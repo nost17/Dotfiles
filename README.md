@@ -1,0 +1,2 @@
+# Dotfiles
+Awesomewm dotfiles config
