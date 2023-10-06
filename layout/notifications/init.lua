@@ -220,8 +220,8 @@ local function mknotification(n)
 end
 Naughty.connect_signal("request::display", function(n)
 	mknotification(n)
-	-- if _U.dnd_state then
-	-- naughty.destroy_all_notifications(nil, 1)
-	-- end
+	if User.config.dnd_state then
+	Naughty.destroy_all_notifications(nil, 1)
+	end
 end)
 require("layout.notifications.playerctl")

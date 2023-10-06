@@ -1,4 +1,4 @@
-User.config.speaker = {}
+User.config.speaker = { index = 0 }
 local kill_script = "ps x | grep 'pactl subscribe' | grep -v grep | awk '{print $1}' | xargs kill"
 local function emit_info()
     Awful.spawn.easy_async_with_shell('echo -n $(pamixer --get-mute); echo "_$(pamixer --get-volume)"',
@@ -21,24 +21,26 @@ local function info_volume(new_sink)
         Awful.spawn.with_line_callback(script, { stdout = function() emit_info() end })
     end)
 end
-local function check_sink()
-    local sink_info = Helpers.misc.getCmdOut(
-        'pamixer --get-default-sink | tail -n1 | awk -F \'"\' \'{gsub(/[ \t]+$/, "", $1); print $1 "@@" $(NF-1)}\''
-    )
-    local new_sink = sink_info:match("^(.*)@@")
-    if new_sink ~= User.config.speaker.index then
-        User.config.speaker.index = new_sink
-        User.config.speaker.name = sink_info:match("@@(.*)")
-        info_volume(new_sink)
-    end
-end
+info_volume()
 
-Gears.timer({
-	timeout = 1.5,
-	call_now = true,
-	autostart = true,
-	single_shot = false,
-	callback = function()
-		check_sink()
-	end,
-})
+-- local function check_sink()
+--     local sink_info = Helpers.misc.getCmdOut(
+--         'pamixer --get-default-sink | tail -n1 | awk -F \'"\' \'{gsub(/[ \t]+$/, "", $1); print $1 "@@" $(NF-1)}\''
+--     )
+--     local new_sink = sink_info:match("^(.*)@@")
+--     if new_sink ~= User.config.speaker.index then
+--         User.config.speaker.index = new_sink
+--         User.config.speaker.name = sink_info:match("@@(.*)")
+--         info_volume(new_sink)
+--     end
+-- end
+--
+-- Gears.timer({
+-- 	timeout = 1.5,
+-- 	call_now = true,
+-- 	autostart = true,
+-- 	single_shot = false,
+-- 	callback = function()
+-- 		check_sink()
+-- 	end,
+-- })

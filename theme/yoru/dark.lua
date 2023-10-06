@@ -1,7 +1,7 @@
 return {
   foreground = "#edeff0",
   background = "#161819",
-  foreground_alt = "#0c0e0f",
+  foreground_alt = "#161819",
   black = "#232526",
   black_alt = "#2c2e2f",
   red = "#df5b61",

@@ -34,9 +34,20 @@ function _btn.state(opts)
   opts.turn_on_fn   = opts.turn_on_fn or nil
 	opts.turn_off_fn  = opts.turn_off_fn or nil
 	opts.alt_fn       = opts.alt_fn or nil
+  opts.other_child  = opts.other_child
+  opts.childs_space = opts.childs_space
   local text_widget = create_icon(opts.text_off, opts.fg_normal, opts.font)
   Gears.table.crush(text_widget, _text, true)
-  opts.child = text_widget
+  if opts.other_child then
+    opts.child = {
+      spacing = opts.childs_space,
+      layout = Wibox.layout.fixed.horizontal,
+      text_widget,
+      opts.other_child,
+    }
+  else
+    opts.child = text_widget
+  end
   local widget = mkcontainer(opts)
   widget._private.state = false
   function widget:turn_on(no_fn)
@@ -45,7 +56,7 @@ function _btn.state(opts)
     text_widget:set_color(opts.fg_normal_on)
     widget._private.state = true
     if opts.turn_on_fn and not no_fn then
-      opts.turn_on_fn()
+      opts.turn_on_fn(widget)
     end
   end
   function widget:turn_off()
@@ -54,7 +65,7 @@ function _btn.state(opts)
     text_widget:set_color(opts.fg_normal)
     widget._private.state = false
     if opts.turn_off_fn then
-      opts.turn_off_fn()
+      opts.turn_off_fn(widget)
     end
   end
   widget:connect_signal("mouse::enter", function(self)
