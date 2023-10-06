@@ -79,7 +79,7 @@ theme.bling_launcher_args              = {
   border_color = theme.black,
   border_width = 3,
 }
-theme.GtkBling                         = require("bling.helpers.icon_theme")(theme.icon_theme)
+theme.GtkBling                         = require("utils.mods.bling.helpers.icon_theme")(theme.icon_theme)
 
 -- TITLEBAR
 -- theme.titlebar_bg_focus                = Helpers.color.LightenDarkenColor(theme.blue, -25)

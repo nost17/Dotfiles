@@ -1,4 +1,4 @@
-local bling = require("bling")
+local bling = require("utils.mods.bling")
 local app_launcher = bling.widget.app_launcher(Beautiful.bling_launcher_args)
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")

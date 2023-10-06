@@ -1,4 +1,4 @@
-local bling = require("bling.signal.playerctl")
+local bling = require("utils.mods.bling.signal.playerctl")
 
 local instance = nil
 
