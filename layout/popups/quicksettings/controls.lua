@@ -16,7 +16,7 @@ local function mkcontrol_btn(opts)
 		},
 		other_child = {
 			id = "icon_label",
-			markup = Helpers.text.colorize_text("Apagado", Beautiful.fg_normal),
+			markup = Helpers.text.colorize_text(opts.label, Beautiful.fg_normal),
 			font = Beautiful.font_text .. "Medium 10",
 			halign = "left",
 			widget = Wibox.widget.textbox,
@@ -27,14 +27,14 @@ local function mkcontrol_btn(opts)
 				opts.on_fn()
 			end
 			w:get_children_by_id("icon_label")[1]
-				:set_markup_silently(Helpers.text.colorize_text("Encendido", Beautiful.black))
+				:set_markup_silently(Helpers.text.colorize_text(opts.label, Beautiful.black))
 		end,
 		turn_off_fn = function(w)
 			if opts.off_fn then
 				opts.off_fn()
 			end
 			w:get_children_by_id("icon_label")[1]
-				:set_markup_silently(Helpers.text.colorize_text("Apagado", Beautiful.fg_normal))
+				:set_markup_silently(Helpers.text.colorize_text(opts.label, Beautiful.fg_normal))
 		end,
 	})
 	return w_icon
@@ -42,15 +42,17 @@ end
 
 local mute_state = mkcontrol_btn({
 	icon = "󰖁",
+  label = "Silencio",
 	on_fn = function()
-		Awful.spawn("pamixer -m")
+		Awful.spawn("pamixer -m", false)
 	end,
 	off_fn = function()
-		Awful.spawn("pamixer -u")
+		Awful.spawn("pamixer -u", false)
 	end,
 })
 local dnd_state = mkcontrol_btn({
 	icon = "󰍶",
+  label = "No molestar",
 	on_fn = function()
     Naughty.destroy_all_notifications(nil, 1)
 		User.config.dnd_state = true

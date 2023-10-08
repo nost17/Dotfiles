@@ -11,7 +11,7 @@ tag.connect_signal("request::default_layouts", function()
 	})
 end)
 
-Awful.tag({ "1", "2", "3", "4", "5" }, SCREEN, Awful.layout.layouts[1])
+Awful.tag({ "1", "2", "3", "4", "5" }, screen.primary, Awful.layout.layouts[1])
 
 screen.connect_signal("request::wallpaper", function(s)
 	Awful.wallpaper({
@@ -63,6 +63,6 @@ Gears.timer({
 	autostart = true,
 	single_shot = true,
 	callback = function()
-		Awful.spawn(Gears.filesystem.get_configuration_dir() .. "scripts/autostart.sh")
+		Awful.spawn(Gears.filesystem.get_configuration_dir() .. "scripts/autostart.sh", false)
 	end,
 })

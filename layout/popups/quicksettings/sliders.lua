@@ -31,7 +31,7 @@ awesome.connect_signal("system::volume", function(volume, _)
 	timer:again()
 end)
 volume_bar:connect_signal("property::value", function(_, new_value)
-	Awful.spawn("pamixer --set-volume " .. new_value)
+	Awful.spawn("pamixer --set-volume " .. new_value, false)
 end)
 
 return Wibox.widget({
