@@ -11,7 +11,7 @@ image_path = sys.argv[1].replace('file://', '') if len(sys.argv) > 1 else notArg
 image_file = Image.open(r"{}".format(image_path))
 
 image_width, image_height = image_file.size
-newSize = image_height / 3 if image_width > image_height else image_height/5
+newSize = image_height / 3 if image_width > image_height else image_height/6
 
 left = 0
 right = image_width 

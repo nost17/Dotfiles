@@ -38,6 +38,7 @@ theme.widget_bg_alt                    = Helpers.color.LightenDarkenColor(theme.
 theme.widget_clock_font                = theme.font_text .. 'Medium 11'
 theme.layouts_icons_color              = Helpers.color.LightenDarkenColor(theme.fg_normal, -30)
 theme.bg_systray                       = theme.widget_bg_color
+theme.music_metadata_halign            = "center"
 
 -- TOOLTIP
 theme.tooltip_bg                       = theme.bg_normal
