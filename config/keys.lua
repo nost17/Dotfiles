@@ -28,9 +28,10 @@ Awful.keyboard.append_global_keybindings({
         { description = "quit awesome", group = "awesome" }),
     Awful.key({ User.config.modkey, }, "Return", function() Awful.spawn(User.vars.terminal) end,
         { description = "open a terminal", group = "launcher" }),
-    Awful.key({ "Mod1" }, "d", function()
-            app_launcher:toggle()
-            -- awful.spawn("/home/e-null/Dev/scripts/awesome/app_launcher.sh", false)
+    Awful.key({ "Mod1" }, "d", function() app_launcher:toggle() end,
+        { description = "run prompt", group = "launcher" }),
+    Awful.key({ "Mod1" }, "a", function()
+          awesome.emit_signal("awesome::notification_center", "toggle")
         end,
         { description = "run prompt", group = "launcher" }),
     Awful.key({ User.config.modkey }, "p", function() menubar.show() end,
@@ -290,5 +291,9 @@ client.connect_signal("request::default_keybindings", function()
                 c:raise()
             end,
             { description = "(un)maximize horizontally", group = "client" }),
+        Awful.key({ User.config.modkey }, "i", function()
+		          local c = client.focus
+		          c.sticky = not c.sticky
+	          end),
     })
 end)

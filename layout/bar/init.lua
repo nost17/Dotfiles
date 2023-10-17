@@ -9,21 +9,24 @@ local main = Awful.wibar({
 	visible = true,
 	-- ontop = true,
 })
-local size = 18
+local size = 20
 local app_launcher = Wibox.widget({
 	{
 		{
 			{
 				image = Gears.color.recolor_image(Beautiful.awesome_icon, Beautiful.fg_normal),
 				forced_width = size,
+				halign = "center",
+				valing = "center",
 				forced_height = size,
 				widget = Wibox.widget.imagebox,
 			},
-			left = (size / 2) + 1,
-			right = (size / 2) + 1,
+			left = (size / 2),
+			right = (size / 2),
 			widget = Wibox.container.margin,
 		},
 		halign = "center",
+		valing = "center",
 		layout = Wibox.container.place,
 	},
 	widget = Wibox.container.background,
@@ -61,7 +64,12 @@ local quicksettings = Wibox.widget({
 quicksettings:add_button(Awful.button({}, 1, function()
 	awesome.emit_signal("awesome::quicksettings_panel", "toggle")
 end))
-Helpers.ui.add_hover(quicksettings:get_children_by_id("background_role")[1], Beautiful.widget_bg_alt, nil, Beautiful.black)
+Helpers.ui.add_hover(
+	quicksettings:get_children_by_id("background_role")[1],
+	Beautiful.widget_bg_alt,
+	nil,
+	Beautiful.black
+)
 
 -- CLOCK WIDGET
 local clock = Wibox.widget({
@@ -77,10 +85,17 @@ local clock = Wibox.widget({
 		right = 8,
 		widget = Wibox.container.margin,
 	},
-	fg = Beautiful.fg_normal,
-	bg = Beautiful.widget_bg_alt,
 	widget = Wibox.container.background,
 })
+clock:add_button(Awful.button({}, 1, function()
+	awesome.emit_signal("awesome::notification_center", "toggle")
+end))
+Helpers.ui.add_hover(
+	clock,
+	Beautiful.widget_bg_alt,
+	nil,
+	Beautiful.black
+)
 
 -- TAGLIST WIDGET
 local taglist = require("layout.bar.taglist")(screen.primary)
@@ -106,6 +121,6 @@ main:setup({
 		expand = "none",
 		layout = Wibox.layout.align.horizontal,
 	},
-  fill_space = true,
+	fill_space = true,
 	layout = Wibox.layout.fixed.vertical,
 })

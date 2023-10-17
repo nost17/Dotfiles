@@ -29,7 +29,6 @@ local toggle_button = buttons.normal({
 	text = "󰐊",
 	expand = false,
 	font = Beautiful.font_icon .. "13",
-	paddings = { right = -1 },
 	fg_normal = Beautiful.foreground_alt,
 	bg_normal = Helpers.color.LightenDarkenColor(Beautiful.blue, -10),
 	bg_hover = Beautiful.blue_alt,

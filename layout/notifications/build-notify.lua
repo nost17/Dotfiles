@@ -1,21 +1,3 @@
-Naughty.config.defaults = {
-	position = "top_right",
-	timeout = 6,
-	app_name = "AwesomeWM",
-}
-Naughty.connect_signal("request::icon", function(n, context, hints)
-	if context ~= "app_icon" then
-		hints.app_icon = n.app_name
-		-- return
-	end
-	local path = Helpers.misc.getIcon(hints.app_icon)
-	if path then
-		n.icon = path
-	end
-end)
-Naughty.connect_signal("request::action_icon", function(a, _, hints)
-	a.icon = require("menubar").utils.lookup_icon(hints.id)
-end)
 local list_names = {
 	"dunstify",
 	"notify-send",
@@ -44,14 +26,16 @@ local function mkimagew(image, size)
 end
 local function mknotification(n)
 	local accent_color = colors[n.urgency]
+	local show_image = true
 	for _, def_name in pairs(list_names) do
 		if n.app_name == def_name then
 			n.app_name = Naughty.config.defaults.app_name
 		end
 	end
-	local show_image = true
-	local n_title = require("layout.notifications.title")(n)
-	local n_message = require("layout.notifications.message")(n)
+	local n_title = Wibox.widget.textbox()
+	local n_message = Wibox.widget.textbox()
+	Helpers.text.set_markup(n_title, n.title, Beautiful.green, Beautiful.notification_font_title)
+	Helpers.text.set_markup(n_message, n.message, Beautiful.red, Beautiful.notification_font_message)
 	local n_image = require("layout.notifications.image")(n)
 	if type(n.icon) ~= "userdata" then
 		show_image = n.icon ~= Helpers.misc.getIcon(n.app_name)
@@ -146,82 +130,53 @@ local function mknotification(n)
 		},
 		widget = Naughty.list.actions,
 	})
-	local notify = Naughty.layout.box({
-		notification = n,
-		type = "notification",
-		cursor = "hand1",
-		bg = Beautiful.notification_border_color,
-		-- filter = function(nn) return Naughty.list.notifications.filter.most_recent(nn, 3) end,
-		shape = Helpers.shape.rrect(2),
-		minimum_width = 280,
-		maximum_width = 680,
-		widget_template = {
+	return Wibox.widget({
+		{
 			{
 				{
 					{
+						n_appname,
 						{
-							n_appname,
 							{
 								{
 									{
-										{
-											show_image and n_image,
-											strategy = "max",
-											height = Beautiful.notification_icon_height,
-											widget = Wibox.container.constraint,
-										},
-										{
-											-- Helpers.ui.vertical_pad(2),
-											n_title,
-											n_message,
-											-- spacing = 2,
-											layout = Wibox.layout.fixed.vertical,
-										},
-										spacing = 6,
-										layout = Wibox.layout.fixed.horizontal,
+										show_image and n_image,
+										strategy = "max",
+										height = Beautiful.notification_icon_height,
+										widget = Wibox.container.constraint,
 									},
-									(n.actions and #n.actions > 0) and actions,
+									{
+										-- Helpers.ui.vertical_pad(2),
+										n_title,
+										n_message,
+										-- spacing = 2,
+										layout = Wibox.layout.fixed.vertical,
+									},
 									spacing = 6,
-									layout = Wibox.layout.fixed.vertical,
+									layout = Wibox.layout.fixed.horizontal,
 								},
-								margins = 6,
-								layout = Wibox.container.margin,
+								(n.actions and #n.actions > 0) and actions,
+								spacing = 6,
+								layout = Wibox.layout.fixed.vertical,
 							},
-							layout = Wibox.layout.fixed.vertical,
+							margins = 6,
+							layout = Wibox.container.margin,
 						},
-						margins = 0,
-						widget = Wibox.container.margin,
+						layout = Wibox.layout.fixed.vertical,
 					},
-					shape = Helpers.shape.rrect(Beautiful.notification_border_radius),
-					bg = Beautiful.notification_bg,
-					widget = Wibox.container.background,
+					margins = 0,
+					widget = Wibox.container.margin,
 				},
-				margins = 2,
-				widget = Wibox.container.margin,
+				shape = Helpers.shape.rrect(Beautiful.notification_border_radius),
+				bg = Beautiful.notification_bg,
+				widget = Wibox.container.background,
 			},
-			shape = Helpers.shape.rrect(Beautiful.notification_border_radius),
-			bg = Beautiful.black_alt,
-			widget = Wibox.container.background,
+			margins = 2,
+			widget = Wibox.container.margin,
 		},
+		shape = Helpers.shape.rrect(Beautiful.notification_border_radius),
+		bg = Beautiful.black_alt,
+		widget = Wibox.container.background,
 	})
-	notify.buttons = {}
-	notify:connect_signal("mouse::enter", function()
-		n:set_timeout(4294967)
-	end)
-	notify:connect_signal("mouse::leave", function()
-		if n.urgency ~= "critical" then
-			n:set_timeout(2)
-		end
-	end)
-	notify:connect_signal("button::press", function()
-		n:destroy()
-	end)
-	return notify
 end
-Naughty.connect_signal("request::display", function(n)
-	mknotification(n)
-	if User.config.dnd_state then
-	Naughty.destroy_all_notifications(nil, 1)
-	end
-end)
-require("layout.notifications.playerctl")
+return mknotification
