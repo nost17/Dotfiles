@@ -28,7 +28,7 @@ function _module.mktext(args)
 		end
 
 		-- Need to unescape in a case the text was escaped by other code before
-		self._private.text = Gears.string.xml_unescape(tostring(self._private.text))
+		-- self._private.text = Gears.string.xml_unescape(tostring(self._private.text))
 		-- self._private.text = Gears.string.xml_escape(tostring(self._private.text))
 		-- self._private.text = self._private.text
 		self._private.text = _module.escape_text(self._private.text)

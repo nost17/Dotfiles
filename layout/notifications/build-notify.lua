@@ -34,9 +34,16 @@ local function mknotification(n)
 	end
 	local n_title = Wibox.widget.textbox()
 	local n_message = Wibox.widget.textbox()
-	Helpers.text.set_markup(n_title, n.title, Beautiful.green, Beautiful.notification_font_title)
-	Helpers.text.set_markup(n_message, n.message, Beautiful.red, Beautiful.notification_font_message)
-	local n_image = require("layout.notifications.image")(n)
+	Helpers.text.set_markup(n_title, n.title, Beautiful.notification_fg, Beautiful.notification_font_title)
+	Helpers.text.set_markup(n_message, n.message, Beautiful.notification_fg, Beautiful.notification_font_message)
+	local n_image = Wibox.widget({
+		clip_shape = Beautiful.notification_icon_shape,
+		valign = "start",
+		halign = "center",
+		-- scaling_quality = "good",
+		widget = Wibox.widget.imagebox,
+	})
+  n_image:set_image(Gears.surface.load_silently(n.icon))
 	if type(n.icon) ~= "userdata" then
 		show_image = n.icon ~= Helpers.misc.getIcon(n.app_name)
 	end

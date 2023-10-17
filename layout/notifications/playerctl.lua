@@ -23,9 +23,9 @@ playerctl:connect_signal("playback_status", function(_, playing)
 end)
 -- message = Helpers.text.colorize_text("<u>" .. music_data.artist .. "</u>", Beautiful.cyan_alt),
 awesome.connect_signal("awesome::music:notify", function()
-  if music_data.album_path == "" or music_data.album_path == nil then
-    music_data.album_path = Beautiful.cover_art
-  end
+	if music_data.album_path == "" or music_data.album_path == nil then
+		music_data.album_path = Beautiful.cover_art
+	end
 	music_notify = Helpers.misc.notify_dwim({
 		title = Helpers.text.colorize_text("<b>" .. music_data.title .. "</b>", Beautiful.blue),
 		message = music_data.artist,
@@ -44,15 +44,22 @@ playerctl:connect_signal("metadata", function(_, title, artist, album_path, _, _
 			player_name = player_name,
 		})
 	else
-		if title ~= music_data.title or music_data.album_path == nil or music_data.album_path == "" then
+		if
+			title ~= music_data.title
+			or music_data.album_path == nil
+			or music_data.album_path == ""
+			or music_data.album_path == Beautiful.cover_art
+		then
 			Gears.table.crush(music_data, {
 				title = title,
 				artist = artist,
 				album_path = album_path,
 				player_name = player_name,
 			})
-			awesome.emit_signal("awesome::music:notify")
+			if User.config.auto_music_notify then
+				awesome.emit_signal("awesome::music:notify")
+			end
 		end
 	end
-  -- Awful.spawn.with_shell("find /tmp -type f -not -name '".. album_path .."' -type f -name 'lua_*' -delete")
+	-- Awful.spawn.with_shell("find /tmp -type f -not -name '".. album_path .."' -type f -name 'lua_*' -delete")
 end)

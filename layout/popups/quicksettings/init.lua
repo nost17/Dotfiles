@@ -11,7 +11,7 @@ local main = Wibox({
   border_color = Beautiful.widget_bg_alt,
 })
 main.y = screen_height - main.height - 42
-main.x = screen_width - main.width - 135
+main.x = screen_width - main.width - main.border_width - Beautiful.useless_gap * 2
 
 -- MUSIC PLAYER WDG
 local music = require("layout.popups.quicksettings.music-player")
@@ -41,4 +41,7 @@ awesome.connect_signal("awesome::quicksettings_panel", function(action)
 	elseif action == "show" then
 		main.visible = true
 	end
+  if main.visible then
+        awesome.emit_signal("awesome::notification_center", "hide")
+  end
 end)

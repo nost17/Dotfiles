@@ -42,7 +42,7 @@ end
 
 local mute_state = mkcontrol_btn({
 	icon = "󰖁",
-  label = "Silencio",
+	label = "Silencio",
 	on_fn = function()
 		Awful.spawn("pamixer -m", false)
 	end,
@@ -52,19 +52,38 @@ local mute_state = mkcontrol_btn({
 })
 local dnd_state = mkcontrol_btn({
 	icon = "󰍶",
-  label = "No molestar",
+	label = "No molestar",
 	on_fn = function()
-    Naughty.destroy_all_notifications(nil, 1)
+		Naughty.destroy_all_notifications(nil, 1)
 		User.config.dnd_state = true
 	end,
 	off_fn = function()
 		User.config.dnd_state = false
 	end,
 })
+local auto_music_notify = mkcontrol_btn({
+	icon = "󰎇",
+	label = "Musica (aviso)",
+	on_fn = function()
+		User.config.auto_music_notify = true
+	end,
+	off_fn = function()
+		User.config.auto_music_notify = false
+	end,
+})
 
 return Wibox.widget({
-	mute_state,
-	dnd_state,
+	{
+		mute_state,
+		dnd_state,
+		spacing = 8,
+		layout = Wibox.layout.flex.horizontal,
+	},
+	{
+		auto_music_notify,
+		spacing = 8,
+		layout = Wibox.layout.flex.horizontal,
+	},
 	spacing = 8,
-	layout = Wibox.layout.flex.horizontal,
+	layout = Wibox.layout.flex.vertical,
 })

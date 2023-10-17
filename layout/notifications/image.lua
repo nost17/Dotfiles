@@ -48,9 +48,9 @@ local function new(args)
 	tb.clip_shape = Beautiful.notification_icon_shape
 	tb.valign = "start"
 	tb.halign = "center"
+	tb.scaling_quality = "best"
 	-- tb.forced_width = beautiful.notification_icon_size
 	-- tb.forced_height = Beautiful.notification_icon_height
-	tb.scaling_quality = "best"
 	Gears.table.crush(tb, icon, true)
 	tb._private.notification = {}
 	function tb._private.icon_changed_callback()
