@@ -220,7 +220,7 @@ local function mknotification(n)
 end
 Naughty.connect_signal("request::display", function(n)
 	mknotification(n)
-	if User.config.dnd_state and _G.notify_center_hide then
+	if User.config.dnd_state or _G.notify_center_visible == true then
 		Naughty.destroy_all_notifications(nil, 1)
 	end
 end)

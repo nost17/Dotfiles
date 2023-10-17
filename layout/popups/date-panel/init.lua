@@ -22,8 +22,9 @@ awesome.connect_signal("awesome::notification_center", function(action)
 	elseif action == "show" then
 		main.visible = true
 	end
-	_G.notify_center_hide = not main.visible
+	_G.notify_center_visible = main.visible
 	if main.visible then
+		Naughty.destroy_all_notifications(nil, 1)
 		awesome.emit_signal("awesome::quicksettings_panel", "hide")
 	end
 end)
