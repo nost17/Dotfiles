@@ -7,8 +7,8 @@ local main = Wibox({
 	bg = Beautiful.bg_normal,
 	visible = false,
 	ontop = true,
-  border_width = 2,
-  border_color = Beautiful.widget_bg_alt,
+	border_width = 2,
+	border_color = Beautiful.widget_bg_alt,
 })
 main.y = screen_height - main.height - 42
 main.x = screen_width - main.width - main.border_width - Beautiful.useless_gap * 2
@@ -22,10 +22,10 @@ local controls = require("layout.popups.quicksettings.controls")
 -- QUICKSETTINGS SETUP
 main:setup({
 	{
-    music,
-    controls,
-    slider_bars,
-    spacing = 8,
+		music,
+		controls,
+		slider_bars,
+		spacing = 8,
 		layout = Wibox.layout.fixed.vertical,
 	},
 	margins = 8,
@@ -41,7 +41,7 @@ awesome.connect_signal("awesome::quicksettings_panel", function(action)
 	elseif action == "show" then
 		main.visible = true
 	end
-  if main.visible then
-        awesome.emit_signal("awesome::notification_center", "hide")
-  end
+	if main.visible then
+		awesome.emit_signal("awesome::notification_center", "hide")
+	end
 end)

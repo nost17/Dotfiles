@@ -26,17 +26,12 @@ function _module.mktext(args)
 			italic_start = "<i>"
 			italic_end = "</i>"
 		end
-
-		-- Need to unescape in a case the text was escaped by other code before
-		-- self._private.text = Gears.string.xml_unescape(tostring(self._private.text))
-		-- self._private.text = Gears.string.xml_escape(tostring(self._private.text))
-		-- self._private.text = self._private.text
 		self._private.text = _module.escape_text(self._private.text)
 		self.markup = bold_start
-				.. italic_start
-				.. _module.colorize_text(self._private.text, self._private.color)
-				.. italic_end
-				.. bold_end
+			.. italic_start
+			.. _module.colorize_text(self._private.text, self._private.color)
+			.. italic_end
+			.. bold_end
 	end
 	function text:set_halign(halign)
 		self.align = halign

@@ -1,43 +1,24 @@
 -- PLAYERCTL WDG
 local playerctl = require("signal.playerctl")
 local buttons = require("utils.button.text")
-local script_path = "python3 " .. Gears.filesystem.get_configuration_dir() .. "scripts/crop_images.py "
-local function mkmusic_btn(icon, action, shape)
-	local wdg = Wibox.widget({
-		{
-			text = icon,
-			id = "text_role",
-			font = Beautiful.font_icon .. "14",
-			halign = "center",
-			valign = "center",
-			widget = Wibox.widget.textbox,
-		},
-		forced_height = 30,
-		shape = shape,
-		widget = Wibox.container.background,
-	})
-	Helpers.ui.add_hover(wdg, Beautiful.bg_normal, Beautiful.fg_normal, Beautiful.black, Beautiful.blue)
-	if action then
-		wdg:add_button(Awful.button({}, 1, function()
-			action(wdg)
-		end))
-	end
-	return wdg
-end
+-- local script_path = "python3 " .. Gears.filesystem.get_configuration_dir() .. "scripts/crop_images.py "
+local script_path = Gears.filesystem.get_configuration_dir() .. "scripts/crop_images.sh "
 
 local toggle_button = buttons.normal({
 	text = "󰐊",
 	expand = false,
-	font = Beautiful.font_icon .. "13",
+	font = Beautiful.font_icon .. "11",
 	fg_normal = Beautiful.foreground_alt,
 	bg_normal = Helpers.color.LightenDarkenColor(Beautiful.blue, -10),
 	bg_hover = Beautiful.blue_alt,
-	shape = Helpers.shape.rrect(8),
+	-- shape = Helpers.shape.rrect(8),
+	shape = Gears.shape.circle,
+  paddings = { left = 1},
 	on_release = function()
 		playerctl:play_pause()
 	end,
-	forced_height = 30,
-	forced_width = 30,
+	forced_height = 24,
+	forced_width = 24,
 })
 local previous_button = buttons.normal({
 	text = "󰒮",
@@ -122,6 +103,7 @@ local media_controls = Wibox.widget({
 			},
 			{
 				positionbar,
+        visible =false,
 				forced_height = positionbar.forced_height,
 				layout = Wibox.container.place,
 			},

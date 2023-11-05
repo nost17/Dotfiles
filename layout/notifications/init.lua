@@ -44,28 +44,26 @@ local function mkimagew(image, size)
 end
 local function mknotification(n)
 	local accent_color = colors[n.urgency]
+	local show_image = true
 	for _, def_name in pairs(list_names) do
 		if n.app_name == def_name then
 			n.app_name = Naughty.config.defaults.app_name
 		end
 	end
-	local show_image = true
 	local n_title = require("layout.notifications.title")(n)
 	local n_message = require("layout.notifications.message")(n)
 	local n_image = require("layout.notifications.image")(n)
-	if type(n.icon) ~= "userdata" then
-		show_image = n.icon ~= Helpers.misc.getIcon(n.app_name)
-	end
+	local app_icon = mkimagew(Helpers.misc.getIcon(n.app_name), 18)
 	local app_name = Wibox.widget({
 		text = n.app_name:gsub("^%l", string.upper),
-		-- text = type(n.icon) ~= "userdata" and n.icon or type(n.icon),
 		font = Beautiful.notification_font_appname,
 		halign = "center",
 		valign = "center",
 		widget = Wibox.widget.textbox,
 	})
-	local app_icon = mkimagew(Helpers.misc.getIcon(n.app_name), 18)
-	local awesome_icon = mkimagew(Gears.color.recolor_image(Beautiful.awesome_icon, accent_color), 18)
+	if type(n.icon) ~= "userdata" then
+		show_image = n.icon ~= Helpers.misc.getIcon(n.app_name)
+	end
 	local n_appname = Wibox.widget({
 		{
 			{
@@ -91,7 +89,13 @@ local function mknotification(n)
 		nil,
 		{
 			{
-				awesome_icon,
+				{
+					markup = Helpers.text.colorize_text("<b>" .. os.date("%H:%M") .. "</b>", accent_color),
+					font = Beautiful.notification_font_appname,
+					halign = "center",
+					valign = "center",
+					widget = Wibox.widget.textbox,
+				},
 				widget = Wibox.container.margin,
 				left = 7,
 				bottom = 2,
@@ -159,38 +163,37 @@ local function mknotification(n)
 			{
 				{
 					{
+						n_appname,
 						{
-							n_appname,
 							{
 								{
 									{
+										show_image and n_image,
+										strategy = "max",
+										height = Beautiful.notification_icon_height,
+										widget = Wibox.container.constraint,
+									},
+									{
 										{
-											show_image and n_image,
-											strategy = "max",
-											height = Beautiful.notification_icon_height,
-											widget = Wibox.container.constraint,
-										},
-										{
-											-- Helpers.ui.vertical_pad(2),
 											n_title,
 											n_message,
 											-- spacing = 2,
 											layout = Wibox.layout.fixed.vertical,
 										},
-										spacing = 6,
-										layout = Wibox.layout.fixed.horizontal,
+										top = -2,
+										layout = Wibox.container.margin,
 									},
-									(n.actions and #n.actions > 0) and actions,
 									spacing = 6,
-									layout = Wibox.layout.fixed.vertical,
+									layout = Wibox.layout.fixed.horizontal,
 								},
-								margins = 6,
-								layout = Wibox.container.margin,
+								(n.actions and #n.actions > 0) and actions,
+								spacing = 6,
+								layout = Wibox.layout.fixed.vertical,
 							},
-							layout = Wibox.layout.fixed.vertical,
+							margins = 6,
+							layout = Wibox.container.margin,
 						},
-						margins = 0,
-						widget = Wibox.container.margin,
+						layout = Wibox.layout.fixed.vertical,
 					},
 					shape = Helpers.shape.rrect(Beautiful.notification_border_radius),
 					bg = Beautiful.notification_bg,
@@ -219,9 +222,10 @@ local function mknotification(n)
 	return notify
 end
 Naughty.connect_signal("request::display", function(n)
-	mknotification(n)
 	if User.config.dnd_state or _G.notify_center_visible == true then
 		Naughty.destroy_all_notifications(nil, 1)
+	else
+		mknotification(n)
 	end
 end)
 require("layout.notifications.playerctl")
