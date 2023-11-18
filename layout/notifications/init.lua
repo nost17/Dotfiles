@@ -45,6 +45,7 @@ end
 local function mknotification(n)
 	local accent_color = colors[n.urgency]
 	local show_image = true
+	local app_icon_path = Helpers.misc.getIcon(n.app_name)
 	for _, def_name in pairs(list_names) do
 		if n.app_name == def_name then
 			n.app_name = Naughty.config.defaults.app_name
@@ -53,7 +54,7 @@ local function mknotification(n)
 	local n_title = require("layout.notifications.title")(n)
 	local n_message = require("layout.notifications.message")(n)
 	local n_image = require("layout.notifications.image")(n)
-	local app_icon = mkimagew(Helpers.misc.getIcon(n.app_name), 18)
+	local app_icon = mkimagew(app_icon_path, 16)
 	local app_name = Wibox.widget({
 		text = n.app_name:gsub("^%l", string.upper),
 		font = Beautiful.notification_font_appname,
@@ -62,52 +63,32 @@ local function mknotification(n)
 		widget = Wibox.widget.textbox,
 	})
 	if type(n.icon) ~= "userdata" then
-		show_image = n.icon ~= Helpers.misc.getIcon(n.app_name)
+		show_image = n.icon ~= app_icon_path
 	end
 	local n_appname = Wibox.widget({
 		{
 			{
-				{
-					app_icon,
-					left = app_icon and 4 or 0,
-					widget = Wibox.container.margin,
-				},
-				{
-					app_name,
-					left = app_icon and 4 or 6,
-					right = 7,
-					widget = Wibox.container.margin,
-				},
+				app_icon,
+				app_name,
+				spacing = 6,
 				layout = Wibox.layout.fixed.horizontal,
 			},
-			forced_height = 26,
-			bg = Beautiful.black_alt,
-			fg = Beautiful.fg_normal .. "CC",
-			shape = Helpers.shape.prrect(10, nil, nil, true, nil),
-			widget = Wibox.container.background,
-		},
-		nil,
-		{
+			nil,
 			{
 				{
-					markup = Helpers.text.colorize_text("<b>" .. os.date("%H:%M") .. "</b>", accent_color),
-					font = Beautiful.notification_font_appname,
+					markup = Helpers.text.colorize_text("󰑊", accent_color),
+					font = Beautiful.font_icon .. "9",
 					halign = "center",
 					valign = "center",
 					widget = Wibox.widget.textbox,
 				},
 				widget = Wibox.container.margin,
-				left = 7,
 				bottom = 2,
-				right = 4,
 			},
-			forced_height = 26,
-			bg = Beautiful.black_alt,
-			fg = Beautiful.fg_normal .. "CC",
-			shape = Helpers.shape.prrect(10, nil, nil, nil, true),
-			widget = Wibox.container.background,
+			layout = Wibox.layout.align.horizontal,
 		},
-		layout = Wibox.layout.align.horizontal,
+		left = 3,
+		widget = Wibox.container.margin,
 	})
 	local actions = Wibox.widget({
 		notification = n,
@@ -132,12 +113,13 @@ local function mknotification(n)
 				widget = Wibox.container.place,
 			},
 			forced_height = 26,
+			shape = Helpers.shape.rrect(Beautiful.radius),
 			-- forced_width = 70,
 			widget = Wibox.container.background,
 			create_callback = function(self, _, _, _)
 				Helpers.ui.add_hover(
 					self,
-					Beautiful.widget_bg_color,
+					Beautiful.black,
 					Beautiful.fg_normal,
 					Beautiful.accent_color,
 					Beautiful.foreground_alt
@@ -154,11 +136,12 @@ local function mknotification(n)
 		notification = n,
 		type = "notification",
 		cursor = "hand1",
-		bg = Beautiful.notification_border_color,
+		-- bg = "#00000000",
+		bg = Beautiful.notification_bg,
 		-- filter = function(nn) return Naughty.list.notifications.filter.most_recent(nn, 3) end,
-		shape = Helpers.shape.rrect(2),
+		shape = Helpers.shape.rrect(Beautiful.notification_border_radius),
 		minimum_width = 280,
-		maximum_width = 680,
+		maximum_width = 480,
 		widget_template = {
 			{
 				{
@@ -168,42 +151,47 @@ local function mknotification(n)
 							{
 								{
 									{
-										show_image and n_image,
-										strategy = "max",
-										height = Beautiful.notification_icon_height,
-										widget = Wibox.container.constraint,
-									},
-									{
 										{
-											n_title,
-											n_message,
-											-- spacing = 2,
-											layout = Wibox.layout.fixed.vertical,
+											show_image and n_image,
+											strategy = "max",
+											height = Beautiful.notification_icon_height,
+											widget = Wibox.container.constraint,
 										},
-										top = -2,
-										layout = Wibox.container.margin,
+										{
+											{
+												n_title,
+												n_message,
+												-- spacing = 2,
+												layout = Wibox.layout.fixed.vertical,
+											},
+											top = -2,
+											layout = Wibox.container.margin,
+										},
+										spacing = 6,
+										layout = Wibox.layout.fixed.horizontal,
 									},
-									spacing = 6,
-									layout = Wibox.layout.fixed.horizontal,
+									left = 2,
+									right = 2,
+									layout = Wibox.container.margin,
 								},
 								(n.actions and #n.actions > 0) and actions,
 								spacing = 6,
 								layout = Wibox.layout.fixed.vertical,
 							},
-							margins = 6,
 							layout = Wibox.container.margin,
 						},
+						spacing = 5,
 						layout = Wibox.layout.fixed.vertical,
 					},
-					shape = Helpers.shape.rrect(Beautiful.notification_border_radius),
+					-- shape = Helpers.shape.rrect(Beautiful.notification_border_radius),
 					bg = Beautiful.notification_bg,
 					widget = Wibox.container.background,
 				},
-				margins = 2,
+				margins = 6,
 				widget = Wibox.container.margin,
 			},
-			shape = Helpers.shape.rrect(Beautiful.notification_border_radius),
-			bg = Beautiful.black_alt,
+			-- shape = Helpers.shape.rrect(Beautiful.notification_border_radius),
+			bg = Beautiful.notification_bg,
 			widget = Wibox.container.background,
 		},
 	})

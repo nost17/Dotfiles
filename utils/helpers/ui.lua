@@ -35,7 +35,7 @@ function _module.add_hover(element, bg , fg, hbg, hfg)
 	local nfg = fg or Helpers.color.isDark(nbg) and Beautiful.white or Beautiful.black
 	element.bg = nbg
 	element.fg = nfg
-	hbg = hbg or Helpers.color.LightenDarkenColor(nbg, 15)
+	hbg = hbg or Helpers.color.ldColor(nbg, 15)
 	hfg = hfg or nfg
 	element:connect_signal("mouse::enter", function(self)
 		self.bg = hbg

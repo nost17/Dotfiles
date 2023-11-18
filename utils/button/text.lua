@@ -28,6 +28,7 @@ function _btn.state(opts)
 	opts.fg_hover = opts.fg_hover or opts.fg_normal
 	opts.fg_normal_on = opts.fg_normal_on or opts.fg_normal
 	opts.fg_hover_on = opts.fg_hover_on or opts.fg_normal_on
+  opts.border_color_on = opts.border_color_on or opts.bg_normal_on
 	opts.text_off = opts.text_off or ""
 	opts.text_on = opts.text_on or opts.text_off
 	opts.font = opts.font or Beautiful.font
@@ -52,6 +53,7 @@ function _btn.state(opts)
 	widget._private.state = false
 	function widget:turn_on(no_fn)
 		widget:get_children_by_id("background_role")[1].bg = opts.bg_normal_on
+    widget:get_children_by_id("background_role")[1].border_color = opts.border_color_on
 		text_widget:set_text(opts.text_on)
 		text_widget:set_color(opts.fg_normal_on)
 		widget._private.state = true
@@ -61,6 +63,7 @@ function _btn.state(opts)
 	end
 	function widget:turn_off()
 		widget:get_children_by_id("background_role")[1].bg = opts.bg_normal
+    widget:get_children_by_id("background_role")[1].border_color = opts.border_color
 		text_widget:set_text(opts.text_off)
 		text_widget:set_color(opts.fg_normal)
 		widget._private.state = false
@@ -108,6 +111,7 @@ function _btn.normal(opts)
 	opts.bg_hover = opts.bg_hover or opts.bg_normal
 	opts.fg_normal = opts.fg_normal or Beautiful.fg_normal
 	opts.fg_hover = opts.fg_hover or opts.fg_normal
+  opts.border_color_hover = opts.border_color_hover or opts.bg_hover
 	opts.text = opts.text or ""
 	opts.on_release = opts.on_release or nil
 	opts.on_alt_release = opts.on_alt_release or nil
@@ -119,10 +123,12 @@ function _btn.normal(opts)
 	local widget = mkcontainer(opts)
 	widget:connect_signal("mouse::enter", function(self)
 		self:get_children_by_id("background_role")[1].bg = opts.bg_hover
+    self:get_children_by_id("background_role")[1].border_color = opts.border_color_hover
 		text_widget:set_color(opts.fg_hover)
 	end)
 	widget:connect_signal("mouse::leave", function(self)
 		self:get_children_by_id("background_role")[1].bg = opts.bg_normal
+    self:get_children_by_id("background_role")[1].border_color = opts.border_color
 		text_widget:set_color(opts.fg_normal)
 	end)
 	Helpers.ui.add_click(widget, 1, function()

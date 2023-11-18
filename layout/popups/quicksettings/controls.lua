@@ -1,22 +1,29 @@
 local buttons = require("utils.button.text")
-
 local function mkcontrol_btn(opts)
 	local w_icon = buttons.state({
 		text_off = opts.icon,
 		font = Beautiful.font_icon .. "13",
 		bg_normal = Beautiful.widget_bg_alt,
-		bg_hover = Beautiful.black,
+		bg_hover = Helpers.color.LDColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
 		bg_normal_on = Beautiful.accent_color,
-		fg_normal_on = Beautiful.black,
-		forced_height = 35,
+		fg_normal = Helpers.color.LDColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.accent_color),
+		fg_normal_on = Beautiful.foreground_alt,
+    bg_hover_on = Helpers.color.LDColor("darken", 0.15, Beautiful.accent_color),
+		-- border_width = User.config.dark_mode and 0 or 1.25,
+		border_color = Beautiful.accent_color,
+		-- border_color_on = "#0b0c0c",
+		-- forced_height = 35,
+		shape = User.config.dark_mode and Helpers.shape.rrect(8) or Gears.shape.rounded_bar,
 		halign = "left",
 		paddings = {
-			left = 8,
+			left = 12,
 			right = 8,
+			top = 8,
+			bottom = 8,
 		},
 		other_child = {
 			id = "icon_label",
-			markup = Helpers.text.colorize_text(opts.label, Beautiful.fg_normal),
+			markup = Helpers.text.colorize_text(opts.label, Beautiful.foreground),
 			font = Beautiful.font_text .. "Medium 10",
 			halign = "left",
 			widget = Wibox.widget.textbox,
@@ -27,14 +34,14 @@ local function mkcontrol_btn(opts)
 				opts.on_fn()
 			end
 			w:get_children_by_id("icon_label")[1]
-				:set_markup_silently(Helpers.text.colorize_text(opts.label, Beautiful.black))
+				:set_markup_silently(Helpers.text.colorize_text(opts.label, Beautiful.foreground_alt))
 		end,
 		turn_off_fn = function(w)
 			if opts.off_fn then
 				opts.off_fn()
 			end
 			w:get_children_by_id("icon_label")[1]
-				:set_markup_silently(Helpers.text.colorize_text(opts.label, Beautiful.fg_normal))
+				:set_markup_silently(Helpers.text.colorize_text(opts.label, Beautiful.foreground))
 		end,
 	})
 	return w_icon

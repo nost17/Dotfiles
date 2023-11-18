@@ -12,11 +12,14 @@ theme.font_text                        = "Sofia Sans "
 theme.font_icon                        = "Material Design Icons Desktop "
 theme.font                             = theme.font_text .. "Regular 12"
 theme.widget_radius                    = 1
+theme.radius                           = 8
 theme.default_app_icon                 = "access"
 theme.icon_theme                       = "Qogir-dark"
 theme.icon_theme_path                  = "/usr/share/icons/" .. theme.icon_theme .. "/scalable/apps/"
-theme.accent_color                     = theme.green
+theme.accent_color                     = theme[User.config.theme_accent or "blue"]
 theme.transparent                      = "#00000000"
+theme.color_method                     = User.config.dark_mode and "lighten" or "darken"
+theme.color_method_factor              = theme.color_method == "lighten" and 0.025 or 0.1
 
 --- MAIN
 theme.bg_normal                        = theme.background
@@ -34,11 +37,12 @@ theme.border_focus                     = theme.yellow
 
 -- WIDGETS
 theme.widget_bg_color                  = theme.bg_normal
-theme.widget_bg_alt                    = Helpers.color.LightenDarkenColor(theme.bg_normal, 7)
+theme.widget_bg_alt                    = Helpers.color.LDColor(theme.color_method, theme.color_method_factor, theme.bg_normal)
 theme.widget_clock_font                = theme.font_text .. 'Medium 11'
-theme.layouts_icons_color              = Helpers.color.LightenDarkenColor(theme.fg_normal, -30)
+theme.layouts_icons_color              = Helpers.color.ldColor(theme.fg_normal, -30)
 theme.bg_systray                       = theme.widget_bg_color
-theme.music_metadata_halign            = "center"
+theme.music_metadata_pos            = "left"
+theme.music_control_pos             = "left"
 
 -- TOOLTIP
 theme.tooltip_bg                       = theme.bg_normal
@@ -82,9 +86,17 @@ theme.bling_launcher_args              = {
 }
 theme.GtkBling                         = require("utils.mods.bling.helpers.icon_theme")(theme.icon_theme)
 
+-- MENU
+
+theme.menu_bg_normal = theme.widget_bg_color
+theme.menu_bg_focus = theme.red
+theme.menu_fg_focus = theme.foreground_alt
+theme.menu_height = 26
+theme.menu_width = 260
+
 -- TITLEBAR
--- theme.titlebar_bg_focus                = Helpers.color.LightenDarkenColor(theme.blue, -25)
--- theme.titlebar_bg_normal               = Helpers.color.LightenDarkenColor(theme.bg_normal, 8)
+-- theme.titlebar_bg_focus                = Helpers.color.ldColor(theme.blue, -25)
+-- theme.titlebar_bg_normal               = Helpers.color.ldColor(theme.bg_normal, 8)
 theme.titlebar_bg_normal = "#0c0e0f"
 theme.titlebar_bg_focus                = theme.titlebar_bg_normal
 theme.titlebar_fg_normal               = theme.titlebar_bg_normal
@@ -94,8 +106,8 @@ theme.titlebar_size                    = 34
 
 -- TASKLIST
 theme.tasklist_bg_color                = theme.transparent
---[[ theme.tasklist_bg_focus                = Helpers.color.LightenDarkenColor(theme.accent_color, 10) ]]
-theme.tasklist_bg_focus                = theme.widget_bg_alt
+--[[ theme.tasklist_bg_focus                = Helpers.color.ldColor(theme.accent_color, 10) ]]
+theme.tasklist_bg_focus                = User.config.dark_mode and Helpers.color.ldColor(theme.widget_bg_alt, 7) or theme.widget_bg_alt
 theme.tasklist_indicator_focus         = theme.accent_color
 theme.tasklist_indicator_normal        = theme.white .. "22"
 theme.taglist_icon_size                = 24
@@ -119,18 +131,18 @@ theme.taglist_shape_border_color_empty = "#00000000"
 
 -- NOTIFICATIONS
 theme.notification_position            = "bottom_right"
-theme.notification_bg                  = Helpers.color.LightenDarkenColor(theme.bg_normal, 6)
-theme.notification_fg                  = Helpers.color.LightenDarkenColor(theme.fg_normal, -15)
-theme.notification_font_title          = theme.font_text .. "Medium 11"
+theme.notification_bg                  = Helpers.color.ldColor(theme.bg_normal, 0)
+theme.notification_fg                  = Helpers.color.ldColor(theme.fg_normal, -15)
+theme.notification_font_title          = theme.font_text .. "Medium 10"
 theme.notification_font_message        = theme.font_text .. "Regular 10"
 theme.notification_font_appname        = theme.font_text .. "Medium 9.5"
 theme.notification_font_actions        = theme.font_text .. "Medium 9"
 theme.notification_icon_shape          = Helpers.shape.rrect(6) -- Gears.shape.circle
 theme.notification_spacing             = 10
 theme.notification_icon_height         = 48
-theme.notification_border_width        = 1
+theme.notification_border_width        = 0
 theme.notification_border_color        = theme.black_alt
-theme.notification_border_radius       = 0
+theme.notification_border_radius       = 10
 
 -- MENUBAR
 theme.menubar_fg_normal                = theme.fg_normal .. "bb"

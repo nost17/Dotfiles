@@ -67,7 +67,7 @@ end))
 Helpers.ui.add_hover(
 	quicksettings:get_children_by_id("background_role")[1],
 	Beautiful.widget_bg_alt,
-	nil,
+	Beautiful.foreground,
 	Beautiful.black
 )
 
@@ -93,7 +93,7 @@ end))
 Helpers.ui.add_hover(
 	clock,
 	Beautiful.widget_bg_alt,
-	nil,
+	Beautiful.foreground,
 	Beautiful.black
 )
 

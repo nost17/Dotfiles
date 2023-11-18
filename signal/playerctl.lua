@@ -13,5 +13,5 @@ end
 if not instance then
 	instance = new()
 end
-Awful.spawn.with_shell("killall playerctld ; sleep 2; playerctld daemon")
+-- Awful.spawn.with_shell("killall playerctld ; sleep 2; playerctld daemon")
 return instance

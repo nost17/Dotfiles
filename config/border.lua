@@ -60,7 +60,7 @@
 --         forced_width = 2,
 --         widget = Wibox.container.background
 --     }
---     -- Helpers.color.LightenDarkenColor(theme.blue, -25)
+--     -- Helpers.color.ldColor(theme.blue, -25)
 --     mytitlebar:setup {
 --         (pos == "bottom" or pos == "right") and color,
 --         nil,
