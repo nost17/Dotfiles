@@ -100,9 +100,9 @@ theme.bling_launcher_args              = {
   prompt_icon_font = theme.font_text .. "Medium 10",
   prompt_font = theme.font_text .. "Medium 11",
   prompt_color = theme.black,
-  prompt_text_color = theme.white .. "bb",
+  prompt_text_color = theme.foreground .. "bb",
   prompt_icon_color = theme.accent_color .. "DF",
-  prompt_cursor_color = theme.white .. "bb",
+  prompt_cursor_color = theme.foreground .. "bb",
   border_color = theme.black,
   border_width = 3,
 }
@@ -131,7 +131,7 @@ theme.tasklist_bg_color                = theme.transparent
 --[[ theme.tasklist_bg_focus                = Helpers.color.ldColor(theme.accent_color, 10) ]]
 theme.tasklist_bg_focus                = User.config.dark_mode and Helpers.color.ldColor(theme.widget_bg_alt, 7) or theme.widget_bg_alt
 theme.tasklist_indicator_focus         = theme.accent_color
-theme.tasklist_indicator_normal        = theme.white .. "22"
+theme.tasklist_indicator_normal        = theme.foreground .. "22"
 theme.taglist_icon_size                = 24
 
 -- TAGLIST
@@ -159,12 +159,13 @@ theme.notification_font_title          = theme.font_text .. "Medium 10"
 theme.notification_font_message        = theme.font_text .. "Regular 10"
 theme.notification_font_appname        = theme.font_text .. "Medium 9.5"
 theme.notification_font_actions        = theme.font_text .. "Medium 9"
+theme.notification_font_hour           = theme.font_text .. "Bold 8"
 theme.notification_icon_shape          = Helpers.shape.rrect(6) -- Gears.shape.circle
 theme.notification_spacing             = 10
 theme.notification_icon_height         = 48
 theme.notification_border_width        = 0
-theme.notification_border_color        = theme.black_alt
-theme.notification_border_radius       = 10
+theme.notification_border_color        = theme.black
+theme.notification_border_radius       = 8
 
 -- MENUBAR
 theme.menubar_fg_normal                = theme.fg_normal .. "bb"

@@ -20,14 +20,14 @@ local function changeTheme(mode)
 		autostart = true,
 		single_shot = true,
 		callback = function()
-      	awesome.restart()
+			awesome.restart()
 		end,
 	})
 end
 local function mkcontrol_btn(opts)
 	local w_icon = buttons.state({
 		text_off = opts.icon,
-    on_by_default = opts.on_by_default,
+		on_by_default = opts.on_by_default,
 		font = Beautiful.font_icon .. "13",
 		bg_normal = Beautiful.widget_bg_alt,
 		bg_hover = Helpers.color.LDColor(
@@ -64,12 +64,13 @@ local function mkcontrol_btn(opts)
 		},
 		childs_space = 8,
 		turn_on_fn = function(w)
-			if opts.on_fn and opts.on_by_default == false then
-				opts.on_fn()
+			if opts.on_by_default then
+				opts.on_by_default = false
+      else
+        opts.on_fn()
 			end
 			w:get_children_by_id("icon_label")[1]
 				:set_markup_silently(Helpers.text.colorize_text(opts.label, Beautiful.foreground_alt))
-      opts.on_by_default = false
 		end,
 		turn_off_fn = function(w)
 			if opts.off_fn then
@@ -117,7 +118,7 @@ local auto_music_notify = mkcontrol_btn({
 local dark_mode = mkcontrol_btn({
 	icon = "󰤄",
 	label = "Modo oscuro",
-  on_by_default = User.config.dark_mode,
+	on_by_default = User.config.dark_mode,
 	on_fn = function()
 		changeTheme(true)
 	end,

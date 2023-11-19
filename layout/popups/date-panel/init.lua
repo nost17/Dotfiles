@@ -9,7 +9,7 @@ local main = Wibox({
 	visible = false,
 	ontop = true,
 	border_width = 2,
-	border_color = Beautiful.black_alt,
+	border_color = Beautiful.black,
 })
 main.y = screen_height - main.height - 42 - screen_gap
 main.x = screen_width - main.width - screen_gap * 2 - 4

@@ -145,47 +145,42 @@ local function mknotification(n)
 		widget_template = {
 			{
 				{
+					n_appname,
 					{
-						n_appname,
 						{
 							{
 								{
 									{
-										{
-											show_image and n_image,
-											strategy = "max",
-											height = Beautiful.notification_icon_height,
-											widget = Wibox.container.constraint,
-										},
-										{
-											{
-												n_title,
-												n_message,
-												-- spacing = 2,
-												layout = Wibox.layout.fixed.vertical,
-											},
-											top = -2,
-											layout = Wibox.container.margin,
-										},
-										spacing = 6,
-										layout = Wibox.layout.fixed.horizontal,
+										show_image and n_image,
+										strategy = "max",
+										height = Beautiful.notification_icon_height,
+										widget = Wibox.container.constraint,
 									},
-									left = 2,
-									right = 2,
-									layout = Wibox.container.margin,
+									{
+										{
+											n_title,
+											n_message,
+											-- spacing = 2,
+											layout = Wibox.layout.fixed.vertical,
+										},
+										top = -2,
+										layout = Wibox.container.margin,
+									},
+									spacing = 6,
+									layout = Wibox.layout.fixed.horizontal,
 								},
-								(n.actions and #n.actions > 0) and actions,
-								spacing = 6,
-								layout = Wibox.layout.fixed.vertical,
+								left = 2,
+								right = 2,
+								layout = Wibox.container.margin,
 							},
-							layout = Wibox.container.margin,
+							(n.actions and #n.actions > 0) and actions,
+							spacing = 6,
+							layout = Wibox.layout.fixed.vertical,
 						},
-						spacing = 5,
-						layout = Wibox.layout.fixed.vertical,
+						layout = Wibox.container.margin,
 					},
-					-- shape = Helpers.shape.rrect(Beautiful.notification_border_radius),
-					bg = Beautiful.notification_bg,
-					widget = Wibox.container.background,
+					spacing = 5,
+					layout = Wibox.layout.fixed.vertical,
 				},
 				margins = 6,
 				widget = Wibox.container.margin,

@@ -32,6 +32,7 @@ local function mknotification(n)
 			n.app_name = Naughty.config.defaults.app_name
 		end
 	end
+	local app_icon_path = Helpers.misc.getIcon(n.app_name)
 	local n_title = Wibox.widget.textbox()
 	local n_message = Wibox.widget.textbox()
 	local n_image = Wibox.widget({
@@ -45,9 +46,7 @@ local function mknotification(n)
 	Helpers.text.set_markup(n_title, n.title, Beautiful.notification_fg, Beautiful.notification_font_title)
 	Helpers.text.set_markup(n_message, n.message, Beautiful.notification_fg, Beautiful.notification_font_message)
 	n_image:set_image(Gears.surface.load_silently(n.icon))
-	if type(n.icon) ~= "userdata" then
-		show_image = n.icon ~= Helpers.misc.getIcon(n.app_name)
-	end
+	local app_icon = mkimagew(app_icon_path, 16)
 	local app_name = Wibox.widget({
 		text = n.app_name:gsub("^%l", string.upper),
 		font = Beautiful.notification_font_appname,
@@ -55,97 +54,97 @@ local function mknotification(n)
 		valign = "center",
 		widget = Wibox.widget.textbox,
 	})
-	local app_icon = mkimagew(Helpers.misc.getIcon(n.app_name), 18)
+	if type(n.icon) ~= "userdata" then
+		show_image = n.icon ~= app_icon_path
+	end
 	local n_appname = Wibox.widget({
 		{
 			{
-				{
-					app_icon,
-					left = app_icon and 4 or 0,
-					bottom = 2,
-					widget = Wibox.container.margin,
-				},
-				{
-					app_name,
-					left = app_icon and 4 or 6,
-					bottom = 2,
-					right = 7,
-					widget = Wibox.container.margin,
-				},
+				app_icon,
+				app_name,
+				spacing = 6,
 				layout = Wibox.layout.fixed.horizontal,
 			},
-			bg = Beautiful.black_alt,
-			fg = Beautiful.fg_normal .. "CC",
-			shape = Helpers.shape.prrect(10, nil, nil, true, nil),
-			widget = Wibox.container.background,
-		},
-		nil,
-		{
+			nil,
 			{
 				{
 					markup = Helpers.text.colorize_text("<b>" .. os.date("%H:%M") .. "</b>", accent_color),
-					font = Beautiful.notification_font_appname,
+					font = Beautiful.notification_font_hour,
 					halign = "center",
 					valign = "center",
 					widget = Wibox.widget.textbox,
 				},
 				widget = Wibox.container.margin,
-				left = 7,
-				bottom = 2,
-				right = 4,
+				-- bottom = 2,
 			},
-			bg = Beautiful.black_alt,
-			fg = Beautiful.fg_normal .. "CC",
-			shape = Helpers.shape.prrect(10, nil, nil, nil, true),
-			widget = Wibox.container.background,
+			layout = Wibox.layout.align.horizontal,
 		},
-		forced_height = 22,
-		layout = Wibox.layout.align.horizontal,
+		left = 3,
+		widget = Wibox.container.margin,
 	})
 	return Wibox.widget({
 		{
 			{
 				{
-					n_appname,
+					{
+						n_appname,
+						top = 3,
+						bottom = 3,
+						left = 8,
+						right = 8,
+						widget = Wibox.container.margin,
+					},
+					bg = Beautiful.black,
+					widget = Wibox.container.background,
+				},
+				{
 					{
 						{
 							{
+								show_image and n_image,
+								strategy = "max",
+								height = 34,
+								widget = Wibox.container.constraint,
+							},
+							{
 								{
-									show_image and n_image,
-									strategy = "max",
-									height = 34,
-									widget = Wibox.container.constraint,
+									n_title,
+									n_message,
+									-- spacing = 2,
+									layout = Wibox.layout.fixed.vertical,
 								},
-								{
-									{
-										n_title,
-										n_message,
-										-- spacing = 2,
-										layout = Wibox.layout.fixed.vertical,
-									},
-									top = -2,
-									layout = Wibox.container.margin,
-								},
-								spacing = 6,
-								layout = Wibox.layout.fixed.horizontal,
+								top = -2,
+								layout = Wibox.container.margin,
 							},
 							spacing = 6,
-							layout = Wibox.layout.fixed.vertical,
+							layout = Wibox.layout.fixed.horizontal,
 						},
-						margins = 6,
+						left = 2,
+						right = 2,
 						layout = Wibox.container.margin,
 					},
-					layout = Wibox.layout.fixed.vertical,
+					left = 6,
+					right = 6,
+					bottom = 6,
+					top = 2,
+					layout = Wibox.container.margin,
 				},
-				shape = Helpers.shape.rrect(Beautiful.notification_border_radius),
-				bg = Beautiful.notification_bg,
-				widget = Wibox.container.background,
+				spacing = 5,
+				layout = Wibox.layout.fixed.vertical,
 			},
-			margins = 2,
+			margins = 0,
+			-- margins = {
+			-- 	top = 6,
+			-- 	bottom = 8,
+			-- 	right = 6,
+			-- 	left = 6,
+			-- },
 			widget = Wibox.container.margin,
 		},
 		shape = Helpers.shape.rrect(Beautiful.notification_border_radius),
-		bg = Beautiful.black_alt,
+		-- border_width = 2,
+		-- border_color = Beautiful.black,
+		bg = Beautiful.widget_bg_alt,
 		widget = Wibox.container.background,
 	})
 end
