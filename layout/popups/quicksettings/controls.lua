@@ -1,14 +1,48 @@
 local buttons = require("utils.button.text")
+local function changeTheme(mode)
+	local RC_FILE = Gears.filesystem.get_configuration_dir() .. "rc.lua"
+
+	-- Leer el contenido del archivo
+	local archivo = assert(io.open(RC_FILE, "r"))
+	local contenido = archivo:read("*all")
+	archivo:close()
+
+	-- Modificar la variable en el contenido
+	contenido = contenido:gsub("dark_mode%s*=%s" .. tostring(User.config.dark_mode), "dark_mode = " .. tostring(mode))
+
+	-- Escribir el contenido modificado de vuelta al archivo
+	archivo = assert(io.open(RC_FILE, "w"))
+	archivo:write(contenido)
+	archivo:close()
+	Gears.timer({
+		timeout = 0.5,
+		call_now = false,
+		autostart = true,
+		single_shot = true,
+		callback = function()
+      	awesome.restart()
+		end,
+	})
+end
 local function mkcontrol_btn(opts)
 	local w_icon = buttons.state({
 		text_off = opts.icon,
+    on_by_default = opts.on_by_default,
 		font = Beautiful.font_icon .. "13",
 		bg_normal = Beautiful.widget_bg_alt,
-		bg_hover = Helpers.color.LDColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
+		bg_hover = Helpers.color.LDColor(
+			Beautiful.color_method,
+			Beautiful.color_method_factor,
+			Beautiful.widget_bg_alt
+		),
 		bg_normal_on = Beautiful.accent_color,
-		fg_normal = Helpers.color.LDColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.accent_color),
+		fg_normal = Helpers.color.LDColor(
+			Beautiful.color_method,
+			Beautiful.color_method_factor,
+			Beautiful.accent_color
+		),
 		fg_normal_on = Beautiful.foreground_alt,
-    bg_hover_on = Helpers.color.LDColor("darken", 0.15, Beautiful.accent_color),
+		bg_hover_on = Helpers.color.LDColor("darken", 0.15, Beautiful.accent_color),
 		-- border_width = User.config.dark_mode and 0 or 1.25,
 		border_color = Beautiful.accent_color,
 		-- border_color_on = "#0b0c0c",
@@ -30,11 +64,12 @@ local function mkcontrol_btn(opts)
 		},
 		childs_space = 8,
 		turn_on_fn = function(w)
-			if opts.on_fn then
+			if opts.on_fn and opts.on_by_default == false then
 				opts.on_fn()
 			end
 			w:get_children_by_id("icon_label")[1]
 				:set_markup_silently(Helpers.text.colorize_text(opts.label, Beautiful.foreground_alt))
+      opts.on_by_default = false
 		end,
 		turn_off_fn = function(w)
 			if opts.off_fn then
@@ -79,6 +114,17 @@ local auto_music_notify = mkcontrol_btn({
 	end,
 })
 
+local dark_mode = mkcontrol_btn({
+	icon = "󰤄",
+	label = "Modo oscuro",
+  on_by_default = User.config.dark_mode,
+	on_fn = function()
+		changeTheme(true)
+	end,
+	off_fn = function()
+		changeTheme(false)
+	end,
+})
 return Wibox.widget({
 	{
 		mute_state,
@@ -88,6 +134,7 @@ return Wibox.widget({
 	},
 	{
 		auto_music_notify,
+		dark_mode,
 		spacing = 8,
 		layout = Wibox.layout.flex.horizontal,
 	},

@@ -187,8 +187,14 @@ local wdg = Wibox.widget({
   fill_space = true,
 	layout = Wibox.layout.fixed.horizontal,
 })
-playerctl:connect_signal("metadata", function(_, title, artist, album_path, _, _, _)
+local first_time = true
+playerctl:connect_signal("metadata", function(_, title, artist, album_path, _, _, player_name)
 	-- music_art:set_image(Gears.surface.load_uncached(album_path))
+  if first_time then
+    local status = Helpers.misc.getCmdOut("playerctl -p " .. player_name .. " status"):lower()
+    toggle_button:set_text(status == "playing" and "󰏤" or "󰐊")
+    first_time = false
+  end
 	music_art.cover_art = album_path == nil or album_path == "" and Beautiful.cover_art or album_path
 	music_title:set_text(title)
 	music_artist:set_text(artist)

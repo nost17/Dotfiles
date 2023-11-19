@@ -27,8 +27,8 @@ User.config = {
 	dark_mode = true,
 	dnd_state = false,
 	modkey = "Mod4",
-	theme = "onedark",
-	theme_accent = "yellow",
+	theme = "yoru",
+	theme_accent = "orange",
 }
 
 -- Desktop configuration

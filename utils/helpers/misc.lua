@@ -12,14 +12,13 @@ local function check(file_name)
 	end
 end
 
-function _module.getIcon(app, icon_fallback, fallback)
+function _module.getIcon(app, icon_fallback)
 	-- icon_fallback = icon_fallback or Beautiful.default_app_icon
-	local menubar_icon = menubar.utils.lookup_icon(app) or menubar.utils.lookup_icon(app:lower())
+	-- local menubar_icon = menubar.utils.lookup_icon(app) or menubar.utils.lookup_icon(app:lower())
 	return check(app)
 		or check(app:lower())
 		or icon_fallback and check(icon_fallback)
 		or icon_fallback and check(icon_fallback:lower())
-		or fallback
 end
 
 function _module.recolor_image(image, color)

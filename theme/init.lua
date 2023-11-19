@@ -1,10 +1,32 @@
 local theme = {}
 local themes_path = Gears.filesystem.get_configuration_dir() .. "theme/"
-if User.config.dark_mode then
-  theme = require("theme." .. User.config.theme .. ".dark")
-else
-  theme = require("theme." .. User.config.theme .. ".light")
+local function check(file)
+  file_path = themes_path:gsub("theme/", "") .. file:gsub("%.", "/") .. ".lua"
+  local f = io.open(file_path, "r")
+	if f ~= nil then
+		io.close(f)
+		return file
+	else
+		return false
+	end
 end
+local theme_light_path = "theme." .. User.config.theme .. ".light"
+local theme_dark_path = "theme." .. User.config.theme .. ".dark"
+
+theme.ToggleDarkMode = function ()
+  if User.config.dark_mode and check(theme_dark_path) then
+    theme = require(theme_dark_path)
+  else
+    if check(theme_light_path) then
+      theme = require(theme_light_path)
+      User.config.dark_mode = false
+    else
+      theme = require(theme_dark_path)
+      User.config.dark_mode = true
+    end
+  end
+end
+theme.ToggleDarkMode()
 
 -- OTHER
 theme.wallpaper                        = themes_path .. "/wallpapers/yoru.jpeg"

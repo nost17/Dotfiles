@@ -27,7 +27,7 @@ awesome.connect_signal("awesome::music:notify", function()
 		music_data.album_path = Beautiful.cover_art
 	end
 	music_notify = Helpers.misc.notify_dwim({
-		title = Helpers.text.colorize_text("<b>" .. music_data.title .. "</b>", Beautiful.blue),
+		title = Helpers.text.colorize_text("<b>" .. music_data.title .. "</b>", Beautiful.accent_color),
 		message = music_data.artist,
 		image = music_data.album_path,
 		app_name = music_data.player_name,
