@@ -1,7 +1,17 @@
 local scroller = require("layout.popups.date-panel.notification-center.notifbox-scroll")
 local builder = require("layout.popups.date-panel.notification-center.build-notify")
 local core = {}
-local empty_widget = Wibox.widget.textbox("Vacio")
+local empty_widget = Wibox.widget({
+	{
+		markup = Helpers.text.colorize_text("󰂛", Beautiful.accent_color),
+		font = Beautiful.font_icon .. "32",
+		widget = Wibox.widget.textbox,
+	},
+	halign = "center",
+	valign = "center",
+				content_fill_vertical = true,
+	layout = Wibox.container.place,
+})
 
 core.remove_empty_widget = true
 core.notifbox_layout = Wibox.layout.fixed.vertical()

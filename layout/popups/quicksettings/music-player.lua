@@ -3,7 +3,7 @@ local playerctl = require("signal.playerctl")
 local buttons = require("utils.button.text")
 -- local script_path = "python3 " .. Gears.filesystem.get_configuration_dir() .. "scripts/crop_images.py "
 local script_path = Gears.filesystem.get_configuration_dir() .. "scripts/crop_images.sh "
-local color = Helpers.color.ldColor(Beautiful.accent_color, User.config.dark_mode and 1 or -35)
+-- local color = Helpers.color.ldColor(Beautiful.accent_color, User.config.dark_mode and 1 or -35)
 local toggle_button = buttons.normal({
 	text = "󰐊",
 	expand = false,
@@ -24,7 +24,7 @@ local previous_button = buttons.normal({
 	text = "󰼨",
 	expand = false,
 	font = Beautiful.font_icon .. "14",
-	fg_normal = User.config.dark_mode and Beautiful.foreground or Beautiful.black,
+	fg_normal = Beautiful.gray,
 	bg_normal = Beautiful.transparent,
 	on_release = function()
 		playerctl:previous()
@@ -35,7 +35,7 @@ local next_button = buttons.normal({
 	text = "󰼧",
 	expand = false,
 	font = Beautiful.font_icon .. "14",
-	fg_normal = User.config.dark_mode and Beautiful.foreground or Beautiful.black,
+	fg_normal = Beautiful.gray,
 	bg_normal = Beautiful.transparent,
 	on_release = function()
 		playerctl:next()
@@ -53,7 +53,7 @@ local music_title = Helpers.text.mktext({
 local music_artist = Helpers.text.mktext({
 	text = "Artista",
 	-- color = Beautiful.fg_normal,
-	color = User.config.dark_mode and Beautiful.foreground or Beautiful.black,
+	color = Beautiful.gray,
 	bold = false,
 	font = Beautiful.font_text .. "Medium ",
 	size = 10,
@@ -188,10 +188,10 @@ local wdg = Wibox.widget({
 	layout = Wibox.layout.fixed.horizontal,
 })
 local first_time = true
-playerctl:connect_signal("metadata", function(_, title, artist, album_path, _, _, player_name)
+playerctl:connect_signal("metadata", function(_, title, artist, album_path, _, _, _)
 	-- music_art:set_image(Gears.surface.load_uncached(album_path))
   if first_time then
-    local status = Helpers.misc.getCmdOut("playerctl -p " .. player_name .. " status"):lower()
+    local status = Helpers.misc.getCmdOut("playerctl status"):lower()
     toggle_button:set_text(status == "playing" and "󰏤" or "󰐊")
     first_time = false
   end

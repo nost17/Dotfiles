@@ -119,7 +119,11 @@ local function mknotification(n)
 			create_callback = function(self, _, _, _)
 				Helpers.ui.add_hover(
 					self,
-					Beautiful.black,
+					Helpers.color.LDColor(
+            Beautiful.color_method,
+            Beautiful.color_method_factor,
+            Beautiful.widget_bg_alt
+          ),
 					Beautiful.fg_normal,
 					Beautiful.accent_color,
 					Beautiful.foreground_alt

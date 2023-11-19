@@ -3,7 +3,6 @@ return {
   background = "#282c34",
   foreground_alt = "#282c34",
   black = "#363B42",
-  black_alt = "#5c6370",
   red = "#e06c75",
   green = "#98c379",
   orange = "#d19a66",

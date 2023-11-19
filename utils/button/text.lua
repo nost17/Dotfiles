@@ -35,8 +35,8 @@ function _btn.state(opts)
 	opts.turn_on_fn = opts.turn_on_fn or nil
 	opts.turn_off_fn = opts.turn_off_fn or nil
 	opts.alt_fn = opts.alt_fn or nil
-	opts.other_child = opts.other_child
-	opts.childs_space = opts.childs_space
+	-- opts.other_child = opts.other_child
+	-- opts.childs_space = opts.childs_space
 	local text_widget = create_icon(opts.text_off, opts.fg_normal, opts.font)
 	Gears.table.crush(text_widget, _text, true)
 	if opts.other_child then
@@ -119,7 +119,16 @@ function _btn.normal(opts)
 	opts.text_id = opts.text_id or "text_role"
 	local text_widget = create_icon(opts.text, opts.fg_normal, opts.font, opts.text_id)
 	Gears.table.crush(text_widget, _text, true)
-	opts.child = text_widget
+  if opts.other_child then
+		opts.child = {
+			spacing = opts.childs_space,
+			layout = Wibox.layout.fixed.horizontal,
+			text_widget,
+			opts.other_child,
+		}
+	else
+		opts.child = text_widget
+	end
 	local widget = mkcontainer(opts)
 	widget:connect_signal("mouse::enter", function(self)
 		self:get_children_by_id("background_role")[1].bg = opts.bg_hover
