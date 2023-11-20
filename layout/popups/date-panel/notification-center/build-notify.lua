@@ -86,16 +86,11 @@ local function mknotification(n)
 		{
 			{
 				{
-					{
-						n_appname,
-						top = 3,
-						bottom = 3,
-						left = 8,
-						right = 8,
-						widget = Wibox.container.margin,
-					},
-					bg = Beautiful.black,
-					widget = Wibox.container.background,
+					n_appname,
+					top = 6,
+					left = 8,
+					right = 8,
+					widget = Wibox.container.margin,
 				},
 				{
 					{
@@ -126,10 +121,9 @@ local function mknotification(n)
 					left = 6,
 					right = 6,
 					bottom = 6,
-					top = 2,
 					layout = Wibox.container.margin,
 				},
-				spacing = 5,
+				spacing = 6,
 				layout = Wibox.layout.fixed.vertical,
 			},
 			margins = 0,
@@ -141,9 +135,9 @@ local function mknotification(n)
 			-- },
 			widget = Wibox.container.margin,
 		},
-		shape = Helpers.shape.rrect(Beautiful.notification_border_radius),
 		-- border_width = 2,
 		-- border_color = Beautiful.black,
+		shape = Helpers.shape.rrect(Beautiful.notification_border_radius),
 		bg = Beautiful.widget_bg_alt,
 		widget = Wibox.container.background,
 	})

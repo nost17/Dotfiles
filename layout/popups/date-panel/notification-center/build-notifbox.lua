@@ -3,13 +3,14 @@ local builder = require("layout.popups.date-panel.notification-center.build-noti
 local core = {}
 local empty_widget = Wibox.widget({
 	{
-		markup = Helpers.text.colorize_text("󰂛", Beautiful.accent_color),
+		markup = Helpers.text.colorize_text("󰂛", Beautiful.yellow),
+		halign = "center",
 		font = Beautiful.font_icon .. "32",
 		widget = Wibox.widget.textbox,
 	},
 	halign = "center",
 	valign = "center",
-				content_fill_vertical = true,
+	content_fill_vertical = true,
 	layout = Wibox.container.place,
 })
 
@@ -39,8 +40,12 @@ local function add_notify(n)
 	core.notifbox_layout:insert(1, notify)
 end
 core.reset()
-
+_G.notify_count = 0
+Naughty.connect_signal("count", function(n)
+	_G.notify_count = n and n or _G.notify_count + 1
+end)
 Naughty.connect_signal("request::display", function(n)
 	add_notify(n)
+	Naughty.emit_signal("count")
 end)
 return core

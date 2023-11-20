@@ -24,7 +24,7 @@ User.vars = {
 	editor = os.getenv("EDITOR") or "nano",
 }
 User.config = {
-	dark_mode = true,
+	dark_mode = false,
 	dnd_state = false,
 	modkey = "Mod4",
 	theme = "yoru",

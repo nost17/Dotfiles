@@ -126,6 +126,15 @@ local dark_mode = mkcontrol_btn({
 		changeTheme(false)
 	end,
 })
+
+awesome.connect_signal("system::volume", function (_, muted)
+  if muted then
+    mute_state:turn_on()
+  else
+    mute_state:turn_off()
+  end
+end)
+
 return Wibox.widget({
 	{
 		mute_state,
