@@ -33,7 +33,7 @@ local function mkimagew(image, size)
 				image = image,
 				halign = "center",
 				valign = "center",
-				clip_shape = Helpers.shape.rrect(3),
+				clip_shape = Helpers.shape.rrect(Dpi(3)),
 				widget = Wibox.widget.imagebox,
 			},
 			strategy = "exact",
@@ -54,7 +54,7 @@ local function mknotification(n)
 	local n_title = require("layout.notifications.title")(n)
 	local n_message = require("layout.notifications.message")(n)
 	local n_image = require("layout.notifications.image")(n)
-	local app_icon = mkimagew(app_icon_path, 16)
+	local app_icon = mkimagew(app_icon_path, Dpi(16))
 	local app_name = Wibox.widget({
 		text = n.app_name:gsub("^%l", string.upper),
 		font = Beautiful.notification_font_appname,
@@ -70,7 +70,7 @@ local function mknotification(n)
 			{
 				app_icon,
 				app_name,
-				spacing = 6,
+				spacing = Dpi(6),
 				layout = Wibox.layout.fixed.horizontal,
 			},
 			nil,
@@ -83,17 +83,17 @@ local function mknotification(n)
 					widget = Wibox.widget.textbox,
 				},
 				widget = Wibox.container.margin,
-				bottom = 2,
+				bottom = Dpi(2),
 			},
 			layout = Wibox.layout.align.horizontal,
 		},
-		left = 3,
+		left = Dpi(3),
 		widget = Wibox.container.margin,
 	})
 	local actions = Wibox.widget({
 		notification = n,
 		base_layout = Wibox.widget({
-			spacing = 4,
+			spacing = Dpi(4),
 			layout = Wibox.layout.flex.horizontal,
 		}),
 		widget_template = {
@@ -106,13 +106,13 @@ local function mknotification(n)
 						font = Beautiful.notification_font_actions,
 						widget = Wibox.widget.textbox,
 					},
-					left = 8,
-					right = 8,
+					left = Dpi(8),
+					right = Dpi(8),
 					widget = Wibox.container.margin,
 				},
 				widget = Wibox.container.place,
 			},
-			forced_height = 26,
+			forced_height = Dpi(26),
 			shape = Helpers.shape.rrect(Beautiful.radius),
 			-- forced_width = 70,
 			widget = Wibox.container.background,
@@ -144,8 +144,8 @@ local function mknotification(n)
 		bg = Beautiful.notification_bg,
 		-- filter = function(nn) return Naughty.list.notifications.filter.most_recent(nn, 3) end,
 		shape = Helpers.shape.rrect(Beautiful.notification_border_radius),
-		minimum_width = 280,
-		maximum_width = 480,
+		minimum_width = Dpi(280),
+		maximum_width = Dpi(480),
 		widget_template = {
 			{
 				{
@@ -167,26 +167,26 @@ local function mknotification(n)
 											-- spacing = 2,
 											layout = Wibox.layout.fixed.vertical,
 										},
-										top = -2,
+										top = Dpi(-2),
 										layout = Wibox.container.margin,
 									},
-									spacing = 6,
+									spacing = Dpi(6),
 									layout = Wibox.layout.fixed.horizontal,
 								},
-								left = 2,
-								right = 2,
+								left = Dpi(2),
+								right = Dpi(2),
 								layout = Wibox.container.margin,
 							},
 							(n.actions and #n.actions > 0) and actions,
-							spacing = 6,
+							spacing = Dpi(6),
 							layout = Wibox.layout.fixed.vertical,
 						},
 						layout = Wibox.container.margin,
 					},
-					spacing = 5,
+					spacing = Dpi(5),
 					layout = Wibox.layout.fixed.vertical,
 				},
-				margins = 6,
+				margins = Dpi(6),
 				widget = Wibox.container.margin,
 			},
 			-- shape = Helpers.shape.rrect(Beautiful.notification_border_radius),
@@ -215,4 +215,4 @@ Naughty.connect_signal("request::display", function(n)
 		mknotification(n)
 	end
 end)
-require("layout.notifications.playerctl")
+-- require("layout.notifications.playerctl")

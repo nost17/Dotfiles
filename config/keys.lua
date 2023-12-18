@@ -1,11 +1,11 @@
 local bling = require("utils.mods.bling")
-local freedesktop = require("utils.mods.freedesktop")
+-- local freedesktop = require("utils.mods.freedesktop")
 local app_launcher = bling.widget.app_launcher(Beautiful.bling_launcher_args)
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 menubar.left_label = ""
 menubar.right_label = ""
-local mymenu = freedesktop.menu.build()
+-- local mymenu = freedesktop.menu.build()
 -- menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 
 Awful.mouse.append_global_mousebindings({
@@ -20,7 +20,7 @@ Awful.keyboard.append_global_keybindings({
         awesome.emit_signal("awesome::quicksettings_panel", "toggle")
     end, { description = "mostrar panel de control", group = "awesome" }),
   Awful.key({ User.config.modkey, }, "w", function ()
-    mymenu:show()
+    -- mymenu:show()
     end, { description = "mostrar panel de control", group = "awesome" }),
     Awful.key({ User.config.modkey, }, "s", hotkeys_popup.show_help,
         { description = "show help", group = "awesome" }),

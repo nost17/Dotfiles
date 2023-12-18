@@ -15,7 +15,7 @@ local function mkimagew(image, size)
 				image = image,
 				halign = "center",
 				valign = "center",
-				clip_shape = Helpers.shape.rrect(3),
+				clip_shape = Helpers.shape.rrect(Dpi(3)),
 				widget = Wibox.widget.imagebox,
 			},
 			strategy = "exact",
@@ -46,7 +46,7 @@ local function mknotification(n)
 	Helpers.text.set_markup(n_title, n.title, Beautiful.notification_fg, Beautiful.notification_font_title)
 	Helpers.text.set_markup(n_message, n.message, Beautiful.notification_fg, Beautiful.notification_font_message)
 	n_image:set_image(Gears.surface.load_silently(n.icon))
-	local app_icon = mkimagew(app_icon_path, 16)
+	local app_icon = mkimagew(app_icon_path, Dpi(16))
 	local app_name = Wibox.widget({
 		text = n.app_name:gsub("^%l", string.upper),
 		font = Beautiful.notification_font_appname,
@@ -62,7 +62,7 @@ local function mknotification(n)
 			{
 				app_icon,
 				app_name,
-				spacing = 6,
+				spacing = Dpi(6),
 				layout = Wibox.layout.fixed.horizontal,
 			},
 			nil,
@@ -79,7 +79,7 @@ local function mknotification(n)
 			},
 			layout = Wibox.layout.align.horizontal,
 		},
-		left = 3,
+		left = Dpi(3),
 		widget = Wibox.container.margin,
 	})
 	return Wibox.widget({
@@ -87,9 +87,9 @@ local function mknotification(n)
 			{
 				{
 					n_appname,
-					top = 6,
-					left = 8,
-					right = 8,
+					top = Dpi(6),
+					left = Dpi(8),
+					right = Dpi(8),
 					widget = Wibox.container.margin,
 				},
 				{
@@ -98,7 +98,7 @@ local function mknotification(n)
 							{
 								show_image and n_image,
 								strategy = "max",
-								height = 34,
+								height = Dpi(34),
 								widget = Wibox.container.constraint,
 							},
 							{
@@ -108,22 +108,22 @@ local function mknotification(n)
 									-- spacing = 2,
 									layout = Wibox.layout.fixed.vertical,
 								},
-								top = -2,
+								top = Dpi(-2),
 								layout = Wibox.container.margin,
 							},
-							spacing = 6,
+							spacing = Dpi(6),
 							layout = Wibox.layout.fixed.horizontal,
 						},
-						left = 2,
-						right = 2,
+						left = Dpi(2),
+						right = Dpi(2),
 						layout = Wibox.container.margin,
 					},
-					left = 6,
-					right = 6,
-					bottom = 6,
+					left = Dpi(6),
+					right = Dpi(6),
+					bottom = Dpi(6),
 					layout = Wibox.container.margin,
 				},
-				spacing = 6,
+				spacing = Dpi(6),
 				layout = Wibox.layout.fixed.vertical,
 			},
 			margins = 0,

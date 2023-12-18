@@ -31,7 +31,7 @@ local tasklist = function(s)
 				Awful.client.focus.byidx(-1)
 			end),
 		},
-		layout = { spacing = 4, layout = Wibox.layout.fixed.horizontal },
+		layout = { spacing = Dpi(4), layout = Wibox.layout.fixed.horizontal },
 		widget_template = {
 			{
 				{
@@ -46,8 +46,8 @@ local tasklist = function(s)
 					width = Beautiful.taglist_icon_size,
 					widget = Wibox.container.constraint,
 				},
-				left = 6,
-				right = 6,
+				left = Dpi(6),
+				right = Dpi(6),
 				widget = Wibox.container.margin,
 			},
 			id = "background_role",

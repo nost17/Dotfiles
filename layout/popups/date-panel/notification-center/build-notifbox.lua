@@ -16,7 +16,7 @@ local empty_widget = Wibox.widget({
 
 core.remove_empty_widget = true
 core.notifbox_layout = Wibox.layout.fixed.vertical()
-core.notifbox_layout.spacing = 10
+core.notifbox_layout.spacing = Dpi(10)
 scroller(core.notifbox_layout)
 core.reset = function()
 	core.notifbox_layout:reset()

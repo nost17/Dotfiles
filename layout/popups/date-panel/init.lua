@@ -1,18 +1,18 @@
 local screen_height = screen.primary.geometry.height
 local screen_width = screen.primary.geometry.width
-local screen_gap = 4
+local screen_gap = Dpi(4)
 
 local main = Wibox({
-	height = screen_height - 42 - 4 - (screen_gap * 2),
-	width = 320,
+	height = screen_height - Dpi(42) - Dpi(4) - (screen_gap * 2),
+	width = Dpi(320),
 	bg = Beautiful.bg_normal,
 	visible = false,
 	ontop = true,
-	border_width = 2,
+	border_width = Dpi(2),
 	border_color = Beautiful.black,
 })
-main.y = screen_height - main.height - 42 - screen_gap
-main.x = screen_width - main.width - screen_gap * 2 - 4
+main.y = screen_height - main.height - Dpi(42) - screen_gap
+main.x = screen_width - main.width - screen_gap * 2 - Dpi(4)
 
 awesome.connect_signal("awesome::notification_center", function(action)
 	if action == "toggle" then
@@ -34,6 +34,6 @@ main:setup({
 		notification_center,
 		layout = Wibox.layout.fixed.vertical,
 	},
-	margins = 8,
+	margins = Dpi(8),
 	widget = Wibox.container.margin,
 })

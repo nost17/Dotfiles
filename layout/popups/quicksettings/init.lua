@@ -2,19 +2,19 @@ local screen_height = screen.primary.geometry.height
 local screen_width = screen.primary.geometry.width
 
 local main = Wibox({
-	height = 260,
-	width = 320,
+	height = Dpi(260),
+	width = Dpi(320),
 	bg = Beautiful.bg_normal,
 	visible = false,
 	ontop = true,
-	border_width = 2,
+	border_width = Dpi(2),
 	border_color = Beautiful.widget_bg_alt,
 })
-main.y = screen_height - main.height - 42
+main.y = screen_height - main.height - Dpi(42)
 main.x = screen_width - main.width - main.border_width - Beautiful.useless_gap * 2
 
 -- MUSIC PLAYER WDG
-local music = require("layout.popups.quicksettings.music-player")
+-- local music = require("layout.popups.quicksettings.music-player")
 -- SLIDERS WDG
 local slider_bars = require("layout.popups.quicksettings.sliders")
 -- QUICKSETTINGS CONTROL BUTTONS WDG
@@ -22,13 +22,13 @@ local controls = require("layout.popups.quicksettings.controls")
 -- QUICKSETTINGS SETUP
 main:setup({
 	{
-		music,
+--		music,
 		controls,
 		slider_bars,
-		spacing = 8,
+		spacing = Dpi(8),
 		layout = Wibox.layout.fixed.vertical,
 	},
-	margins = 8,
+	margins = Dpi(8),
 	widget = Wibox.container.margin,
 })
 

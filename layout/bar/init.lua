@@ -2,14 +2,14 @@ local screen_height = screen.primary.geometry.height
 local screen_width = screen.primary.geometry.width
 
 local main = Awful.wibar({
-	height = 34,
+	height = Dpi(34),
 	width = screen_width,
 	bg = Beautiful.bg_normal,
 	position = "bottom",
 	visible = true,
 	-- ontop = true,
 })
-local size = 20
+local size = Dpi(20)
 local app_launcher = Wibox.widget({
 	{
 		{
@@ -50,15 +50,15 @@ local quicksettings = Wibox.widget({
 				},
 				layout = Wibox.layout.fixed.horizontal,
 			},
-			left = 6,
-			right = 6,
+			left = Dpi(6),
+			right = Dpi(6),
 			widget = Wibox.container.margin,
 		},
 		id = "background_role",
 		widget = Wibox.container.background,
 	},
-	top = 4,
-	bottom = 4,
+	top = Dpi(4),
+	bottom = Dpi(4),
 	widget = Wibox.container.margin,
 })
 quicksettings:add_button(Awful.button({}, 1, function()
@@ -81,8 +81,8 @@ local clock = Wibox.widget({
 			font = Beautiful.widget_clock_font,
 			widget = Wibox.widget.textclock,
 		},
-		left = 8,
-		right = 8,
+		left = Dpi(8),
+		right = Dpi(8),
 		widget = Wibox.container.margin,
 	},
 	widget = Wibox.container.background,
@@ -108,14 +108,14 @@ main:setup({
 		{
 			app_launcher,
 			taglist,
-			spacing = 4,
+			spacing = Dpi(4),
 			layout = Wibox.layout.fixed.horizontal,
 		},
 		tasklist,
 		{
 			quicksettings,
 			clock,
-			spacing = 8,
+			spacing = Dpi(8),
 			layout = Wibox.layout.fixed.horizontal,
 		},
 		expand = "none",

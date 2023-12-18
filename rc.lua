@@ -7,6 +7,7 @@ Wibox = require("wibox")
 Beautiful = require("beautiful")
 Helpers = require("utils.helpers")
 Naughty = require("naughty")
+Dpi = Beautiful.xresources.apply_dpi
 
 -- Naughty error notification
 Naughty.connect_signal("request::display_error", function(message, startup)
@@ -19,10 +20,7 @@ end)
 
 -- User configuration
 User = {}
-User.vars = {
-	terminal = "kitty",
-	editor = os.getenv("EDITOR") or "nano",
-}
+
 User.config = {
 	dark_mode = false,
 	dnd_state = false,
@@ -31,6 +29,16 @@ User.config = {
 	theme_accent = "orange",
 }
 
+User.vars = {
+	terminal = "kitty",
+	editor = os.getenv("EDITOR") or "nano",
+}
+
+User.music_players = {
+	{ player = "auto", name = "Auto" },
+	{ player = "mpd", name = "Mpd" },
+	{ player = "firefox", name = "Firefox" },
+}
 -- Desktop configuration
 require("theme") -- Beautiful theme
 require("config") -- AwesomeWM configuration files

@@ -47,13 +47,13 @@ local function mkcontrol_btn(opts)
 		border_color = Beautiful.accent_color,
 		-- border_color_on = "#0b0c0c",
 		-- forced_height = 35,
-		shape = User.config.dark_mode and Helpers.shape.rrect(8) or Gears.shape.rounded_bar,
+		shape = User.config.dark_mode and Helpers.shape.rrect(Dpi(8)) or Gears.shape.rounded_bar,
 		halign = "left",
 		paddings = {
-			left = 12,
-			right = 8,
-			top = 8,
-			bottom = 8,
+			left = Dpi(12),
+			right = Dpi(8),
+			top = Dpi(8),
+			bottom = Dpi(8),
 		},
 		other_child = {
 			id = "icon_label",
@@ -62,7 +62,7 @@ local function mkcontrol_btn(opts)
 			halign = "left",
 			widget = Wibox.widget.textbox,
 		},
-		childs_space = 8,
+		childs_space = Dpi(8),
 		turn_on_fn = function(w)
 			if opts.on_by_default then
 				opts.on_by_default = false
@@ -139,15 +139,15 @@ return Wibox.widget({
 	{
 		mute_state,
 		dnd_state,
-		spacing = 8,
+		spacing = Dpi(8),
 		layout = Wibox.layout.flex.horizontal,
 	},
 	{
 		auto_music_notify,
 		dark_mode,
-		spacing = 8,
+		spacing = Dpi(8),
 		layout = Wibox.layout.flex.horizontal,
 	},
-	spacing = 8,
+	spacing = Dpi(8),
 	layout = Wibox.layout.flex.vertical,
 })

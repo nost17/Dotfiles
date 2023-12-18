@@ -34,19 +34,19 @@ theme.font_text                        = "Sofia Sans "
 theme.font_icon                        = "Material Design Icons Desktop "
 theme.font                             = theme.font_text .. "Regular 12"
 theme.widget_radius                    = 1
-theme.radius                           = 8
+theme.radius                           = Dpi(8)
 theme.default_app_icon                 = "access"
 theme.icon_theme                       = "Qogir-dark"
-theme.icon_theme_path                  = "/usr/share/icons/" .. theme.icon_theme .. "/scalable/apps/"
+theme.icon_theme_path                  = "/usr/local/share/icons/" .. theme.icon_theme .. "/scalable/apps/"
 theme.accent_color                     = theme[User.config.theme_accent or "blue"]
 theme.transparent                      = "#00000000"
 theme.color_method                     = User.config.dark_mode and "lighten" or "darken"
-theme.color_method_factor              = theme.color_method == "lighten" and 0.025 or 0.1
+theme.color_method_factor              = theme.color_method == "lighten" and 0.025 or 0.08
 
 --- MAIN
 theme.bg_normal                        = theme.background
 theme.fg_normal                        = theme.foreground
-theme.useless_gap                      = 4
+theme.useless_gap                      = Dpi(4)
 theme.gap_single_client                = false
 theme.awesome_icon                     = themes_path .. "images/awesome.png"
 theme.cover_art                        = themes_path .. "images/default_music_cover.jpeg"
@@ -69,7 +69,7 @@ theme.music_control_pos             = "left"
 -- TOOLTIP
 theme.tooltip_bg                       = theme.bg_normal
 theme.tooltip_fg                       = theme.fg_normal
-theme.tooltip_margins                  = 10
+theme.tooltip_margins                  = Dpi(10)
 
 -- BLING
 theme.bling_launcher_args              = {
@@ -77,23 +77,23 @@ theme.bling_launcher_args              = {
   apps_per_column = 1,
   background = theme.background,
   -- icon_size = 32,
-  apps_spacing = 6,
+  apps_spacing = Dpi(6),
   app_show_icon = false,
   app_name_halign = "left",
   app_shape = Helpers.shape.rrect(theme.widget_radius - 5),
-  apps_per_row = 6,
-  app_height = 35,
-  app_width = 260,
-  apps_margin = 10,
+  apps_per_row = Dpi(6),
+  app_height = Dpi(35),
+  app_width = Dpi(260),
+  apps_margin = Dpi(10),
   app_selected_color = theme.widget_bg_color,
   app_normal_color = theme.background,
   app_name_selected_color = theme.accent_color .. "EF",
   app_name_normal_color = theme.foreground .. "6F",
   app_name_font = theme.font_text .. "Regular 12",
-  prompt_height = 40,
+  prompt_height = Dpi(40),
   prompt_margins = 0,
   prompt_paddings = {
-    left = 20, right = 30,
+    left = Dpi(20), right = Dpi(30),
   },
   prompt_text = "",
   prompt_icon = ">", -- 󰍉
@@ -104,7 +104,7 @@ theme.bling_launcher_args              = {
   prompt_icon_color = theme.accent_color .. "DF",
   prompt_cursor_color = theme.foreground .. "bb",
   border_color = theme.black,
-  border_width = 3,
+  border_width = Dpi(3),
 }
 theme.GtkBling                         = require("utils.mods.bling.helpers.icon_theme")(theme.icon_theme)
 
@@ -132,12 +132,12 @@ theme.tasklist_bg_color                = theme.transparent
 theme.tasklist_bg_focus                = User.config.dark_mode and Helpers.color.ldColor(theme.widget_bg_alt, 7) or theme.widget_bg_alt
 theme.tasklist_indicator_focus         = theme.accent_color
 theme.tasklist_indicator_normal        = theme.foreground .. "22"
-theme.taglist_icon_size                = 24
+theme.taglist_icon_size                = Dpi(24)
 
 -- TAGLIST
 theme.taglist_shape                    = Helpers.shape.rrect(theme.widget_radius)
 theme.taglist_font                     = theme.font_text .. "Bold 12"
-theme.taglist_spacing                  = 12
+theme.taglist_spacing                  = Dpi(12)
 theme.taglist_shape_border_width       = 0
 theme.taglist_shape_border_color       = theme.background
 theme.taglist_bg_color                 = theme.bg_normal
@@ -161,11 +161,11 @@ theme.notification_font_appname        = theme.font_text .. "Medium 9.5"
 theme.notification_font_actions        = theme.font_text .. "Medium 9"
 theme.notification_font_hour           = theme.font_text .. "Bold 8"
 theme.notification_icon_shape          = Helpers.shape.rrect(6) -- Gears.shape.circle
-theme.notification_spacing             = 10
-theme.notification_icon_height         = 48
+theme.notification_spacing             = Dpi(10)
+theme.notification_icon_height         = Dpi(48)
 theme.notification_border_width        = 0
 theme.notification_border_color        = theme.black
-theme.notification_border_radius       = 8
+theme.notification_border_radius       = Dpi(8)
 
 -- MENUBAR
 theme.menubar_fg_normal                = theme.fg_normal .. "bb"
