@@ -39,7 +39,7 @@ local function new(args)
       markup(
         tb,
         n.message,
-        Beautiful.notification_fg,
+        Helpers.color.LDColor(User.config.dark_mode and "darken" or "lighten", 0.12, Beautiful.notification_fg),
         Beautiful.notification_font_message
       )
     end

@@ -32,10 +32,17 @@ local main = Wibox.widget({
 	{
 		{
 			{
-				markup = Helpers.text.colorize_text("󰂚", Beautiful.yellow),
-				halign = "center",
-				font = Beautiful.font_icon .. "12",
-				widget = Wibox.widget.textbox,
+				{
+					image = Beautiful.notification_icon,
+					halign = "center",
+					valign = "center",
+					-- clip_shape = Helpers.shape.rrect(Dpi(3)),
+					widget = Wibox.widget.imagebox,
+				},
+				strategy = "exact",
+				height = Dpi(18),
+				width = Dpi(18),
+				widget = Wibox.container.constraint,
 			},
 			notify_count,
 			spacing = Dpi(3),
@@ -53,7 +60,7 @@ local main = Wibox.widget({
 	},
 	notifications_layout,
 	spacing = Dpi(8),
-  -- fill_space = true,
+	-- fill_space = true,
 	layout = Wibox.layout.fixed.vertical,
 })
 return main

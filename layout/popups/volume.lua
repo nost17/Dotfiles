@@ -23,12 +23,12 @@ local volume_bar = Wibox.widget({
 })
 local wdg = Wibox({
 	bg = Beautiful.bg_normal,
-	width = 130,
-	height = 130,
+	width = Dpi(130),
+	height = Dpi(130),
 	visible = false,
 	ontop = true,
 	screen = screen.primary,
-	border_width = 3,
+	border_width = Dpi(3),
 	border_color = Beautiful.widget_bg_alt,
 })
 wdg.x = (screen_width / 2) - (wdg.width / 2)
@@ -44,7 +44,7 @@ local wdg_timer = Gears.timer({
 wdg:setup({
 	{
 		volume_bar,
-		margins = 15,
+		margins = Dpi(15),
 		widget = Wibox.container.margin,
 	},
 	layout = Wibox.container.place,

@@ -14,7 +14,7 @@ main.y = screen_height - main.height - Dpi(42)
 main.x = screen_width - main.width - main.border_width - Beautiful.useless_gap * 2
 
 -- MUSIC PLAYER WDG
--- local music = require("layout.popups.quicksettings.music-player")
+local music = require("layout.popups.quicksettings.music-player")
 -- SLIDERS WDG
 local slider_bars = require("layout.popups.quicksettings.sliders")
 -- QUICKSETTINGS CONTROL BUTTONS WDG
@@ -22,7 +22,7 @@ local controls = require("layout.popups.quicksettings.controls")
 -- QUICKSETTINGS SETUP
 main:setup({
 	{
---		music,
+	music,
 		controls,
 		slider_bars,
 		spacing = Dpi(8),

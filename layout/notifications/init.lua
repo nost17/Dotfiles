@@ -45,7 +45,7 @@ end
 local function mknotification(n)
 	local accent_color = colors[n.urgency]
 	local show_image = true
-	local app_icon_path = Helpers.misc.getIcon(n.app_name)
+	local app_icon_path = Helpers.misc.getIcon(n.app_name, nil, Beautiful.notification_icon)
 	for _, def_name in pairs(list_names) do
 		if n.app_name == def_name then
 			n.app_name = Naughty.config.defaults.app_name
@@ -54,13 +54,17 @@ local function mknotification(n)
 	local n_title = require("layout.notifications.title")(n)
 	local n_message = require("layout.notifications.message")(n)
 	local n_image = require("layout.notifications.image")(n)
-	local app_icon = mkimagew(app_icon_path, Dpi(16))
+	local app_icon = mkimagew(app_icon_path, Dpi(18))
 	local app_name = Wibox.widget({
-		text = n.app_name:gsub("^%l", string.upper),
-		font = Beautiful.notification_font_appname,
-		halign = "center",
-		valign = "center",
-		widget = Wibox.widget.textbox,
+		{
+			text = n.app_name:gsub("^%l", string.upper),
+			font = Beautiful.notification_font_appname,
+			halign = "center",
+			valign = "center",
+			widget = Wibox.widget.textbox,
+		},
+		fg = Helpers.color.LDColor(User.config.dark_mode and "darken" or "lighten", 0.12, Beautiful.notification_fg),
+		widget = Wibox.container.background,
 	})
 	if type(n.icon) ~= "userdata" then
 		show_image = n.icon ~= app_icon_path
@@ -70,7 +74,7 @@ local function mknotification(n)
 			{
 				app_icon,
 				app_name,
-				spacing = Dpi(6),
+				spacing = Dpi(4),
 				layout = Wibox.layout.fixed.horizontal,
 			},
 			nil,
@@ -87,6 +91,8 @@ local function mknotification(n)
 			},
 			layout = Wibox.layout.align.horizontal,
 		},
+    bottom = Dpi(3),
+    top = Dpi(3),
 		left = Dpi(3),
 		widget = Wibox.container.margin,
 	})
@@ -120,10 +126,10 @@ local function mknotification(n)
 				Helpers.ui.add_hover(
 					self,
 					Helpers.color.LDColor(
-            Beautiful.color_method,
-            Beautiful.color_method_factor,
-            Beautiful.widget_bg_alt
-          ),
+						Beautiful.color_method,
+						Beautiful.color_method_factor,
+						Beautiful.widget_bg_alt
+					),
 					Beautiful.fg_normal,
 					Beautiful.accent_color,
 					Beautiful.foreground_alt

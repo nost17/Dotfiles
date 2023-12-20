@@ -35,12 +35,16 @@ User.vars = {
 }
 
 User.music_players = {
-	{ player = "auto", name = "Auto" },
-	{ player = "mpd", name = "Mpd" },
-	{ player = "firefox", name = "Firefox" },
+	{ player = "auto", name = "Auto", icon = "󰖟"},
+	{ player = "mpd", name = "Local", icon = "󰋎" },
+	{ player = "firefox", name = "Firefox", icon = "󰈹" },
 }
+User.current_player = User.music_players[1]
+Playerctl = require("signal.playerctl")()
+
 -- Desktop configuration
 require("theme") -- Beautiful theme
 require("config") -- AwesomeWM configuration files
 require("signal") -- Awesome signal files
 require("layout") -- UI configuration files
+

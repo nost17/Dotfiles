@@ -36,6 +36,7 @@ local function add_notify(n)
 		else
 			core.notifbox_layout:remove_widgets(notify, true)
 		end
+		Naughty.emit_signal("count", _G.notify_count - 1)
 	end))
 	core.notifbox_layout:insert(1, notify)
 end
@@ -46,6 +47,6 @@ Naughty.connect_signal("count", function(n)
 end)
 Naughty.connect_signal("request::display", function(n)
 	add_notify(n)
-	Naughty.emit_signal("count")
+	Naughty.emit_signal("count", #core.notifbox_layout.children)
 end)
 return core

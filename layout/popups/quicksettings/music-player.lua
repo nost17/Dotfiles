@@ -1,24 +1,21 @@
 -- PLAYERCTL WDG
-local playerctl = require("signal.playerctl")
 local buttons = require("utils.button.text")
 -- local script_path = "python3 " .. Gears.filesystem.get_configuration_dir() .. "scripts/crop_images.py "
 local script_path = Gears.filesystem.get_configuration_dir() .. "scripts/crop_images.sh "
--- local color = Helpers.color.ldColor(Beautiful.accent_color, User.config.dark_mode and 1 or -35)
 local toggle_button = buttons.normal({
 	text = "󰐊",
 	expand = false,
 	font = Beautiful.font_icon .. "12",
 	fg_normal = User.config.dark_mode and Beautiful.foreground_alt or Beautiful.foreground,
-	-- bg_normal = Helpers.color.ldColor(Beautiful.blue, -10),
 	bg_normal = Beautiful.accent_color,
 	bg_hover = Helpers.color.ldColor(Beautiful.accent_color, 20),
-	shape = Helpers.shape.rrect(8),
-	paddings = { left = 1 },
+	shape = Helpers.shape.rrect(Dpi(8)),
+	paddings = { left = Dpi(1) },
 	on_release = function()
-		playerctl:play_pause()
+		Playerctl:play_pause()
 	end,
-	forced_height = 28,
-	forced_width = 27,
+	forced_height = Dpi(28),
+	forced_width = Dpi(27),
 })
 local previous_button = buttons.normal({
 	text = "󰼨",
@@ -27,9 +24,9 @@ local previous_button = buttons.normal({
 	fg_normal = Beautiful.gray,
 	bg_normal = Beautiful.transparent,
 	on_release = function()
-		playerctl:previous()
+		Playerctl:previous()
 	end,
-	forced_height = 20,
+	forced_height = Dpi(20),
 })
 local next_button = buttons.normal({
 	text = "󰼧",
@@ -38,9 +35,42 @@ local next_button = buttons.normal({
 	fg_normal = Beautiful.gray,
 	bg_normal = Beautiful.transparent,
 	on_release = function()
-		playerctl:next()
+		Playerctl:next()
 	end,
-	forced_height = 20,
+	forced_height = Dpi(20),
+})
+local player_label = Wibox.widget({
+	text = User.current_player.name,
+	font = Beautiful.font_text .. "11",
+	halign = "center",
+  valign = "center",
+	widget = Wibox.widget.textbox,
+})
+local player_button = buttons.normal({
+	text = User.current_player.icon,
+	expand = false,
+	font = Beautiful.font_icon .. "13",
+	fg_normal = Beautiful.accent_color,
+	bg_normal = Beautiful.transparent,
+	paddings = {
+		left = Dpi(3),
+		right = Dpi(3),
+	},
+	child_pos = "right",
+	childs_space = Dpi(4),
+	other_child = {
+    {
+      player_label,
+      top = 2,
+      widget = Wibox.container.margin,
+    },
+    fg = Beautiful.gray,
+    widget = Wibox.container.background
+  },
+	on_release = function()
+		Playerctl:new_player()
+	end,
+	forced_height = Dpi(20),
 })
 local music_title = Helpers.text.mktext({
 	text = "Titulo",
@@ -71,52 +101,26 @@ local music_art = Wibox.widget({
 		end)
 	end,
 })
-music_art.cover_art = Beautiful.cover_art
-
-local positionbar = Wibox.widget({
-	forced_height = 2,
-	color = Beautiful.blue,
-	background_color = Beautiful.black,
-	widget = Wibox.widget.progressbar,
-})
-local volume_bar = Wibox.widget({
-	color = Helpers.color.LDColor("darken", 0.2, Beautiful.accent_color),
-	background_color = Beautiful.widget_bg_alt,
-	handle_color = Beautiful.red,
-	value = 100,
-	max_value = 100,
-	border_width = 0,
-	shape = Gears.shape.rounded_bar,
-	bar_shape = Gears.shape.rounded_bar,
-	-- paddings = {
-	-- 	right = 10,
-	-- },
-	widget = Wibox.widget.progressbar,
-})
+music_art.cover_art = Beautiful.music_cover_default
 
 local media_controls = Wibox.widget({
 	{
 		{
 			{
 				toggle_button,
-				Helpers.ui.horizontal_pad(3),
+				Helpers.ui.horizontal_pad(Dpi(3)),
 				previous_button,
 				next_button,
-				spacing = 2,
+				spacing = Dpi(2),
 				layout = Wibox.layout.fixed.horizontal,
 			},
-			{
-				positionbar,
-				visible = false,
-				forced_height = positionbar.forced_height,
-				layout = Wibox.container.place,
-			},
-			spacing = 4,
-			layout = Wibox.layout.fixed.horizontal,
+			halign = Beautiful.music_control_pos,
+			valign = "center",
+			layout = Wibox.container.place,
 		},
-		halign = Beautiful.music_control_pos,
-		valign = "center",
-		layout = Wibox.container.place,
+		nil,
+		player_button,
+		layout = Wibox.layout.align.horizontal,
 	},
 	-- left = -3,
 	widget = Wibox.container.margin,
@@ -124,118 +128,67 @@ local media_controls = Wibox.widget({
 local wdg = Wibox.widget({
 	{
 		{
-			volume_bar,
-			direction = "east",
-			widget = Wibox.container.rotate,
+			music_art,
+			halign = "center",
+			valign = "center",
+			content_fill_vertical = true,
+			content_fill_horizontal = true,
+			layout = Wibox.container.place,
 		},
-		forced_width = 5,
-		forced_height = 100,
-		layout = Wibox.container.place,
-	},
-	{
 		{
-			{
-				music_art,
-				halign = "center",
-				valign = "center",
-				content_fill_vertical = true,
-				content_fill_horizontal = true,
-				layout = Wibox.container.place,
-			},
-			{
-				bg = User.config.dark_mode and Beautiful.bg_normal .. "dF" or Beautiful.foreground .. "cF",
-				widget = Wibox.container.background,
-			},
+			bg = User.config.dark_mode and Beautiful.bg_normal .. "aF" or Beautiful.foreground .. "aF",
+			widget = Wibox.container.background,
+		},
+		{
 			{
 				{
 					{
 						{
-							{
-								music_title,
-								music_artist,
-								layout = Wibox.layout.fixed.vertical,
-							},
-							halign = Beautiful.music_metadata_pos,
-							valign = "top",
-							layout = Wibox.container.place,
+							music_title,
+							music_artist,
+							layout = Wibox.layout.fixed.vertical,
 						},
-						left = 2,
-						right = 5,
-						widget = Wibox.container.margin,
+						halign = Beautiful.music_metadata_pos,
+						valign = "top",
+						layout = Wibox.container.place,
 					},
-					nil,
-					media_controls,
-					layout = Wibox.layout.align.vertical,
+					left = Dpi(2),
+					right = Dpi(2),
+					widget = Wibox.container.margin,
 				},
-				margins = {
-					left = 6,
-					right = 5,
-					top = 5,
-					bottom = 5,
-				},
-				widget = Wibox.container.margin,
+				nil,
+				media_controls,
+				layout = Wibox.layout.align.vertical,
 			},
-			forced_height = 100,
-			layout = Wibox.layout.stack,
+			margins = Dpi(7),
+			widget = Wibox.container.margin,
 		},
-		shape = Helpers.shape.rrect(Beautiful.radius + 2),
-		bg = Beautiful.transparent,
-		widget = Wibox.container.background,
+		forced_height = Dpi(100),
+		layout = Wibox.layout.stack,
 	},
-	spacing = 4,
-	-- expand = false,
-	fill_space = true,
-	layout = Wibox.layout.fixed.horizontal,
+	shape = Helpers.shape.rrect(Beautiful.radius + 2),
+	bg = Beautiful.transparent,
+	widget = Wibox.container.background,
 })
-local first_time = true
-playerctl:connect_signal("metadata", function(_, title, artist, album_path, _, _, _)
+
+Playerctl:connect_signal("new_player", function(_)
+	player_button:set_text(User.current_player.icon)
+  player_label:set_text(User.current_player.name)
+end)
+
+Playerctl:connect_signal("metadata", function(_, title, artist, _, album_art, _)
 	-- music_art:set_image(Gears.surface.load_uncached(album_path))
-	if first_time then
-		local status = Helpers.misc.getCmdOut("playerctl status"):lower()
-		toggle_button:set_text(status == "playing" and "󰏤" or "󰐊")
-		first_time = false
-	end
-	music_art.cover_art = album_path == nil or album_path == "" and Beautiful.cover_art or album_path
+	music_art.cover_art = album_art == nil or album_art == "" and Beautiful.music_cover_default or album_art
 	music_title:set_text(title)
 	music_artist:set_text(artist)
 end)
 
-playerctl:connect_signal("position", function(_, a, b, _)
-	positionbar.value = a
-	positionbar.max_value = b
-end)
-
-playerctl:connect_signal("playback_status", function(_, playing, _)
+Playerctl:connect_signal("status", function(_, playing)
 	if playing then
 		toggle_button:set_text("󰏤")
 	else
 		toggle_button:set_text("󰐊")
 	end
 end)
-local function set_slider_value(_, volume)
-	volume_bar.value = volume and volume * 100 or 100
-end
---
-playerctl:connect_signal("volume", set_slider_value)
---
-volume_bar:connect_signal("button::press", function()
-	playerctl:disconnect_signal("volume", set_slider_value)
-end)
---
-volume_bar:connect_signal("button::release", function()
-	playerctl:connect_signal("volume", set_slider_value)
-end)
--- volume_bar:connect_signal("property::value", function(_, new_value)
--- 	Awful.spawn.with_shell("playerctl volume " .. tostring(new_value / 100):gsub(",","."))
--- end)
-volume_bar:buttons(Gears.table.join(
-	-- Scroll - Increase or decrease volume
-	Awful.button({}, 4, function()
-		Awful.spawn.with_shell("playerctl volume 0.05+")
-	end),
-	Awful.button({}, 5, function()
-		Awful.spawn.with_shell("playerctl volume 0.05-")
-	end)
-))
 
 return wdg

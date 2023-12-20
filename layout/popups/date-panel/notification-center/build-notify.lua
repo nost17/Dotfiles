@@ -32,7 +32,7 @@ local function mknotification(n)
 			n.app_name = Naughty.config.defaults.app_name
 		end
 	end
-	local app_icon_path = Helpers.misc.getIcon(n.app_name)
+	local app_icon_path = Helpers.misc.getIcon(n.app_name, nil, Beautiful.notification_icon)
 	local n_title = Wibox.widget.textbox()
 	local n_message = Wibox.widget.textbox()
 	local n_image = Wibox.widget({
@@ -62,7 +62,7 @@ local function mknotification(n)
 			{
 				app_icon,
 				app_name,
-				spacing = Dpi(6),
+				spacing = Dpi(4),
 				layout = Wibox.layout.fixed.horizontal,
 			},
 			nil,
@@ -79,6 +79,8 @@ local function mknotification(n)
 			},
 			layout = Wibox.layout.align.horizontal,
 		},
+    bottom = Dpi(3),
+    top = Dpi(3),
 		left = Dpi(3),
 		widget = Wibox.container.margin,
 	})

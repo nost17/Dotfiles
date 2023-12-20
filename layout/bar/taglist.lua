@@ -38,14 +38,14 @@ local function taglist(s)
 					{
 						{
 							id = "indicator",
-							forced_height = 2,
-							forced_width = 10,
+							forced_height = Dpi(2),
+							forced_width = Dpi(10),
 							widget = Wibox.container.background,
 						},
 						valign = "bottom",
 						layout = Wibox.container.place,
 					},
-					bottom = 4,
+					bottom = Dpi(4),
 					widget = Wibox.container.margin,
 				},
 				layout = Wibox.layout.stack,
@@ -64,8 +64,8 @@ local function taglist(s)
 	})
 	local wdg = Wibox.widget({
 		mytaglist,
-		left = 8,
-		right = 8,
+		left = Dpi(8),
+		right = Dpi(8),
 		-- top = 3,
 		widget = Wibox.container.margin,
 	})
