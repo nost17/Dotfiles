@@ -107,11 +107,12 @@ local dnd_state = mkcontrol_btn({
 local auto_music_notify = mkcontrol_btn({
 	icon = "󰎇",
 	label = "Musica (aviso)",
+  on_by_default = User.config.music_notify,
 	on_fn = function()
-		User.config.auto_music_notify = true
+		User.config.music_notify = true
 	end,
 	off_fn = function()
-		User.config.auto_music_notify = false
+		User.config.music_notify = false
 	end,
 })
 

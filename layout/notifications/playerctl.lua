@@ -1,20 +1,19 @@
 local music_notify
+local old_metadata = {}
 local firs_time = true
-local music_data = {}
-local playerctl = require("signal.playerctl")
 local next_button = Naughty.action({ name = "Siguiente" })
 local prev_button = Naughty.action({ name = "Anterior" })
 local toggle_button = Naughty.action({ name = "" })
 next_button:connect_signal("invoked", function()
-	playerctl:next()
+	Playerctl:next()
 end)
 toggle_button:connect_signal("invoked", function()
-	playerctl:play_pause()
+	Playerctl:play_pause()
 end)
 prev_button:connect_signal("invoked", function()
-	playerctl:previous()
+	Playerctl:previous()
 end)
-playerctl:connect_signal("playback_status", function(_, playing)
+Playerctl:connect_signal("status", function(_, playing)
 	if playing then
 		toggle_button.name = "Pausar"
 	else
@@ -22,42 +21,30 @@ playerctl:connect_signal("playback_status", function(_, playing)
 	end
 end)
 -- message = Helpers.text.colorize_text("<u>" .. music_data.artist .. "</u>", Beautiful.cyan_alt),
-awesome.connect_signal("awesome::music:notify", function()
-	if music_data.album_path == "" or music_data.album_path == nil then
-		music_data.album_path = Beautiful.cover_art
-	end
+function Playerctl:notify()
 	music_notify = Helpers.misc.notify_dwim({
-		title = Helpers.text.colorize_text("<b>" .. music_data.title .. "</b>", Beautiful.accent_color),
-		message = music_data.artist,
-		image = music_data.album_path,
-		app_name = music_data.player_name,
+		title = Helpers.text.colorize_text("<b>" .. self._private.prev_metadata.title .. "</b>", Beautiful.accent_color),
+		message = self._private.prev_metadata.artist,
+		image = self._private.prev_metadata.cover_art,
+		app_name = 'Música',
 		actions = { prev_button, toggle_button, next_button },
+    bg = Beautiful.red,
 	}, music_notify)
-end)
-playerctl:connect_signal("metadata", function(_, title, artist, album_path, _, _, player_name)
+end
+Playerctl:connect_signal("metadata", function(_, title, _, _, _, _)
 	if firs_time then
 		firs_time = false
-		Gears.table.crush(music_data, {
-			title = title,
-			artist = artist,
-			album_path = album_path,
-			player_name = player_name,
-		})
+		old_title = title
 	else
 		if
-			title ~= music_data.title
-			or music_data.album_path == nil
-			or music_data.album_path == ""
-			or music_data.album_path == Beautiful.cover_art
+			title ~= old_title
+			or Playerctl._private.prev_metadata.cover_art == nil
+			or Playerctl._private.prev_metadata.cover_art == ""
+			or Playerctl._private.prev_metadata.cover_art == Beautiful.cover_art
 		then
-			Gears.table.crush(music_data, {
-				title = title,
-				artist = artist,
-				album_path = album_path,
-				player_name = player_name,
-			})
-			if User.config.auto_music_notify then
-				awesome.emit_signal("awesome::music:notify")
+      old_title = title
+			if User.config.music_notify then
+        Playerctl:notify()
 			end
 		end
 	end

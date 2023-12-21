@@ -22,11 +22,12 @@ end)
 User = {}
 
 User.config = {
-	dark_mode = false,
+	dark_mode = true,
 	dnd_state = false,
+  music_notify = true,
 	modkey = "Mod4",
 	theme = "yoru",
-	theme_accent = "orange",
+	theme_accent = "blue",
 }
 
 User.vars = {
@@ -35,9 +36,9 @@ User.vars = {
 }
 
 User.music_players = {
-	{ player = "auto", name = "Auto", icon = "󰖟"},
 	{ player = "mpd", name = "Local", icon = "󰋎" },
 	{ player = "firefox", name = "Firefox", icon = "󰈹" },
+	{ player = "auto", name = "Auto", icon = "󰖟" },
 }
 User.current_player = User.music_players[1]
 Playerctl = require("signal.playerctl")()
@@ -47,4 +48,3 @@ require("theme") -- Beautiful theme
 require("config") -- AwesomeWM configuration files
 require("signal") -- Awesome signal files
 require("layout") -- UI configuration files
-

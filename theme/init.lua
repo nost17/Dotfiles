@@ -41,7 +41,7 @@ theme.icon_theme_path                  = "/usr/local/share/icons/" .. theme.icon
 theme.accent_color                     = theme[User.config.theme_accent or "blue"]
 theme.transparent                      = "#00000000"
 theme.color_method                     = User.config.dark_mode and "lighten" or "darken"
-theme.color_method_factor              = theme.color_method == "lighten" and 0.025 or 0.08
+theme.color_method_factor              = theme.color_method == "lighten" and 0.05 or 0.08
 
 --- MAIN
 theme.bg_normal                        = theme.background
@@ -65,6 +65,8 @@ theme.bg_systray                       = theme.widget_bg_color
 theme.music_metadata_pos               = "left"
 theme.music_control_pos                = "left"
 theme.music_cover_default              = themes_path .. "images/default_music_cover.jpeg"
+theme.main_panel_pos                   = "top"
+theme.main_panel_size                  = Dpi(42)
 
 -- TOOLTIP
 theme.tooltip_bg                       = theme.bg_normal
@@ -152,9 +154,9 @@ theme.taglist_fg_empty                 = theme.black
 theme.taglist_shape_border_color_empty = "#00000000"
 
 -- NOTIFICATIONS
-theme.notification_position            = "bottom_right"
+theme.notification_position            = "top_middle"
 theme.notification_icon                = themes_path .. "images/notification.png"
-theme.notification_bg                  = Helpers.color.ldColor(theme.bg_normal, 0)
+theme.notification_bg                  = Helpers.color.LDColor(theme.color_method, theme.color_method_factor * 0.75, theme.bg_normal)
 theme.notification_fg                  = Helpers.color.ldColor(theme.fg_normal, -15)
 theme.notification_font_title          = theme.font_text .. "SemiBold 11"
 theme.notification_font_message        = theme.font_text .. "Medium 10"
@@ -167,6 +169,7 @@ theme.notification_icon_height         = Dpi(48)
 theme.notification_border_width        = 0
 theme.notification_border_color        = theme.black
 theme.notification_border_radius       = Dpi(6)
+theme.notification_padding             = Dpi(8)
 
 -- MENUBAR
 theme.menubar_fg_normal                = theme.fg_normal .. "bb"

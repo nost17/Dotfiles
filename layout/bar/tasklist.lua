@@ -1,6 +1,9 @@
 -- local icons =
 local create_task = function(self, c, _, _)
 	self:get_children_by_id("icon_client")[1].image = Beautiful.GtkBling:get_client_icon_path(c)
+  if c.minimized then
+		self:get_children_by_id("icon_client")[1].opacity = 0.2
+  end
 end
 local update_task = function(self, c, _, _)
 	if c.minimized then

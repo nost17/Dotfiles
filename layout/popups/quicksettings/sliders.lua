@@ -3,7 +3,11 @@ local color = Helpers.color.ldColor(Beautiful.accent_color, User.config.dark_mod
 local volume_bar = Wibox.widget({
 	bar_height = Dpi(6),
 	bar_active_color = color,
-	bar_color = Beautiful.black,
+	bar_color = Helpers.color.LDColor(
+    Beautiful.color_method,
+    Beautiful.color_method_factor,
+    Beautiful.widget_bg_alt
+  ),
 	minimun = 0,
 	maximun = 100,
 	handle_color = color,

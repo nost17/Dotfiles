@@ -1,5 +1,5 @@
 Naughty.config.defaults = {
-	position = "top_right",
+	position = Beautiful.notification_position,
 	timeout = 6,
 	app_name = "AwesomeWM",
 }
@@ -176,7 +176,7 @@ local function mknotification(n)
 										top = Dpi(-2),
 										layout = Wibox.container.margin,
 									},
-									spacing = Dpi(6),
+									spacing = Dpi(8),
 									layout = Wibox.layout.fixed.horizontal,
 								},
 								left = Dpi(2),
@@ -192,7 +192,7 @@ local function mknotification(n)
 					spacing = Dpi(5),
 					layout = Wibox.layout.fixed.vertical,
 				},
-				margins = Dpi(6),
+				margins = Beautiful.notification_padding,
 				widget = Wibox.container.margin,
 			},
 			-- shape = Helpers.shape.rrect(Beautiful.notification_border_radius),
@@ -221,4 +221,4 @@ Naughty.connect_signal("request::display", function(n)
 		mknotification(n)
 	end
 end)
--- require("layout.notifications.playerctl")
+require("layout.notifications.playerctl")

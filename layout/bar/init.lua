@@ -2,10 +2,10 @@ local screen_height = screen.primary.geometry.height
 local screen_width = screen.primary.geometry.width
 
 local main = Awful.wibar({
-	height = Dpi(34),
+	height = Dpi(36),
 	width = screen_width,
 	bg = Beautiful.bg_normal,
-	position = "bottom",
+	position = "top",
 	visible = true,
 	-- ontop = true,
 })
