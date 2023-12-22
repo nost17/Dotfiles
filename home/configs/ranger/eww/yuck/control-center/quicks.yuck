@@ -1,0 +1,30 @@
+( defvar USER_ICON "./assets/user_icon.jpeg" )
+( defvar USER_NAME "iNova" )
+( defvar HOST_NAME "@Bspwm" )
+( defvar MENU_EXTRA_VISIBLE false )
+; ( defvar MENU_CONTENT '{ "options": [{ "icon":"ﶸ", "action":"alacritty" }, { "icon":"ﵘ", "action":"kitty" }, { "icon": "ﳴ", "action": "thunar" }]}')
+( defwidget mkbtn [ icon action status name ]
+    (box :orientation "h" :space-evenly true :halign "center" :class "icon-qs ${name} ${status}"
+      ( button :valign "center" :onclick action :timeout "0.5s"  icon)
+      (box :orientation "h" :space-evenly false :halign "center" :class "icon-qs sep ${status}")
+      ( button :valign "center" "" )
+    )
+)
+;  ﲧ ﬂ
+( defwidget profile []
+  ( box :class "profile-box" :orientation "v" :hexpand true
+    ( box :orientation "v" :class "profile-image"
+      ( box :orientation "v" :valign "end" :class "profile-info" :spacing -8
+        ( box :hexpand true :halign 'end' :class "profile-info user" "${USER_NAME}"  )
+        ( box :hexpand true :halign 'end' :class "profile-info info" "${HOST_NAME}"  ))
+    )
+  ))
+( defwidget quicksettings []
+  ( box :orientation "h" :class "quicksettings-box" :valign "center"
+    :spacing 10 :space-evenly true
+      ( mkbtn :icon "﹨" :action "kitty" :status "disable" :name "Wifi" )
+      ( mkbtn :icon "﬎" :action "kitty" :status "enable" :name "Bluetooth" )
+      ( mkbtn :icon "" :action "alacritty" :status "disable" :name "Silencio" )
+      ( mkbtn :icon "ﲷ" :action "alacritty" :status "disable" :name "Luz nocturna")
+  )
+)

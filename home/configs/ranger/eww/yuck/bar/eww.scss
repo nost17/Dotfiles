@@ -1,0 +1,27 @@
+@import "../../themes/onedark.scss";
+.bar-main {
+  border-radius: 0.65em;
+  // border: 2px solid $surface-strong;
+  background-color: $surface-moderate;
+  color: $fg;
+  padding: 0 0.4em;
+  &.icon {
+    border-radius: 0.4em;
+    font-size: 22pt;
+    color: $bg;
+    font-weight: 600;
+    padding: 0 0.3em;
+    margin: 0.25em 0;
+    &.launcher {
+      background-color: $magenta;
+    }
+    &.panel {
+      background-color: $red;
+    }
+  }
+}
+.bar-main .music {
+  font-size: 16pt;
+  color: $white;
+  &.artist { color: $yellow; font-style: italic; }
+}

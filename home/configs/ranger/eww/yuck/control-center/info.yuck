@@ -1,0 +1,31 @@
+(defpoll TIME :interval "30s" "date +'%R'")
+(defwidget battery-info []
+  (box :orientation "h" :space-evenly false :halign "start" :spacing 6
+    (label :class "info battery icon-charging" :text {"${EWW_BATTERY.BAT0.status}" == 'Charging' ? "ﲹ" : ""})
+    (label :class "info battery icon" :text { EWW_BATTERY.BAT0.capacity < 10 ? "﫶" :
+      EWW_BATTERY.BAT0.capacity < 25 ? "﫹" :
+      EWW_BATTERY.BAT0.capacity < 50 ? "﫺" :
+      EWW_BATTERY.BAT0.capacity < 75 ? "﫸" :
+    EWW_BATTERY.BAT0.capacity < 95 ? "﫷" : "﫻"} :valign "center")
+    (label :class "info battery label" :text "${EWW_BATTERY.BAT0.capacity}%" :valign "center")
+  )
+)
+(defwidget weather-info []
+  (box :orientation "h" :space-evenly false :halign "center" :spacing 5
+    (label :text "ﮊ" :halign "center")
+    (label :text "38 °C")
+  )
+)
+(defwidget date-info []
+  (box :orientation "h" :space-evenly false :halign "end" :spacing 5
+    (label :text "${TIME}" :class "info time")
+    (label :text "" :class "info time icon")
+  )
+)
+(defwidget info-minimal []
+  (box :orientation "h" :space-evenly true :class "info box"
+    (battery-info)
+    (weather-info)
+    (date-info)
+  )
+)

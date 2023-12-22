@@ -1,0 +1,22 @@
+(defpoll BS_VALUE :interval "2s" "xbacklight -get")
+(defpoll VOL_VALUE :interval "2s" "pamixer --get-volume")
+(defwidget mkbar [ name value action icon ]
+  (box :orientation "h" :space-evenly false :spacing 12
+    (label :text icon :class "bar ${name} icon")
+    (scale
+      :min 1
+      :max 101
+      :hexpand true
+      :value value
+      :orientation "h"
+      :onchange action
+      :class "bar ${name}"
+    )
+  )
+)
+(defwidget system-bars []
+  (box :orientation "vertical" :class "system-box" :spacing WIDGET_SPACE :space-evenly true
+    (mkbar :name "bright" :value BS_VALUE :action "xbacklight -set {}" :icon "")
+    (mkbar :name "volume" :value VOL_VALUE :action "pamixer --set-volume {}" :icon "")
+  )
+)

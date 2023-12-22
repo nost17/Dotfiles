@@ -1,0 +1,33 @@
+(include "../vars.yuck")
+(defwidget launcher []
+  (box :orientation "h" :space-evenly false :spacing 7
+    (button :class "bar-main icon launcher" :onclick "scripts/launch.sh alacritty" "󰍉" )
+    (button :class "bar-main icon panel" :onclick "kitty" "󰗘" )
+  )
+)
+(defwidget bar-music []
+  (box :orientation "v" :class "bar-main" :spacing -2 :space-evenly false :valign "center" :halign "center"
+  (label :class "bar-main music title" :text "${MUSIC_DATA.title}" :halign "start" :valign "center" :wrap false :limit-width 34)
+  (label :class "bar-main music artist" :text "${MUSIC_DATA.artist}" :halign "start" :limit-width 30)
+  )  
+)
+(defwidget bar []
+  (box :orientation "h" :class "bar-main" :space-evenly false
+    (launcher)
+    (bar-music)
+  )  
+)
+(defwindow main-bar
+  :monitor 0
+  :geometry (
+    geometry :x "10px"
+    :y "10px"
+    :width "1900px"
+    :height "60px"
+    :anchor "top left")
+  :stacking "fg"
+  :windowtype "dock"
+  :wm-ignore false
+  :reserve (struts :distance "75px" :side "top")
+  (bar)
+)

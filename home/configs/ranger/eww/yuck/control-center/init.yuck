@@ -1,0 +1,16 @@
+(defvar WIDGET_SPACE 15 )
+(include "./yuck/control-center/bars.yuck")
+(include "./yuck/control-center/monitors.yuck")
+(include "./yuck/control-center/quicks.yuck")
+(include "./yuck/control-center/music.yuck")
+(include "./yuck/control-center/info.yuck")
+(defwidget widgets[]
+  (box :orientation "vertical" :class "box-main" :spacing WIDGET_SPACE
+    :halign "fill" :valign "start" :space-evenly false
+    (monitors)
+    (quicksettings)
+    (system-bars)
+    (music-control)
+    (info-minimal)
+  )
+)
