@@ -2,13 +2,7 @@ local theme = {}
 local themes_path = Gears.filesystem.get_configuration_dir() .. "theme/"
 local function check(file)
   file_path = themes_path:gsub("theme/", "") .. file:gsub("%.", "/") .. ".lua"
-  local f = io.open(file_path, "r")
-	if f ~= nil then
-		io.close(f)
-		return file
-	else
-		return false
-	end
+  return Helpers.misc.checkFile(file_path)
 end
 local theme_light_path = "theme." .. User.config.theme .. ".light"
 local theme_dark_path = "theme." .. User.config.theme .. ".dark"
@@ -61,7 +55,7 @@ theme.widget_bg_color                  = theme.bg_normal
 theme.widget_bg_alt                    = Helpers.color.LDColor(theme.color_method, theme.color_method_factor, theme.bg_normal)
 theme.widget_clock_font                = theme.font_text .. 'Medium 11'
 theme.layouts_icons_color              = Helpers.color.ldColor(theme.fg_normal, -30)
-theme.bg_systray                       = theme.widget_bg_color
+theme.bg_systray                       = theme.widget_bg_alt
 theme.music_metadata_pos               = "left"
 theme.music_control_pos                = "left"
 theme.music_cover_default              = themes_path .. "images/default_music_cover.jpeg"
@@ -84,9 +78,9 @@ theme.bling_launcher_args              = {
   app_name_halign = "left",
   app_shape = Helpers.shape.rrect(theme.widget_radius - 5),
   apps_per_row = Dpi(6),
-  app_height = Dpi(35),
+  app_height = Dpi(24),
   app_width = Dpi(260),
-  apps_margin = Dpi(10),
+  apps_margin = Dpi(6),
   app_selected_color = theme.widget_bg_color,
   app_normal_color = theme.background,
   app_name_selected_color = theme.accent_color .. "EF",
@@ -164,7 +158,7 @@ theme.notification_font_appname        = theme.font_text .. "Bold 10"
 theme.notification_font_actions        = theme.font_text .. "Medium 9"
 theme.notification_font_hour           = theme.font_text .. "Bold 10"
 theme.notification_icon_shape          = Helpers.shape.rrect(6) -- Gears.shape.circle
-theme.notification_spacing             = Dpi(10)
+theme.notification_spacing             = Dpi(6)
 theme.notification_icon_height         = Dpi(48)
 theme.notification_border_width        = 0
 theme.notification_border_color        = theme.black

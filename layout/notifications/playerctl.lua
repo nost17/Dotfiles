@@ -1,6 +1,6 @@
 local music_notify
-local old_metadata = {}
 local firs_time = true
+local colorize_text = Helpers.text.colorize_text
 local next_button = Naughty.action({ name = "Siguiente" })
 local prev_button = Naughty.action({ name = "Anterior" })
 local toggle_button = Naughty.action({ name = "" })
@@ -23,12 +23,19 @@ end)
 -- message = Helpers.text.colorize_text("<u>" .. music_data.artist .. "</u>", Beautiful.cyan_alt),
 function Playerctl:notify()
 	music_notify = Helpers.misc.notify_dwim({
-		title = Helpers.text.colorize_text("<b>" .. self._private.prev_metadata.title .. "</b>", Beautiful.accent_color),
-		message = self._private.prev_metadata.artist,
+		title = colorize_text("<b>" .. self._private.prev_metadata.title .. "</b>", Beautiful.accent_color),
+		message = "<u>"
+			.. self._private.prev_metadata.artist
+			.. "</u>"
+			.. "\n"
+			.. "<i>"
+			.. self._private.prev_metadata.album
+			-- .. self._private.prev_metadata.album:lower():gsub("^%l", string.upper)
+			.. "</i>",
 		image = self._private.prev_metadata.cover_art,
-		app_name = 'Música',
+		app_name = "Música",
 		actions = { prev_button, toggle_button, next_button },
-    bg = Beautiful.red,
+		bg = Beautiful.red,
 	}, music_notify)
 end
 Playerctl:connect_signal("metadata", function(_, title, _, _, _, _)
@@ -42,9 +49,9 @@ Playerctl:connect_signal("metadata", function(_, title, _, _, _, _)
 			or Playerctl._private.prev_metadata.cover_art == ""
 			or Playerctl._private.prev_metadata.cover_art == Beautiful.cover_art
 		then
-      old_title = title
+			old_title = title
 			if User.config.music_notify then
-        Playerctl:notify()
+				Playerctl:notify()
 			end
 		end
 	end

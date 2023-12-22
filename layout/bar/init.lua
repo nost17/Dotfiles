@@ -36,11 +36,23 @@ app_launcher:add_button(Awful.button({}, 1, function()
 	require("utils.mods.bling").widget.app_launcher(Beautiful.bling_launcher_args):toggle()
 end))
 
--- SETTINGS PANEL WIDGET
+-- BATTERY WIDGET
+local battery = require("layout.bar.battery")
+
+-- QUICKSETTINGS PANEL WIDGET
 local quicksettings = Wibox.widget({
 	{
 		{
 			{
+				{
+					{
+						base_size = 24,
+						widget = Wibox.widget.systray,
+					},
+					valign = "center",
+					layout = Wibox.container.place,
+				},
+				battery,
 				{
 					text = "󰒓",
 					font = Beautiful.font_icon .. "11",
@@ -48,6 +60,7 @@ local quicksettings = Wibox.widget({
 					valign = "center",
 					widget = Wibox.widget.textbox,
 				},
+				spacing = Dpi(6),
 				layout = Wibox.layout.fixed.horizontal,
 			},
 			left = Dpi(6),
@@ -55,6 +68,7 @@ local quicksettings = Wibox.widget({
 			widget = Wibox.container.margin,
 		},
 		id = "background_role",
+		shape = Helpers.shape.rrect(Beautiful.radius),
 		widget = Wibox.container.background,
 	},
 	top = Dpi(4),
@@ -68,7 +82,7 @@ Helpers.ui.add_hover(
 	quicksettings:get_children_by_id("background_role")[1],
 	Beautiful.widget_bg_alt,
 	Beautiful.foreground,
-	Beautiful.black
+	Helpers.color.LDColor(Beautiful.color_method, Beautiful.color_method_factor * 1.4, Beautiful.widget_bg_alt)
 )
 
 -- CLOCK WIDGET
@@ -90,12 +104,7 @@ local clock = Wibox.widget({
 clock:add_button(Awful.button({}, 1, function()
 	awesome.emit_signal("awesome::notification_center", "toggle")
 end))
-Helpers.ui.add_hover(
-	clock,
-	Beautiful.widget_bg_alt,
-	Beautiful.foreground,
-	Beautiful.black
-)
+Helpers.ui.add_hover(clock, Beautiful.widget_bg_alt, Beautiful.foreground, Beautiful.black)
 
 -- TAGLIST WIDGET
 local taglist = require("layout.bar.taglist")(screen.primary)

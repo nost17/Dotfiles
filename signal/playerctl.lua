@@ -49,14 +49,6 @@ function playerctl:next(player)
 	end
 end
 
-function playerctl:geti()
-	Naughty.notify({
-		title = Helpers.text.colorize_text("<b>" .. self._private.prev_metadata.title .. "</b>", Beautiful.blue),
-		message = "<i>" .. self._private.prev_metadata.album .. "</i>" .. "\n" .. self._private.prev_metadata.artist,
-		image = self._private.prev_metadata.cover_art,
-	})
-end
-
 local function emit_metadata(self)
 	Awful.spawn.easy_async_with_shell(self._private.metadata_cmd, function(stdout)
 		local artist = stdout:match("^ARTIST@(.*)@TITLE")
@@ -109,7 +101,7 @@ local function init_metadata_signal(self)
 		.. "' | grep -v grep | awk '{print $1}' | xargs kill"
 	Awful.spawn.easy_async_with_shell(kill_script, function(_)
 		Awful.spawn.with_line_callback(self._private.metadata_cmd .. " -F", {
-			stdout = function(std)
+			stdout = function()
 				Gears.timer({
 					timeout = User.current_player.player == "firefox" and 0.25 or 0.10,
 					call_now = false,

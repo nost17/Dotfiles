@@ -1,24 +1,25 @@
 local _module = {}
 local menubar = require("menubar")
 
-local function check(file_name)
-	file = Beautiful.icon_theme_path .. file_name .. ".svg"
-	local f = io.open(file, "r")
+function _module.checkFile(file_path)
+	local f = io.open(file_path, "r")
 	if f ~= nil then
 		io.close(f)
-		return file
+		return file_path
 	else
 		return false
 	end
 end
 
 function _module.getIcon(app, icon_fallback, fallback)
+  app_path = _module.checkFile(Beautiful.icon_theme_path .. app .. ".svg")
+  app_path_alt = _module.checkFile(Beautiful.icon_theme_path .. app:lower() .. ".svg")
 	-- icon_fallback = icon_fallback or Beautiful.default_app_icon
 	-- local menubar_icon = menubar.utils.lookup_icon(app) or menubar.utils.lookup_icon(app:lower())
-	return check(app)
-		or check(app:lower())
-		or icon_fallback and check(icon_fallback)
-		or icon_fallback and check(icon_fallback:lower())
+	return app_path
+		or app_path_alt
+		or icon_fallback and _module.checkFile(icon_fallback)
+		or icon_fallback and _module.checkFile(icon_fallback:lower())
     or fallback and fallback
 end
 
