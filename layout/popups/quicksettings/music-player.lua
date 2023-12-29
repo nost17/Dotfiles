@@ -22,28 +22,34 @@ local previous_button = buttons.normal({
 	expand = false,
 	font = Beautiful.font_icon .. "14",
 	fg_normal = Beautiful.gray,
-	bg_normal = Beautiful.transparent,
+	bg_normal = Beautiful.gray .. "1F",
+	bg_hover = Beautiful.gray .. "2F",
 	on_release = function()
 		Playerctl:previous()
 	end,
-	forced_height = Dpi(20),
+	paddings = { left = 4 },
+	forced_height = Dpi(28),
+	forced_width = Dpi(28),
 })
 local next_button = buttons.normal({
 	text = "󰼧",
 	expand = false,
 	font = Beautiful.font_icon .. "14",
 	fg_normal = Beautiful.gray,
-	bg_normal = Beautiful.transparent,
+	bg_normal = Beautiful.gray .. "1F",
+	bg_hover = Beautiful.gray .. "2F",
 	on_release = function()
 		Playerctl:next()
 	end,
-	forced_height = Dpi(20),
+	paddings = { right = 4 },
+	forced_height = Dpi(28),
+	forced_width = Dpi(28),
 })
 local player_label = Wibox.widget({
 	text = User.current_player.name,
 	font = Beautiful.font_text .. "11",
 	halign = "center",
-  valign = "center",
+	valign = "center",
 	widget = Wibox.widget.textbox,
 })
 local player_button = buttons.normal({
@@ -51,33 +57,35 @@ local player_button = buttons.normal({
 	expand = false,
 	font = Beautiful.font_icon .. "13",
 	fg_normal = Beautiful.accent_color,
-	bg_normal = Beautiful.transparent,
+	bg_normal = Beautiful.gray .. "1F",
+  bg_hover = Beautiful.gray .. "3F",
+  shape = Gears.shape.rounded_bar,
 	paddings = {
-		left = Dpi(3),
-		right = Dpi(3),
+		left = Dpi(6),
+		right = Dpi(6),
 	},
 	child_pos = "right",
 	childs_space = Dpi(4),
 	other_child = {
-    {
-      player_label,
-      top = 2,
-      widget = Wibox.container.margin,
-    },
-    fg = Beautiful.gray,
-    widget = Wibox.container.background
-  },
+		{
+			player_label,
+			top = 2,
+			widget = Wibox.container.margin,
+		},
+		fg = Beautiful.gray,
+		widget = Wibox.container.background,
+	},
 	on_release = function()
 		Playerctl:new_player()
 	end,
-	forced_height = Dpi(20),
+	forced_height = Dpi(28),
 })
 local music_title = Helpers.text.mktext({
 	text = "Titulo",
 	color = Beautiful.accent_color,
 	bold = true,
 	font = Beautiful.font_text,
-	size = 11,
+	size = Beautiful.music_title_font_size or 11,
 	halign = Beautiful.music_metadata_halign,
 })
 local music_artist = Helpers.text.mktext({
@@ -86,7 +94,7 @@ local music_artist = Helpers.text.mktext({
 	color = Beautiful.gray,
 	bold = false,
 	font = Beautiful.font_text .. "Medium ",
-	size = 10,
+	size = Beautiful.music_artist_font_size or 10,
 	halign = Beautiful.music_metadata_halign,
 })
 local music_art = Wibox.widget({
@@ -109,8 +117,29 @@ local media_controls = Wibox.widget({
 			{
 				toggle_button,
 				Helpers.ui.horizontal_pad(Dpi(3)),
-				previous_button,
-				next_button,
+				{
+					{
+						{
+							previous_button,
+							next_button,
+							layout = Wibox.layout.fixed.horizontal,
+						},
+						{
+							{
+								forced_width = 2,
+								forced_height = Dpi(20),
+								bg = Beautiful.gray .. "5F",
+								widget = Wibox.container.background,
+							},
+							halign = "center",
+							valign = "center",
+							layout = Wibox.container.place,
+						},
+						layout = Wibox.layout.stack,
+					},
+					shape = Gears.shape.rounded_bar,
+					widget = Wibox.container.background,
+				},
 				spacing = Dpi(2),
 				layout = Wibox.layout.fixed.horizontal,
 			},
@@ -136,7 +165,8 @@ local wdg = Wibox.widget({
 			layout = Wibox.container.place,
 		},
 		{
-			bg = User.config.dark_mode and Beautiful.bg_normal .. "aF" or Beautiful.foreground .. "aF",
+			bg = User.config.dark_mode and Beautiful.bg_normal .. "cF" or Beautiful.foreground .. "cF",
+      -- bg = "#181818CF",
 			widget = Wibox.container.background,
 		},
 		{
@@ -173,7 +203,7 @@ local wdg = Wibox.widget({
 
 Playerctl:connect_signal("new_player", function(_)
 	player_button:set_text(User.current_player.icon)
-  player_label:set_text(User.current_player.name)
+	player_label:set_text(User.current_player.name)
 end)
 
 Playerctl:connect_signal("metadata", function(_, title, artist, _, album_art, _)

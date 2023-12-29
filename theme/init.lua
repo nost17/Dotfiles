@@ -30,8 +30,8 @@ theme.font                             = theme.font_text .. "Regular 12"
 theme.widget_radius                    = 1
 theme.radius                           = Dpi(8)
 theme.default_app_icon                 = "access"
-theme.icon_theme                       = "Qogir-dark"
-theme.icon_theme_path                  = "/usr/local/share/icons/" .. theme.icon_theme .. "/scalable/apps/"
+-- theme.icon_theme                       = "ePapirus-Dark"
+-- theme.icon_theme_path                  = "/usr/share/icons/" .. theme.icon_theme .. "/48x48/apps/"
 theme.accent_color                     = theme[User.config.theme_accent or "blue"]
 theme.transparent                      = "#00000000"
 theme.color_method                     = User.config.dark_mode and "lighten" or "darken"
@@ -56,11 +56,15 @@ theme.widget_bg_alt                    = Helpers.color.LDColor(theme.color_metho
 theme.widget_clock_font                = theme.font_text .. 'Medium 11'
 theme.layouts_icons_color              = Helpers.color.ldColor(theme.fg_normal, -30)
 theme.bg_systray                       = theme.widget_bg_alt
+theme.main_panel_pos                   = "top"
+theme.main_panel_size                  = Dpi(42)
+
+-- MUSIC CONTROL WIDGET
 theme.music_metadata_pos               = "left"
 theme.music_control_pos                = "left"
 theme.music_cover_default              = themes_path .. "images/default_music_cover.jpeg"
-theme.main_panel_pos                   = "top"
-theme.main_panel_size                  = Dpi(42)
+theme.music_title_font_size            = 12
+theme.music_artist_font_size           = 11
 
 -- TOOLTIP
 theme.tooltip_bg                       = theme.bg_normal
@@ -152,10 +156,10 @@ theme.notification_position            = "top_middle"
 theme.notification_icon                = themes_path .. "images/notification.png"
 theme.notification_bg                  = Helpers.color.LDColor(theme.color_method, theme.color_method_factor * 0.75, theme.bg_normal)
 theme.notification_fg                  = Helpers.color.ldColor(theme.fg_normal, -15)
-theme.notification_font_title          = theme.font_text .. "SemiBold 11"
-theme.notification_font_message        = theme.font_text .. "Medium 10"
-theme.notification_font_appname        = theme.font_text .. "Bold 10"
-theme.notification_font_actions        = theme.font_text .. "Medium 9"
+theme.notification_font_title          = theme.font_text .. "SemiBold 12"
+theme.notification_font_message        = theme.font_text .. "Medium 11"
+theme.notification_font_appname        = theme.font_text .. "Bold 11"
+theme.notification_font_actions        = theme.font_text .. "Medium 10"
 theme.notification_font_hour           = theme.font_text .. "Bold 10"
 theme.notification_icon_shape          = Helpers.shape.rrect(6) -- Gears.shape.circle
 theme.notification_spacing             = Dpi(6)

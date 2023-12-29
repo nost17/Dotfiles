@@ -22,12 +22,12 @@ end)
 User = {}
 
 User.config = {
-	dark_mode = true,
+	dark_mode = false,
 	dnd_state = false,
-  music_notify = true,
+	music_notify = true,
 	modkey = "Mod4",
-	theme = "nymph",
-	theme_accent = "blue",
+	theme = "onedark",
+	theme_accent = "yellow",
 }
 
 User.vars = {
@@ -37,7 +37,8 @@ User.vars = {
 
 User.music_players = {
 	{ player = "mpd", name = "Local", icon = "󰋎" },
-	{ player = "firefox", name = "Firefox", icon = "󰈹" },
+	{ player = "chromium", name = "Chromium", icon = "󰇩" },
+	-- { player = "firefox", name = "Firefox", icon = "󰈹" },
 	{ player = "auto", name = "Auto", icon = "󰖟" },
 }
 User.current_player = User.music_players[1]

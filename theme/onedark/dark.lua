@@ -10,5 +10,5 @@ return {
   blue = "#61afef",
   magenta = "#c678dd",
   cyan = "#56b6c2",
-  gray = "#5c6370",
+  gray = "#abb2bf",
 }

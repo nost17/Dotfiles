@@ -1,3 +1,5 @@
+local getIcon = require("utils.modules.get_icon")
+
 local list_names = {
 	"dunstify",
 	"notify-send",
@@ -32,7 +34,12 @@ local function mknotification(n)
 			n.app_name = Naughty.config.defaults.app_name
 		end
 	end
-	local app_icon_path = Helpers.misc.getIcon(n.app_name, nil, Beautiful.notification_icon)
+	local app_icon_path = getIcon({
+		name = n.app_name,
+		icon_size = 48,
+		try_fallback = false,
+		manual_fallback = Beautiful.notification_icon,
+	})
 	local n_title = Wibox.widget.textbox()
 	local n_message = Wibox.widget.textbox()
 	local n_image = Wibox.widget({
@@ -46,7 +53,7 @@ local function mknotification(n)
 	Helpers.text.set_markup(n_title, n.title, Beautiful.notification_fg, Beautiful.notification_font_title)
 	Helpers.text.set_markup(n_message, n.message, Beautiful.notification_fg, Beautiful.notification_font_message)
 	n_image:set_image(Gears.surface.load_silently(n.icon))
-	local app_icon = mkimagew(app_icon_path, Dpi(16))
+	local app_icon = mkimagew(app_icon_path, Dpi(18))
 	local app_name = Wibox.widget({
 		text = n.app_name:gsub("^%l", string.upper),
 		font = Beautiful.notification_font_appname,
@@ -79,8 +86,8 @@ local function mknotification(n)
 			},
 			layout = Wibox.layout.align.horizontal,
 		},
-    bottom = Dpi(3),
-    top = Dpi(3),
+		bottom = Dpi(3),
+		top = Dpi(3),
 		left = Dpi(3),
 		widget = Wibox.container.margin,
 	})

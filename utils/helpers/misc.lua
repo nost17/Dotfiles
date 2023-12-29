@@ -1,5 +1,5 @@
 local _module = {}
-local menubar = require("menubar")
+-- local menubar = require("menubar")
 
 function _module.checkFile(file_path)
 	local f = io.open(file_path, "r")
@@ -12,15 +12,15 @@ function _module.checkFile(file_path)
 end
 
 function _module.getIcon(app, icon_fallback, fallback)
-  app_path = _module.checkFile(Beautiful.icon_theme_path .. app .. ".svg")
-  app_path_alt = _module.checkFile(Beautiful.icon_theme_path .. app:lower() .. ".svg")
+	app_path = _module.checkFile(Beautiful.icon_theme_path .. app .. ".svg")
+	app_path_alt = _module.checkFile(Beautiful.icon_theme_path .. app:lower() .. ".svg")
 	-- icon_fallback = icon_fallback or Beautiful.default_app_icon
 	-- local menubar_icon = menubar.utils.lookup_icon(app) or menubar.utils.lookup_icon(app:lower())
 	return app_path
 		or app_path_alt
 		or icon_fallback and _module.checkFile(icon_fallback)
 		or icon_fallback and _module.checkFile(icon_fallback:lower())
-    or fallback and fallback
+		or fallback and fallback
 end
 
 function _module.recolor_image(image, color)
@@ -51,7 +51,7 @@ function _module.notify_dwim(args, notif)
 end
 
 function _module.gc(widget, id)
-  return widget:get_children_by_id(id)[1]
+	return widget:get_children_by_id(id)[1]
 end
 
 return _module

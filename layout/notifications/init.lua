@@ -1,3 +1,4 @@
+local getIcon = require("utils.modules.get_icon")
 Naughty.config.defaults = {
 	position = Beautiful.notification_position,
 	timeout = 6,
@@ -8,7 +9,13 @@ Naughty.connect_signal("request::icon", function(n, context, hints)
 		hints.app_icon = n.app_name
 		-- return
 	end
-	local path = Helpers.misc.getIcon(hints.app_icon)
+	-- local path = Helpers.misc.getIcon(hints.app_icon)
+	local path = getIcon({
+		name = hints.app_icon,
+		icon_size = 48,
+		try_fallback = false,
+		manual_fallback = Beautiful.notification_icon,
+	})
 	if path then
 		n.icon = path
 	end
@@ -45,12 +52,17 @@ end
 local function mknotification(n)
 	local accent_color = colors[n.urgency]
 	local show_image = true
-	local app_icon_path = Helpers.misc.getIcon(n.app_name, nil, Beautiful.notification_icon)
 	for _, def_name in pairs(list_names) do
 		if n.app_name == def_name then
 			n.app_name = Naughty.config.defaults.app_name
 		end
 	end
+	local app_icon_path = getIcon({
+		name = n.app_name,
+		icon_size = 48,
+		try_fallback = false,
+		manual_fallback = Beautiful.notification_icon,
+	})
 	local n_title = require("layout.notifications.title")(n)
 	local n_message = require("layout.notifications.message")(n)
 	local n_image = require("layout.notifications.image")(n)
@@ -91,8 +103,8 @@ local function mknotification(n)
 			},
 			layout = Wibox.layout.align.horizontal,
 		},
-    bottom = Dpi(3),
-    top = Dpi(3),
+		bottom = Dpi(3),
+		top = Dpi(3),
 		left = Dpi(3),
 		widget = Wibox.container.margin,
 	})
