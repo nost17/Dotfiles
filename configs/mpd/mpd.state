@@ -1,0 +1,66 @@
+sw_volume: 100
+audio_device_state:1:My Pulse Output
+audio_device_state:1:FIFO
+state: pause
+current: 32
+time: 143.474000
+random: 0
+repeat: 1
+single: 0
+consume: 0
+crossfade: 0
+mixrampdb: 0.000000
+mixrampdelay: -1.000000
+playlist_begin
+0:Maluma - HP.mp3
+1:Kesha - Backstabber.mp3
+2:Willow - Wait a Minute!.mp3
+3:Joji - SLOW DANCING IN THE DARK.mp3
+4:Micro TDH - Besame Sin Sentir.mp3
+5:PHANTOGRAM - Black Out Days (Future Islands Remix).mp3
+6:08 Lady Gaga - Bloody Mary.mp3
+7:Lana Del Rey - Summertime Sadness.mp3
+8:Bizarrap - C.R.O Bzrp Music Sessions, Vol. 29.mp3
+9:07 Canserbero - Maquiavelico.mp3
+10:Chase Atlantic - Swim.mp3
+11:Sex, Drugs, Etc. - Beach Weather (320).mp3
+12:Christina Aguilera - Genie In a Bottle.mp3
+13:SUMAYA ANDINA - Corazoncito.mp3
+14:Melanie Martinez - Tag, You're It.mp3
+15:Cake - Melanie Martinez (320).mp3
+16:06 Blackbear - Idfc.mp3
+17:Paramore - Decode.mp3
+18:blackbear - do re mi.mp3
+19:NEFFEX - Destiny.mp3
+20:SUICIDAL-IDOL - ecstacy (slowed).mp3
+21:Los Angeles Azules - Dr Psiquiatra.mp3
+22:Hoshi - Et même après je t'aimerai.mp3
+23:blackbear - Hot Girl Bummer.mp3
+24:Kronno Zomber - SonicExe vs Foxy.mp3
+25:12 Arctic Monkeys - 505.mp3
+26:03 Shakira - La Tortura.mp3
+27:Harry Styles - Adore You.mp3
+28:Marshmello - FRIENDS.mp3
+29:Ice Cube - It Was A Good Day.mp3
+30:Ice Cube - You Know How We Do It.mp3
+31:Billie Eilish - NDA.mp3
+32:The Neighbourhood - Softcore.mp3
+33:Harleys In Hawaii - Katy Perry (320).mp3
+34:Shawn Mendes - Treat You Better.mp3
+35:Volcan Peaks - As We Saw The Ocean.mp3
+36:J Balvin - 6 AM.mp3
+37:LPTightrope.mp3
+38:Lee Eye - María Magdalena.mp3
+39:Miki Matsubara - Mayonaka no Door  Stay With Me.mp3
+40:Ricky Montgomery - Line Without a Hook.mp3
+41:Ricky Montgomery - Mr Loverman.mp3
+42:Kordhell - Murder In My Mind (Slowed + Reverb).mp3
+43:Knust - Perder o Interesse.mp3
+44:Doja Cat - Need to Know.mp3
+45:Doja Cat - So High.mp3
+46:Stromae - Tous les mêmes.mp3
+47:Daft Punk - Instant Crush (feat Julian Casablancas).mp3
+48:Rockabye_feat_Sean_Paul_Anne_Marie_Clean_Bandit_Sean_Paul_Anne_Marie.mp3
+49:Flo Rida - GDFR (feat Sage the Gemini & Lookas).mp3
+50:The Neighbourhood - Scary Love.mp3
+playlist_end
