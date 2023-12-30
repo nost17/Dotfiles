@@ -1,0 +1,26 @@
+{
+  "configs": [
+    "ranger",
+    "mpDris2",
+    "awesome",
+    "mpd",
+    "ncmpcpp",
+    "kitty"
+  ],
+  "install": [
+    "playerctl",
+    "mpd",
+    "mpc",
+    "ncmpcpp",
+    "mpdris2",
+    "ranger",
+    "neofetch",
+    "htop",
+    "ripgrep",
+    "fzf",
+    "feh",
+    "ffmpeg",
+    "acpi",
+    "xclip"
+  ]
+}
