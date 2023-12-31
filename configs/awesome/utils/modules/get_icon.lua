@@ -75,7 +75,7 @@ local function get_icon_by_class(client_class, apps, args)
 	class_3 = class_3:match("(.-)%s+") or class_3
 
 	local possible_icon_names = { class, class_2, class_1 }
-	if not class_3:find("gnome") and not class_3:find("apple") then
+	if not class_3:find("gnome") and not class_3:find("apple") and not class:find("github") then
 		table.insert(possible_icon_names, class_3)
 	end
 
@@ -97,8 +97,8 @@ local function getIconPath(args)
 	args.gtk_theme = Gtk.IconTheme.get_default()
 
 	if args.client then
-		return args.client.class ~= nil and get_icon_by_class(args.client.class, GTK_APPS, args)
-			or get_icon_by_pid_command(args.client, GTK_APPS)
+		return get_icon_by_pid_command(args.client, GTK_APPS, args)
+      or args.client.class ~= nil and get_icon_by_class(args.client.class, GTK_APPS, args)
 			or args.try_fallback ~= false and get_icon_by_class(args.name_fallback, GTK_APPS, args)
 			or args.try_fallback ~= false and get_icon_alt(args.name_fallback, args)
 			or args.client.class ~= nil and get_icon_alt(args.client.class, args)
