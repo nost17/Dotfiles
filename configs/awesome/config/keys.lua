@@ -20,8 +20,8 @@ Awful.keyboard.append_global_keybindings({
         awesome.emit_signal("awesome::quicksettings_panel", "toggle")
     end, { description = "mostrar panel de control", group = "awesome" }),
   Awful.key({ User.config.modkey, }, "w", function ()
-    -- mymenu:show()
-    end, { description = "mostrar panel de control", group = "awesome" }),
+    awesome.emit_signal("awesome::app_launcher", "toggle")
+    end, { description = "mostrar lanzador de aplicaciones", group = "awesome" }),
     Awful.key({ User.config.modkey, }, "s", hotkeys_popup.show_help,
         { description = "show help", group = "awesome" }),
     -- Awful.key({ User.config.modkey,           }, "w", function () mymainmenu:show() end,
@@ -43,6 +43,27 @@ Awful.keyboard.append_global_keybindings({
 })
 -- MEDIA KEYS
 Awful.keyboard.append_global_keybindings({
+    -- Mediua player keys
+    -- Awful.key({}, "XF86AudioPause", function()
+    --     if Playerctl then
+    --         Playerctl:pause()
+    --     end
+    -- end),
+    -- Awful.key({}, "XF86AudioPlay", function()
+    --     if Playerctl then
+    --         Playerctl:play()
+    --     end
+    -- end),
+    -- Awful.key({}, "XF86AudioNext", function()
+    --     if Playerctl then
+    --         Playerctl:next()
+    --     end
+    -- end),
+    -- Awful.key({}, "XF86AudioPrev", function()
+    --     if Playerctl then
+    --         Playerctl:previous()
+    --     end
+    -- end),
     -- Volume and Brightness keys
     Awful.key({User.config.modkey}, "-", function()
         Awful.spawn.with_shell("pamixer -d 5", false)

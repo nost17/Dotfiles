@@ -30,7 +30,7 @@ function _module.add_cursor_hover(element)
 end
 
 function _module.add_hover(element, bg , fg, hbg, hfg)
-	_module.add_cursor_hover(element)
+	-- _module.add_cursor_hover(element)
 	local nbg = bg or Beautiful.accent_color
 	local nfg = fg or Helpers.color.isDark(nbg) and Beautiful.white or Beautiful.black
 	element.bg = nbg

@@ -2,8 +2,9 @@ local screen_height = screen.primary.geometry.height
 local screen_width = screen.primary.geometry.width
 
 local main = Wibox({
-	height = Dpi(280),
-	width = Dpi(300),
+	screen = screen.primary,
+	height = Dpi(300),
+	width = Dpi(320),
 	bg = Beautiful.bg_normal,
 	visible = false,
 	ontop = true,

@@ -6,9 +6,32 @@ local function changeTheme(mode)
 	local archivo = assert(io.open(RC_FILE, "r"))
 	local contenido = archivo:read("*all")
 	archivo:close()
-
+	local dark_mode = User.config.dark_mode
 	-- Modificar la variable en el contenido
-	contenido = contenido:gsub("dark_mode%s*=%s" .. tostring(User.config.dark_mode), "dark_mode = " .. tostring(mode))
+	if mode == "light" then
+		if _G.light_theme_exist then
+			dark_mode = false
+      Naughty.notify {
+        title = "si existe blanco"
+      }
+		else
+			dark_mode = true
+      Naughty.notify {
+        title = "no existe blanco"
+      }
+		end
+	elseif mode == "dark" then
+		if _G.dark_theme_exist then
+			dark_mode = true
+		else
+			dark_mode = false
+		end
+	end
+  Naughty.notify {
+    title = tostring(User.config.dark_mode)
+  }
+  contenido = contenido:gsub("dark_mode%s*=%s" .. "false", "dark_mode = " .. tostring(User.config.dark_mode))
+	contenido = contenido:gsub("dark_mode%s*=%s" .. tostring(User.config.dark_mode), "dark_mode = " .. tostring(dark_mode))
 
 	-- Escribir el contenido modificado de vuelta al archivo
 	archivo = assert(io.open(RC_FILE, "w"))
@@ -47,7 +70,7 @@ local function mkcontrol_btn(opts)
 		border_color = Beautiful.accent_color,
 		-- border_color_on = "#0b0c0c",
 		-- forced_height = 35,
-		shape = User.config.dark_mode and Helpers.shape.rrect(Dpi(8)) or Gears.shape.rounded_bar,
+		shape = User.config.dark_mode and Helpers.shape.rrect(Beautiful.small_radius) or Gears.shape.rounded_bar,
 		halign = "left",
 		paddings = {
 			left = Dpi(12),
@@ -66,8 +89,8 @@ local function mkcontrol_btn(opts)
 		turn_on_fn = function(w)
 			if opts.on_by_default then
 				opts.on_by_default = false
-      else
-        opts.on_fn()
+			else
+				opts.on_fn()
 			end
 			w:get_children_by_id("icon_label")[1]
 				:set_markup_silently(Helpers.text.colorize_text(opts.label, Beautiful.foreground_alt))
@@ -107,7 +130,7 @@ local dnd_state = mkcontrol_btn({
 local auto_music_notify = mkcontrol_btn({
 	icon = "󰎇",
 	label = "Musica (aviso)",
-  on_by_default = User.config.music_notify,
+	on_by_default = User.config.music_notify,
 	on_fn = function()
 		User.config.music_notify = true
 	end,
@@ -121,19 +144,19 @@ local dark_mode = mkcontrol_btn({
 	label = "Modo oscuro",
 	on_by_default = User.config.dark_mode,
 	on_fn = function()
-		changeTheme(true)
+		changeTheme("dark")
 	end,
 	off_fn = function()
-		changeTheme(false)
+		changeTheme("light")
 	end,
 })
 
-awesome.connect_signal("system::volume", function (_, muted)
-  if muted then
-    mute_state:turn_on()
-  else
-    mute_state:turn_off()
-  end
+awesome.connect_signal("system::volume", function(_, muted)
+	if muted then
+		mute_state:turn_on()
+	else
+		mute_state:turn_off()
+	end
 end)
 
 return Wibox.widget({

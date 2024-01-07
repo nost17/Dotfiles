@@ -1,14 +1,14 @@
 -- local icons =
 local getIcon = require("utils.modules.get_icon")
 local create_task = function(self, c, _, _)
-  self:get_children_by_id("icon_client")[1].image = getIcon({
-    client = c,
-    icon_size = 48,
-  })
+	self:get_children_by_id("icon_client")[1].image = getIcon({
+		client = c,
+		icon_size = 48,
+	})
 	-- self:get_children_by_id("icon_client")[1].image = Beautiful.GtkBling:get_client_icon_path(c)
-  if c.minimized then
+	if c.minimized then
 		self:get_children_by_id("icon_client")[1].opacity = 0.2
-  end
+	end
 end
 local update_task = function(self, c, _, _)
 	if c.minimized then

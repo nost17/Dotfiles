@@ -11,11 +11,11 @@ CONFIG_TARGET_DIR=$HOME/.config
 DATA_JSON=${SCRIPT_DIR}/data_install.jsonc
 
 getPrompt() {
-  local F_UNDERLINED="\e[4m"
-  local F_DIM="\e[2m"
-  sleep 0.4;
-  echo -e "\n${F_DIM}[[${NO_FORMAT} ${F_BOLD}${C_GREEN}${1}${NO_FORMAT} ${F_DIM}]]${NO_FORMAT}\n"
-  sleep 0.4;
+	local F_UNDERLINED="\e[4m"
+	local F_DIM="\e[2m"
+	sleep 0.4;
+	echo -e "\n${F_DIM}[[${NO_FORMAT} ${F_BOLD}${C_GREEN}${1}${NO_FORMAT} ${F_DIM}]]${NO_FORMAT}\n"
+	sleep 0.4;
 }
 
 readarray -t CONFIG_LIST < <(cat ${DATA_JSON} | jq -c '.configs[]' | awk -NF '"' '{print $2}')
@@ -31,10 +31,10 @@ echo -e " [${C_RED}+${NO_FORMAT}] Installing :: ${INSTALL_LIST[@]}"
 
 getPrompt "INSTALLING CONFIG FILES"
 for config_file in ${CONFIG_LIST[@]}; do
-  echo -e " [${C_RED}+${NO_FORMAT}] Symlink:: ${config_file} ${C_BLUE}-->${NO_FORMAT} ${CONFIG_TARGET_DIR}/${config_file}"
-  if [ -d "${CONFIG_TARGET_DIR}/${config_file}" ]; then rm "${CONFIG_TARGET_DIR}/${config_file}"; fi
-  ln -s "${SCRIPT_DIR}/configs/${config_file}" "${CONFIG_TARGET_DIR}/${config_file}"
-  sleep 0.2
+	echo -e " [${C_RED}+${NO_FORMAT}] Symlink:: ${config_file} ${C_BLUE}-->${NO_FORMAT} ${CONFIG_TARGET_DIR}/${config_file}"
+	if [ -d "${CONFIG_TARGET_DIR}/${config_file}" ]; then rm "${CONFIG_TARGET_DIR}/${config_file}"; fi
+	ln -s "${SCRIPT_DIR}/configs/${config_file}" "${CONFIG_TARGET_DIR}/${config_file}"
+	sleep 0.2
 done
 echo ""
 

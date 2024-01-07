@@ -11,7 +11,10 @@ tag.connect_signal("request::default_layouts", function()
 	})
 end)
 
-Awful.tag({ "1", "2", "3", "4", "5" }, screen.primary, Awful.layout.layouts[1])
+
+Awful.screen.connect_for_each_screen(function(s)
+	Awful.tag({ "1", "2", "3", "4", "5" }, s, Awful.layout.layouts[1])
+end)
 
 screen.connect_signal("request::wallpaper", function(s)
 	Awful.wallpaper({

@@ -22,7 +22,7 @@ end)
 User = {}
 
 User.config = {
-	dark_mode = true,
+	dark_mode = false,
 	dnd_state = false,
 	music_notify = true,
 	modkey = "Mod4",
@@ -37,11 +37,11 @@ User.vars = {
 
 User.music_players = {
 	{ player = "mpd", name = "Local", icon = "󰋎" },
+	{ player = "firefox", name = "Firefox", icon = "󰈹" },
 	{ player = "chromium", name = "Chromium", icon = "󰇩" },
-	-- { player = "firefox", name = "Firefox", icon = "󰈹" },
 	{ player = "auto", name = "Auto", icon = "󰖟" },
 }
-User.current_player = User.music_players[1]
+User.current_player = User.music_players[2]
 Playerctl = require("signal.playerctl")()
 
 -- Desktop configuration

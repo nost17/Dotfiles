@@ -9,7 +9,7 @@ local toggle_button = buttons.normal({
 	fg_normal = User.config.dark_mode and Beautiful.foreground_alt or Beautiful.foreground,
 	bg_normal = Beautiful.accent_color,
 	bg_hover = Helpers.color.ldColor(Beautiful.accent_color, 20),
-	shape = Helpers.shape.rrect(Dpi(8)),
+	shape = Helpers.shape.rrect(Beautiful.small_radius),
 	paddings = { left = Dpi(1) },
 	on_release = function()
 		Playerctl:play_pause()
@@ -58,8 +58,8 @@ local player_button = buttons.normal({
 	font = Beautiful.font_icon .. "13",
 	fg_normal = Beautiful.accent_color,
 	bg_normal = Beautiful.gray .. "1F",
-  bg_hover = Beautiful.gray .. "3F",
-  shape = Gears.shape.rounded_bar,
+	bg_hover = Beautiful.gray .. "3F",
+	shape = Gears.shape.rounded_bar,
 	paddings = {
 		left = Dpi(6),
 		right = Dpi(6),
@@ -100,16 +100,17 @@ local music_artist = Helpers.text.mktext({
 local music_art = Wibox.widget({
 	halign = "center",
 	valign = "center",
+  opacity = 0.8,
+  resize = true,
 	horizontal_fit_policy = "fit",
 	vertical_fit_policy = "fit",
 	widget = Wibox.widget.imagebox,
-	set_cover_art = function(self, image)
-		Awful.spawn.easy_async_with_shell(script_path .. image, function()
+	set_cover_art = function(self, art, size)
+		Awful.spawn.easy_async_with_shell(script_path .. art .. " " .. size, function()
 			self:set_image(Gears.surface.load_uncached("/tmp/coversito.png"))
 		end)
 	end,
 })
-music_art.cover_art = Beautiful.music_cover_default
 
 local media_controls = Wibox.widget({
 	{
@@ -156,17 +157,18 @@ local media_controls = Wibox.widget({
 })
 local wdg = Wibox.widget({
 	{
-		{
-			music_art,
-			halign = "center",
-			valign = "center",
-			content_fill_vertical = true,
-			content_fill_horizontal = true,
-			layout = Wibox.container.place,
-		},
+    music_art,
+		-- {
+		-- 	music_art,
+		-- 	halign = "center",
+		-- 	valign = "center",
+		-- 	content_fill_vertical = true,
+		-- 	content_fill_horizontal = true,
+		-- 	layout = Wibox.container.place,
+		-- },
 		{
 			bg = User.config.dark_mode and Beautiful.bg_normal .. "cF" or Beautiful.foreground .. "cF",
-      -- bg = "#181818CF",
+			-- bg = "#181818CF",
 			widget = Wibox.container.background,
 		},
 		{
@@ -193,13 +195,16 @@ local wdg = Wibox.widget({
 			margins = Dpi(7),
 			widget = Wibox.container.margin,
 		},
-		forced_height = Dpi(100),
+		-- forced_height = Dpi(100),
 		layout = Wibox.layout.stack,
 	},
-	shape = Helpers.shape.rrect(Beautiful.radius + 2),
+	shape = Helpers.shape.rrect(Beautiful.medium_radius),
+  forced_height = Dpi(120),
 	bg = Beautiful.transparent,
 	widget = Wibox.container.background,
 })
+
+music_art.set_cover_art(music_art, Beautiful.music_cover_default, wdg.forced_height)
 
 Playerctl:connect_signal("new_player", function(_)
 	player_button:set_text(User.current_player.icon)
@@ -208,7 +213,8 @@ end)
 
 Playerctl:connect_signal("metadata", function(_, title, artist, _, album_art, _)
 	-- music_art:set_image(Gears.surface.load_uncached(album_path))
-	music_art.cover_art = album_art == nil or album_art == "" and Beautiful.music_cover_default or album_art
+	-- music_art.cover_art = { art = album_art, size = wdg.forced_height }
+  music_art.set_cover_art(music_art, album_art, wdg.forced_height)
 	music_title:set_text(title)
 	music_artist:set_text(artist)
 end)

@@ -5,7 +5,7 @@ local main = Awful.wibar({
 	height = Dpi(36),
 	width = screen_width,
 	bg = Beautiful.bg_normal,
-	position = "top",
+	position = Beautiful.main_panel_pos,
 	visible = true,
 	-- ontop = true,
 })
@@ -68,7 +68,7 @@ local quicksettings = Wibox.widget({
 			widget = Wibox.container.margin,
 		},
 		id = "background_role",
-		shape = Helpers.shape.rrect(Beautiful.radius),
+		shape = Helpers.shape.rrect(Beautiful.small_radius),
 		widget = Wibox.container.background,
 	},
 	top = Dpi(4),

@@ -22,7 +22,7 @@ local function mkbar(bar, icon)
 				widget = Wibox.container.margin,
 			},
 			bg = Beautiful.widget_bg_alt,
-			shape = Helpers.shape.rrect(Dpi(8)),
+			shape = Helpers.shape.rrect(Beautiful.small_radius),
 			widget = Wibox.container.background,
 		},
 	})

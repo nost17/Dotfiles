@@ -6,8 +6,9 @@ local function check(file)
 end
 local theme_light_path = "theme." .. User.config.theme .. ".light"
 local theme_dark_path = "theme." .. User.config.theme .. ".dark"
-
-theme.ToggleDarkMode = function ()
+_G.light_theme_exist = check(theme_light_path)
+_G.dark_theme_exist = check(theme_dark_path)
+theme.ToggleDarkMode = function()
   if User.config.dark_mode and check(theme_dark_path) then
     theme = require(theme_dark_path)
   else
@@ -23,56 +24,57 @@ end
 theme.ToggleDarkMode()
 
 -- OTHER
-theme.wallpaper                        = themes_path .. "/wallpapers/yoru.jpeg"
-theme.font_text                        = "Sofia Sans "
-theme.font_icon                        = "Material Design Icons Desktop "
-theme.font                             = theme.font_text .. "Regular 12"
-theme.widget_radius                    = 1
-theme.radius                           = Dpi(8)
-theme.default_app_icon                 = "access"
+theme.wallpaper              = themes_path .. "/wallpapers/yoru.jpeg"
+theme.font_text              = "Sofia Sans "
+theme.font_icon              = "Material Design Icons Desktop "
+theme.font                   = theme.font_text .. "Regular 12"
+theme.widget_radius          = 1
+theme.default_app_icon       = "access"
 -- theme.icon_theme                       = "ePapirus-Dark"
 -- theme.icon_theme_path                  = "/usr/share/icons/" .. theme.icon_theme .. "/48x48/apps/"
-theme.accent_color                     = theme[User.config.theme_accent or "blue"]
-theme.transparent                      = "#00000000"
-theme.color_method                     = User.config.dark_mode and "lighten" or "darken"
-theme.color_method_factor              = theme.color_method == "lighten" and 0.04 or 0.08
+theme.accent_color           = theme[User.config.theme_accent or "blue"]
+theme.transparent            = "#00000000"
+theme.color_method           = User.config.dark_mode and "lighten" or "darken"
+theme.color_method_factor    = theme.color_method == "lighten" and 0.04 or 0.08
 
 --- MAIN
-theme.bg_normal                        = theme.background
-theme.fg_normal                        = theme.foreground
-theme.useless_gap                      = Dpi(4)
-theme.gap_single_client                = false
-theme.awesome_icon                     = themes_path .. "images/awesome.png"
+theme.bg_normal              = theme.background
+theme.fg_normal              = theme.foreground
+theme.useless_gap            = Dpi(4)
+theme.gap_single_client      = false
+theme.awesome_icon           = themes_path .. "images/awesome.png"
 -- theme.awesome_icon = themes_path .. "images/awesome.png"
+theme.small_radius           = Dpi(6)
+theme.medium_radius          = Dpi(10)
 
 -- BORDER
-theme.border_width                     = 2
-theme.border_normal                    = "#0c0e0f"
-theme.border_focus                     = theme.yellow
+theme.border_width           = 2
+theme.border_normal          = "#0c0e0f"
+theme.border_focus           = theme.yellow
 
 -- WIDGETS
-theme.widget_bg_color                  = theme.bg_normal
-theme.widget_bg_alt                    = Helpers.color.LDColor(theme.color_method, theme.color_method_factor, theme.bg_normal)
-theme.widget_clock_font                = theme.font_text .. 'Medium 11'
-theme.layouts_icons_color              = Helpers.color.ldColor(theme.fg_normal, -30)
-theme.bg_systray                       = theme.widget_bg_alt
-theme.main_panel_pos                   = "top"
-theme.main_panel_size                  = Dpi(42)
+theme.widget_bg_color        = theme.bg_normal
+theme.widget_bg_alt          = Helpers.color.LDColor(theme.color_method, theme.color_method_factor, theme.bg_normal)
+theme.widget_clock_font      = theme.font_text .. 'Medium 11'
+theme.layouts_icons_color    = Helpers.color.ldColor(theme.fg_normal, -30)
+theme.bg_systray             = theme.widget_bg_alt
+theme.main_panel_pos         = "bottom"
+theme.main_panel_size        = Dpi(42)
 
 -- MUSIC CONTROL WIDGET
-theme.music_metadata_pos               = "left"
-theme.music_control_pos                = "left"
-theme.music_cover_default              = themes_path .. "images/default_music_cover.jpeg"
-theme.music_title_font_size            = 12
-theme.music_artist_font_size           = 11
+theme.music_metadata_pos     = "left"
+theme.music_control_pos      = "left"
+theme.music_cover_default    = themes_path .. "images/default_music_cover.jpeg"
+theme.music_title_font_size  = 12
+theme.music_artist_font_size = 11
 
 -- TOOLTIP
-theme.tooltip_bg                       = theme.bg_normal
-theme.tooltip_fg                       = theme.fg_normal
-theme.tooltip_margins                  = Dpi(10)
+theme.tooltip_bg             = theme.bg_normal
+theme.tooltip_fg             = theme.fg_normal
+theme.tooltip_margins        = Dpi(10)
 
 -- BLING
-theme.bling_launcher_args              = {
+theme.bling_launcher_args    = {
   placement = Awful.placement.bottom_left,
   apps_per_column = 1,
   background = theme.background,
@@ -81,7 +83,7 @@ theme.bling_launcher_args              = {
   app_show_icon = false,
   app_name_halign = "left",
   app_shape = Helpers.shape.rrect(theme.widget_radius - 5),
-  apps_per_row = Dpi(6),
+  apps_per_row = 6,
   app_height = Dpi(24),
   app_width = Dpi(260),
   apps_margin = Dpi(6),
@@ -106,30 +108,31 @@ theme.bling_launcher_args              = {
   border_color = theme.black,
   border_width = Dpi(3),
 }
-theme.GtkBling                         = require("utils.mods.bling.helpers.icon_theme")(theme.icon_theme)
+theme.GtkBling               = require("utils.mods.bling.helpers.icon_theme")(theme.icon_theme)
 
 -- MENU
 
-theme.menu_bg_normal = theme.widget_bg_color
-theme.menu_bg_focus = theme.red
-theme.menu_fg_focus = theme.foreground_alt
-theme.menu_height = 26
-theme.menu_width = 260
+theme.menu_bg_normal         = theme.widget_bg_color
+theme.menu_bg_focus          = theme.red
+theme.menu_fg_focus          = theme.foreground_alt
+theme.menu_height            = 26
+theme.menu_width             = 260
 
 -- TITLEBAR
 -- theme.titlebar_bg_focus                = Helpers.color.ldColor(theme.blue, -25)
 -- theme.titlebar_bg_normal               = Helpers.color.ldColor(theme.bg_normal, 8)
-theme.titlebar_bg_normal = "#0c0e0f"
-theme.titlebar_bg_focus                = theme.titlebar_bg_normal
-theme.titlebar_fg_normal               = theme.titlebar_bg_normal
-theme.titlebar_fg_focus                = theme.fg_normal .. "BF"
-theme.titlebar_font                    = theme.font_text .. "SemiBold 10"
-theme.titlebar_size                    = 34
+theme.titlebar_bg_normal     = "#0c0e0f"
+theme.titlebar_bg_focus      = theme.titlebar_bg_normal
+theme.titlebar_fg_normal     = theme.titlebar_bg_normal
+theme.titlebar_fg_focus      = theme.fg_normal .. "BF"
+theme.titlebar_font          = theme.font_text .. "SemiBold 10"
+theme.titlebar_size          = 34
 
 -- TASKLIST
-theme.tasklist_bg_color                = theme.transparent
+theme.tasklist_bg_color      = theme.transparent
 --[[ theme.tasklist_bg_focus                = Helpers.color.ldColor(theme.accent_color, 10) ]]
-theme.tasklist_bg_focus                = User.config.dark_mode and Helpers.color.ldColor(theme.widget_bg_alt, 7) or theme.widget_bg_alt
+theme.tasklist_bg_focus                = User.config.dark_mode and Helpers.color.ldColor(theme.widget_bg_alt, 7) or
+theme.widget_bg_alt
 theme.tasklist_indicator_focus         = theme.accent_color
 theme.tasklist_indicator_normal        = theme.foreground .. "22"
 theme.taglist_icon_size                = Dpi(24)
@@ -152,10 +155,11 @@ theme.taglist_fg_empty                 = theme.black
 theme.taglist_shape_border_color_empty = "#00000000"
 
 -- NOTIFICATIONS
-theme.notification_position            = "top_middle"
+theme.notification_position            = "top_right"
 theme.notification_icon                = themes_path .. "images/notification.png"
-theme.notification_bg                  = Helpers.color.LDColor(theme.color_method, theme.color_method_factor * 0.75, theme.bg_normal)
-theme.notification_fg                  = Helpers.color.ldColor(theme.fg_normal, -15)
+theme.notification_bg                  = Helpers.color.LDColor(theme.color_method, theme.color_method_factor * 0.75,
+  theme.bg_normal)
+theme.notification_fg                  = Helpers.color.ldColor(theme.fg_normal, 15, 'darken')
 theme.notification_font_title          = theme.font_text .. "SemiBold 12"
 theme.notification_font_message        = theme.font_text .. "Medium 11"
 theme.notification_font_appname        = theme.font_text .. "Bold 11"
@@ -163,7 +167,7 @@ theme.notification_font_actions        = theme.font_text .. "Medium 10"
 theme.notification_font_hour           = theme.font_text .. "Bold 10"
 theme.notification_icon_shape          = Helpers.shape.rrect(6) -- Gears.shape.circle
 theme.notification_spacing             = Dpi(6)
-theme.notification_icon_height         = Dpi(48)
+theme.notification_icon_height         = Dpi(52)
 theme.notification_border_width        = 0
 theme.notification_border_color        = theme.black
 theme.notification_border_radius       = Dpi(6)

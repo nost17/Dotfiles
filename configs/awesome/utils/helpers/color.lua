@@ -21,23 +21,53 @@ local function hex_to_rgb(hexArg)
 	return r, g, b
 end
 
-function M.ldColor(col, amt)
-	local r, g, b = hex_to_rgb(col)
-	local hex
-	if r <= 34 and amt < 0 then
-		hex = "#000000"
-	else
-		hex = string.format("%#x", clamp(r + amt) * 0x10000 + clamp(g + amt) * 0x100 + clamp(b + amt)):gsub("0x", "#")
+function M.ldColor(color, brightness, method)
+	-- Convertir el color hexadecimal a componentes RGB y alfa
+	local r, g, b, a = 0, 0, 0, 255
+	if method == "darken" then
+		brightness = -brightness
 	end
-	return hex
+	if not color:match("^#%x+$") then
+		return "#FFFFFFFF"
+	end
+
+	if #color == 7 then
+		r = tonumber(color:sub(2, 3), 16)
+		g = tonumber(color:sub(4, 5), 16)
+		b = tonumber(color:sub(6, 7), 16)
+	elseif #color == 9 then
+		r = tonumber(color:sub(2, 3), 16)
+		g = tonumber(color:sub(4, 5), 16)
+		b = tonumber(color:sub(6, 7), 16)
+		a = tonumber(color:sub(8, 9), 16)
+	else
+		return "#FFFFFFFF"
+	end
+
+	-- Aumentar el brillo
+	r = math.min(255, r + brightness)
+	g = math.min(255, g + brightness)
+	b = math.min(255, b + brightness)
+
+	-- Convertir los componentes RGB y alfa de vuelta a formato hexadecimal
+	local new_color = string.format("#%02X%02X%02X%02X", r, g, b, a)
+
+	return new_color
 end
 
 function M.LDColor(method, factor, color)
 	local script_path = Gears.filesystem.get_configuration_dir() .. "scripts/my_color "
-	local script = script_path .. "-t " .. method .. " -f " .. tostring(factor):gsub(",", ".") .. " -c '" .. color .. "'"
-  local out = Helpers.misc.getCmdOut(script)
-  out = string.gsub(string.gsub(string.gsub(out, "^%s+", ""), "%s+$", ""), "[\n\r]+", " ")
-  return out
+	local script = script_path
+		.. "-t "
+		.. method
+		.. " -f "
+		.. tostring(factor):gsub(",", ".")
+		.. " -c '"
+		.. color
+		.. "'"
+	local out = Helpers.misc.getCmdOut(script)
+	out = string.gsub(string.gsub(string.gsub(out, "^%s+", ""), "%s+$", ""), "[\n\r]+", " ")
+	return out
 end
 
 function M.isDark(hex)

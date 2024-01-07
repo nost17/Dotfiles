@@ -75,7 +75,8 @@ local function mknotification(n)
 			valign = "center",
 			widget = Wibox.widget.textbox,
 		},
-		fg = Helpers.color.LDColor(User.config.dark_mode and "darken" or "lighten", 0.12, Beautiful.notification_fg),
+		-- fg = Helpers.color.LDColor(User.config.dark_mode and "darken" or "lighten", 0.12, Beautiful.notification_fg),
+    fg = Helpers.color.ldColor(Beautiful.notification_fg, 20, User.config.dark_mode and "darken" or "lighten"),
 		widget = Wibox.container.background,
 	})
 	if type(n.icon) ~= "userdata" then
@@ -131,7 +132,7 @@ local function mknotification(n)
 				widget = Wibox.container.place,
 			},
 			forced_height = Dpi(26),
-			shape = Helpers.shape.rrect(Beautiful.radius),
+			shape = Helpers.shape.rrect(Beautiful.small_radius),
 			-- forced_width = 70,
 			widget = Wibox.container.background,
 			create_callback = function(self, _, _, _)

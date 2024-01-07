@@ -5,8 +5,8 @@ local GTK_APPS = lgi.Gio.AppInfo.get_all()
 
 -- @Autor: https://github.com/chadcat7
 local custom_names = {
-	["Musica"] = "apple-music",
-	["Música"] = "apple-music",
+	["Musica"] = "gnome-music",
+	["Música"] = "gnome-music",
 	["ncmpcpp-music"] = "apple-music",
 }
 
@@ -92,15 +92,14 @@ end
 local function getIconPath(args)
 	args.icon_size = args.icon_size or 48
 	args.name = args.client == nil and args.name or "default-application"
-	args.name_fallback = args.name_fallback or "access"
 	args.flag = args.symbolic and Gtk.IconLookupFlags.FORCE_SYMBOLIC or 0
 	args.gtk_theme = Gtk.IconTheme.get_default()
 
 	if args.client then
 		return get_icon_by_pid_command(args.client, GTK_APPS, args)
       or args.client.class ~= nil and get_icon_by_class(args.client.class, GTK_APPS, args)
-			or args.try_fallback ~= false and get_icon_by_class(args.name_fallback, GTK_APPS, args)
-			or args.try_fallback ~= false and get_icon_alt(args.name_fallback, args)
+			or args.try_fallback ~= false and args.name_fallback and get_icon_by_class(args.name_fallback, GTK_APPS, args)
+			or args.try_fallback ~= false and args.name_fallback and get_icon_alt(args.name_fallback, args)
 			or args.client.class ~= nil and get_icon_alt(args.client.class, args)
 			or args.manual_fallback and args.manual_fallback
 	else

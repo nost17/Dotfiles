@@ -10,6 +10,7 @@ local main = Wibox({
 	ontop = true,
 	border_width = Dpi(2),
 	border_color = Beautiful.black,
+	screen = screen.primary,
 })
 
 if Beautiful.main_panel_pos == "top" then
