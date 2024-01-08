@@ -1,4 +1,5 @@
 local Gio = require("lgi").Gio
+local Gtk = require("lgi").require("Gtk", "3.0")
 local getIcon = require("utils.modules.get_icon")
 local string = string
 local table = table
@@ -16,6 +17,45 @@ local terminal_commands_lookup = {
 	terminator = "terminator -e",
 	kitty = "kitty -e",
 }
+
+local function get_gicon_path(gicon)
+	if gicon == nil then
+		return false
+	end
+
+	local icon_info = Gtk.IconTheme.get_default():lookup_by_gicon(gicon, 48, 0)
+	if icon_info then
+		local icon_path = icon_info:get_filename()
+		if icon_path then
+			return icon_path
+		end
+	end
+	return false
+end
+
+local function case_insensitive_pattern(pattern)
+	-- find an optional '%' (group 1) followed by any character (group 2)
+	local p = pattern:gsub("(%%?)(.)", function(percent, letter)
+		if percent ~= "" or not letter:match("%a") then
+			-- if the '%' matched, or `letter` is not a letter, return "as is"
+			return percent .. letter
+		else
+			-- else, return a case-insensitive character class of the matched letter
+			return string.format("[%s%s]", letter:lower(), letter:upper())
+		end
+	end)
+
+	return p
+end
+
+local function has_value(tab, val)
+	for index, value in pairs(tab) do
+		if val:find(case_insensitive_pattern(value)) then
+			return true
+		end
+	end
+	return false
+end
 
 local function select_app(self, x, y)
 	local widgets = self._private.grid:get_widgets_at(x, y)
@@ -371,4 +411,77 @@ local function reset(self)
 	select_app(self, 1, 1)
 end
 
+local function generate_apps(self)
+	self._private.all_entries = {}
+	self._private.matched_entries = {}
 
+	local app_info = Gio.AppInfo
+	local apps = app_info.get_all()
+	if self.sort_alphabetically then
+		table.sort(apps, function(a, b)
+			local app_a_score = app_info.get_name(a):lower()
+			if has_value(self.favorites, app_info.get_name(a)) then
+				app_a_score = "aaaaaaaaaaa" .. app_a_score
+			end
+			local app_b_score = app_info.get_name(b):lower()
+			if has_value(self.favorites, app_info.get_name(b)) then
+				app_b_score = "aaaaaaaaaaa" .. app_b_score
+			end
+
+			return app_a_score < app_b_score
+		end)
+	else
+		table.sort(apps, function(a, b)
+			local app_a_favorite = has_value(self.favorites, app_info.get_name(a))
+			local app_b_favorite = has_value(self.favorites, app_info.get_name(b))
+
+			if app_a_favorite and not app_b_favorite then
+				return true
+			elseif app_b_favorite and not app_a_favorite then
+				return false
+			elseif app_a_favorite and app_b_favorite then
+				return app_info.get_name(a):lower() < app_info.get_name(b):lower()
+			else
+				return false
+			end
+		end)
+	end
+
+	-- local icon_theme = require(tostring(path):match(".*bling") .. ".helpers.icon_theme")(self.icon_theme, self.icon_size)
+
+	for _, app in ipairs(apps) do
+		if app.should_show(app) then
+			local name = app_info.get_name(app)
+			local commandline = app_info.get_commandline(app)
+			local executable = app_info.get_executable(app)
+			local icon = get_gicon_path(app_info.get_icon(app))
+
+			-- Check if this app should be skipped, depanding on the skip_names / skip_commands table
+			if not has_value(self.skip_names, name) and not has_value(self.skip_commands, commandline) then
+				-- Check if this app should be skipped becuase it's iconless depanding on skip_empty_icons
+				if icon ~= "" or self.skip_empty_icons == false then
+					if icon == "" then
+						if self.default_app_icon_name ~= nil then
+							icon = getIcon({
+								name = self.default_app_icon_name,
+							})
+						elseif self.default_app_icon_path ~= nil then
+							icon = self.default_app_icon_path
+						end
+					end
+
+					local desktop_app_info = Gio.DesktopAppInfo.new(app_info.get_id(app))
+					local terminal = Gio.DesktopAppInfo.get_string(desktop_app_info, "Terminal") == "true" and true
+						or false
+					table.insert(self._private.all_entries, {
+						name = name,
+						commandline = commandline,
+						executable = executable,
+						terminal = terminal,
+						icon = icon,
+					})
+				end
+			end
+		end
+	end
+end
