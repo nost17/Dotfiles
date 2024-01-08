@@ -485,3 +485,54 @@ local function generate_apps(self)
 		end
 	end
 end
+
+--- Shows the app launcher
+function app_launcher:show()
+	local screen = self.screen
+	if self.show_on_focused_screen then
+		screen = Awful.screen.focused()
+	end
+
+	screen.app_launcher = self._private.widget
+	screen.app_launcher.screen = screen
+	self._private.prompt:start()
+
+	screen.app_launcher.visible = true
+
+	awesome.emit_signal("visible::app_launcher", true)
+end
+
+--- Hides the app launcher
+function app_launcher:hide()
+	local screen = self.screen
+	if self.show_on_focused_screen then
+		screen = Awful.screen.focused()
+	end
+
+	if screen.app_launcher == nil or screen.app_launcher.visible == false then
+		return
+	end
+
+	self._private.prompt:stop()
+
+	if self.reset_on_hide == true then
+		reset(self)
+	end
+	screen.app_launcher.visible = false
+	screen.app_launcher = nil
+
+	awesome.emit_signal("visible::app_launcher", false)
+end
+
+function app_launcher:toggle()
+    local screen = self.screen
+    if self.show_on_focused_screen then
+        screen = Awful.screen.focused()
+    end
+
+    if screen.app_launcher and screen.app_launcher.visible then
+        self:hide()
+    else
+        self:show()
+    end
+end
