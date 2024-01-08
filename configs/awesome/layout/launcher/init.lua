@@ -536,3 +536,279 @@ function app_launcher:toggle()
         self:show()
     end
 end
+
+local function new(args)
+    args = args or {}
+
+    args.terminal = args.terminal or nil
+    args.favorites = args.favorites or {}
+    args.search_commands = args.search_commands == nil and true or args.search_commands
+    args.skip_names = args.skip_names or {}
+    args.skip_commands = args.skip_commands or {}
+    args.skip_empty_icons = args.skip_empty_icons ~= nil and args.skip_empty_icons or false
+    args.sort_alphabetically = args.sort_alphabetically == nil and true or args.sort_alphabetically
+    args.reverse_sort_alphabetically = args.reverse_sort_alphabetically ~= nil and args.reverse_sort_alphabetically or false
+    args.select_before_spawn = args.select_before_spawn == nil and true or args.select_before_spawn
+    args.hide_on_left_clicked_outside = args.hide_on_left_clicked_outside == nil and true or args.hide_on_left_clicked_outside
+    args.hide_on_right_clicked_outside = args.hide_on_right_clicked_outside == nil and true or args.hide_on_right_clicked_outside
+    args.hide_on_launch = args.hide_on_launch == nil and true or args.hide_on_launch
+    args.try_to_keep_index_after_searching = args.try_to_keep_index_after_searching ~= nil and args.try_to_keep_index_after_searching or false
+    args.reset_on_hide = args.reset_on_hide == nil and true or args.reset_on_hide
+    args.save_history = args.save_history == nil and true or args.save_history
+    args.wrap_page_scrolling = args.wrap_page_scrolling == nil and true or args.wrap_page_scrolling
+    args.wrap_app_scrolling = args.wrap_app_scrolling == nil and true or args.wrap_app_scrolling
+
+    args.default_app_icon_name = args.default_app_icon_name or nil
+    args.default_app_icon_path = args.default_app_icon_path or nil
+    args.icon_theme = args.icon_theme or nil
+    args.icon_size = args.icon_size or nil
+
+    args.type = args.type or "dock"
+    args.show_on_focused_screen = args.show_on_focused_screen == nil and true or args.show_on_focused_screen
+    args.screen = args.screen or capi.screen.primary
+    args.placement = args.placement or Awful.placement.centered
+    args.rubato = args.rubato or nil
+    args.shrink_width = args.shrink_width ~= nil and args.shrink_width or false
+    args.shrink_height = args.shrink_height ~= nil and args.shrink_height or false
+    args.background = args.background or "#000000"
+    args.border_width = args.border_width or Beautiful.border_width or Dpi(0)
+    args.border_color = args.border_color or Beautiful.border_color or "#FFFFFF"
+    args.shape = args.shape or nil
+
+    args.prompt_height = args.prompt_height or Dpi(100)
+    args.prompt_margins = args.prompt_margins or Dpi(0)
+    args.prompt_paddings = args.prompt_paddings or Dpi(30)
+    args.prompt_shape = args.prompt_shape or nil
+    args.prompt_color = args.prompt_color or Beautiful.fg_normal or "#FFFFFF"
+    args.prompt_border_width = args.prompt_border_width or Beautiful.border_width or Dpi(0)
+    args.prompt_border_color = args.prompt_border_color or Beautiful.border_color or args.prompt_color
+    args.prompt_text_halign = args.prompt_text_halign or "left"
+    args.prompt_text_valign = args.prompt_text_valign or "center"
+    args.prompt_icon_text_spacing = args.prompt_icon_text_spacing or Dpi(10)
+    args.prompt_show_icon = args.prompt_show_icon == nil and true or args.prompt_show_icon
+    args.prompt_icon_font = args.prompt_icon_font or Beautiful.font
+    args.prompt_icon_color = args.prompt_icon_color or Beautiful.bg_normal or "#000000"
+    args.prompt_icon = args.prompt_icon or ""
+    args.prompt_icon_markup = args.prompt_icon_markup or string.format("<span size='xx-large' foreground='%s'>%s</span>", args.prompt_icon_color, args.prompt_icon)
+    args.prompt_text = args.prompt_text or "<b>Search</b>: "
+    args.prompt_start_text = args.prompt_start_text or ""
+    args.prompt_font = args.prompt_font or Beautiful.font
+    args.prompt_text_color = args.prompt_text_color or Beautiful.bg_normal or "#000000"
+    args.prompt_cursor_color = args.prompt_cursor_color or Beautiful.bg_normal or "#000000"
+
+    args.apps_per_row = args.apps_per_row or 5
+    args.apps_per_column = args.apps_per_column or 3
+    args.apps_margin = args.apps_margin or Dpi(30)
+    args.apps_spacing = args.apps_spacing or Dpi(30)
+
+    args.expand_apps = args.expand_apps == nil and true or args.expand_apps
+    args.app_width = args.app_width or Dpi(300)
+    args.app_height = args.app_height or Dpi(120)
+    args.app_shape = args.app_shape or nil
+    args.app_normal_color = args.app_normal_color or Beautiful.bg_normal or "#000000"
+    args.app_normal_hover_color = args.app_normal_hover_color or "#bf616a"
+    args.app_selected_color = args.app_selected_color or Beautiful.fg_normal or "#FFFFFF"
+    args.app_selected_hover_color = args.app_selected_hover_color or "#78e6ca"
+    args.app_content_padding = args.app_content_padding or Dpi(10)
+    args.app_content_spacing = args.app_content_spacing or Dpi(10)
+    args.app_show_icon = args.app_show_icon == nil and true or args.app_show_icon
+    args.app_icon_halign = args.app_icon_halign or "center"
+    args.app_icon_width = args.app_icon_width or Dpi(70)
+    args.app_icon_height = args.app_icon_height or Dpi(70)
+    args.app_show_name = args.app_show_name == nil and true or args.app_show_name
+    args.app_name_generic_name_spacing = args.app_name_generic_name_spacing or Dpi(0)
+    args.app_name_halign = args.app_name_halign or "center"
+    args.app_name_font = args.app_name_font or Beautiful.font
+    args.app_name_normal_color = args.app_name_normal_color or Beautiful.fg_normal or "#FFFFFF"
+    args.app_name_selected_color = args.app_name_selected_color or Beautiful.bg_normal or "#000000"
+    args.app_show_generic_name = args.app_show_generic_name ~= nil and args.app_show_generic_name or false
+
+    local ret = Gears.object({})
+    ret._private = {}
+    ret._private.text = ""
+
+    Gears.table.crush(ret, app_launcher)
+    Gears.table.crush(ret, args)
+
+    -- Calculate the grid width and height
+    local grid_width = ret.shrink_width == false
+        and Dpi((ret.app_width * ret.apps_per_column) + ((ret.apps_per_column - 1) * ret.apps_spacing))
+        or nil
+    local grid_height = ret.shrink_height == false
+        and Dpi((ret.app_height * ret.apps_per_row) + ((ret.apps_per_row - 1) * ret.apps_spacing))
+        or nil
+
+    -- These widgets need to be later accessed
+    ret._private.prompt = prompt
+    {
+        prompt = ret.prompt_text,
+        text = ret.prompt_start_text,
+        font = ret.prompt_font,
+        reset_on_stop = ret.reset_on_hide,
+        bg_cursor = ret.prompt_cursor_color,
+        history_path = ret.save_history == true and Gears.filesystem.get_cache_dir() .. "/history" or nil,
+        changed_callback = function(text)
+            if text == ret._private.text then
+                return
+            end
+
+            if ret._private.search_timer ~= nil and ret._private.search_timer.started then
+                ret._private.search_timer:stop()
+            end
+
+            ret._private.search_timer = Gears.timer {
+                timeout = 0.05,
+                autostart = true,
+                single_shot = true,
+                callback = function()
+                    -- search(ret, text)
+                end
+            }
+
+            ret._private.text = text
+        end,
+        keypressed_callback = function(mod, key, cmd)
+            if key == "Escape" then
+                ret:hide()
+            end
+            if key == "Return" then
+                if ret._private.active_widget ~= nil then
+                    ret._private.active_widget.spawn()
+                end
+            end
+            if key == "Up" then
+                scroll_up(ret)
+            end
+            if key == "Down" then
+                scroll_down(ret)
+            end
+            if key == "Left" then
+                scroll_left(ret)
+            end
+            if key == "Right" then
+                scroll_right(ret)
+            end
+        end
+    }
+    ret._private.grid = Wibox.widget
+    {
+        layout = Wibox.layout.grid,
+        forced_width = grid_width,
+        forced_height = grid_height,
+        orientation = "horizontal",
+        homogeneous     = true,
+        expand          = ret.expand_apps,
+        spacing = ret.apps_spacing,
+        forced_num_rows = ret.apps_per_row,
+        buttons =
+        {
+            Awful.button({}, 4, function() scroll_up(ret) end),
+            Awful.button({}, 5, function() scroll_down(ret) end)
+        }
+    }
+    ret._private.widget = Awful.popup
+    {
+        type = args.type,
+        visible = false,
+        ontop = true,
+        placement = ret.placement,
+        border_width = ret.border_width,
+        border_color = ret.border_color,
+        shape = ret.shape,
+        bg =  ret.background,
+        widget =
+        {
+            layout = Wibox.layout.fixed.vertical,
+            {
+                widget = Wibox.container.margin,
+                margins = ret.prompt_margins,
+                {
+                    widget = Wibox.container.background,
+                    forced_height = ret.prompt_height,
+                    shape = ret.prompt_shape,
+                    bg = ret.prompt_color,
+                    fg = ret.prompt_text_color,
+                    border_width = ret.prompt_border_width,
+                    border_color = ret.prompt_border_color,
+                    {
+                        widget = Wibox.container.margin,
+                        margins = ret.prompt_paddings,
+                        {
+                            widget = Wibox.container.place,
+                            halign = ret.prompt_text_halign,
+                            valign = ret.prompt_text_valign,
+                            {
+                                layout = Wibox.layout.fixed.horizontal,
+                                spacing = ret.prompt_icon_text_spacing,
+                                {
+                                    widget = Wibox.widget.textbox,
+                                    font = ret.prompt_icon_font,
+                                    markup = ret.prompt_icon_markup
+                                },
+                                ret._private.prompt.textbox
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                widget = Wibox.container.margin,
+                margins = ret.apps_margin,
+                ret._private.grid
+            }
+        }
+    }
+
+    -- Private variables to be used to be used by the scrolling and searching functions
+    ret._private.max_apps_per_page = ret.apps_per_column * ret.apps_per_row
+    ret._private.apps_per_page = ret._private.max_apps_per_page
+    ret._private.pages_count = 0
+    ret._private.current_page = 1
+
+    generate_apps(ret)
+    reset(ret)
+
+    if ret.hide_on_left_clicked_outside then
+        Awful.mouse.append_client_mousebinding(
+            Awful.button({ }, 1, function (c)
+                ret:hide()
+            end)
+        )
+
+        Awful.mouse.append_global_mousebinding(
+            Awful.button({ }, 1, function (c)
+                ret:hide()
+            end)
+        )
+    end
+    if ret.hide_on_right_clicked_outside then
+        Awful.mouse.append_client_mousebinding(
+            Awful.button({ }, 3, function (c)
+                ret:hide()
+            end)
+        )
+
+        Awful.mouse.append_global_mousebinding(
+            Awful.button({ }, 3, function (c)
+                ret:hide()
+            end)
+        )
+    end
+
+    local kill_old_inotify_process_script = [[ ps x | grep "inotifywait -e modify /usr/share/applications" | grep -v grep | awk '{print $1}' | xargs kill ]]
+    local subscribe_script = [[ bash -c "while (inotifywait -e modify /usr/share/applications -qq) do echo; done" ]]
+
+    Awful.spawn.easy_async_with_shell(kill_old_inotify_process_script, function()
+        Awful.spawn.with_line_callback(subscribe_script, {stdout = function(_)
+            generate_apps(ret)
+        end})
+    end)
+
+    return ret
+end
+
+function app_launcher.mt:__call(...)
+    return new(...)
+end
+
+return setmetatable(app_launcher, app_launcher.mt)
