@@ -1,6 +1,7 @@
 local Gio = require("lgi").Gio
 local Gtk = require("lgi").require("Gtk", "3.0")
 local getIcon = require("utils.modules.get_icon")
+local prompt = require("layout.launcher.prompt")
 local string = string
 local table = table
 local math = math
@@ -810,5 +811,18 @@ end
 function app_launcher.mt:__call(...)
     return new(...)
 end
+setmetatable(app_launcher, app_launcher.mt)
 
-return setmetatable(app_launcher, app_launcher.mt)
+local my_launcher = app_launcher(Beautiful.bling_launcher_args)
+
+awesome.connect_signal("awesome::app_launcher", function(action)
+	if action == "toggle" then
+    my_launcher:toggle()
+	elseif action == "open" then
+    my_launcher:show()
+	elseif action == "close" then
+    my_launcher:hide()
+	end
+end)
+
+
