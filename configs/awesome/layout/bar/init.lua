@@ -33,7 +33,7 @@ local app_launcher = Wibox.widget({
 })
 Helpers.ui.add_hover(app_launcher, Beautiful.widget_bg_alt, nil, Beautiful.black)
 app_launcher:add_button(Awful.button({}, 1, function()
-	require("utils.mods.bling").widget.app_launcher(Beautiful.bling_launcher_args):toggle()
+  awesome.emit_signal("awesome::app_launcher", "toggle")
 end))
 
 -- BATTERY WIDGET

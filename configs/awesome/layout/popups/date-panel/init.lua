@@ -3,7 +3,7 @@ local screen_width = screen.primary.geometry.width
 local screen_gap = Dpi(4)
 
 local main = Wibox({
-	height = screen_height - Beautiful.main_panel_size - Dpi(4) - (screen_gap * 2),
+	height = screen_height - Beautiful.main_panel_size - Dpi(4) - Beautiful.useless_gap,
 	width = Dpi(320),
 	bg = Beautiful.bg_normal,
 	visible = false,
@@ -14,11 +14,10 @@ local main = Wibox({
 })
 
 if Beautiful.main_panel_pos == "top" then
-	main.y = Beautiful.main_panel_size
+  Helpers.placement(main, "top_right")
 elseif Beautiful.main_panel_pos == "bottom" then
-	main.y = screen_height - main.height - Dpi(42) - screen_gap
+  Helpers.placement(main, "bottom_right")
 end
-main.x = screen_width - main.width - screen_gap * 2 - Dpi(4)
 
 awesome.connect_signal("awesome::notification_center", function(action)
 	if action == "toggle" then

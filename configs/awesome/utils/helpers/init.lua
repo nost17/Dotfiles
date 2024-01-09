@@ -1,12 +1,16 @@
 local _module = {}
 local cairo = require("lgi").cairo
 
-_module = {
-	color = require(... .. ".color"),
-	shape = require(... .. ".shape"),
-	ui = require(... .. ".ui"),
-	text = require(... .. ".text"),
-}
+_module.addTables = function(a, b)
+	local result = {}
+	for _, v in pairs(a) do
+		table.insert(result, v)
+	end
+	for _, v in pairs(b) do
+		table.insert(result, v)
+	end
+	return result
+end
 
 function _module.checkFile(file_path)
 	local f = io.open(file_path, "r")
@@ -18,29 +22,31 @@ function _module.checkFile(file_path)
 	end
 end
 function _module.cropSurface(ratio, surf)
-  local old_w, old_h = Gears.surface.get_size(surf)
-  local old_ratio = old_w / old_h
-  if old_ratio == ratio then return surf end
+	local old_w, old_h = Gears.surface.get_size(surf)
+	local old_ratio = old_w / old_h
+	if old_ratio == ratio then
+		return surf
+	end
 
-  local new_h = old_h
-  local new_w = old_w
-  local offset_h, offset_w = 0, 0
-  -- quick mafs
-  if (old_ratio < ratio) then
-    new_h = math.ceil(old_w * (1 / ratio))
-    offset_h = math.ceil((old_h - new_h) / 2)
-  else
-    new_w = math.ceil(old_h * ratio)
-    offset_w = math.ceil((old_w - new_w) / 2)
-  end
+	local new_h = old_h
+	local new_w = old_w
+	local offset_h, offset_w = 0, 0
+	-- quick mafs
+	if old_ratio < ratio then
+		new_h = math.ceil(old_w * (1 / ratio))
+		offset_h = math.ceil((old_h - new_h) / 2)
+	else
+		new_w = math.ceil(old_h * ratio)
+		offset_w = math.ceil((old_w - new_w) / 2)
+	end
 
-  local out_surf = cairo.ImageSurface(cairo.Format.ARGB32, new_w, new_h)
-  local cr = cairo.Context(out_surf)
-  cr:set_source_surface(surf, -offset_w, -offset_h)
-  cr.operator = cairo.Operator.SOURCE
-  cr:paint()
+	local out_surf = cairo.ImageSurface(cairo.Format.ARGB32, new_w, new_h)
+	local cr = cairo.Context(out_surf)
+	cr:set_source_surface(surf, -offset_w, -offset_h)
+	cr.operator = cairo.Operator.SOURCE
+	cr:paint()
 
-  return out_surf
+	return out_surf
 end
 
 function _module.recolor_image(image, color)
@@ -73,5 +79,21 @@ end
 function _module.gc(widget, id)
 	return widget:get_children_by_id(id)[1]
 end
+
+function _module.placement(wdg, pos, props)
+	props = props or { honor_workarea = true, margins = Beautiful.useless_gap }
+	if Awful.placement[pos] then
+		Awful.placement[pos](wdg, props)
+	else
+		Awful.placement.centered(wdg, props)
+	end
+end
+
+_module = Gears.table.crush(_module, {
+	color = require(... .. ".color"),
+	shape = require(... .. ".shape"),
+	ui = require(... .. ".ui"),
+	text = require(... .. ".text"),
+})
 
 return _module

@@ -105,8 +105,8 @@ local function select_app(self, x, y)
 		self._private.active_widget = widgets[1]
 		if self._private.active_widget ~= nil then
 			self._private.active_widget.selected = true
-			self._private.active_widget:get_children_by_id("background")[1].bg = self.app_selected_color
-			local name_widget = self._private.active_widget:get_children_by_id("name")[1]
+			Helpers.gc(self._private.active_widget, "background").bg = self.app_selected_color
+			local name_widget = Helpers.gc(self._private.active_widget, "name")
 			if name_widget then
 				name_widget.markup = Helpers.text.colorize_text(name_widget.text, self.app_name_selected_color)
 			end
@@ -117,8 +117,8 @@ end
 local function unselect_app(self)
 	if self._private.active_widget ~= nil then
 		self._private.active_widget.selected = false
-		self._private.active_widget:get_children_by_id("background")[1].bg = self.app_normal_color
-		local name_widget = self._private.active_widget:get_children_by_id("name")[1]
+		Helpers.gc(self._private.active_widget, "background").bg = self.app_normal_color
+		local name_widget = Helpers.gc(self._private.active_widget, "name")
 		if name_widget then
 			name_widget.markup = Helpers.text.colorize_text(name_widget.text, self.app_name_normal_color)
 		end
@@ -205,9 +205,9 @@ local function create_app_widget(self, entry)
 
 		local w_app = _self
 		if w_app.selected then
-			w_app:get_children_by_id("background")[1].bg = self.app_selected_hover_color
+			Helpers.gc(w_app, "background").bg = self.app_selected_hover_color
 		else
-			app:get_children_by_id("background")[1].bg = self.app_normal_hover_color
+			Helpers.gc(w_app, "background").bg = self.app_normal_hover_color
 		end
 	end)
 
@@ -219,9 +219,9 @@ local function create_app_widget(self, entry)
 
 		local w_app = _self
 		if w_app.selected then
-			w_app:get_children_by_id("background")[1].bg = self.app_selected_color
+			Helpers.gc(w_app, "background").bg = self.app_selected_color
 		else
-			w_app:get_children_by_id("background")[1].bg = self.app_normal_color
+			Helpers.gc(w_app, "background").bg = self.app_normal_color
 		end
 	end)
 
@@ -358,9 +358,9 @@ local function page_backward(self, direction)
 			select_app(self, math.min(pos.row, #self._private.grid.children % self.apps_per_row), columns)
 		end
 	end
-  if columns == 1 then
-    select_app(self, rows, 1)
-  end
+	if columns == 1 then
+		select_app(self, rows, 1)
+	end
 end
 
 local function page_forward(self, direction)
@@ -428,7 +428,6 @@ local function scroll_up(self)
 		end
 	else
 		page_backward(self, "up")
-
 	end
 end
 
@@ -571,7 +570,7 @@ local function generate_apps(self)
 			if not has_value(self.skip_names, name) and not has_value(self.skip_commands, commandline) then
 				-- Check if this app should be skipped becuase it's iconless depanding on skip_empty_icons
 				if icon ~= "" or self.skip_empty_icons == false then
-					if icon == "" then
+					if icon == "" or not icon then
 						if self.default_app_icon_name ~= nil then
 							icon = getIcon({
 								name = self.default_app_icon_name,
@@ -580,7 +579,6 @@ local function generate_apps(self)
 							icon = self.default_app_icon_path
 						end
 					end
-
 					local desktop_app_info = Gio.DesktopAppInfo.new(app_info.get_id(app))
 					local terminal = Gio.DesktopAppInfo.get_string(desktop_app_info, "Terminal") == "true" and true
 						or false

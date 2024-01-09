@@ -13,11 +13,10 @@ local main = Wibox({
 })
 
 if Beautiful.main_panel_pos == "top" then
-	main.y = Beautiful.main_panel_size
+  Helpers.placement(main, "top_right")
 elseif Beautiful.main_panel_pos == "bottom" then
-	main.y = screen_height - main.height - Beautiful.main_panel_size
+  Helpers.placement(main, "bottom_right")
 end
-main.x = screen_width - main.width - main.border_width - Beautiful.useless_gap * 2
 
 -- MUSIC PLAYER WDG
 local music = require("layout.popups.quicksettings.music-player")
@@ -25,7 +24,7 @@ local music = require("layout.popups.quicksettings.music-player")
 local slider_bars = require("layout.popups.quicksettings.sliders")
 -- QUICKSETTINGS CONTROL BUTTONS WDG
 local controls = require("layout.popups.quicksettings.controls")
--- QUICKSETTINGS SETUP
+-- QUICKSETTINGS SET
 main:setup({
 	{
 		music,
@@ -51,3 +50,7 @@ awesome.connect_signal("awesome::quicksettings_panel", function(action)
 		awesome.emit_signal("awesome::notification_center", "hide")
 	end
 end)
+
+Awful.mouse.append_client_mousebinding(Awful.button({}, 1, function(c)
+  awesome.emit_signal("awesome::quicksettings_panel", "hide")
+end))

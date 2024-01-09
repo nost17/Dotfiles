@@ -100,15 +100,16 @@ local music_artist = Helpers.text.mktext({
 local music_art = Wibox.widget({
 	halign = "center",
 	valign = "center",
-  opacity = 0.8,
-  resize = true,
+	opacity = 0.7,
+	resize = true,
 	horizontal_fit_policy = "fit",
 	vertical_fit_policy = "fit",
 	widget = Wibox.widget.imagebox,
-	set_cover_art = function(self, art, size)
-		Awful.spawn.easy_async_with_shell(script_path .. art .. " " .. size, function()
-			self:set_image(Gears.surface.load_uncached("/tmp/coversito.png"))
-		end)
+	set_cover_art = function(self, art, ratio)
+		self:set_image(Helpers.cropSurface(ratio, Gears.surface.load_uncached(art)))
+		-- Awful.spawn.easy_async_with_shell(script_path .. art .. " " .. tostring(ratio):gsub(",", "."), function()
+		-- 	self:set_image(Gears.surface.load_uncached("/tmp/coversito.png"))
+		-- end)
 	end,
 })
 
@@ -157,7 +158,7 @@ local media_controls = Wibox.widget({
 })
 local wdg = Wibox.widget({
 	{
-    music_art,
+		music_art,
 		-- {
 		-- 	music_art,
 		-- 	halign = "center",
@@ -199,12 +200,12 @@ local wdg = Wibox.widget({
 		layout = Wibox.layout.stack,
 	},
 	shape = Helpers.shape.rrect(Beautiful.medium_radius),
-  forced_height = Dpi(120),
+	-- forced_height = Dpi(120),
 	bg = Beautiful.transparent,
 	widget = Wibox.container.background,
 })
-
-music_art.set_cover_art(music_art, Beautiful.music_cover_default, wdg.forced_height)
+local music_cover_ratio = 2.5
+music_art.set_cover_art(music_art, Beautiful.music_cover_default, music_cover_ratio)
 
 Playerctl:connect_signal("new_player", function(_)
 	player_button:set_text(User.current_player.icon)
@@ -214,7 +215,7 @@ end)
 Playerctl:connect_signal("metadata", function(_, title, artist, _, album_art, _)
 	-- music_art:set_image(Gears.surface.load_uncached(album_path))
 	-- music_art.cover_art = { art = album_art, size = wdg.forced_height }
-  music_art.set_cover_art(music_art, album_art, wdg.forced_height)
+	music_art.set_cover_art(music_art, album_art, music_cover_ratio)
 	music_title:set_text(title)
 	music_artist:set_text(artist)
 end)
