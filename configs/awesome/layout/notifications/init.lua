@@ -9,7 +9,7 @@ Naughty.connect_signal("request::icon", function(n, context, hints)
 		hints.app_icon = n.app_name
 		-- return
 	end
-	-- local path = Helpers.misc.getIcon(hints.app_icon)
+	-- local path = Helpers.getIcon(hints.app_icon)
 	local path = getIcon({
 		name = hints.app_icon,
 		icon_size = 48,

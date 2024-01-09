@@ -22,7 +22,7 @@ Playerctl:connect_signal("status", function(_, playing)
 end)
 -- message = Helpers.text.colorize_text("<u>" .. music_data.artist .. "</u>", Beautiful.cyan_alt),
 function Playerctl:notify()
-	music_notify = Helpers.misc.notify_dwim({
+	music_notify = Helpers.notify_dwim({
 		title = colorize_text("<b>" .. self._private.prev_metadata.title .. "</b>", Beautiful.accent_color),
 		message = "<u>"
 			.. self._private.prev_metadata.artist

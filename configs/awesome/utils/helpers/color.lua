@@ -65,7 +65,7 @@ function M.LDColor(method, factor, color)
 		.. " -c '"
 		.. color
 		.. "'"
-	local out = Helpers.misc.getCmdOut(script)
+	local out = Helpers.getCmdOut(script)
 	out = string.gsub(string.gsub(string.gsub(out, "^%s+", ""), "%s+$", ""), "[\n\r]+", " ")
 	return out
 end

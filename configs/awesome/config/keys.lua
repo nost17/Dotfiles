@@ -1,6 +1,7 @@
 local bling = require("utils.mods.bling")
 -- local freedesktop = require("utils.mods.freedesktop")
-local app_launcher = bling.widget.app_launcher(Beautiful.bling_launcher_args)
+-- local props = require("layout.launcher.props")
+-- local app_launcher = bling.widget.app_launcher(Beautiful.bling_launcher_args)
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 menubar.left_label = ""
@@ -32,8 +33,8 @@ Awful.keyboard.append_global_keybindings({
         { description = "quit awesome", group = "awesome" }),
     Awful.key({ User.config.modkey, }, "Return", function() Awful.spawn(User.vars.terminal) end,
         { description = "open a terminal", group = "launcher" }),
-    Awful.key({ "Mod1" }, "d", function() app_launcher:toggle() end,
-        { description = "run prompt", group = "launcher" }),
+    -- Awful.key({ "Mod1" }, "d", function() app_launcher:toggle() end,
+    --     { description = "run prompt", group = "launcher" }),
     Awful.key({ "Mod1" }, "a", function()
           awesome.emit_signal("awesome::notification_center", "toggle")
         end,

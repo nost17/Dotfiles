@@ -24,7 +24,7 @@ end
 -- info_volume()
 
 local function check_sink()
-    local sink_info = Helpers.misc.getCmdOut(
+    local sink_info = Helpers.getCmdOut(
         'pamixer --get-default-sink | tail -n1 | awk -F \'"\' \'{gsub(/[ \t]+$/, "", $1); print $1 "@@" $(NF-1)}\''
     )
     local new_sink = sink_info:match("^(.*)@@")

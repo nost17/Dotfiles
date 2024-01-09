@@ -2,7 +2,7 @@ local theme = {}
 local themes_path = Gears.filesystem.get_configuration_dir() .. "theme/"
 local function check(file)
   file_path = themes_path:gsub("theme/", "") .. file:gsub("%.", "/") .. ".lua"
-  return Helpers.misc.checkFile(file_path)
+  return Helpers.checkFile(file_path)
 end
 local theme_light_path = "theme." .. User.config.theme .. ".light"
 local theme_dark_path = "theme." .. User.config.theme .. ".dark"
@@ -217,7 +217,7 @@ for _, layout_name in ipairs({
   'layout_cornersw',
   'layout_cornerse',
 }) do
-  theme[layout_name] = Helpers.misc.recolor_image(theme[layout_name], theme.layouts_icons_color)
+  theme[layout_name] = Helpers.recolor_image(theme[layout_name], theme.layouts_icons_color)
 end
 
 Beautiful.init(theme)

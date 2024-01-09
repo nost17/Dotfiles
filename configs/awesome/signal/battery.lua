@@ -5,8 +5,8 @@ local first_time = true
 Awful.spawn.easy_async_with_shell(kill_script, function()
 	Awful.spawn.with_line_callback(script, {
 		stdout = function()
-			local capacity = Helpers.misc.getCmdOut("cat /sys/class/power_supply/BAT0/capacity")
-			local status = Helpers.misc.getCmdOut("cat /sys/class/power_supply/BAT0/status"):lower()
+			local capacity = Helpers.getCmdOut("cat /sys/class/power_supply/BAT0/capacity")
+			local status = Helpers.getCmdOut("cat /sys/class/power_supply/BAT0/status"):lower()
 			if capacity ~= old_capacity or status ~= old_status then
 				local charging = status == "charging"
 				awesome.emit_signal("awesome::battery", tonumber(capacity), charging)

@@ -25,13 +25,13 @@ local battery_bar = Wibox.widget({
 	widget = Wibox.widget.progressbar,
 })
 local battery_label = Wibox.widget({
-	text = Helpers.misc.getCmdOut("cat /sys/class/power_supply/BAT0/capacity") .. "%",
+	text = Helpers.getCmdOut("cat /sys/class/power_supply/BAT0/capacity") .. "%",
 	font = Beautiful.font_text .. "SemiBold 12",
 	halign = "center",
 	widget = Wibox.widget.textbox,
 })
 
-battery_bar.value = tonumber(Helpers.misc.getCmdOut("cat /sys/class/power_supply/BAT0/capacity"))
+battery_bar.value = tonumber(Helpers.getCmdOut("cat /sys/class/power_supply/BAT0/capacity"))
 
 awesome.connect_signal("awesome::battery", function(capacity, charging)
 	battery_label:set_text(tostring(capacity) .. "%")
