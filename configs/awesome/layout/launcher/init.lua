@@ -857,11 +857,11 @@ local function new(args)
 		end
 	)
 	local logout_button = create_user_button(
-		"󰍃",
-		Beautiful.green,
+		"󰈆",
+		Beautiful.magenta,
 		Helpers.shape.rrect(Beautiful.small_radius),
 		function()
-      awesome.emit_signal("awesome::logoutscreen", "show")
+			awesome.emit_signal("awesome::logoutscreen", "show")
 		end
 	)
 	ret._private.widget = Awful.popup({
@@ -882,21 +882,32 @@ local function new(args)
 				{
 					widget = Wibox.container.margin,
 					margins = {
-            top = args.grid_margins or 0,
-            bottom = args.grid_margins or 0,
-            right = args.grid_margins,
-            left = args.grid_margins - args.border_width,
-          },
+						top = args.grid_margins or 0,
+						bottom = args.grid_margins or 0,
+						right = args.grid_margins,
+						left = args.grid_margins - args.border_width,
+					},
 					{
 						layout = Wibox.layout.align.vertical,
-						nil,
+						{
+							widget = Wibox.widget.imagebox,
+							image = Beautiful.user_icon,
+							clip_shape = Gears.shape.circle,
+							forced_width = Dpi(46),
+							forced_height = Dpi(46),
+						},
 						nil,
 						{
-							layout = Wibox.layout.fixed.vertical,
-              spacing = args.grid_margins,
-							sleep_button,
-							lockscreen_button,
-							logout_button,
+							layout = Wibox.container.place,
+							halign = "center",
+              content_fill_horizontal = true,
+							{
+								layout = Wibox.layout.fixed.vertical,
+								spacing = args.grid_margins,
+								sleep_button,
+								lockscreen_button,
+								logout_button,
+							},
 						},
 					},
 				},

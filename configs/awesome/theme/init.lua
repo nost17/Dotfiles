@@ -43,6 +43,7 @@ theme.fg_normal              = theme.foreground
 theme.useless_gap            = Dpi(4)
 theme.gap_single_client      = false
 theme.awesome_icon           = themes_path .. "images/awesome.png"
+theme.user_icon              = themes_path .. "images/user_icon.jpeg"
 -- theme.awesome_icon = themes_path .. "images/awesome.png"
 theme.small_radius           = Dpi(6)
 theme.medium_radius          = Dpi(10)
