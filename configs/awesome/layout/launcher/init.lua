@@ -646,6 +646,20 @@ function app_launcher:toggle()
 	end
 end
 
+local function create_user_button(icon, color, shape, fn)
+	local wdg = require("utils.button.text").normal({
+		text = icon,
+		font = Beautiful.font_icon .. "15",
+		shape = shape,
+		fg_normal = color,
+		bg_normal = color .. "1F",
+		bg_hover = color .. "3F",
+		on_release = fn,
+		forced_height = Dpi(46),
+	})
+	return wdg
+end
+
 local function new(args)
 	args = args or {}
 
@@ -689,6 +703,9 @@ local function new(args)
 	args.border_color = args.border_color or Beautiful.border_color or "#FFFFFF"
 	args.shape = args.shape or nil
 
+	args.prompt_image_bg_ratio = args.prompt_image_bg_ratio or 0
+	args.prompt_image_bg_height = args.prompt_image_bg_height or Dpi(120)
+
 	args.prompt_height = args.prompt_height or Dpi(100)
 	args.prompt_margins = args.prompt_margins or Dpi(0)
 	args.prompt_paddings = args.prompt_paddings or Dpi(30)
@@ -721,9 +738,9 @@ local function new(args)
 	args.app_height = args.app_height or Dpi(32)
 	args.app_shape = args.app_shape or nil
 	args.app_normal_color = args.app_normal_color or Beautiful.bg_normal or "#000000"
-	args.app_normal_hover_color = args.app_normal_hover_color or "#bf616a"
+	args.app_normal_hover_color = args.app_normal_hover_color or nil
 	args.app_selected_color = args.app_selected_color or Beautiful.fg_normal or "#FFFFFF"
-	args.app_selected_hover_color = args.app_selected_hover_color or "#78e6ca"
+	args.app_selected_hover_color = args.app_selected_hover_color or nil
 	args.app_content_padding = args.app_content_padding or 0
 	args.app_content_spacing = args.app_content_spacing or Dpi(10)
 	args.app_show_icon = args.app_show_icon == nil and true or args.app_show_icon
@@ -822,6 +839,31 @@ local function new(args)
 			end),
 		},
 	})
+	-- 󰌾 󰐥 󰒲
+	local sleep_button = create_user_button(
+		"󰒲",
+		Beautiful.yellow,
+		Helpers.shape.rrect(Beautiful.small_radius),
+		function()
+			Awful.spawn("systemctl suspend", false)
+		end
+	)
+	local lockscreen_button = create_user_button(
+		"󰌾",
+		Beautiful.blue,
+		Helpers.shape.rrect(Beautiful.small_radius),
+		function()
+			Awful.spawn("kitty", false)
+		end
+	)
+	local logout_button = create_user_button(
+		"󰍃",
+		Beautiful.green,
+		Helpers.shape.rrect(Beautiful.small_radius),
+		function()
+			Awful.spawn("kitty", false)
+		end
+	)
 	ret._private.widget = Awful.popup({
 		type = args.type,
 		visible = false,
@@ -832,43 +874,100 @@ local function new(args)
 		shape = ret.shape,
 		bg = ret.background,
 		widget = {
-			layout = Wibox.layout.fixed.vertical,
+			layout = Wibox.layout.fixed.horizontal,
 			{
-				widget = Wibox.container.margin,
-				margins = ret.prompt_margins,
+				widget = Wibox.container.background,
+				bg = args.border_color,
+				forced_width = Dpi(50) + args.border_width + args.grid_margins * 1.5,
 				{
-					widget = Wibox.container.background,
-					forced_height = ret.prompt_height,
-					shape = ret.prompt_shape,
-					bg = ret.prompt_color,
-					fg = ret.prompt_text_color,
-					border_width = ret.prompt_border_width,
-					border_color = ret.prompt_border_color,
+					widget = Wibox.container.margin,
+					margins = {
+            top = args.grid_margins or 0,
+            bottom = args.grid_margins or 0,
+            right = args.grid_margins,
+            left = args.grid_margins - args.border_width,
+          },
 					{
-						widget = Wibox.container.margin,
-						margins = ret.prompt_paddings,
+						layout = Wibox.layout.align.vertical,
+						nil,
+						nil,
 						{
-							widget = Wibox.container.place,
-							halign = ret.prompt_text_halign,
-							valign = ret.prompt_text_valign,
-							{
-								layout = Wibox.layout.fixed.horizontal,
-								spacing = ret.prompt_icon_text_spacing,
-								{
-									widget = Wibox.widget.textbox,
-									font = ret.prompt_icon_font,
-									markup = ret.prompt_icon_markup,
-								},
-								ret._private.prompt.textbox,
-							},
+							layout = Wibox.layout.fixed.vertical,
+              spacing = args.grid_margins,
+							sleep_button,
+							lockscreen_button,
+							logout_button,
 						},
 					},
 				},
 			},
 			{
 				widget = Wibox.container.margin,
-				margins = ret.apps_margin,
-				ret._private.grid,
+				margins = args.grid_margins or 0,
+				{
+					layout = Wibox.layout.fixed.vertical,
+					spacing = args.grid_spacing or 0,
+					{
+						layout = Wibox.layout.stack,
+						{
+							image = Helpers.cropSurface(
+								args.prompt_image_bg_ratio,
+								Gears.surface.load_uncached(Beautiful.wallpaper)
+							),
+							halign = "center",
+							valign = "center",
+							resize = true,
+							vertical_fit_policy = "fill",
+							horizontal_fit_policy = "fill",
+							clip_shape = args.prompt_image_bg_shape or nil,
+							forced_width = grid_width,
+							forced_height = args.prompt_image_bg_height,
+							widget = Wibox.widget.imagebox,
+						},
+						{
+							widget = Wibox.container.margin,
+							margins = ret.prompt_margins,
+							{
+								layout = Wibox.layout.align.vertical,
+								expand = "outside",
+								nil,
+								{
+									widget = Wibox.container.background,
+									forced_height = ret.prompt_height,
+									shape = ret.prompt_shape,
+									bg = ret.prompt_color,
+									fg = ret.prompt_text_color,
+									border_width = ret.prompt_border_width,
+									border_color = ret.prompt_border_color,
+									{
+										widget = Wibox.container.margin,
+										margins = ret.prompt_paddings,
+										{
+											widget = Wibox.container.place,
+											halign = ret.prompt_text_halign,
+											valign = ret.prompt_text_valign,
+											{
+												layout = Wibox.layout.fixed.horizontal,
+												spacing = ret.prompt_icon_text_spacing,
+												{
+													widget = Wibox.widget.textbox,
+													font = ret.prompt_icon_font,
+													markup = ret.prompt_icon_markup,
+												},
+												ret._private.prompt.textbox,
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+					{
+						widget = Wibox.container.margin,
+						margins = ret.apps_margin,
+						ret._private.grid,
+					},
+				},
 			},
 		},
 	})

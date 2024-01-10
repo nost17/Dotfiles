@@ -80,8 +80,8 @@ function _module.gc(widget, id)
 	return widget:get_children_by_id(id)[1]
 end
 
-function _module.placement(wdg, pos, props)
-	props = props or { honor_workarea = true, margins = Beautiful.useless_gap }
+function _module.placement(wdg, pos, props, margins)
+	props = props or { honor_workarea = true, margins = margins or Beautiful.useless_gap }
 	if Awful.placement[pos] then
 		Awful.placement[pos](wdg, props)
 	else
