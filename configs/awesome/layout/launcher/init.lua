@@ -861,7 +861,7 @@ local function new(args)
 		Beautiful.green,
 		Helpers.shape.rrect(Beautiful.small_radius),
 		function()
-			Awful.spawn("kitty", false)
+      awesome.emit_signal("awesome::logoutscreen", "show")
 		end
 	)
 	ret._private.widget = Awful.popup({

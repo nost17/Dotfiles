@@ -24,7 +24,7 @@ end
 theme.ToggleDarkMode()
 
 -- OTHER
-theme.wallpaper              = themes_path .. "/wallpapers/yoru.jpeg"
+theme.wallpaper              = theme.wallpaper or themes_path .. "/wallpapers/yoru.jpeg"
 theme.font_text              = "Sofia Sans "
 theme.font_icon              = "Material Design Icons Desktop "
 theme.font                   = theme.font_text .. "Regular 12"

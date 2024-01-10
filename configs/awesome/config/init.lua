@@ -11,7 +11,6 @@ tag.connect_signal("request::default_layouts", function()
 	})
 end)
 
-
 Awful.screen.connect_for_each_screen(function(s)
 	Awful.tag({ "1", "2", "3", "4", "5" }, s, Awful.layout.layouts[1])
 end)
@@ -20,16 +19,11 @@ screen.connect_signal("request::wallpaper", function(s)
 	Awful.wallpaper({
 		screen = s,
 		widget = {
-			{
-				image = Beautiful.wallpaper,
-				upscale = true,
-				downscale = true,
-				widget = Wibox.widget.imagebox,
-			},
-			valign = "center",
-			halign = "center",
-			tiled = false,
-			widget = Wibox.container.tile,
+			widget = Wibox.widget.imagebox,
+			image = Beautiful.wallpaper,
+			upscale = true,
+			downscale = true,
+			vertical_fit_policy = "fill",
 		},
 	})
 end)

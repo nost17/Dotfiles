@@ -26,7 +26,7 @@ User.config = {
 	dnd_state = false,
 	music_notify = true,
 	modkey = "Mod4",
-	theme = "nymph",
+	theme = "onedark",
 	theme_accent = "blue",
 }
 
