@@ -853,7 +853,7 @@ local function new(args)
 		Beautiful.blue,
 		Helpers.shape.rrect(Beautiful.small_radius),
 		function()
-			Awful.spawn("kitty", false)
+			awesome.emit_signal("awesome::app_launcher", "hide")
 		end
 	)
 	local logout_button = create_user_button(
@@ -900,7 +900,7 @@ local function new(args)
 						{
 							layout = Wibox.container.place,
 							halign = "center",
-              content_fill_horizontal = true,
+							content_fill_horizontal = true,
 							{
 								layout = Wibox.layout.fixed.vertical,
 								spacing = args.grid_margins,
@@ -1037,9 +1037,9 @@ local my_launcher = app_launcher(props)
 awesome.connect_signal("awesome::app_launcher", function(action)
 	if action == "toggle" then
 		my_launcher:toggle()
-	elseif action == "open" then
+	elseif action == "show" then
 		my_launcher:show()
-	elseif action == "close" then
+	elseif action == "hide" then
 		my_launcher:hide()
 	end
 end)

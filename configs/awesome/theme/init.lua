@@ -62,6 +62,9 @@ theme.bg_systray             = theme.widget_bg_alt
 theme.main_panel_pos         = "bottom"
 theme.main_panel_size        = Dpi(42)
 
+-- LOGOUT SCREEN
+theme.logoutscreen_buttons_shape = Helpers.shape.rrect(theme.small_radius)
+
 -- MUSIC CONTROL WIDGET
 theme.music_metadata_pos     = "left"
 theme.music_control_pos      = "left"
