@@ -140,6 +140,7 @@ function playerctl:new_player(new_player)
 		player_count = player_count + 1
     set_player(self)
 	end
+  emit_metadata(self)
 end
 
 local function new(args)
