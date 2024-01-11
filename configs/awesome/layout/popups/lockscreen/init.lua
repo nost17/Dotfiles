@@ -22,35 +22,6 @@ local auth = function(password)
 	return LuaPam.auth_current_user(password)
 end
 
-local function create_custom_button(icon, fn)
-	return Wibox.widget({
-		layout = Wibox.container.place,
-		halign = "center",
-		valign = "center",
-		{
-			widget = Wibox.container.background,
-			bg = Beautiful.bg_normal,
-			shape = Gears.shape.rounded_bar,
-			require("utils.button.text").normal({
-				text = icon,
-				bold = true,
-				font = Beautiful.font_icon .. "13",
-				shape = Gears.shape.rounded_bar,
-				fg_normal = Beautiful.red,
-				bg_normal = Beautiful.bg_normal,
-				bg_hover = Beautiful.red .. "2F",
-				on_release = function()
-					if fn then
-						fn()
-					end
-				end,
-				expand = false,
-				forced_height = Dpi(40),
-				forced_width = Dpi(80),
-			}),
-		},
-	})
-end
 local function create_prompt_icon(icon, color, bg, id)
 	local size = Dpi(30)
 	return Wibox.widget({
@@ -114,10 +85,6 @@ awesome.connect_signal("awesome::lockscreen", function(action)
 	input_prompt.new_textbox:set_markup_silently(Beautiful.lockscreen_placeholder_text)
 end)
 
-local close_button = create_custom_button("󰖭", function()
-	awesome.emit_signal("awesome::lockscreen", "hide")
-end)
-
 local fake_textbox = Wibox.widget.textbox()
 input_prompt.new_textbox = Wibox.widget({
 	widget = Wibox.widget.textbox,
@@ -150,9 +117,9 @@ input_prompt.widget = prompt({
 		end
 	end,
 	keypressed_callback = function(_, key, _)
-    if key == "Escape" then
-      input_prompt.widget:stop()
-    end
+		if key == "Escape" then
+			input_prompt.widget:stop()
+		end
 		if key == "Return" then
 			if auth(input_prompt.text) then
 				awesome.emit_signal("awesome::lockscreen", "hide")
@@ -278,8 +245,8 @@ input_prompt.promptbox = Wibox.widget({
 		},
 	},
 })
-Helpers.ui.add_click(input_prompt.promptbox, 1, function ()
-  input_prompt.widget:start()
+Helpers.ui.add_click(input_prompt.promptbox, 1, function()
+	input_prompt.widget:start()
 end)
 
 local battery = require("layout.popups.logoutscreen.battery_lock")
@@ -289,12 +256,6 @@ lockscreen:setup({
 	layout = Wibox.layout.stack,
 	background,
 	overlay,
-	{
-		layout = Wibox.container.place,
-		valign = "top",
-		halign = "right",
-		close_button,
-	},
 	{
 		layout = Wibox.container.place,
 		valign = "center",
@@ -331,13 +292,18 @@ lockscreen:setup({
 	},
 	{
 		layout = Wibox.container.place,
+		content_fill_horizontal = true,
+		fill_horizontal = true,
 		valign = "bottom",
 		halign = "center",
 		{
 			widget = Wibox.container.margin,
-			margins = Dpi(30),
+      bottom = 0,
+      right = Dpi(40),
+      left = Dpi(40),
 			{
 				layout = Wibox.layout.align.horizontal,
+				expand = "none",
 				music,
 				battery,
 				nil,
