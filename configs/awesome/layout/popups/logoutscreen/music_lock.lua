@@ -2,8 +2,8 @@ local music_title = Helpers.text.mktext({
 	text = "Titulo",
 	color = Beautiful.fg_normal,
 	bold = false,
-	font = "Rubik Regular ",
-	size = Beautiful.music_title_font_size or 11,
+	font = "Rubik Medium",
+	size = 13,
 	halign = "left",
 })
 
@@ -12,7 +12,7 @@ local music_artist = Helpers.text.mktext({
 	color = Beautiful.fg_normal,
 	bold = false,
 	font = "Rubik Regular ",
-	size = Beautiful.music_artist_font_size or 11,
+	size = 11,
 	halign = "left",
 })
 
@@ -46,7 +46,7 @@ local music_art = Wibox.widget({
 music_art:set_image(Gears.surface.load_uncached(Beautiful.music_cover_default))
 
 Playerctl:connect_signal("metadata", function(_, title, artist, _, album_art, _)
-	music_art:set_image(Gears.surface.load_uncached(album_art))
+	music_art:set_image(Helpers.cropSurface(1, Gears.surface.load_uncached(album_art)))
 	music_title:set_text(title)
 	music_artist:set_text(artist)
 end)
