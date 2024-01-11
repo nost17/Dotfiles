@@ -8,6 +8,8 @@ Beautiful = require("beautiful")
 Helpers = require("utils.helpers")
 Naughty = require("naughty")
 Dpi = Beautiful.xresources.apply_dpi
+LuaPam = require("liblua_pam")
+
 
 -- Naughty error notification
 Naughty.connect_signal("request::display_error", function(message, startup)
@@ -41,7 +43,7 @@ User.music_players = {
 	{ player = "chromium", name = "Chromium", icon = "󰇩" },
 	{ player = "auto", name = "Auto", icon = "󰖟" },
 }
-User.current_player = User.music_players[1]
+User.current_player = User.music_players[2]
 Playerctl = require("signal.playerctl")()
 
 -- Desktop configuration

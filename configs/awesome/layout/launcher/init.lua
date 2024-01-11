@@ -853,7 +853,7 @@ local function new(args)
 		Beautiful.blue,
 		Helpers.shape.rrect(Beautiful.small_radius),
 		function()
-			awesome.emit_signal("awesome::app_launcher", "hide")
+			awesome.emit_signal("awesome::lockscreen", "show")
 		end
 	)
 	local logout_button = create_user_button(
