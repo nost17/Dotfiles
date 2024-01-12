@@ -817,3 +817,8 @@ Jan 09 16:51 : player: played "Paramore - Decode.mp3"
 Jan 09 16:54 : player: played "01 David Bisbal - Herederos.mp3"
 Jan 10 20:46 : client: [0] command "close" during idle
 Jan 10 20:55 : player: played "Clean Bandit - Solo (feat Demi Lovato).mp3"
+Jan 12 09:33 : client: [0] command "close" during idle
+Jan 12 09:54 : player: played "Hoshi - Comment je vais faire.mp3"
+Jan 12 09:59 : player: played "Superman - Eminem  Dina Rae (320).mp3"
+Jan 12 10:01 : client: [1] command "close" during idle
+Jan 12 10:01 : client: [4] command "close" during idle

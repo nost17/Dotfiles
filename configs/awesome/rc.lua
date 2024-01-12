@@ -43,7 +43,7 @@ User.music_players = {
 	{ player = "chromium", name = "Chromium", icon = "󰇩" },
 	{ player = "auto", name = "Auto", icon = "󰖟" },
 }
-User.current_player = User.music_players[2]
+User.current_player = User.music_players[1]
 Playerctl = require("signal.playerctl")()
 
 -- Desktop configuration

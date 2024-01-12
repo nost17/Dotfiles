@@ -1,6 +1,15 @@
 local playerctl = { mt = {} }
 local setmetatable = setmetatable
 
+local player_count = 1
+local get_player_index = function(pos)
+	if pos == "next" then
+		return (player_count % #User.music_players) + 1
+	elseif pos == "prev" then
+		return (player_count % #User.music_players) - 1
+	end
+end
+
 function playerctl:pause(player)
 	if player ~= nil then
 		Awful.spawn.with_shell("playerctl --player=" .. player .. " pause")
@@ -80,7 +89,7 @@ end
 
 local function init_status_signal(self)
 	local init_script = self._private.cmd .. "status -F"
-	local kill_script = "ps x | grep '" .. init_script .. " -F" .. "' | grep -v grep | awk '{print $1}' | xargs kill"
+	local kill_script = "ps x | grep -e 'playerctl --player=' -e 'status -F' | grep -v grep | awk '{print $1}' | xargs kill"
 	Awful.spawn.easy_async_with_shell(kill_script, function(_)
 		Awful.spawn.with_line_callback(init_script, {
 			stdout = function(stdout)
@@ -96,6 +105,9 @@ end
 
 local function init_metadata_signal(self)
 	local kill_script = "ps x | grep '"
+    .. "playerctl "
+    .. self._private.metadata_format
+    .. "\\|"
 		.. self._private.metadata_cmd
 		.. " -F"
 		.. "' | grep -v grep | awk '{print $1}' | xargs kill"
@@ -129,18 +141,17 @@ local function set_player(self)
 	self:emit_signal("new_player")
 end
 
-local player_count = 1
 function playerctl:new_player(new_player)
 	if new_player then
 		User.current_player.player = new_player
 		User.current_player.name = new_player:gsub("^%l", string.upper)
-    set_player(self)
+		set_player(self)
 	else
-		User.current_player = User.music_players[(player_count % #User.music_players) + 1]
+		User.current_player = User.music_players[get_player_index("next")]
 		player_count = player_count + 1
-    set_player(self)
+		set_player(self)
 	end
-  emit_metadata(self)
+	emit_metadata(self)
 end
 
 local function new(args)
@@ -153,6 +164,7 @@ local function new(args)
 	ret.prev_metadata = {}
 
 	ret._private.cmd = "playerctl "
+  ret._private.metadata_format = "metadata -f ARTIST@{{artist}}@TITLE@{{title}}@ALBUM@{{album}}@ART@{{mpris:artUrl}}@END"
 	-- Set cmd
 	if User.current_player.player ~= "auto" then
 		ret._private.cmd = ret._private.cmd .. "--player=" .. User.current_player.player .. " "
@@ -160,7 +172,7 @@ local function new(args)
 		ret._private.cmd = "playerctl "
 	end
 	ret._private.metadata_cmd = ret._private.cmd
-		.. "metadata -f ARTIST@{{artist}}@TITLE@{{title}}@ALBUM@{{album}}@ART@{{mpris:artUrl}}@END"
+		.. ret._private.metadata_format
 	--- Return object
 	emit_metadata(ret)
 	init_status_signal(ret)

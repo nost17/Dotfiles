@@ -49,7 +49,7 @@ theme.small_radius           = Dpi(6)
 theme.medium_radius          = Dpi(10)
 
 -- BORDER
-theme.border_width           = 2
+theme.border_width           = 0
 theme.border_normal          = "#0c0e0f"
 theme.border_focus           = theme.yellow
 
@@ -125,12 +125,38 @@ theme.menu_width             = 260
 -- TITLEBAR
 -- theme.titlebar_bg_focus                = Helpers.color.ldColor(theme.blue, -25)
 -- theme.titlebar_bg_normal               = Helpers.color.ldColor(theme.bg_normal, 8)
-theme.titlebar_bg_normal     = "#0c0e0f"
+theme.titlebar_bg_normal     = theme.widget_bg_color
 theme.titlebar_bg_focus      = theme.titlebar_bg_normal
-theme.titlebar_fg_normal     = theme.titlebar_bg_normal
+theme.titlebar_fg_normal     = theme.fg_normal
 theme.titlebar_fg_focus      = theme.fg_normal .. "BF"
 theme.titlebar_font          = theme.font_text .. "SemiBold 10"
-theme.titlebar_size          = 34
+theme.titlebar_size          = Dpi(40)
+local recolor_image = Gears.color.recolor_image
+local recolor = function (color, method)
+  return Helpers.color.ldColor(color, 35, method or "darken")
+end
+theme.titlebar_close_button_normal              =
+  recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.widget_bg_alt, "lighten"))
+theme.titlebar_close_button_focus               = recolor_image(themes_path .. "images/titlebar/close_icon.png", theme.red)
+theme.titlebar_minimize_button_normal           =
+  recolor_image(themes_path .. "images/titlebar/minimize_icon.png", recolor(theme.widget_bg_alt, "lighten"))
+theme.titlebar_minimize_button_focus            = recolor_image(themes_path .. "images/titlebar/minimize_icon.png", theme.green)
+theme.titlebar_maximized_button_normal_active   =
+  recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.widget_bg_alt, "lighten"))
+theme.titlebar_maximized_button_normal_inactive =
+  recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.widget_bg_alt, "lighten"))
+theme.titlebar_maximized_button_focus_active    = recolor_image(themes_path .. "images/titlebar/close_icon.png", theme.orange)
+theme.titlebar_maximized_button_focus_inactive  = recolor_image(themes_path .. "images/titlebar/close_icon.png", theme.orange)
+-- TITLEBAR NORMAL HOVER
+theme.titlebar_close_button_normal_hover        = recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.red))
+theme.titlebar_minimize_button_normal_hover     = recolor_image(themes_path .. "images/titlebar/minimize_icon.png", recolor(theme.green))
+theme.titlebar_maximized_button_normal_active_hover   = recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.orange))
+theme.titlebar_maximized_button_normal_inactive_hover = recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.orange))
+-- TITLEBAR FOCUS HOVER
+theme.titlebar_close_button_focus_hover               = theme.titlebar_close_button_normal_hover
+theme.titlebar_minimize_button_focus_hover            = theme.titlebar_minimize_button_normal_hover
+theme.titlebar_maximized_button_focus_active_hover    = theme.titlebar_maximized_button_normal_active_hover
+theme.titlebar_maximized_button_focus_inactive_hover  = theme.titlebar_maximized_button_normal_inactive_hover
 
 -- TASKLIST
 theme.tasklist_bg_color      = theme.transparent
