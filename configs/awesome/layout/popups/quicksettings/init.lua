@@ -1,56 +1,41 @@
-local screen_height = screen.primary.geometry.height
-local screen_width = screen.primary.geometry.width
-
-local main = Wibox({
+local quicksettings = Wibox({
 	screen = screen.primary,
 	height = Dpi(300),
 	width = Dpi(320),
-	bg = Beautiful.bg_normal,
+	bg = Beautiful.widget_bg_color,
 	visible = false,
 	ontop = true,
-	border_width = Dpi(2),
+	-- border_width = Dpi(2),
 	border_color = Beautiful.widget_bg_alt,
 })
 
+local placement = Awful.placement.center_horizontal
+local placement_props = { honor_workarea = true, margins = Beautiful.useless_gap }
+
 if Beautiful.main_panel_pos == "top" then
-  Helpers.placement(main, "top_right")
+	placement = placement + Awful.placement.bottom
+	placement(quicksettings, placement_props)
 elseif Beautiful.main_panel_pos == "bottom" then
-  Helpers.placement(main, "bottom_right")
+	placement = placement + Awful.placement.top
+	placement(quicksettings, placement_props)
 end
 
--- MUSIC PLAYER WDG
-local music = require("layout.popups.quicksettings.music-player")
--- SLIDERS WDG
-local slider_bars = require("layout.popups.quicksettings.sliders")
--- QUICKSETTINGS CONTROL BUTTONS WDG
-local controls = require("layout.popups.quicksettings.controls")
--- QUICKSETTINGS SET
-main:setup({
-	{
-		music,
-		controls,
-		slider_bars,
-		spacing = Dpi(8),
-		layout = Wibox.layout.fixed.vertical,
-	},
-	margins = Dpi(8),
-	widget = Wibox.container.margin,
-})
-
--- SIGNAL
-awesome.connect_signal("awesome::quicksettings_panel", function(action)
+awesome.connect_signal("awesome::quicksettings", function(action)
 	if action == "toggle" then
-		main.visible = not main.visible
+		quicksettings.visible = not quicksettings.visible
+		awesome.emit_signal("visible::quicksettings", quicksettings.visible)
 	elseif action == "hide" then
-		main.visible = false
+		quicksettings.visible = false
+		awesome.emit_signal("visible::quicksettings", quicksettings.visible)
 	elseif action == "show" then
-		main.visible = true
+		quicksettings.visible = true
+		awesome.emit_signal("visible::quicksettings", quicksettings.visible)
 	end
-	if main.visible then
+	if quicksettings.visible then
 		awesome.emit_signal("awesome::notification_center", "hide")
 	end
 end)
 
-Awful.mouse.append_client_mousebinding(Awful.button({}, 1, function(c)
-  awesome.emit_signal("awesome::quicksettings_panel", "hide")
+Awful.mouse.append_client_mousebinding(Awful.button({}, 1, function(_)
+  awesome.emit_signal("awesome::quicksettings", "hide")
 end))

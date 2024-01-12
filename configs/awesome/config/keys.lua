@@ -15,7 +15,7 @@ Awful.keyboard.append_global_keybindings({
 		awesome.emit_signal("awesome::lockscreen", "toggle")
 	end, { description = "mostrar panel de control", group = "awesome" }),
 	Awful.key({ User.config.modkey }, "a", function()
-		awesome.emit_signal("awesome::quicksettings_panel", "toggle")
+		awesome.emit_signal("awesome::quicksettings", "toggle")
 	end, { description = "mostrar panel de control", group = "awesome" }),
 	Awful.key({ User.config.modkey }, "w", function()
 		awesome.emit_signal("awesome::app_launcher", "toggle")
