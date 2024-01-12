@@ -3,9 +3,13 @@ local screen_width = screen.primary.geometry.width
 local prompt = require("layout.launcher.prompt")
 local input_prompt = {}
 
+if User.config.dark_mode then
+	Beautiful.lockscreen_overlay_color = Beautiful.bg_normal .. "DF"
+else
+	Beautiful.lockscreen_overlay_color = Beautiful.bg_normal .. "8F"
+end
 Beautiful.lockscreen_pass_halign = "center"
 Beautiful.lockscreen_wallpaper_bg = Beautiful.wallpaper_alt or Beautiful.wallpaper
-Beautiful.lockscreen_overlay_color = Beautiful.bg_normal .. "DF"
 Beautiful.lockscreen_prompt_fg = Beautiful.fg_normal
 Beautiful.lockscreen_prompt_bg = Beautiful.widget_bg_alt
 Beautiful.lockscreen_prompt_shape = Gears.shape.rounded_bar
@@ -298,9 +302,9 @@ lockscreen:setup({
 		halign = "center",
 		{
 			widget = Wibox.container.margin,
-      bottom = 0,
-      right = Dpi(40),
-      left = Dpi(40),
+			bottom = 0,
+			right = Dpi(40),
+			left = Dpi(40),
 			{
 				layout = Wibox.layout.align.horizontal,
 				expand = "none",

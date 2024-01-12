@@ -22,7 +22,6 @@ client.connect_signal("request::titlebars", function(c)
 	titlebar.widget = {
 		widget = Wibox.container.margin,
 		margins = Dpi(5),
-		buttons = buttons,
 		{
 			layout = Wibox.layout.align.horizontal,
 			{
@@ -31,13 +30,14 @@ client.connect_signal("request::titlebars", function(c)
 				{
 					layout = Wibox.layout.fixed.horizontal,
 					spacing = Dpi(7),
+          buttons = buttons,
 					{
 						widget = Wibox.widget.imagebox,
 						image = getIcon({
 							client = c,
 							icon_size = 48,
-							try_fallback = true,
-							name_fallback = "default-application",
+							-- try_fallback = true,
+							-- name_fallback = "default-application",
 						}),
 						forced_height = Dpi(26),
 						forced_width = Dpi(26),
@@ -56,7 +56,10 @@ client.connect_signal("request::titlebars", function(c)
 					},
 				},
 			},
-			nil,
+      {
+        widget = Wibox.container.background,
+        buttons = buttons,
+      },
 			{
 				widget = Wibox.container.background,
 				forced_height = Dpi(30),

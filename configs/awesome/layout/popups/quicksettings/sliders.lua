@@ -1,5 +1,6 @@
 local volume_value
-local color = Helpers.color.ldColor(Beautiful.accent_color, User.config.dark_mode and 1 or -35)
+-- local color = Helpers.color.ldColor(Beautiful.accent_color, 20, "darken")
+local color = Helpers.color.LDColor("lighten", 0.2, Beautiful.accent_color)
 
 local function mkbar(bar, icon)
 	return Wibox.widget({

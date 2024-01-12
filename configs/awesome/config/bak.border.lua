@@ -1,0 +1,90 @@
+-- client.connect_signal("request::titlebars", function(c)
+-- 	local function get_name()
+-- 		return c.name:gsub("- " .. c.class, ""):gsub("- Chromium", "")
+-- 	end
+-- 	local titlebar = Awful.titlebar(c, {
+-- 		size = Beautiful.titlebar_size,
+-- 		enable_tooltip = false,
+-- 		position = "top",
+-- 		-- bg             = Beautiful.titlebar_bg_normal
+-- 	})
+-- 	local title_client = Wibox.widget({
+-- 		text = get_name(),
+-- 		font = Beautiful.titlebar_font,
+-- 		valign = "center",
+-- 		widget = Wibox.widget.textbox,
+-- 	})
+-- 	titlebar:setup({
+-- 		{
+-- 			{
+-- 				title_client,
+-- 				valign = "center",
+-- 				halign = "left",
+-- 				layout = Wibox.container.place,
+-- 			},
+-- 			left = 15,
+-- 			widget = Wibox.container.margin,
+-- 		},
+-- 		buttons = {
+-- 			Awful.button({}, 1, function()
+-- 				c:activate({ context = "titlebar", action = "mouse_move" })
+-- 			end),
+-- 			Awful.button({}, 3, function()
+-- 				c:activate({ context = "titlebar", action = "mouse_resize" })
+-- 			end),
+-- 		},
+-- 		fill_space = true,
+-- 		layout = Wibox.layout.fixed.vertical,
+-- 	})
+-- 	c:connect_signal("property::name", function()
+-- 		title_client:set_text(get_name())
+-- 	end)
+-- 	client.connect_signal("focus", function(cl)
+-- 		if c.active then
+-- 			title_client:set_text(get_name())
+-- 		else
+-- 			title_client:set_text("")
+-- 		end
+-- 	end)
+-- end)
+-- local function mkborder(c, pos)
+--     local mytitlebar = Awful.titlebar(c, {
+--         size           = 12,
+--         enable_tooltip = false,
+--         position       = pos,
+--         bg = Beautiful.titlebar_bg_normal
+--     })
+--     local color = Wibox.widget {
+--         bg = Beautiful.blue,
+--         forced_height = 2,
+--         forced_width = 2,
+--         widget = Wibox.container.background
+--     }
+--     -- Helpers.color.ldColor(theme.blue, -25)
+--     mytitlebar:setup {
+--         (pos == "bottom" or pos == "right") and color,
+--         nil,
+--         (pos == "top" or pos == "left") and color,
+--         buttons = {
+--             Awful.button({}, 1, function()
+--                 c:activate { context = "titlebar", action = "mouse_move" }
+--             end),
+--             Awful.button({}, 3, function()
+--                 c:activate { context = "titlebar", action = "mouse_resize" }
+--             end),
+--         },
+--         layout = (pos == "top" or pos == "bottom") and Wibox.layout.align.vertical or Wibox.layout.align.horizontal
+--     }
+--     client.connect_signal("focus", function()
+--         if c.active then
+--             color.bg = Beautiful.titlebar_bg_focus
+--         else
+--             color.bg = Beautiful.titlebar_bg_normal
+--         end
+--     end)
+-- end
+-- client.connect_signal("request::titlebars", function(c)
+--     for _, pos in ipairs(Beautiful.titlebar_positions) do
+--         mkborder(c, pos)
+--     end
+-- end)

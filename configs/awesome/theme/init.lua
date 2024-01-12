@@ -133,7 +133,7 @@ theme.titlebar_font          = theme.font_text .. "SemiBold 10"
 theme.titlebar_size          = Dpi(40)
 local recolor_image = Gears.color.recolor_image
 local recolor = function (color, method)
-  return Helpers.color.ldColor(color, 35, method or "darken")
+  return Helpers.color.ldColor(color, 35, method or "lighten")
 end
 theme.titlebar_close_button_normal              =
   recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.widget_bg_alt, "lighten"))
