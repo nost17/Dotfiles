@@ -42,6 +42,10 @@ Awful.mouse.append_client_mousebinding(Awful.button({}, 1, function(_)
 	awesome.emit_signal("awesome::quicksettings", "hide")
 end))
 
+Awful.mouse.append_global_mousebinding(Awful.button({}, 1, function(c)
+	awesome.emit_signal("awesome::quicksettings", "hide")
+end))
+
 local examble = Wibox.widget({
 	widget = Wibox.container.background,
 	border_width = Dpi(2),
@@ -52,6 +56,7 @@ local examble = Wibox.widget({
 local user_info = require("layout.popups.quicksettings.user_info")
 local music_player_control = require("layout.popups.quicksettings.music-player")
 local controls = require("layout.popups.quicksettings.controls")
+local calendar = require("layout.popups.quicksettings.calendar")
 
 quicksettings:setup({
 	widget = Wibox.container.margin,
@@ -64,7 +69,7 @@ quicksettings:setup({
 		{
 			layout = Wibox.layout.flex.horizontal,
 			spacing = Dpi(10),
-			examble,
+			calendar,
 			controls,
 			music_player_control,
 		},
