@@ -56,7 +56,7 @@ theme.border_focus           = theme.yellow
 -- WIDGETS
 theme.widget_bg_color        = theme.bg_normal
 theme.widget_bg_alt          = Helpers.color.LDColor(theme.color_method, theme.color_method_factor, theme.bg_normal)
-theme.widget_clock_font      = theme.font_text .. 'Medium 11'
+theme.widget_clock_font      = theme.font_text .. 'Medium 12'
 theme.layouts_icons_color    = Helpers.color.ldColor(theme.fg_normal, -30)
 theme.bg_systray             = theme.widget_bg_alt
 theme.main_panel_pos         = "bottom"

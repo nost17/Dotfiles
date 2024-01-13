@@ -125,9 +125,9 @@ local player_button = buttons.normal({
 
 local music_player_widget = Wibox.widget({
 	widget = Wibox.container.background,
-	border_width = Dpi(2),
+  shape = Beautiful.quicksettings_widgets_shape,
+	border_width = Beautiful.quicksettings_widgets_border_width,
 	border_color = Beautiful.widget_bg_alt,
-	shape = Helpers.shape.rrect(Beautiful.small_radius),
 	{
 		widget = Wibox.container.margin,
 		top = Dpi(15),

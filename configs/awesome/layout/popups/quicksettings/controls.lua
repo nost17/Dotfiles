@@ -18,7 +18,7 @@ local function create_settings_button(opts)
 		or nil
 	local icon = wbutton.state({
 		text_off = opts.icon,
-		-- on_by_default = opts.on_by_default,
+		on_by_default = opts.on_by_default,
 		font = Beautiful.font_icon .. "12",
 		bg_normal = Beautiful.widget_bg_alt,
 		bg_hover = Helpers.color.LDColor(
@@ -36,11 +36,21 @@ local function create_settings_button(opts)
 				icon_settings.bg = self._private.opts.bg_normal_on
 				icon_settings_w:set_color(self._private.opts.fg_normal_on)
 			end
+			if opts.on_by_default then
+				opts.on_by_default = false
+			else
+				if opts.on_fn then
+					opts.on_fn()
+				end
+			end
 		end,
 		turn_off_fn = function(self)
 			if icon_settings then
 				icon_settings.bg = self._private.opts.bg_normal
 				icon_settings_w:set_color(self._private.opts.fg_normal)
+			end
+			if opts.off_fn then
+				opts.off_fn()
 			end
 		end,
 	})
@@ -75,6 +85,9 @@ local function create_settings_button(opts)
 			else
 				self.bg = icon._private.opts.bg_normal
 			end
+		end)
+		Helpers.ui.add_click(icon_settings, 1, function()
+			opts.open_setting()
 		end)
 	end
 
@@ -123,50 +136,89 @@ local function create_settings_button(opts)
 		},
 		label,
 	})
+  function wdg:turn_on(no_fn)
+    icon:turn_on(no_fn)
+  end
+  function wdg:turn_off()
+    icon:turn_off()
+  end
 	return wdg
 end
 
 local music_notify = create_settings_button({
 	icon = "󰎇",
-	open_setting = true,
 	label = "Musica",
+  on_by_default = User.config.music_notify,
+	on_fn = function()
+		User.config.music_notify = true
+	end,
+	off_fn = function()
+		User.config.music_notify = false
+	end,
 })
 
 local dark_mode = create_settings_button({
 	icon = "󰤄",
 	label = "Modo oscuro",
+  on_by_default = User.config.dark_mode
 })
 
 local dnd_state = create_settings_button({
 	icon = "󰍶",
 	label = "No molestar",
+	on_fn = function()
+		Naughty.destroy_all_notifications(nil, 1)
+		User.config.dnd_state = true
+	end,
+	off_fn = function()
+		User.config.dnd_state = false
+	end,
 })
 
 local mute_state = create_settings_button({
 	icon = "󰖁",
 	label = "Silencio",
-	open_setting = true,
+	open_setting = function()
+		Awful.spawn("pavucontrol &", false)
+		awesome.emit_signal("awesome::quicksettings", "hide")
+	end,
+	on_fn = function()
+		Awful.spawn("pamixer -m", false)
+	end,
+	off_fn = function()
+		Awful.spawn("pamixer -u", false)
+	end,
 })
 
 -- 󰌵 󱠃 󱠀 󱠁
 local blue_light_state = create_settings_button({
 	icon = "󱠂",
 	label = "Luz nocturna",
+	on_fn = function()
+		Awful.spawn.with_shell("xsct 4500")
+	end,
+	off_fn = function()
+		Awful.spawn.with_shell("xsct 0")
+	end,
 })
 
 local wifi_state = create_settings_button({
 	icon = "󰤢",
 	label = "Internet",
-	open_setting = true,
+	-- open_setting = true,
 })
+
+if Helpers.getCmdOut("xsct | awk -NF ' ~ ' '{print $2}' | awk '{print $1}'") ~= "6500" then
+  blue_light_state:turn_on(true)
+end
 
 local sliders_control = require("layout.popups.quicksettings.sliders")
 
 return Wibox.widget({
 	widget = Wibox.container.background,
-	border_width = Dpi(2),
+  shape = Beautiful.quicksettings_widgets_shape,
+	border_width = Beautiful.quicksettings_widgets_border_width,
 	border_color = Beautiful.widget_bg_alt,
-  shape = Helpers.shape.rrect(Beautiful.small_radius),
 	{
 		widget = Wibox.container.margin,
 		top = Dpi(15),
@@ -194,7 +246,7 @@ return Wibox.widget({
 				mute_state,
 				dnd_state,
 			},
-      sliders_control
+			sliders_control,
 		},
 	},
 })

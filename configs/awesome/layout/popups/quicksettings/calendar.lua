@@ -84,11 +84,11 @@ local function decorate_cell(widget, flag, date)
 	return ret
 end
 
-return wibox.widget({
+local calendar = wibox.widget({
 	widget = Wibox.container.background,
-	border_width = Dpi(2),
+  shape = Beautiful.quicksettings_widgets_shape,
+	border_width = Beautiful.quicksettings_widgets_border_width,
 	border_color = Beautiful.widget_bg_alt,
-  shape = Helpers.shape.rrect(Beautiful.small_radius),
 	{
 		widget = wibox.container.margin,
 		top = Dpi(15),
@@ -106,3 +106,6 @@ return wibox.widget({
 		},
 	},
 })
+
+collectgarbage("collect")
+return calendar

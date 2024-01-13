@@ -864,6 +864,15 @@ local function new(args)
 			awesome.emit_signal("awesome::logoutscreen", "show")
 		end
 	)
+  local music_button = create_user_button(
+		"󰋎",
+		Beautiful.orange or Beautiful.red,
+		Helpers.shape.rrect(Beautiful.small_radius),
+		function()
+      Awful.spawn.with_shell("kitty --class 'ncmpcpp-music' -e 'ncmpcpp' &> /dev/null &")
+      awesome.emit_signal("awesome::app_launcher", "hide")
+		end
+	)
 	ret._private.widget = Awful.popup({
 		type = args.type,
 		visible = false,
@@ -904,6 +913,7 @@ local function new(args)
 							{
 								layout = Wibox.layout.fixed.vertical,
 								spacing = args.grid_margins,
+                music_button,
 								sleep_button,
 								lockscreen_button,
 								logout_button,

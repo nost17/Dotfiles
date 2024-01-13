@@ -1,15 +1,16 @@
-local screen_height = screen.primary.geometry.height
+local wbutton = require("utils.button.text")
+-- local screen_height = screen.primary.geometry.height
 local screen_width = screen.primary.geometry.width
 
 local main = Awful.wibar({
-	height = Dpi(36),
+	height = Dpi(40),
 	width = screen_width,
 	bg = Beautiful.bg_normal,
 	position = Beautiful.main_panel_pos,
 	visible = true,
 	-- ontop = true,
 })
-local size = Dpi(20)
+local size = Dpi(22)
 local app_launcher = Wibox.widget({
 	{
 		{
@@ -33,76 +34,74 @@ local app_launcher = Wibox.widget({
 })
 Helpers.ui.add_hover(app_launcher, Beautiful.widget_bg_alt, nil, Beautiful.black)
 app_launcher:add_button(Awful.button({}, 1, function()
-  awesome.emit_signal("awesome::app_launcher", "toggle")
+	awesome.emit_signal("awesome::app_launcher", "toggle")
 end))
 
 -- BATTERY WIDGET
 local battery = require("layout.bar.battery")
 
 -- QUICKSETTINGS PANEL WIDGET
-local quicksettings = Wibox.widget({
+local status = Wibox.widget({
+	layout = Wibox.layout.fixed.horizontal,
+	spacing = Dpi(10),
 	{
 		{
-			{
-				{
-					{
-						base_size = 24,
-						widget = Wibox.widget.systray,
-					},
-					valign = "center",
-					layout = Wibox.container.place,
-				},
-				battery,
-				{
-					text = "󰒓",
-					font = Beautiful.font_icon .. "11",
-					halign = "center",
-					valign = "center",
-					widget = Wibox.widget.textbox,
-				},
-				spacing = Dpi(6),
-				layout = Wibox.layout.fixed.horizontal,
-			},
-			left = Dpi(6),
-			right = Dpi(6),
-			widget = Wibox.container.margin,
+			base_size = 24,
+			widget = Wibox.widget.systray,
 		},
-		id = "background_role",
-		shape = Helpers.shape.rrect(Beautiful.small_radius),
-		widget = Wibox.container.background,
+		valign = "center",
+		layout = Wibox.container.place,
 	},
-	top = Dpi(4),
-	bottom = Dpi(4),
-	widget = Wibox.container.margin,
+	battery,
 })
-quicksettings:add_button(Awful.button({}, 1, function()
-	awesome.emit_signal("awesome::quicksettings_panel", "toggle")
-end))
-Helpers.ui.add_hover(
-	quicksettings:get_children_by_id("background_role")[1],
-	Beautiful.widget_bg_alt,
-	Beautiful.foreground,
-	Helpers.color.LDColor(Beautiful.color_method, Beautiful.color_method_factor * 1.4, Beautiful.widget_bg_alt)
-)
 
 -- CLOCK WIDGET
-local clock = Wibox.widget({
-	{
+local function mkclock()
+	local hour = Wibox.widget({
+		widget = Wibox.widget.textclock,
+		format = "%H : %M",
+		align = "center",
+		valign = "center",
+		font = Beautiful.font_text .. "Medium 13",
+	})
+	local day = Wibox.widget({
+		widget = Wibox.widget.textbox,
+		align = "center",
+		valign = "center",
+		font = Beautiful.font_text .. "Regular 12",
+	})
+	local function set_date()
+		day:set_text(tostring(os.date("%a")):gsub("^%l", string.upper) .. os.date(" %d"))
+	end
+	set_date()
+	hour:connect_signal("widget::redraw_needed", function()
+		set_date()
+	end)
+
+	local wdg = Wibox.widget({
+		widget = Wibox.container.background,
 		{
-			format = "%a %d %b %H:%M",
-			align = "center",
-			valign = "center",
-			font = Beautiful.widget_clock_font,
-			widget = Wibox.widget.textclock,
+			widget = Wibox.container.margin,
+			left = Dpi(8),
+			right = Dpi(8),
+			{
+				layout = Wibox.layout.fixed.horizontal,
+				spacing = Dpi(12),
+				{
+					widget = Wibox.container.margin,
+					top = Dpi(1),
+					-- valign = "center",
+					hour,
+				},
+				day,
+			},
 		},
-		left = Dpi(8),
-		right = Dpi(8),
-		widget = Wibox.container.margin,
-	},
-	widget = Wibox.container.background,
-})
+	})
+	return wdg
+end
+local clock = mkclock()
 clock:add_button(Awful.button({}, 1, function()
-	awesome.emit_signal("awesome::notification_center", "toggle")
+	awesome.emit_signal("awesome::quicksettings", "toggle")
 end))
 Helpers.ui.add_hover(clock, Beautiful.widget_bg_alt, Beautiful.foreground, Beautiful.black)
 
@@ -112,24 +111,42 @@ local taglist = require("layout.bar.taglist")(screen.primary)
 -- TASKLIST WIDGET
 local tasklist = require("layout.bar.tasklist")(screen.primary)
 
+-- NOTIFIFCATIONS PANEL WIDGET
+local notify_panel = wbutton.normal({
+	text = "󰂚",
+	font = Beautiful.font_icon .. "13",
+	fg_normal = Beautiful.fg_normal,
+	bg_normal = Beautiful.widget_bg_alt,
+	fg_hover = Beautiful.accent_color,
+	bg_hover = Helpers.color.LDColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
+	paddings = {
+		left = (size / 2),
+		right = (size / 2),
+	},
+	on_release = function(_)
+		awesome.emit_signal("awesome::notification_center", "toggle")
+	end,
+})
+
 main:setup({
+	layout = Wibox.layout.fixed.vertical,
+	fill_space = true,
 	{
+		layout = Wibox.layout.align.horizontal,
+		expand = "none",
 		{
+			layout = Wibox.layout.fixed.horizontal,
+			spacing = Dpi(4),
 			app_launcher,
 			taglist,
-			spacing = Dpi(4),
-			layout = Wibox.layout.fixed.horizontal,
+			tasklist,
 		},
-		tasklist,
+		clock,
 		{
-			quicksettings,
-			clock,
-			spacing = Dpi(8),
 			layout = Wibox.layout.fixed.horizontal,
+			spacing = Dpi(8),
+			status,
+			notify_panel,
 		},
-		expand = "none",
-		layout = Wibox.layout.align.horizontal,
 	},
-	fill_space = true,
-	layout = Wibox.layout.fixed.vertical,
 })

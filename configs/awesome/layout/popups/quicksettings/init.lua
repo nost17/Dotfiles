@@ -46,12 +46,8 @@ Awful.mouse.append_global_mousebinding(Awful.button({}, 1, function(c)
 	awesome.emit_signal("awesome::quicksettings", "hide")
 end))
 
-local examble = Wibox.widget({
-	widget = Wibox.container.background,
-	border_width = Dpi(2),
-	border_color = Beautiful.widget_bg_alt,
-	shape = Helpers.shape.rrect(Beautiful.small_radius),
-})
+Beautiful.quicksettings_widgets_shape =  Helpers.shape.rrect(Beautiful.medium_radius)
+Beautiful.quicksettings_widgets_border_width = 2
 
 local user_info = require("layout.popups.quicksettings.user_info")
 local music_player_control = require("layout.popups.quicksettings.music-player")

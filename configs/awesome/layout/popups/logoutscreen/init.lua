@@ -2,7 +2,7 @@ local screen_height = screen.primary.geometry.height
 local screen_width = screen.primary.geometry.width
 
 local function create_user_button(icon, color, shape, fn)
-	local size = Dpi(100)
+	local size = Dpi(110)
 	local wdg = require("utils.button.text").normal({
 		text = icon,
 		font = Beautiful.font_icon .. "30",
@@ -23,7 +23,8 @@ local function create_user_button(icon, color, shape, fn)
 	return Wibox.widget({
 		widget = Wibox.container.background,
 		shape = shape,
-		border_width = Dpi(1.5),
+		border_width = 0,
+		-- border_width = Dpi(1.5),
 		border_color = color,
 		bg = Beautiful.bg_normal,
 		wdg,
@@ -88,12 +89,8 @@ awesome.connect_signal("awesome::logoutscreen", function(action)
 	end
 end)
 
-local def_shape = Beautiful.logoutscreen_buttons_shape or Gears.shape.circle
-local def_fn = function(action)
-	Naughty.notify({
-		title = action,
-	})
-end
+local def_shape = Helpers.shape.rrect(Beautiful.medium_radius)
+local def_fn = function(action) end
 
 -- BACKGROUND
 local background = Wibox.widget({
@@ -124,19 +121,19 @@ setBlur()
 
 -- BUTTONS
 local sleep_button = create_user_button("󰒲", Beautiful.yellow, def_shape, function()
-	def_fn("suspender")
+	Awful.spawn.with_shell("systemctl suspend")
 end)
 local lockscreen_button = create_user_button("󰌾", Beautiful.blue, def_shape, function()
-	def_fn("bloquear")
+	awesome.emit_signal("awesome::lockscreen", "show")
 end)
 local logout_button = create_user_button("󰈆", Beautiful.magenta, def_shape, function()
-	def_fn("salir")
+  awesome.quit()
 end)
 local shutdown_button = create_user_button("󰐥", Beautiful.red, def_shape, function()
-	def_fn("apagar")
+	Awful.spawn.with_shell("systemctl poweroff")
 end)
 local reboot_button = create_user_button("󰑐", Beautiful.green, def_shape, function()
-	def_fn("reiniciar")
+	Awful.spawn.with_shell("systemctl reboot")
 end)
 local close_button = creante_custom_button("󰖭")
 local restart_wm = creante_custom_button("󰑐  ", function()
@@ -192,7 +189,7 @@ logoutscreen:setup({
 	overlay,
 	{
 		layout = Wibox.container.place,
-    content_fill_horizontal = true,
+		content_fill_horizontal = true,
 		halign = "center",
 		valign = "top",
 		{

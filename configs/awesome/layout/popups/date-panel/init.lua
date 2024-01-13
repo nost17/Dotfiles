@@ -1,9 +1,10 @@
 local screen_height = screen.primary.geometry.height
 local screen_width = screen.primary.geometry.width
 local screen_gap = Dpi(4)
+local notification_center = require("layout.popups.date-panel.notification-center")
 
 local main = Wibox({
-	height = screen_height - Beautiful.main_panel_size - Dpi(4) - Beautiful.useless_gap,
+	height = screen_height - Beautiful.main_panel_size - Dpi(4) - Beautiful.useless_gap * 2,
 	width = Dpi(320),
 	bg = Beautiful.bg_normal,
 	visible = false,
@@ -12,6 +13,7 @@ local main = Wibox({
 	border_color = Beautiful.black,
 	screen = screen.primary,
 })
+
 
 if Beautiful.main_panel_pos == "top" then
   Helpers.placement(main, "top_right")
@@ -30,10 +32,9 @@ awesome.connect_signal("awesome::notification_center", function(action)
 	_G.notify_center_visible = main.visible
 	if main.visible then
 		Naughty.destroy_all_notifications(nil, 1)
-		awesome.emit_signal("awesome::quicksettings_panel", "hide")
+		awesome.emit_signal("awesome::quicksettings", "hide")
 	end
 end)
-local notification_center = require("layout.popups.date-panel.notification-center")
 main:setup({
 	{
 		notification_center,
