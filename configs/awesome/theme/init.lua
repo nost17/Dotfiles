@@ -145,13 +145,13 @@ theme.titlebar_maximized_button_normal_active   =
   recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.widget_bg_alt, "lighten"))
 theme.titlebar_maximized_button_normal_inactive =
   recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.widget_bg_alt, "lighten"))
-theme.titlebar_maximized_button_focus_active    = recolor_image(themes_path .. "images/titlebar/close_icon.png", theme.orange)
-theme.titlebar_maximized_button_focus_inactive  = recolor_image(themes_path .. "images/titlebar/close_icon.png", theme.orange)
+theme.titlebar_maximized_button_focus_active    = recolor_image(themes_path .. "images/titlebar/close_icon.png", theme.orange or theme.yellow)
+theme.titlebar_maximized_button_focus_inactive  = recolor_image(themes_path .. "images/titlebar/close_icon.png", theme.orange or theme.yellow)
 -- TITLEBAR NORMAL HOVER
 theme.titlebar_close_button_normal_hover        = recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.red))
 theme.titlebar_minimize_button_normal_hover     = recolor_image(themes_path .. "images/titlebar/minimize_icon.png", recolor(theme.green))
-theme.titlebar_maximized_button_normal_active_hover   = recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.orange))
-theme.titlebar_maximized_button_normal_inactive_hover = recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.orange))
+theme.titlebar_maximized_button_normal_active_hover   = recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.orange or theme.yellow))
+theme.titlebar_maximized_button_normal_inactive_hover = recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.orange or theme.yellow))
 -- TITLEBAR FOCUS HOVER
 theme.titlebar_close_button_focus_hover               = theme.titlebar_close_button_normal_hover
 theme.titlebar_minimize_button_focus_hover            = theme.titlebar_minimize_button_normal_hover

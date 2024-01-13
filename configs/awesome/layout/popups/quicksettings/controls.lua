@@ -148,8 +148,9 @@ local mute_state = create_settings_button({
 	open_setting = true,
 })
 
+-- 󰌵 󱠃 󱠀 󱠁
 local blue_light_state = create_settings_button({
-	icon = "󰌵",
+	icon = "󱠂",
 	label = "Luz nocturna",
 })
 
@@ -164,7 +165,8 @@ local sliders_control = require("layout.popups.quicksettings.sliders")
 return Wibox.widget({
 	widget = Wibox.container.background,
 	border_width = Dpi(2),
-	border_color = Beautiful.yellow,
+	border_color = Beautiful.widget_bg_alt,
+  shape = Helpers.shape.rrect(Beautiful.small_radius),
 	{
 		widget = Wibox.container.margin,
 		top = Dpi(15),

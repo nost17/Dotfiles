@@ -104,6 +104,7 @@ function _btn.state(opts)
 	if opts.on_by_default then
 		widget:turn_on()
 	end
+  widget._private.opts = opts
 	return widget
 end
 function _btn.normal(opts)
