@@ -1,0 +1,198 @@
+local wbutton = require("utils.button.text")
+local wtext = require("utils.helpers.text").mktext
+
+local function create_settings_button(opts)
+	opts = opts or {}
+	local icon_settings_w = wtext({
+		text = "󰅂",
+		font = Beautiful.font_icon,
+		size = 13,
+		halign = "center",
+	})
+	local icon_settings = opts.open_setting
+			and Wibox.widget({
+				widget = Wibox.container.background,
+				bg = Beautiful.widget_bg_alt,
+				icon_settings_w,
+			})
+		or nil
+	local icon = wbutton.state({
+		text_off = opts.icon,
+		-- on_by_default = opts.on_by_default,
+		font = Beautiful.font_icon .. "12",
+		bg_normal = Beautiful.widget_bg_alt,
+		bg_hover = Helpers.color.LDColor(
+			Beautiful.color_method,
+			Beautiful.color_method_factor,
+			Beautiful.widget_bg_alt
+		),
+		bg_normal_on = Beautiful.accent_color,
+		fg_normal = Helpers.color.LDColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.fg_normal),
+		fg_normal_on = Beautiful.foreground_alt,
+		bg_hover_on = Helpers.color.LDColor("darken", 0.15, Beautiful.accent_color),
+		expand = true,
+		turn_on_fn = function(self)
+			if icon_settings then
+				icon_settings.bg = self._private.opts.bg_normal_on
+				icon_settings_w:set_color(self._private.opts.fg_normal_on)
+			end
+		end,
+		turn_off_fn = function(self)
+			if icon_settings then
+				icon_settings.bg = self._private.opts.bg_normal
+				icon_settings_w:set_color(self._private.opts.fg_normal)
+			end
+		end,
+	})
+
+	icon:connect_signal("mouse::enter", function(self)
+		if icon_settings then
+			if not icon._private.state then
+				icon_settings.bg = self._private.opts.bg_hover
+			end
+		end
+	end)
+	icon:connect_signal("mouse::leave", function(self)
+		if icon_settings then
+			if icon._private.state then
+				icon_settings.bg = self._private.opts.bg_normal_on
+			else
+				icon_settings.bg = self._private.opts.bg_normal
+			end
+		end
+	end)
+	if icon_settings then
+		icon_settings:connect_signal("mouse::enter", function(self)
+			if icon._private.state then
+				self.bg = icon._private.opts.bg_hover_on
+			else
+				self.bg = icon._private.opts.bg_hover
+			end
+		end)
+		icon_settings:connect_signal("mouse::leave", function(self)
+			if icon._private.state then
+				self.bg = icon._private.opts.bg_normal_on
+			else
+				self.bg = icon._private.opts.bg_normal
+			end
+		end)
+	end
+
+	local label = wtext({
+		text = opts.label,
+		font = Beautiful.font_text .. "Regular",
+		size = 10,
+		halign = "center",
+	})
+	local border_color = Beautiful.fg_normal .. "4F"
+	local wdg = Wibox.widget({
+		layout = Wibox.layout.fixed.vertical,
+		spacing = Dpi(3),
+		{
+			widget = Wibox.container.background,
+			shape = Helpers.shape.rrect(Beautiful.small_radius),
+			bg = border_color,
+			{
+				bottom = 2,
+				widget = Wibox.container.margin,
+				{
+					widget = Wibox.container.background,
+					border_width = 0,
+					border_color = border_color,
+					forced_width = Dpi(70),
+					forced_height = Dpi(38),
+					shape = Helpers.shape.prrect(Beautiful.small_radius * 1.3, false, false, true, true),
+					{
+						layout = Wibox.layout.align.horizontal,
+						expand = "outside",
+						-- fill_space = true,
+						icon,
+						icon_settings and {
+							layout = Wibox.container.place,
+							{
+								widget = Wibox.container.background,
+								-- bg = border_color,
+								-- forced_height = Dpi(40),
+								forced_width = 1.5,
+							},
+						},
+						icon_settings,
+					},
+				},
+			},
+		},
+		label,
+	})
+	return wdg
+end
+
+local music_notify = create_settings_button({
+	icon = "󰎇",
+	open_setting = true,
+	label = "Musica",
+})
+
+local dark_mode = create_settings_button({
+	icon = "󰤄",
+	label = "Modo oscuro",
+})
+
+local dnd_state = create_settings_button({
+	icon = "󰍶",
+	label = "No molestar",
+})
+
+local mute_state = create_settings_button({
+	icon = "󰖁",
+	label = "Silencio",
+	open_setting = true,
+})
+
+local blue_light_state = create_settings_button({
+	icon = "󰌵",
+	label = "Luz nocturna",
+})
+
+local wifi_state = create_settings_button({
+	icon = "󰤢",
+	label = "Internet",
+	open_setting = true,
+})
+
+local sliders_control = require("layout.popups.quicksettings.sliders")
+
+return Wibox.widget({
+	widget = Wibox.container.background,
+	border_width = Dpi(2),
+	border_color = Beautiful.yellow,
+	{
+		widget = Wibox.container.margin,
+		top = Dpi(15),
+		bottom = Dpi(15),
+		right = Dpi(15),
+		left = Dpi(15),
+		{
+			layout = Wibox.layout.fixed.vertical,
+			spacing = Dpi(10),
+			{
+				layout = Wibox.layout.flex.horizontal,
+				spacing = Dpi(15),
+				music_notify,
+				blue_light_state,
+			},
+			{
+				layout = Wibox.layout.flex.horizontal,
+				spacing = Dpi(15),
+				wifi_state,
+				dark_mode,
+			},
+			{
+				layout = Wibox.layout.flex.horizontal,
+				spacing = Dpi(15),
+				mute_state,
+				dnd_state,
+			},
+      sliders_control
+		},
+	},
+})
