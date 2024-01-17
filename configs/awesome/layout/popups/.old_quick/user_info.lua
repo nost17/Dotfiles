@@ -93,6 +93,12 @@ return Wibox.widget({
 	layout = Wibox.layout.align.horizontal,
   expand = "none",
 	battery,
-	nil,
+	{
+		widget = Wibox.widget.textbox,
+		text = "Ajustes Rapidos",
+		font = Beautiful.font_text .. "SemiBold 14",
+		halign = "center",
+		valign = "center",
+	},
 	clock,
 })

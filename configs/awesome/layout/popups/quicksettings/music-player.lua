@@ -2,15 +2,20 @@ local buttons = require("utils.button.text")
 
 local music_art = Wibox.widget({
 	widget = Wibox.widget.imagebox,
+	opacity = 0.85,
 	-- clip_shape = Gears.shape.circle,
 	halign = "center",
 	valign = "center",
+	resize = true,
+	upscale = true,
 	clip_shape = Helpers.shape.rrect(Beautiful.small_radius),
-	forced_height = Dpi(180),
-	forced_width = Dpi(180),
+	vertical_fit_policy = "fit",
+	horizontal_fit_policy = "fit",
+	-- forced_height = Dpi(180),
+	-- forced_width = Dpi(180),
 })
 local function set_cover(art)
-	music_art:set_image(Helpers.cropSurface(1, Gears.surface.load_uncached(art)))
+	music_art:set_image(Helpers.cropSurface(1.7, Gears.surface.load_uncached(art)))
 end
 set_cover(Beautiful.music_cover_default)
 
@@ -20,70 +25,74 @@ local music_title = Helpers.text.mktext({
 	bold = false,
 	font = "Rubik Medium",
 	size = 11,
-	halign = "center",
+	halign = "left",
 })
 
 local music_artist = Helpers.text.mktext({
 	text = "N/A",
-	color = Beautiful.fg_normal,
+	color = User.config.dark_mode and Beautiful.fg_normal or Beautiful.foreground_alt,
 	bold = false,
 	font = "Rubik Regular",
 	size = 10,
-	halign = "center",
+	halign = "left",
 })
 
 local play_pause_button = buttons.normal({
-	text = "󰐊",
-	expand = false,
-	font = Beautiful.font_icon .. "15",
-	fg_normal = User.config.dark_mode and Beautiful.foreground_alt or Beautiful.foreground,
-	bg_normal = Beautiful.accent_color,
-	bg_hover = Helpers.color.ldColor(Beautiful.accent_color, 20),
-	shape = Helpers.shape.rrect(Beautiful.small_radius),
-	paddings = { left = Dpi(1) },
+	text = "󰐍",
+	expand = true,
+	font = Beautiful.font_icon .. "18",
+	fg_normal = Beautiful.fg_normal,
+	bg_normal = Beautiful.widget_bg_alt,
+	-- fg_normal = User.config.dark_mode and Beautiful.foreground_alt or Beautiful.foreground,
+	-- bg_normal = Beautiful.accent_color,
+	-- bg_hover = Helpers.color.ldColor(Beautiful.accent_color, 20),
+	-- shape = Helpers.shape.rrect(Beautiful.small_radius),
+	-- paddings = { left = Dpi(1) },
 	on_release = function()
 		Playerctl:play_pause()
 	end,
-	forced_height = Dpi(34),
-	forced_width = Dpi(34),
+	-- forced_height = Dpi(34),
+	-- forced_width = Dpi(34),
 })
 local next_button = buttons.normal({
 	text = "󰒭",
-	expand = false,
-	font = Beautiful.font_icon .. "15",
+	expand = true,
+	font = Beautiful.font_icon .. "17",
 	fg_normal = Beautiful.fg_normal,
-	bg_normal = Helpers.color.LDColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
-	bg_hover = Helpers.color.LDColor(
-		Beautiful.color_method,
-		Beautiful.color_method_factor * 1.5,
-		Beautiful.widget_bg_alt
-	),
+	bg_normal = Beautiful.widget_bg_alt,
+	-- bg_normal = Helpers.color.LDColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
+	-- bg_hover = Helpers.color.LDColor(
+	-- 	Beautiful.color_method,
+	-- 	Beautiful.color_method_factor * 1.5,
+	-- 	Beautiful.widget_bg_alt
+	-- ),
 	on_release = function()
 		Playerctl:next()
 	end,
-	shape = Helpers.shape.prrect(Beautiful.small_radius, false, true, true, false),
-	paddings = { left = Dpi(5) },
-	forced_height = Dpi(26),
-	forced_width = Dpi(34),
+	-- shape = Helpers.shape.prrect(Beautiful.small_radius, false, true, true, false),
+	-- paddings = { left = Dpi(5) },
+	-- forced_height = Dpi(26),
+	-- forced_width = Dpi(34),
 })
 local prev_button = buttons.normal({
 	text = "󰒮",
-	expand = false,
-	font = Beautiful.font_icon .. "15",
+	expand = true,
+	font = Beautiful.font_icon .. "17",
 	fg_normal = Beautiful.fg_normal,
-	bg_normal = Helpers.color.LDColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
-	bg_hover = Helpers.color.LDColor(
-		Beautiful.color_method,
-		Beautiful.color_method_factor * 1.5,
-		Beautiful.widget_bg_alt
-	),
+	bg_normal = Beautiful.widget_bg_alt,
+	-- bg_normal = Helpers.color.LDColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
+	-- bg_hover = Helpers.color.LDColor(
+	-- 	Beautiful.color_method,
+	-- 	Beautiful.color_method_factor * 1.5,
+	-- 	Beautiful.widget_bg_alt
+	-- ),
 	on_release = function()
 		Playerctl:previous()
 	end,
-	shape = Helpers.shape.prrect(Beautiful.small_radius, true, false, false, true),
-	paddings = { right = Dpi(5) },
-	forced_height = Dpi(26),
-	forced_width = Dpi(34),
+	-- shape = Helpers.shape.prrect(Beautiful.small_radius, true, false, false, true),
+	-- paddings = { right = Dpi(5) },
+	-- forced_height = Dpi(26),
+	-- forced_width = Dpi(34),
 })
 
 local player_label = Wibox.widget({
@@ -96,7 +105,7 @@ local player_label = Wibox.widget({
 
 local player_button = buttons.normal({
 	text = User.current_player.icon,
-	expand = false,
+	-- expand = false,
 	font = Beautiful.font_icon .. "13",
 	fg_normal = Beautiful.yellow,
 	bg_normal = Beautiful.widget_bg_color,
@@ -108,6 +117,7 @@ local player_button = buttons.normal({
 	},
 	child_pos = "right",
 	childs_space = Dpi(4),
+	halign = "left",
 	other_child = {
 		{
 			player_label,
@@ -123,60 +133,85 @@ local player_button = buttons.normal({
 	forced_height = Dpi(28),
 })
 
+local overlay = Wibox.widget({
+	widget = Wibox.container.background,
+	-- bg = Beautiful.bg_normal .. "CF",
+	bg = {
+		type = "linear",
+		from = { 0, 0 },
+		to = { Dpi(330), 0 },
+		stops = User.config.dark_mode
+				and { { 0, Beautiful.bg_normal .. "FF" }, { 1, Beautiful.widget_bg_alt .. "A5" } }
+			or { { 0, Beautiful.fg_normal .. "FF" }, { 1, Beautiful.black .. "A5" } },
+	},
+	-- forced_height = art_h,
+	-- forced_width = art_w,
+})
+
 local music_player_widget = Wibox.widget({
 	widget = Wibox.container.background,
-  shape = Beautiful.quicksettings_widgets_shape,
-	border_width = Beautiful.quicksettings_widgets_border_width,
+	shape = Beautiful.quicksettings_widgets_shape,
+	bg = Beautiful.bg_normal,
+	border_width = 0,
 	border_color = Beautiful.widget_bg_alt,
 	{
 		widget = Wibox.container.margin,
-		top = Dpi(15),
-		bottom = Dpi(15),
-		right = Dpi(10),
-		left = Dpi(10),
+		margins = Dpi(10),
 		{
-			layout = Wibox.layout.align.vertical,
+			layout = Wibox.layout.align.horizontal,
+			nil,
 			{
-				layout = Wibox.container.place,
+				widget = Wibox.container.background,
+				shape = Helpers.shape.rrect(Beautiful.medium_radius),
 				{
 					layout = Wibox.layout.stack,
+					forced_height = Dpi(145),
 					music_art,
+					overlay,
 					{
 						widget = Wibox.container.margin,
+						top = Dpi(10),
 						bottom = Dpi(6),
-						left = Dpi(4),
+						left = Dpi(10),
+						right = Dpi(10),
 						{
-							layout = Wibox.container.place,
-							halign = "left",
-							valign = "bottom",
-							player_button,
+							layout = Wibox.layout.align.vertical,
+							{
+								layout = Wibox.layout.fixed.vertical,
+								spacing = Dpi(4),
+								music_title,
+								music_artist,
+							},
+							nil,
+							{
+								layout = Wibox.container.place,
+								halign = "left",
+								player_button,
+							},
 						},
 					},
 				},
 			},
 			{
 				widget = Wibox.container.margin,
-				top = Dpi(7),
+				left = Dpi(10),
 				{
-					layout = Wibox.layout.fixed.vertical,
-					spacing = Dpi(4),
-					music_title,
-					music_artist,
-				},
-			},
-			{
-				widget = Wibox.container.margin,
-				bottom = Dpi(3),
-				{
-					layout = Wibox.container.place,
-					halign = "center",
-					valign = "center",
+					widget = Wibox.container.background,
+					bg = Beautiful.widget_bg_alt,
+					shape = Beautiful.quicksettings_widgets_shape,
 					{
-						layout = Wibox.layout.fixed.horizontal,
-						spacing = 0,
-						prev_button,
-						play_pause_button,
-						next_button,
+						widget = Wibox.container.margin,
+						top = Dpi(15),
+						bottom = Dpi(15),
+						left = Dpi(10),
+						right = Dpi(10),
+						{
+							layout = Wibox.layout.align.vertical,
+              expand = "none",
+							next_button,
+							play_pause_button,
+							prev_button,
+						},
 					},
 				},
 			},
@@ -194,9 +229,9 @@ end)
 
 Playerctl:connect_signal("status", function(_, playing)
 	if playing then
-		play_pause_button:set_text("󰏤")
+		play_pause_button:set_text("󰏦")
 	else
-		play_pause_button:set_text("󰐊")
+		play_pause_button:set_text("󰐍")
 	end
 end)
 

@@ -52,24 +52,16 @@ Awful.keyboard.append_global_keybindings({
 Awful.keyboard.append_global_keybindings({
 	-- Mediua player keys
 	-- Awful.key({}, "XF86AudioPause", function()
-	--     if Playerctl then
 	--         Playerctl:pause()
-	--     end
 	-- end),
 	-- Awful.key({}, "XF86AudioPlay", function()
-	--     if Playerctl then
 	--         Playerctl:play()
-	--     end
 	-- end),
 	-- Awful.key({}, "XF86AudioNext", function()
-	--     if Playerctl then
 	--         Playerctl:next()
-	--     end
 	-- end),
 	-- Awful.key({}, "XF86AudioPrev", function()
-	--     if Playerctl then
 	--         Playerctl:previous()
-	--     end
 	-- end),
 	-- Volume and Brightness keys
 	Awful.key({ User.config.modkey }, "-", function()

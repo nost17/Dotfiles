@@ -76,12 +76,13 @@ local function decorate_cell(widget, flag, date)
 		bg = props.bg_color or default_bg,
 		widget = Wibox.container.background,
 	})
+	collectgarbage("collect")
 	return ret
 end
 
 local calendar = Wibox.widget({
 	widget = Wibox.container.background,
-  shape = Beautiful.quicksettings_widgets_shape,
+	shape = Beautiful.quicksettings_widgets_shape,
 	border_width = Beautiful.quicksettings_widgets_border_width,
 	border_color = Beautiful.widget_bg_alt,
 	{
@@ -102,5 +103,4 @@ local calendar = Wibox.widget({
 	},
 })
 
-collectgarbage("collect")
 return calendar

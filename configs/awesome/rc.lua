@@ -28,8 +28,8 @@ User.config = {
 	dnd_state = false,
 	music_notify = true,
 	modkey = "Mod4",
-	theme = "onedark",
-	theme_accent = "blue",
+	theme = "yoru",
+	theme_accent = "green",
 }
 
 User.vars = {
@@ -51,3 +51,14 @@ require("theme") -- Beautiful theme
 require("config") -- AwesomeWM configuration files
 require("signal") -- Awesome signal files
 require("layout") -- UI configuration files
+
+Gears.timer {
+  timeout = 5,
+  autostart = true,
+  call_now = true,
+  callback = function()
+    collectgarbage "collect"
+  end,
+}
+collectgarbage("setpause", 110)
+collectgarbage("setstepmul", 1000)

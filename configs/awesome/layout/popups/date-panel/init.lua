@@ -14,11 +14,10 @@ local main = Wibox({
 	screen = screen.primary,
 })
 
-
 if Beautiful.main_panel_pos == "top" then
-  Helpers.placement(main, "top_right")
+	Helpers.placement(main, "top_right")
 elseif Beautiful.main_panel_pos == "bottom" then
-  Helpers.placement(main, "bottom_right")
+	Helpers.placement(main, "bottom_right")
 end
 
 awesome.connect_signal("awesome::notification_center", function(action)
@@ -37,8 +36,8 @@ awesome.connect_signal("awesome::notification_center", function(action)
 end)
 main:setup({
 	{
-		notification_center,
 		layout = Wibox.layout.fixed.vertical,
+		notification_center,
 	},
 	margins = Dpi(8),
 	widget = Wibox.container.margin,

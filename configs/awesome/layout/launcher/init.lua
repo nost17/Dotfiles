@@ -652,7 +652,12 @@ local function create_user_button(icon, color, shape, fn)
 		font = Beautiful.font_icon .. "15",
 		shape = shape,
 		fg_normal = color,
-		bg_normal = color .. "1F",
+		bg_normal = Helpers.color.LDColor(
+			Beautiful.color_method,
+			Beautiful.color_method_factor,
+			Beautiful.widget_bg_alt
+		),
+		-- bg_normal = color .. "1F",
 		bg_hover = color .. "3F",
 		on_release = fn,
 		forced_height = Dpi(46),
@@ -864,13 +869,13 @@ local function new(args)
 			awesome.emit_signal("awesome::logoutscreen", "show")
 		end
 	)
-  local music_button = create_user_button(
+	local music_button = create_user_button(
 		"󰋎",
 		Beautiful.orange or Beautiful.red,
 		Helpers.shape.rrect(Beautiful.small_radius),
 		function()
-      Awful.spawn.with_shell("kitty --class 'ncmpcpp-music' -e 'ncmpcpp' &> /dev/null &")
-      awesome.emit_signal("awesome::app_launcher", "hide")
+			Awful.spawn.with_shell("kitty --class 'ncmpcpp-music' -e 'ncmpcpp' &> /dev/null &")
+			awesome.emit_signal("awesome::app_launcher", "hide")
 		end
 	)
 	ret._private.widget = Awful.popup({
@@ -913,7 +918,7 @@ local function new(args)
 							{
 								layout = Wibox.layout.fixed.vertical,
 								spacing = args.grid_margins,
-                music_button,
+								music_button,
 								sleep_button,
 								lockscreen_button,
 								logout_button,

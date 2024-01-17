@@ -94,7 +94,6 @@ local function create_settings_button(opts)
 	local label = wtext({
 		text = opts.label,
 		font = Beautiful.font_text .. "Regular",
-    color = Beautiful.fg_normal .. "CC",
 		size = 10,
 		halign = "center",
 	})
@@ -114,7 +113,7 @@ local function create_settings_button(opts)
 					border_width = 0,
 					border_color = border_color,
 					forced_width = Dpi(70),
-					forced_height = Dpi(40),
+					forced_height = Dpi(38),
 					shape = Helpers.shape.prrect(Beautiful.small_radius * 1.3, false, false, true, true),
 					{
 						layout = Wibox.layout.align.horizontal,
@@ -127,7 +126,7 @@ local function create_settings_button(opts)
 								widget = Wibox.container.background,
 								-- bg = border_color,
 								-- forced_height = Dpi(40),
-								forced_width = 1,
+								forced_width = 1.5,
 							},
 						},
 						icon_settings,
@@ -208,7 +207,6 @@ local wifi_state = create_settings_button({
 	label = "Internet",
 	-- open_setting = true,
 })
-
 local floating_mode = create_settings_button({
 	icon = "󰀿",
 	label = "Modo Flotante",
@@ -226,33 +224,36 @@ local sliders_control = require("layout.popups.quicksettings.sliders")
 
 return Wibox.widget({
 	widget = Wibox.container.background,
-	-- shape = Beautiful.quicksettings_widgets_shape,
-	border_width = 0,
+	shape = Beautiful.quicksettings_widgets_shape,
+	border_width = Beautiful.quicksettings_widgets_border_width,
 	border_color = Beautiful.widget_bg_alt,
 	{
 		widget = Wibox.container.margin,
+		margins = Dpi(15),
 		{
 			layout = Wibox.layout.fixed.vertical,
 			spacing = Dpi(10),
 			{
 				layout = Wibox.layout.flex.horizontal,
-				spacing = Dpi(10),
+				spacing = Dpi(8),
 				wifi_state,
-				mute_state,
-				dark_mode,
-			},
-			{
-				layout = Wibox.layout.flex.horizontal,
-				spacing = Dpi(10),
-				music_notify,
+				-- mute_state,
 				blue_light_state,
-				dnd_state,
 			},
 			{
 				layout = Wibox.layout.flex.horizontal,
-				spacing = Dpi(10),
-				screenshot,
-				floating_mode,
+				spacing = Dpi(8),
+				music_notify,
+				dark_mode,
+				-- dnd_state,
+			},
+			{
+				layout = Wibox.layout.flex.horizontal,
+				spacing = Dpi(15),
+				mute_state,
+				dnd_state,
+				-- screenshot,
+				-- floating_mode,
 			},
 			sliders_control,
 		},

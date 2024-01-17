@@ -1,21 +1,21 @@
 local quicksettings = Wibox({
 	screen = screen.primary,
-	height = Dpi(540),
-	width = Dpi(330),
-	bg = Beautiful.bg_normal .. "00",
+	height = Dpi(390),
+	width = Dpi(824),
+	bg = Beautiful.widget_bg_color,
 	visible = false,
 	ontop = true,
-	border_width = 0,
-	-- shape = Helpers.shape.rrect(Beautiful.medium_radius),
+	border_width = Dpi(2),
+	shape = Helpers.shape.rrect(Beautiful.medium_radius),
 	border_color = Beautiful.widget_bg_alt,
 	-- border_color = Beautiful.red,
 })
 
-local placement = Awful.placement.bottom_right
-local placement_props = { honor_workarea = true, margins = Beautiful.useless_gap * 2 }
+local placement = Awful.placement.center_horizontal
+local placement_props = { honor_workarea = true, margins = Beautiful.useless_gap }
 
 if Beautiful.main_panel_pos == "bottom" then
-	-- placement = placement + Awful.placement.bottom
+	placement = placement + Awful.placement.bottom
 	placement(quicksettings, placement_props)
 elseif Beautiful.main_panel_pos == "top" then
 	placement = placement + Awful.placement.top
@@ -46,42 +46,30 @@ Awful.mouse.append_global_mousebinding(Awful.button({}, 1, function(c)
 	awesome.emit_signal("awesome::quicksettings", "hide")
 end))
 
-Beautiful.quicksettings_widgets_shape = Helpers.shape.rrect(Beautiful.medium_radius)
+Beautiful.quicksettings_widgets_shape =  Helpers.shape.rrect(Beautiful.medium_radius)
 Beautiful.quicksettings_widgets_border_width = 2
 
 local user_info = require("layout.popups.quicksettings.user_info")
 local music_player_control = require("layout.popups.quicksettings.music-player")
 local controls = require("layout.popups.quicksettings.controls")
+local calendar = require("layout.popups.quicksettings.calendar")
 
 quicksettings:setup({
-	layout = Wibox.layout.align.vertical,
+	widget = Wibox.container.margin,
+	margins = Dpi(10),
 	{
-		widget = Wibox.container.margin,
-		bottom = Dpi(10),
-		music_player_control,
-	},
-	{
-		widget = Wibox.container.background,
-		bg = Beautiful.bg_normal,
-		-- forced_height = Dpi(320),
-		shape = Beautiful.quicksettings_widgets_shape,
+		layout = Wibox.layout.fixed.vertical,
+		fill_space = true,
+		spacing = Dpi(10),
+		user_info,
 		{
-			widget = Wibox.container.margin,
-			margins = Dpi(10),
-			{
-				layout = Wibox.layout.fixed.vertical,
-				-- fill_space = true,
-				spacing = Dpi(10),
-				user_info,
-				{
-					layout = Wibox.layout.flex.horizontal,
-					spacing = Dpi(10),
-					controls,
-				},
-			},
+			layout = Wibox.layout.flex.horizontal,
+			spacing = Dpi(10),
+			calendar,
+			controls,
+			music_player_control,
 		},
 	},
-  nil,
 })
 
 collectgarbage("collect")

@@ -79,7 +79,7 @@ end)
 
 return Wibox.widget({
 	layout = Wibox.layout.flex.vertical,
-	spacing = Dpi(7),
+	spacing = Dpi(5),
 	set_icon_in_bar("󰕾", Beautiful.magenta, volume_bar),
 	set_icon_in_bar("󰃠", Beautiful.yellow, brightness_bar),
 })

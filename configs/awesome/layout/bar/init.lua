@@ -3,7 +3,7 @@ local wbutton = require("utils.button.text")
 local screen_width = screen.primary.geometry.width
 
 local main = Awful.wibar({
-	height = Dpi(40),
+	height = Dpi(42),
 	width = screen_width,
 	bg = Beautiful.bg_normal,
 	position = Beautiful.main_panel_pos,
@@ -41,19 +41,24 @@ end))
 local battery = require("layout.bar.battery")
 
 -- QUICKSETTINGS PANEL WIDGET
-local status = Wibox.widget({
-	layout = Wibox.layout.fixed.horizontal,
-	spacing = Dpi(10),
+local quicksettings = Wibox.widget({
+	widget = Wibox.container.background,
 	{
+		widget = Wibox.container.margin,
+		left = Dpi(10),
+		right = Dpi(5),
 		{
-			base_size = 24,
-			widget = Wibox.widget.systray,
+			layout = Wibox.layout.fixed.horizontal,
+			spacing = Dpi(10),
+			battery,
 		},
-		valign = "center",
-		layout = Wibox.container.place,
 	},
-	battery,
 })
+
+Helpers.ui.add_click(quicksettings, 1, function()
+	awesome.emit_signal("awesome::quicksettings", "toggle")
+end)
+Helpers.ui.add_hover(quicksettings, Beautiful.widget_bg_alt, Beautiful.foreground, Beautiful.black)
 
 -- CLOCK WIDGET
 local function mkclock()
@@ -139,13 +144,30 @@ main:setup({
 			spacing = Dpi(4),
 			app_launcher,
 			taglist,
-			tasklist,
 		},
-		clock,
+		tasklist,
 		{
 			layout = Wibox.layout.fixed.horizontal,
 			spacing = Dpi(8),
-			status,
+			{
+				widget = Wibox.container.margin,
+				top = Dpi(5),
+				bottom = Dpi(5),
+				{
+					layout = Wibox.layout.fixed.horizontal,
+					spacing = Dpi(8),
+					{
+						layout = Wibox.container.place,
+						valign = "center",
+						{
+							base_size = 24,
+							widget = Wibox.widget.systray,
+						},
+					},
+					quicksettings,
+					clock,
+				},
+			},
 			notify_panel,
 		},
 	},
