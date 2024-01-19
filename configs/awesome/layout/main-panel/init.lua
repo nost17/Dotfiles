@@ -4,23 +4,28 @@ local screen_height = main_panel_screen.geometry.height
 local dpi = Beautiful.xresources.apply_dpi
 
 local main_panel = Awful.wibar({
-	screen = main_panel_screen,
-	height = screen_height,
-	width = Beautiful.main_panel_size,
-	bg = Beautiful.bg_normal,
-	position = Beautiful.main_panel_pos,
-	visible = true,
+  screen = main_panel_screen,
+  height = screen_height,
+  width = Beautiful.main_panel_size,
+  bg = Beautiful.bg_normal,
+  position = Beautiful.main_panel_pos,
+  visible = true,
 })
 
 local taglist = require("layout.main-panel.mods.taglist")(main_panel_screen)
+local tasklist = require("layout.main-panel.mods.tasklist")(main_panel_screen)
 
 main_panel:setup({
-	layout = Wibox.layout.align.vertical,
-	{
-		widget = Wibox.container.margin,
-		margins = dpi(5),
-		taglist,
-	},
-	nil,
-	nil,
+  layout = Wibox.layout.align.vertical,
+  {
+    widget = Wibox.container.margin,
+    margins = dpi(5),
+    taglist,
+  },
+  {
+    widget = Wibox.container.margin,
+    margins = dpi(5),
+    tasklist,
+  },
+  nil,
 })

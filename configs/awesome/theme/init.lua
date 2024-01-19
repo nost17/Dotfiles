@@ -125,11 +125,13 @@ theme.titlebar_maximized_button_focus_inactive_hover  = theme.titlebar_maximized
 -- TASKLIST
 theme.tasklist_bg_color      = theme.transparent
 --[[ theme.tasklist_bg_focus                = Helpers.color.ldColor(theme.accent_color, 10) ]]
-theme.tasklist_bg_focus                = User.config.dark_mode and Helpers.color.ldColor(theme.widget_bg_alt, 7) or
-theme.widget_bg_alt
+theme.tasklist_bg_focus                = theme.widget_bg_alt
 theme.tasklist_indicator_focus         = theme.accent_color
 theme.tasklist_indicator_normal        = theme.foreground .. "22"
-theme.taglist_icon_size                = dpi(24)
+theme.tasklist_indicator_minimized     = theme.transparent
+theme.tasklist_indicator_position      = "left"
+theme.tasklist_icon_size               = dpi(26)
+theme.tasklist_spacing                 = dpi(5)
 
 -- TAGLIST
 theme.taglist_shape                    = Helpers.shape.rrect(theme.small_radius * 0.7)
