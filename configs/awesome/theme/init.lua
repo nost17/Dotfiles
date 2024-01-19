@@ -35,7 +35,7 @@ theme.default_app_icon       = "access"
 theme.accent_color           = theme[User.config.theme_accent or "blue"]
 theme.transparent            = "#00000000"
 theme.color_method           = User.config.dark_mode and "lighten" or "darken"
-theme.color_method_factor    = 10
+theme.color_method_factor    = 15
 
 --- MAIN
 theme.bg_normal              = theme.background
@@ -59,7 +59,7 @@ theme.widget_clock_font      = theme.font_text .. 'Medium 12'
 theme.layouts_icons_color    = Helpers.color.ldColor("darken", 20, theme.fg_normal)
 theme.bg_systray             = theme.widget_bg
 theme.main_panel_pos         = "left"
-theme.main_panel_size        = dpi(44)
+theme.main_panel_size        = dpi(46)
 
 -- LOGOUT SCREEN
 theme.logoutscreen_buttons_shape = Helpers.shape.rrect(theme.small_radius)
@@ -132,20 +132,21 @@ theme.tasklist_indicator_normal        = theme.foreground .. "22"
 theme.taglist_icon_size                = dpi(24)
 
 -- TAGLIST
-theme.taglist_shape                    = Helpers.shape.rrect(theme.widget_radius)
+theme.taglist_shape                    = Helpers.shape.rrect(theme.small_radius * 0.7)
 theme.taglist_font                     = theme.font_text .. "Bold 12"
-theme.taglist_spacing                  = dpi(12)
+theme.taglist_spacing                  = dpi(6)
+theme.taglist_icon_padding             = dpi(3)
 theme.taglist_shape_border_width       = 0
 theme.taglist_shape_border_color       = theme.background
-theme.taglist_bg_color                 = theme.bg_normal
-theme.taglist_bg_urgent                = theme.taglist_bg_color
-theme.taglist_bg_focus                 = theme.taglist_bg_color
-theme.taglist_bg_occupied              = theme.taglist_bg_color
+theme.taglist_bg_color                 = theme.widget_bg_alt
+theme.taglist_bg_urgent                = theme.red
+theme.taglist_bg_focus                 = theme.accent_color
+theme.taglist_bg_occupied              = Helpers.color.ldColor(theme.color_method, theme.color_method_factor, theme.taglist_bg_color)
 theme.taglist_bg_empty                 = theme.taglist_bg_color
-theme.taglist_fg_focus                 = theme.accent_color
-theme.taglist_fg_urgent                = theme.red
+theme.taglist_fg_focus                 = theme.foreground_alt
+theme.taglist_fg_urgent                = theme.foreground_alt
 theme.taglist_fg_occupied              = theme.fg_normal
-theme.taglist_fg_empty                 = theme.black
+theme.taglist_fg_empty                 = theme.fg_normal
 theme.taglist_shape_border_color_empty = "#00000000"
 
 -- NOTIFICATIONS
