@@ -51,7 +51,6 @@ local function new(args)
 							widget = Wibox.container.margin,
 							id = "padding_role",
 							margins = args.paddings,
-							-- bottom = -20,
 							args.child,
 						},
 					},

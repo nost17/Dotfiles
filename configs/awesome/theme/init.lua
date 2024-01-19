@@ -1,18 +1,19 @@
 local theme = {}
 local themes_path = Gears.filesystem.get_configuration_dir() .. "theme/"
+local dpi = Beautiful.xresources.apply_dpi
 local function check(file)
   file_path = themes_path:gsub("theme/", "") .. file:gsub("%.", "/") .. ".lua"
   return Helpers.checkFile(file_path)
 end
-local theme_light_path = "theme." .. User.config.theme .. ".light"
-local theme_dark_path = "theme." .. User.config.theme .. ".dark"
+local theme_dark_path = "theme.colors." .. User.config.theme
+local theme_light_path = "theme.colors." .. User.config.theme .. "_light"
 _G.light_theme_exist = check(theme_light_path)
 _G.dark_theme_exist = check(theme_dark_path)
-theme.ToggleDarkMode = function()
-  if User.config.dark_mode and check(theme_dark_path) then
+local setThene = function()
+  if User.config.dark_mode and _G.dark_theme_exist then
     theme = require(theme_dark_path)
   else
-    if check(theme_light_path) then
+    if _G.light_theme_exist then
       theme = require(theme_light_path)
       User.config.dark_mode = false
     else
@@ -21,7 +22,7 @@ theme.ToggleDarkMode = function()
     end
   end
 end
-theme.ToggleDarkMode()
+setThene()
 
 -- OTHER
 theme.wallpaper              = theme.wallpaper or themes_path .. "/wallpapers/yoru.jpeg"
@@ -40,13 +41,13 @@ theme.color_method_factor    = theme.color_method == "lighten" and 0.04 or 0.08
 --- MAIN
 theme.bg_normal              = theme.background
 theme.fg_normal              = theme.foreground
-theme.useless_gap            = Dpi(4)
+theme.useless_gap            = dpi(4)
 theme.gap_single_client      = false
 theme.awesome_icon           = themes_path .. "images/awesome.png"
 theme.user_icon              = themes_path .. "images/user_icon.jpeg"
 -- theme.awesome_icon = themes_path .. "images/awesome.png"
-theme.small_radius           = Dpi(6)
-theme.medium_radius          = Dpi(10)
+theme.small_radius           = dpi(6)
+theme.medium_radius          = dpi(10)
 
 -- BORDER
 theme.border_width           = 0
@@ -60,7 +61,7 @@ theme.widget_clock_font      = theme.font_text .. 'Medium 12'
 theme.layouts_icons_color    = Helpers.color.ldColor(theme.fg_normal, -30)
 theme.bg_systray             = theme.widget_bg_alt
 theme.main_panel_pos         = "bottom"
-theme.main_panel_size        = Dpi(42)
+theme.main_panel_size        = dpi(42)
 
 -- LOGOUT SCREEN
 theme.logoutscreen_buttons_shape = Helpers.shape.rrect(theme.small_radius)
@@ -75,7 +76,7 @@ theme.music_artist_font_size = 11
 -- TOOLTIP
 theme.tooltip_bg             = theme.bg_normal
 theme.tooltip_fg             = theme.fg_normal
-theme.tooltip_margins        = Dpi(10)
+theme.tooltip_margins        = dpi(10)
 
 -- BLING
 theme.bling_launcher_args    = {
@@ -83,23 +84,23 @@ theme.bling_launcher_args    = {
   apps_per_column = 1,
   background = theme.background,
   -- icon_size = 32,
-  apps_spacing = Dpi(6),
+  apps_spacing = dpi(6),
   app_show_icon = false,
   app_name_halign = "left",
   app_shape = Helpers.shape.rrect(theme.widget_radius - 5),
   apps_per_row = 6,
-  app_height = Dpi(24),
-  app_width = Dpi(260),
-  apps_margin = Dpi(6),
+  app_height = dpi(24),
+  app_width = dpi(260),
+  apps_margin = dpi(6),
   app_selected_color = theme.widget_bg_color,
   app_normal_color = theme.background,
   app_name_selected_color = theme.accent_color .. "EF",
   app_name_normal_color = theme.foreground .. "6F",
   app_name_font = theme.font_text .. "Regular 12",
-  prompt_height = Dpi(40),
+  prompt_height = dpi(40),
   prompt_margins = 0,
   prompt_paddings = {
-    left = Dpi(20), right = Dpi(30),
+    left = dpi(20), right = dpi(30),
   },
   prompt_text = "",
   prompt_icon = ">", -- 󰍉
@@ -110,7 +111,7 @@ theme.bling_launcher_args    = {
   prompt_icon_color = theme.accent_color .. "DF",
   prompt_cursor_color = theme.foreground .. "bb",
   border_color = theme.black,
-  border_width = Dpi(3),
+  border_width = dpi(3),
 }
 theme.GtkBling               = require("utils.mods.bling.helpers.icon_theme")(theme.icon_theme)
 
@@ -130,7 +131,7 @@ theme.titlebar_bg_focus      = theme.titlebar_bg_normal
 theme.titlebar_fg_normal     = theme.fg_normal
 theme.titlebar_fg_focus      = theme.fg_normal .. "BF"
 theme.titlebar_font          = theme.font_text .. "SemiBold 10"
-theme.titlebar_size          = Dpi(40)
+theme.titlebar_size          = dpi(40)
 local recolor_image = Gears.color.recolor_image
 local recolor = function (color, method)
   return Helpers.color.ldColor(color, 35, method or "lighten")
@@ -165,12 +166,12 @@ theme.tasklist_bg_focus                = User.config.dark_mode and Helpers.color
 theme.widget_bg_alt
 theme.tasklist_indicator_focus         = theme.accent_color
 theme.tasklist_indicator_normal        = theme.foreground .. "22"
-theme.taglist_icon_size                = Dpi(24)
+theme.taglist_icon_size                = dpi(24)
 
 -- TAGLIST
 theme.taglist_shape                    = Helpers.shape.rrect(theme.widget_radius)
 theme.taglist_font                     = theme.font_text .. "Bold 12"
-theme.taglist_spacing                  = Dpi(12)
+theme.taglist_spacing                  = dpi(12)
 theme.taglist_shape_border_width       = 0
 theme.taglist_shape_border_color       = theme.background
 theme.taglist_bg_color                 = theme.bg_normal
@@ -196,12 +197,12 @@ theme.notification_font_appname        = theme.font_text .. "Bold 11"
 theme.notification_font_actions        = theme.font_text .. "Medium 10"
 theme.notification_font_hour           = theme.font_text .. "Bold 10"
 theme.notification_icon_shape          = Helpers.shape.rrect(6) -- Gears.shape.circle
-theme.notification_spacing             = Dpi(6)
-theme.notification_icon_height         = Dpi(52)
+theme.notification_spacing             = dpi(6)
+theme.notification_icon_height         = dpi(52)
 theme.notification_border_width        = 0
 theme.notification_border_color        = theme.black
-theme.notification_border_radius       = Dpi(6)
-theme.notification_padding             = Dpi(8)
+theme.notification_border_radius       = dpi(6)
+theme.notification_padding             = dpi(8)
 
 -- MENUBAR
 theme.menubar_fg_normal                = theme.fg_normal .. "bb"

@@ -35,20 +35,9 @@ function _btn.state(opts)
 	opts.turn_on_fn = opts.turn_on_fn or nil
 	opts.turn_off_fn = opts.turn_off_fn or nil
 	opts.alt_fn = opts.alt_fn or nil
-	-- opts.other_child = opts.other_child
-	-- opts.childs_space = opts.childs_space
 	local text_widget = create_icon(opts.text_off, opts.fg_normal, opts.font)
 	Gears.table.crush(text_widget, _text, true)
-	if opts.other_child then
-		opts.child = {
-			spacing = opts.childs_space,
-			layout = Wibox.layout.fixed.horizontal,
-			text_widget,
-			opts.other_child,
-		}
-	else
-		opts.child = text_widget
-	end
+  opts.child = text_widget
 	local widget = mkcontainer(opts)
 	widget._private.state = false
 	function widget:turn_on(no_fn)
@@ -104,11 +93,11 @@ function _btn.state(opts)
 	if opts.on_by_default then
 		widget:turn_on()
 	end
-  widget._private.opts = opts
+	widget._private.opts = opts
 	return widget
 end
 function _btn.normal(opts)
-	opts.bg_normal = opts.bg_normal or Beautiful.bg_alt
+	opts.bg_normal = opts.bg_normal or Beautiful.bg_normal
 	opts.bg_hover = opts.bg_hover or opts.bg_normal
 	opts.fg_normal = opts.fg_normal or Beautiful.fg_normal
 	opts.fg_hover = opts.fg_hover or opts.fg_normal
@@ -118,21 +107,9 @@ function _btn.normal(opts)
 	opts.on_alt_release = opts.on_alt_release or nil
 	opts.font = opts.font or Beautiful.font
 	opts.text_id = opts.text_id or "text_role"
-	opts.child_pos = opts.child_pos or "right"
 	local text_widget = create_icon(opts.text, opts.fg_normal, opts.font, opts.text_id)
 	Gears.table.crush(text_widget, _text, true)
-	if opts.other_child then
-		opts.other_child =opts.other_child
-		opts.child = {
-			spacing = opts.childs_space,
-			layout = Wibox.layout.fixed.horizontal,
-			opts.child_pos == "left" and opts.other_child,
-			text_widget,
-			opts.child_pos == "right" and opts.other_child,
-		}
-	else
-		opts.child = text_widget
-	end
+	opts.child = text_widget
 	local widget = mkcontainer(opts)
 	widget:connect_signal("mouse::enter", function(self)
 		self:get_children_by_id("background_role")[1].bg = opts.bg_hover
@@ -151,7 +128,7 @@ function _btn.normal(opts)
 		})
 	end
 	Helpers.ui.add_click(widget, 1, function()
-    if opts.on_release then
+		if opts.on_release then
 			opts.on_release(widget)
 		end
 	end)
