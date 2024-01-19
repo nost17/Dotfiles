@@ -21,7 +21,8 @@ local function hex_to_rgb(hexArg)
 	return r, g, b
 end
 
-function M.ldColor(color, brightness, method)
+function M.ldColor(method, brightness, color)
+  color = color or "#FFFFFFFF"
 	-- Convertir el color hexadecimal a componentes RGB y alfa
 	local r, g, b, a = 0, 0, 0, 255
 	if method == "darken" then
@@ -56,7 +57,7 @@ function M.ldColor(color, brightness, method)
 end
 
 function M.LDColor(method, factor, color)
-	local script_path = Gears.filesystem.get_configuration_dir() .. "scripts/my_color "
+	local script_path = Gears.filesystem.get_configuration_dir() .. "scripts/ldcolor "
 	local script = script_path
 		.. "-t "
 		.. method

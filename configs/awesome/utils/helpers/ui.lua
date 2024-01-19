@@ -1,4 +1,5 @@
 local _module = {}
+local capi = { mouse = mouse }
 
 function _module.horizontal_pad(width)
 	return Wibox.widget({
@@ -14,17 +15,20 @@ function _module.vertical_pad(height)
 	})
 end
 
-function _module.add_cursor_hover(element)
-	local old_cursor, old_wibox
-	element:connect_signal("mouse::enter", function(c)
-		local wb = mouse.current_wibox
-		old_cursor, old_wibox = wb.cursor, wb
-		wb.cursor = "hand1"
+function _module.add_hover_cursor(w, hover_cursor)
+	local original_cursor = "left_ptr"
+  hover_cursor = hover_cursor or "hand1"
+	w:connect_signal("mouse::enter", function()
+		local widget = capi.mouse.current_wibox
+		if widget then
+			widget.cursor = hover_cursor
+		end
 	end)
-	element:connect_signal("mouse::leave", function(c)
-		if old_wibox then
-			old_wibox.cursor = old_cursor
-			old_wibox = nil
+
+	w:connect_signal("mouse::leave", function()
+		local widget = capi.mouse.current_wibox
+		if widget then
+			widget.cursor = original_cursor
 		end
 	end)
 end

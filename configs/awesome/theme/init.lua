@@ -32,11 +32,10 @@ theme.font                   = theme.font_text .. "Regular 12"
 theme.widget_radius          = 1
 theme.default_app_icon       = "access"
 -- theme.icon_theme                       = "ePapirus-Dark"
--- theme.icon_theme_path                  = "/usr/share/icons/" .. theme.icon_theme .. "/48x48/apps/"
 theme.accent_color           = theme[User.config.theme_accent or "blue"]
 theme.transparent            = "#00000000"
 theme.color_method           = User.config.dark_mode and "lighten" or "darken"
-theme.color_method_factor    = theme.color_method == "lighten" and 0.04 or 0.08
+theme.color_method_factor    = 10
 
 --- MAIN
 theme.bg_normal              = theme.background
@@ -45,23 +44,22 @@ theme.useless_gap            = dpi(4)
 theme.gap_single_client      = false
 theme.awesome_icon           = themes_path .. "images/awesome.png"
 theme.user_icon              = themes_path .. "images/user_icon.jpeg"
--- theme.awesome_icon = themes_path .. "images/awesome.png"
 theme.small_radius           = dpi(6)
 theme.medium_radius          = dpi(10)
 
 -- BORDER
-theme.border_width           = 0
+theme.border_width           = 2
 theme.border_normal          = "#0c0e0f"
 theme.border_focus           = theme.yellow
 
 -- WIDGETS
-theme.widget_bg_color        = theme.bg_normal
-theme.widget_bg_alt          = Helpers.color.LDColor(theme.color_method, theme.color_method_factor, theme.bg_normal)
+theme.widget_bg              = theme.bg_normal
+theme.widget_bg_alt          = Helpers.color.ldColor(theme.color_method, 10, theme.widget_bg)
 theme.widget_clock_font      = theme.font_text .. 'Medium 12'
-theme.layouts_icons_color    = Helpers.color.ldColor(theme.fg_normal, -30)
-theme.bg_systray             = theme.widget_bg_alt
-theme.main_panel_pos         = "bottom"
-theme.main_panel_size        = dpi(42)
+theme.layouts_icons_color    = Helpers.color.ldColor("darken", 20, theme.fg_normal)
+theme.bg_systray             = theme.widget_bg
+theme.main_panel_pos         = "left"
+theme.main_panel_size        = dpi(44)
 
 -- LOGOUT SCREEN
 theme.logoutscreen_buttons_shape = Helpers.shape.rrect(theme.small_radius)
@@ -79,45 +77,10 @@ theme.tooltip_fg             = theme.fg_normal
 theme.tooltip_margins        = dpi(10)
 
 -- BLING
-theme.bling_launcher_args    = {
-  placement = Awful.placement.bottom_left,
-  apps_per_column = 1,
-  background = theme.background,
-  -- icon_size = 32,
-  apps_spacing = dpi(6),
-  app_show_icon = false,
-  app_name_halign = "left",
-  app_shape = Helpers.shape.rrect(theme.widget_radius - 5),
-  apps_per_row = 6,
-  app_height = dpi(24),
-  app_width = dpi(260),
-  apps_margin = dpi(6),
-  app_selected_color = theme.widget_bg_color,
-  app_normal_color = theme.background,
-  app_name_selected_color = theme.accent_color .. "EF",
-  app_name_normal_color = theme.foreground .. "6F",
-  app_name_font = theme.font_text .. "Regular 12",
-  prompt_height = dpi(40),
-  prompt_margins = 0,
-  prompt_paddings = {
-    left = dpi(20), right = dpi(30),
-  },
-  prompt_text = "",
-  prompt_icon = ">", -- 󰍉
-  prompt_icon_font = theme.font_text .. "Medium 10",
-  prompt_font = theme.font_text .. "Medium 11",
-  prompt_color = theme.black,
-  prompt_text_color = theme.foreground .. "bb",
-  prompt_icon_color = theme.accent_color .. "DF",
-  prompt_cursor_color = theme.foreground .. "bb",
-  border_color = theme.black,
-  border_width = dpi(3),
-}
 theme.GtkBling               = require("utils.mods.bling.helpers.icon_theme")(theme.icon_theme)
 
 -- MENU
-
-theme.menu_bg_normal         = theme.widget_bg_color
+theme.menu_bg_normal         = theme.widget_bg
 theme.menu_bg_focus          = theme.red
 theme.menu_fg_focus          = theme.foreground_alt
 theme.menu_height            = 26
@@ -126,7 +89,7 @@ theme.menu_width             = 260
 -- TITLEBAR
 -- theme.titlebar_bg_focus                = Helpers.color.ldColor(theme.blue, -25)
 -- theme.titlebar_bg_normal               = Helpers.color.ldColor(theme.bg_normal, 8)
-theme.titlebar_bg_normal     = theme.widget_bg_color
+theme.titlebar_bg_normal     = theme.widget_bg
 theme.titlebar_bg_focus      = theme.titlebar_bg_normal
 theme.titlebar_fg_normal     = theme.fg_normal
 theme.titlebar_fg_focus      = theme.fg_normal .. "BF"
@@ -134,7 +97,7 @@ theme.titlebar_font          = theme.font_text .. "SemiBold 10"
 theme.titlebar_size          = dpi(40)
 local recolor_image = Gears.color.recolor_image
 local recolor = function (color, method)
-  return Helpers.color.ldColor(color, 35, method or "lighten")
+  return Helpers.color.ldColor(method or "lighten", 35, color)
 end
 theme.titlebar_close_button_normal              =
   recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.widget_bg_alt, "lighten"))
@@ -188,9 +151,9 @@ theme.taglist_shape_border_color_empty = "#00000000"
 -- NOTIFICATIONS
 theme.notification_position            = "top_right"
 theme.notification_icon                = themes_path .. "images/notification.png"
-theme.notification_bg                  = Helpers.color.LDColor(theme.color_method, theme.color_method_factor * 0.75,
+theme.notification_bg                  = Helpers.color.ldColor(theme.color_method, theme.color_method_factor,
   theme.bg_normal)
-theme.notification_fg                  = Helpers.color.ldColor(theme.fg_normal, 15, 'darken')
+theme.notification_fg                  = Helpers.color.ldColor('darken', 15, theme.fg_normal)
 theme.notification_font_title          = theme.font_text .. "SemiBold 12"
 theme.notification_font_message        = theme.font_text .. "Medium 11"
 theme.notification_font_appname        = theme.font_text .. "Bold 11"
@@ -248,7 +211,7 @@ for _, layout_name in ipairs({
   'layout_cornersw',
   'layout_cornerse',
 }) do
-  theme[layout_name] = Helpers.recolor_image(theme[layout_name], theme.layouts_icons_color)
+  theme[layout_name] = Gears.color.recolor_image(theme[layout_name], theme.layouts_icons_color)
 end
 
 Beautiful.init(theme)

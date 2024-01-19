@@ -214,7 +214,11 @@ function elevated_button.state(args)
 		if button == 1 then
 			if args.on_release ~= nil and fake ~= true then
 				args.on_release(self, lx, ly, button, mods, find_widgets_result)
-				effect(widget, args.bg_hover, args.shape, args.border_width_on, args.on_normal_border_color)
+				if self._private.state == true then
+					effect(widget, args.bg_hover_on, args.shape, args.border_width_on, args.on_normal_border_color)
+				else
+					effect(widget, args.bg_hover, args.shape, args.border_width, args.normal_border_color)
+				end
 			elseif args.on_turn_on ~= nil or args.on_turn_off ~= nil or args.on_press then
 				if widget._private.state == true then
 					if args.on_turn_off then
