@@ -1,146 +1,136 @@
-local mkcontainer = require("utils.container")
-local _btn = {}
-local _text = {}
-local function create_icon(text, color, font, id)
-	local w = Wibox.widget.textbox()
-	w.halign = "center"
-	w._private.text = text
-	w._private.color = color
-	w.id = id or "text_role"
-	w:set_font(font)
-	w:set_markup_silently(Helpers.text.colorize_text(text, color))
-	return w
+-------------------------------------------
+-- @author https://github.com/Kasper24
+-- @copyright 2021-2022 Kasper24
+-------------------------------------------
+
+local gtable = require("gears.table")
+local twidget = require("utils.modules.text")
+local ewidget = require("utils.button.elevated")
+local beautiful = require("beautiful")
+-- local Helpers = require("helpers")
+local setmetatable = setmetatable
+local math = math
+
+local text_button = { mt = {} }
+
+function text_button:set_font(font)
+	self._private.text:set_font(font)
 end
-function _text:set_color(new_color)
-	self._private.color = new_color
-	self:set_markup_silently(Helpers.text.colorize_text(self._private.text, new_color))
+
+function text_button:set_bold(bold)
+	self._private.text:set_bold(bold)
 end
-function _text:set_text(new_text)
-	self._private.text = new_text
-	self:set_markup_silently(Helpers.text.colorize_text(new_text, self._private.color))
+
+function text_button:set_size(font, size)
+	self._private.text:set_size(font, size)
 end
-function _btn.state(opts)
-	opts.bg_normal = opts.bg_normal or Beautiful.bg_normal
-	opts.bg_hover = opts.bg_hover or opts.bg_normal
-	opts.bg_normal_on = opts.bg_normal_on or Beautiful.black
-	opts.bg_hover_on = opts.bg_hover_on or opts.bg_normal_on
-	opts.fg_normal = opts.fg_normal or Beautiful.fg_normal
-	opts.fg_hover = opts.fg_hover or opts.fg_normal
-	opts.fg_normal_on = opts.fg_normal_on or opts.fg_normal
-	opts.fg_hover_on = opts.fg_hover_on or opts.fg_normal_on
-	opts.border_color_on = opts.border_color_on or opts.bg_normal_on
-	opts.text_off = opts.text_off or ""
-	opts.text_on = opts.text_on or opts.text_off
-	opts.font = opts.font or Beautiful.font
-	opts.turn_on_fn = opts.turn_on_fn or nil
-	opts.turn_off_fn = opts.turn_off_fn or nil
-	opts.alt_fn = opts.alt_fn or nil
-	local text_widget = create_icon(opts.text_off, opts.fg_normal, opts.font)
-	Gears.table.crush(text_widget, _text, true)
-  opts.child = text_widget
-	local widget = mkcontainer(opts)
-	widget._private.state = false
-	function widget:turn_on(no_fn)
-		widget:get_children_by_id("background_role")[1].bg = opts.bg_normal_on
-		widget:get_children_by_id("background_role")[1].border_color = opts.border_color_on
-		text_widget:set_text(opts.text_on)
-		text_widget:set_color(opts.fg_normal_on)
-		widget._private.state = true
-		if opts.turn_on_fn and not no_fn then
-			opts.turn_on_fn(widget)
-		end
-	end
-	function widget:turn_off()
-		widget:get_children_by_id("background_role")[1].bg = opts.bg_normal
-		widget:get_children_by_id("background_role")[1].border_color = opts.border_color
-		text_widget:set_text(opts.text_off)
-		text_widget:set_color(opts.fg_normal)
-		widget._private.state = false
-		if opts.turn_off_fn then
-			opts.turn_off_fn(widget)
-		end
-	end
-	widget:connect_signal("mouse::enter", function(self)
-		if widget._private.state then
-			self:get_children_by_id("background_role")[1].bg = opts.bg_hover_on
-			text_widget:set_color(opts.fg_hover_on)
+
+function text_button:set_color(color)
+	self._private.text:set_color(color)
+end
+
+function text_button:set_text(text)
+	self._private.text:set_text(text)
+end
+
+local function button(args, type)
+	args = args or {}
+
+	args.color = args.fg_normal
+	local text_widget = twidget(args)
+
+	args.child = text_widget
+	local widget = type == "normal" and ewidget.normal(args) or ewidget.state(args)
+
+	gtable.crush(widget, text_button, true)
+	widget._private.text = text_widget
+
+	return widget, text_widget
+end
+
+function text_button.state(args)
+	args = args or {}
+
+	args.fg_normal = args.fg_normal or beautiful.fg_normal
+	args.fg_hover = args.fg_hover or Helpers.color.ldColor("lighten", beautiful.color_method_factor, args.fg_normal)
+	args.fg_press = args.fg_press or args.fg_hover
+
+	args.fg_normal_on = args.fg_normal_on or args.fg_normal
+	args.fg_hover_on = args.fg_hover_on
+		or Helpers.color.ldColor("lighten", beautiful.color_method_factor, args.fg_normal_on)
+	args.fg_press_on = args.fg_press_on or args.fg_hover_on
+
+	local widget, text_widget = button(args, "state")
+
+	function text_widget:on_hover(wdg, state)
+		if state == true then
+			text_widget:set_color(args.fg_hover_on)
 		else
-			self:get_children_by_id("background_role")[1].bg = opts.bg_hover
-			text_widget:set_color(opts.fg_hover)
+			text_widget:set_color(args.fg_hover)
 		end
-	end)
-	widget:connect_signal("mouse::leave", function(self)
-		if widget._private.state then
-			self:get_children_by_id("background_role")[1].bg = opts.bg_normal_on
-			text_widget:set_color(opts.fg_normal_on)
-		else
-			self:get_children_by_id("background_role")[1].bg = opts.bg_normal
-			text_widget:set_color(opts.fg_normal)
-		end
-	end)
-	Helpers.ui.add_click(widget, 1, function()
-		if widget._private.state then
-			widget:turn_off()
-		else
-			widget:turn_on()
-		end
-	end)
-	Helpers.ui.add_click(widget, 3, function()
-		if opts.alt_fn then
-			opts.alt_fn()
-		end
-	end)
-	if opts.on_by_default then
-		widget:turn_on()
 	end
-	widget._private.opts = opts
-	return widget
-end
-function _btn.normal(opts)
-	opts.bg_normal = opts.bg_normal or Beautiful.bg_normal
-	opts.bg_hover = opts.bg_hover or opts.bg_normal
-	opts.fg_normal = opts.fg_normal or Beautiful.fg_normal
-	opts.fg_hover = opts.fg_hover or opts.fg_normal
-	opts.border_color_hover = opts.border_color_hover or opts.bg_hover
-	opts.text = opts.text or ""
-	opts.on_release = opts.on_release or nil
-	opts.on_alt_release = opts.on_alt_release or nil
-	opts.font = opts.font or Beautiful.font
-	opts.text_id = opts.text_id or "text_role"
-	local text_widget = create_icon(opts.text, opts.fg_normal, opts.font, opts.text_id)
-	Gears.table.crush(text_widget, _text, true)
-	opts.child = text_widget
-	local widget = mkcontainer(opts)
-	widget:connect_signal("mouse::enter", function(self)
-		self:get_children_by_id("background_role")[1].bg = opts.bg_hover
-		self:get_children_by_id("background_role")[1].border_color = opts.border_color_hover
-		text_widget:set_color(opts.fg_hover)
-	end)
-	widget:connect_signal("mouse::leave", function(self)
-		self:get_children_by_id("background_role")[1].bg = opts.bg_normal
-		self:get_children_by_id("background_role")[1].border_color = opts.border_color
-		text_widget:set_color(opts.fg_normal)
-	end)
-	if opts.expand == false then
-		widget = Wibox.widget({
-			widget,
-			layout = Wibox.container.place,
-		})
+
+	function text_widget:on_leave(wdg, state)
+		if state == true then
+			text_widget:set_color(args.fg_normal_on)
+		else
+			text_widget:set_color(args.fg_normal)
+		end
 	end
-	Helpers.ui.add_click(widget, 1, function()
-		if opts.on_release then
-			opts.on_release(widget)
+
+	function text_widget:on_turn_on()
+		text_widget:set_color(args.fg_normal_on)
+	end
+
+	if args.on_by_default == true then
+		text_widget:on_turn_on()
+	end
+
+	function text_widget:on_turn_off()
+		text_widget:set_color(args.fg_normal)
+	end
+
+	function text_widget:on_press()
+		text_widget:set_color(args.fg_press)
+	end
+
+	function text_widget:on_release(wdg)
+		if wdg._private.state then
+			text_widget:set_color(args.fg_hover_on)
+		else
+			text_widget:set_color(args.fg_hover)
 		end
-	end)
-	Helpers.ui.add_click(widget, 3, function()
-		if opts.on_alt_release then
-			opts.on_alt_release(widget)
-		end
-	end)
-	function widget:set_text(new_text)
-		text_widget:set_text(new_text)
 	end
 
 	return widget
 end
-return _btn
+
+function text_button.normal(args)
+	args = args or {}
+
+	args.fg_normal = args.fg_normal or beautiful.fg_normal
+	args.fg_hover = args.fg_hover or Helpers.color.ldColor("lighten", beautiful.color_method_factor, args.fg_normal)
+	args.fg_press = args.fg_press or args.fg_hover
+
+	local widget, text_widget = button(args, "normal")
+
+	function text_widget:on_hover()
+		text_widget:set_color(args.fg_hover)
+	end
+
+	function text_widget:on_leave()
+		text_widget:set_color(args.fg_normal)
+	end
+
+	function text_widget:on_press()
+		text_widget:set_color(args.fg_press)
+	end
+
+	function text_widget:on_release(wdg)
+		text_widget:set_color(args.fg_hover)
+	end
+
+	return widget
+end
+
+return setmetatable(text_button, text_button.mt)
