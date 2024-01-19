@@ -32,7 +32,7 @@ local function button(args)
 	args.valign = args.valign or "center"
 
 	args.bg = args.normal_bg
-	args.shape = args.normal_shape or nil
+	args.shape = args.shape or nil
 	args.border_width = args.normal_border_width or nil
 	args.border_color = args.normal_border_color or Beautiful.transparent
 
