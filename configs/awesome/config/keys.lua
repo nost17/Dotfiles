@@ -18,8 +18,8 @@ Awful.keyboard.append_global_keybindings({
 		awesome.emit_signal("awesome::quicksettings", "toggle")
 	end, { description = "mostrar panel de control", group = "awesome" }),
 	Awful.key({ User.vars.modkey }, "w", function()
-    Awful.spawn("rofi -show drun -show-icons", false)
-		-- awesome.emit_signal("awesome::app_launcher", "toggle")
+    -- Awful.spawn("rofi -show drun -show-icons", false)
+		awesome.emit_signal("awesome::app_launcher", "show")
 	end, { description = "mostrar lanzador de aplicaciones", group = "awesome" }),
 	Awful.key({ User.vars.modkey }, "s", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
 	Awful.key({ User.vars.modkey }, "q", function()
