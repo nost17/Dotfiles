@@ -45,7 +45,7 @@ User.current_player = User.music_players[1]
 -- Desktop configuration
 require("theme")  -- Beautiful theme
 require("config") -- AwesomeWM configuration files
--- require("signal") -- Awesome signal files
+require("lib") -- Awesome signal files
 require("layout") -- UI configuration files
 
 collectgarbage("collect")
