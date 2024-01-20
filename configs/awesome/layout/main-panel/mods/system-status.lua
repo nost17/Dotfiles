@@ -28,7 +28,7 @@ local battery_bar = Wibox.widget({
 })
 battery_bar.value = tonumber(Helpers.getCmdOut("cat /sys/class/power_supply/BAT0/capacity"))
 
-awesome.connect_signal("awesome::battery", function(capacity, charging)
+awesome.connect_signal("lib::battery", function(capacity, charging)
   battery_bar.value = capacity
   if charging then
     battery_charging_icon.visible = true
