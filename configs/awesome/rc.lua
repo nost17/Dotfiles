@@ -48,7 +48,7 @@ require("config") -- AwesomeWM configuration files
 require("lib") -- Awesome signal files
 require("layout") -- UI configuration files
 
-collectgarbage("collect")
+-- collectgarbage("collect")
 
 -- Gears.timer({
 -- 	timeout = 5,

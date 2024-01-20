@@ -130,7 +130,7 @@ theme.tasklist_indicator_focus         = theme.accent_color
 theme.tasklist_indicator_normal        = theme.foreground .. "22"
 theme.tasklist_indicator_minimized     = theme.transparent
 theme.tasklist_indicator_position      = "left"
-theme.tasklist_icon_size               = dpi(26)
+theme.tasklist_icon_size               = dpi(30)
 theme.tasklist_spacing                 = dpi(5)
 
 -- TAGLIST

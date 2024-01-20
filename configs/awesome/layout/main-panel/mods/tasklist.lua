@@ -44,7 +44,8 @@ local tasklist = function(s)
     },
     layout = { layout = Wibox.layout.fixed.vertical },
     widget_template = {
-      layout = Wibox.layout.stack,
+      layout = Wibox.layout.fixed.horizontal,
+      spacing = 1,
       create_callback = function(self, c, index, objects)
         create_task(self, c, index, objects)
         update_task(self, c, index, objects)
@@ -54,23 +55,23 @@ local tasklist = function(s)
       end,
       {
         valign = "center",
-        halign = Beautiful.tasklist_indicator_position or "left",
+        -- halign = Beautiful.tasklist_indicator_position or "left",
         layout = Wibox.container.place,
         {
           widget = Wibox.container.background,
           bg = Beautiful.tasklist_indicator_normal,
           id = "indicator",
           forced_width = 3,
-          forced_height = 26,
+          forced_height = 25,
           shape = Gears.shape.rounded_bar,
         },
       },
       {
+        widget = Wibox.widget.imagebox,
         id = "icon_client",
         forced_height = Beautiful.tasklist_icon_size,
         forced_width = Beautiful.tasklist_icon_size,
         halign = "center",
-        widget = Wibox.widget.imagebox,
       },
     },
   })
@@ -78,6 +79,7 @@ local tasklist = function(s)
     {
       task,
       top = dpi(5),
+      left = dpi(1.5),
       bottom = dpi(5),
       widget = Wibox.container.margin,
     },

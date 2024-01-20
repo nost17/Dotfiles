@@ -1,50 +1,79 @@
 local dpi = Beautiful.xresources.apply_dpi
 
+-- [[ BATTERY ]]
 local battery_charging_icon = Wibox.widget({
-  widget = Wibox.container.margin,
-  -- right = dpi(-7),
+  widget = Wibox.widget.textbox,
+  markup = Helpers.text.colorize_text(Helpers.text.escape_text("󰉁"), Beautiful.yellow),
+  font = Beautiful.font_icon .. "11",
+  halign = "center",
+  valign = "center",
   visible = false,
-  {
-    markup = Helpers.text.colorize_text(Helpers.text.escape_text("󰉁"), Beautiful.yellow),
-    font = Beautiful.font_icon .. "11",
-    halign = "center",
-    valign = "center",
-    widget = Wibox.widget.textbox,
-  },
 })
 local battery_bar = Wibox.widget({
-  battery_charging_icon,
+  widget = Wibox.container.arcchart,
   value = 0,
   min_value = 0,
   max_value = 100,
   bg = Helpers.color.ldColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
   start_angle = math.pi * 1.5,
   rounded_edge = true,
-  thickness = dpi(3),
+  thickness = dpi(2),
   forced_width = dpi(28),
   forced_height = dpi(28),
   colors = {
     Beautiful.green,
   },
-  widget = Wibox.container.arcchart,
+  battery_charging_icon,
 })
 battery_bar.value = tonumber(Helpers.getCmdOut("cat /sys/class/power_supply/BAT0/capacity"))
 
 awesome.connect_signal("lib::battery", function(capacity, charging)
-  battery_bar.value = capacity
-  if charging then
-    battery_charging_icon.visible = true
-    battery_bar:set_colors({ Beautiful.green })
-  else
-    battery_charging_icon.visible = false
-    if capacity < 25 then
+  if capacity ~= battery_bar.value then
+    battery_bar.value = capacity
+    battery_charging_icon.visible = charging
+    if not charging and capacity < 25 then
       battery_bar:set_colors({ Beautiful.red })
+    else
+      battery_bar:set_colors({ Beautiful.green })
     end
   end
 end)
 
+-- [[ VOLUME ]]
+local volume_muted_icon = Wibox.widget({
+  widget = Wibox.widget.textbox,
+  markup = Helpers.text.colorize_text(Helpers.text.escape_text("󰝟"), Beautiful.magenta),
+  font = Beautiful.font_icon .. "13",
+  halign = "center",
+  valign = "center",
+  visible = false,
+})
+
+local volume_bar = Wibox.widget({
+  widget = Wibox.container.arcchart,
+  value = 0,
+  min_value = 0,
+  max_value = 100,
+  bg = Helpers.color.ldColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
+  start_angle = math.pi * 1.5,
+  rounded_edge = true,
+  thickness = dpi(2),
+  forced_width = dpi(28),
+  forced_height = dpi(28),
+  colors = {
+    Beautiful.magenta,
+  },
+  volume_muted_icon,
+})
+awesome.connect_signal("lib::volume", function(volume, muted)
+  volume_bar.value = volume
+  volume_muted_icon.visible = muted
+end)
+
+-- [[ SYSTEM STATUS ]]
 local system_status_widget = Wibox.widget({
   widget = Wibox.container.background,
+  shape = Helpers.shape.rrect(Beautiful.small_radius),
   bg = Beautiful.widget_bg_alt,
   {
     widget = Wibox.container.margin,
@@ -52,15 +81,9 @@ local system_status_widget = Wibox.widget({
     bottom = dpi(7),
     {
       layout = Wibox.layout.fixed.vertical,
-      {
-        layout = Wibox.container.place,
-        {
-          layout = Wibox.container.place,
-          halign = "center",
-          valign = "center",
-          battery_bar,
-        },
-      },
+      spacing = dpi(7),
+      volume_bar,
+      battery_bar,
     },
   },
 })

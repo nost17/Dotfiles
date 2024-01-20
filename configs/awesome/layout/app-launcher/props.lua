@@ -4,7 +4,7 @@ return {
   skip_empty_icons = false,
   shape = Helpers.shape.rrect(Beautiful.medium_radius),
   placement = function(c)
-    Helpers.placement(c, "top_left", nil, Beautiful.useless_gap * 3)
+    Helpers.placement(c, "top_left", nil, Beautiful.useless_gap * 2)
   end,
   border_color = Beautiful.widget_bg_alt,
   border_width = 0,
