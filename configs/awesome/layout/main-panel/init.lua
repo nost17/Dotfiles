@@ -1,10 +1,11 @@
--- local wbutton = require("utils.button")
+local wbutton = require("utils.button")
 local main_panel_screen = screen.primary
 local screen_height = main_panel_screen.geometry.height
 local dpi = Beautiful.xresources.apply_dpi
 
 local taglist = require("layout.main-panel.mods.taglist")(main_panel_screen)
 local tasklist = require("layout.main-panel.mods.tasklist")(main_panel_screen)
+local status = require("layout.main-panel.mods.system-status")
 local clock = Wibox.widget({
   widget = Wibox.container.background,
   bg = Beautiful.widget_bg_alt,
@@ -30,6 +31,19 @@ local clock = Wibox.widget({
     },
   },
 })
+local app_launcher = wbutton.text.normal({
+  text = "󱓞",
+  font = Beautiful.font_icon,
+  size = 15,
+  shape = Helpers.shape.rrect(Beautiful.small_radius),
+  fg_normal = Beautiful.accent_color,
+  bg_normal = Beautiful.widget_bg_alt,
+  bg_hover = Helpers.color.ldColor(Beautiful.color_method, 10, Beautiful.widget_bg_alt),
+  on_release = function()
+    awesome.emit_signal("awesome::app_launcher", "toggle")
+  end,
+  forced_height = dpi(35),
+})
 
 local main_panel = Awful.wibar({
   screen = main_panel_screen,
@@ -45,8 +59,18 @@ main_panel:setup({
   margins = dpi(5),
   {
     layout = Wibox.layout.align.vertical,
-    taglist,
+    {
+      layout = Wibox.layout.fixed.vertical,
+      spacing = dpi(5),
+      app_launcher,
+      taglist,
+    },
     tasklist,
-    clock,
+    {
+      layout = Wibox.layout.fixed.vertical,
+      spacing = dpi(5),
+      status,
+      clock,
+    },
   },
 })

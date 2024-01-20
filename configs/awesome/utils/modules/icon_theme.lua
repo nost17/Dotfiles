@@ -8,7 +8,7 @@ local icon_theme = { mt = {} }
 local custom_icons = {
   ["Musica"] = "gnome-music",
   ["Música"] = "gnome-music",
-  ["ncmpcpp-music"] = "apple-music",
+  ["ncmpcpp-music"] = "gnome-music",
   ["cinnamon-settings"] = "gnome-settings",
 }
 local custom_names = {
@@ -155,8 +155,12 @@ function icon_theme:get_icon_path(args)
   -- self.icon_theme = Gtk.IconTheme.get_default()
   args.name = args.client == nil and args.name or "default-application"
   if args.client then
-    return get_icon_by_pid_command(args.client, self.apps)
-        or args.client.class ~= nil and icon_theme:get_icon_by_class(args.client.class)
+    -- return get_icon_by_pid_command(args.client, self.apps)
+    return args.client.class ~= nil and icon_theme:get_icon_by_class(args.client.class)
+        or custom_icons[args.client.class] and args.client.class ~= nil and icon_theme:get_icon_alt(
+          args.client.class
+        )
+        or get_icon_by_pid_command(args.client, self.apps)
         or args.try_fallback ~= false and args.name_fallback and icon_theme:get_icon_by_class(args.name_fallback)
         or args.try_fallback ~= false and args.name_fallback and icon_theme:get_icon_alt(args.name_fallback)
         or args.client.class ~= nil and icon_theme:get_icon_alt(args.client.class)

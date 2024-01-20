@@ -637,7 +637,7 @@ local function create_user_button(icon, color, shape, fn)
     text = icon,
     font = Beautiful.font_icon,
     size = 15,
-    shape = Gears.shape.circle,
+    shape = shape,
     fg_normal = color,
     bg_normal = Helpers.color.ldColor(
       Beautiful.color_method,
