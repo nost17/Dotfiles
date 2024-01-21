@@ -56,7 +56,6 @@ theme.border_focus = theme.yellow
 theme.widget_bg = theme.bg_normal
 theme.widget_bg_alt = Helpers.color.ldColor(theme.color_method, theme.color_method_factor, theme.widget_bg)
 theme.widget_clock_font = theme.font_text .. "Medium 12"
-theme.layouts_icons_color = Helpers.color.ldColor("darken", 20, theme.fg_normal)
 theme.bg_systray = theme.widget_bg
 theme.main_panel_pos = "left"
 theme.main_panel_size = dpi(46)
@@ -185,6 +184,7 @@ theme.menubar_bg_focus = theme.magenta
 theme.menubar_font = theme.font_text .. "Medium 16"
 
 -- LAYOUT BOX
+theme.layouts_icons_color = theme.fg_normal
 theme.layout_fairh = themes_path .. "images/layouts/fairhw.png"
 theme.layout_fairv = themes_path .. "images/layouts/fairvw.png"
 theme.layout_floating = themes_path .. "images/layouts/floatingw.png"

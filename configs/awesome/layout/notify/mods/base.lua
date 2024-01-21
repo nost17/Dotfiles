@@ -2,6 +2,8 @@ local dpi = Beautiful.xresources.apply_dpi
 local wbutton = require("utils.button")
 local icon_theme = require("utils.modules.icon_theme")()
 
+Naughty.config.maximum_width = dpi(540)
+Naughty.config.minimum_width = dpi(240)
 Naughty.config.defaults = {
   position = Beautiful.notification_position,
   timeout = 6,
@@ -109,6 +111,7 @@ local function mknotification(n)
   })
   local visual_area = Wibox.widget({
     layout = Wibox.layout.align.horizontal,
+    expand = "none",
     {
       widget = Wibox.container.margin,
       top = dpi(-2),
@@ -117,9 +120,14 @@ local function mknotification(n)
         halign = "left",
         valign = "center",
         {
-          layout = Wibox.layout.fixed.vertical,
-          n_title,
-          n_message,
+          strategy = "max",
+          width = Naughty.config.maximum_width - Beautiful.notification_icon_height * 3,
+          widget = Wibox.container.constraint,
+          {
+            layout = Wibox.layout.fixed.vertical,
+            n_title,
+            n_message,
+          },
         },
       },
     },
@@ -140,7 +148,8 @@ local function mknotification(n)
     notification = n,
     type = "notification",
     shape = Helpers.shape.rrect(Beautiful.notification_radius),
-    minimum_width = dpi(240),
+    minimum_width = Naughty.config.minimum_width,
+    maximum_width = Naughty.config.maximum_width,
     widget_template = {
       layout = Wibox.layout.fixed.vertical,
       spacing = Beautiful.notification_padding * 0.8,
@@ -211,4 +220,6 @@ end)
 
 Naughty.connect_signal("request::display", function(n)
   mknotification(n)
+  User.notify_count = User.notify_count + 1
+  Naughty.emit_signal("count")
 end)

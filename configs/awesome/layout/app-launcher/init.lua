@@ -639,11 +639,12 @@ local function create_user_button(icon, color, shape, fn)
     size = 15,
     shape = shape,
     fg_normal = color,
-    bg_normal = Helpers.color.ldColor(
-      Beautiful.color_method,
-      10,
-      Beautiful.widget_bg_alt
-    ),
+    bg_normal = Beautiful.widget_bg_alt,
+    -- bg_normal = Helpers.color.ldColor(
+    --   Beautiful.color_method,
+    --   10,
+    --   Beautiful.widget_bg_alt
+    -- ),
     -- bg_normal = color .. "1F",
     bg_hover = color .. "3F",
     on_release = fn,
@@ -1046,7 +1047,7 @@ setmetatable(app_launcher, app_launcher.mt)
 local props = require("layout.app-launcher.props")
 local my_launcher = app_launcher(props)
 
-awesome.connect_signal("awesome::app_launcher", function(action)
+awesome.connect_signal("panels::app_launcher", function(action)
   if action == "toggle" then
     my_launcher:toggle()
   elseif action == "show" then

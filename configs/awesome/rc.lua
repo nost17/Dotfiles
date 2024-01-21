@@ -33,6 +33,8 @@ User.vars.modkey = "Mod4"
 User.vars.terminal = "kitty"
 User.vars.editor = os.getenv("EDITOR") or "nano"
 
+User.notify_count = 0
+
 User.music_players = {
 	{ player = "mpd", name = "Local", icon = "󰋎" },
 	{ player = "firefox", name = "Firefox", icon = "󰈹" },

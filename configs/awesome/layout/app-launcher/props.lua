@@ -6,7 +6,11 @@ return {
   placement = function(c)
     Helpers.placement(c, "top_left", nil, Beautiful.useless_gap * 2)
   end,
-  border_color = Beautiful.widget_bg_alt,
+  border_color = Helpers.color.ldColor(
+    Beautiful.color_method,
+    Beautiful.color_method_factor / 2,
+    Beautiful.widget_bg
+  ),
   border_width = 0,
   background = Beautiful.widget_bg,
   icon_size = 48,
@@ -41,7 +45,7 @@ return {
   app_name_font = Beautiful.font_text .. "Regular 12",
   prompt_image_bg_ratio = 3,
   prompt_image_bg_height = dpi(130),
-  prompt_image_bg_shape = Helpers.shape.rrect(Beautiful.medium_radius),
+  prompt_image_bg_shape = Helpers.shape.rrect(Beautiful.small_radius),
   prompt_height = dpi(40),
   prompt_margins = {
     right = dpi(70),

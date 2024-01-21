@@ -41,11 +41,11 @@ local app_launcher = wbutton.text.normal({
   bg_normal = Beautiful.widget_bg_alt,
   -- bg_hover = Helpers.color.ldColor(Beautiful.color_method, 10, Beautiful.widget_bg_alt),
   on_release = function()
-    awesome.emit_signal("awesome::app_launcher", "toggle")
+    awesome.emit_signal("panels::app_launcher", "toggle")
   end,
-  forced_height = dpi(35),
+  forced_height = dpi(37),
 })
--- 󰫤 󰫥 󱥒 
+-- 󰫤 󰫥 󱥒 󰂜 󰂞
 local user_icon = wbutton.text.normal({
   text = "󱥒",
   font = Beautiful.font_icon,
@@ -53,12 +53,37 @@ local user_icon = wbutton.text.normal({
   forced_height = dpi(44),
   -- fg_normal = Beautiful.foreground_alt,
   bg_normal = Beautiful.accent_color,
-  on_release = function(self)
+  on_release = function()
     Naughty.notify({
-      title = "xd",
+      title = "TODO: Quicksettings xd",
     })
   end,
 })
+local notify_panel = wbutton.text.normal({
+  text = "󰂜",
+  font = Beautiful.font_icon,
+  size = 18,
+  forced_height = dpi(44),
+  -- fg_normal = Beautiful.foreground_alt,
+  bg_normal = Beautiful.accent_color,
+  on_release = function()
+    Naughty.notify({
+      title = "TODO: Notification panel",
+    })
+    User.notify_count = 0
+    Naughty.emit_signal("count")
+  end,
+})
+
+Naughty.connect_signal("count", function()
+  if User.notify_count >= 1 then
+    notify_panel:set_text("󰂞")
+  else
+    notify_panel:set_text("󰂜")
+  end
+end)
+
+local layout_box = require("layout.main-panel.mods.layout-box")(main_panel_screen)
 
 local main_panel = Awful.wibar({
   screen = main_panel_screen,
@@ -70,13 +95,14 @@ local main_panel = Awful.wibar({
 })
 
 main_panel:setup({
-  layout = Wibox.layout.fixed.vertical,
-  spacing = dpi(3),
-  fill_space = true,
+  layout = Wibox.layout.align.vertical,
   user_icon,
   {
     widget = Wibox.container.margin,
-    margins = dpi(5),
+    top = dpi(8),
+    bottom = dpi(8),
+    right = dpi(5),
+    left = dpi(5),
     {
       layout = Wibox.layout.align.vertical,
       {
@@ -90,8 +116,10 @@ main_panel:setup({
         layout = Wibox.layout.fixed.vertical,
         spacing = dpi(5),
         status,
+        layout_box,
         clock,
       },
     },
   },
+  notify_panel,
 })

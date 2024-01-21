@@ -11,8 +11,9 @@ local function create_user_button(icon, color, shape, fn)
     size = 30,
     shape = shape,
     fg_normal = color,
+    fg_hover = Beautiful.foreground_alt,
     bg_normal = Beautiful.transparent,
-    bg_hover = color .. "3F",
+    bg_hover = color,
     on_release = function()
       if fn then
         fn()
@@ -26,7 +27,7 @@ local function create_user_button(icon, color, shape, fn)
   return Wibox.widget({
     widget = Wibox.container.background,
     shape = shape,
-    border_width = 0,
+    -- border_width = 2,
     -- border_width = Dpi(1.5),
     border_color = color,
     bg = Beautiful.bg_normal,
@@ -93,8 +94,7 @@ awesome.connect_signal("awesome::logoutscreen", function(action)
   end
 end)
 
-local def_shape = Helpers.shape.rrect(Beautiful.medium_radius)
-local def_fn = function(action) end
+local def_shape = Helpers.shape.rrect(Beautiful.small_radius)
 
 -- BACKGROUND
 local background = Wibox.widget({

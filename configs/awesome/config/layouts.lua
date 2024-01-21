@@ -4,9 +4,9 @@ tag.connect_signal("request::default_layouts", function()
 		Awful.layout.suit.tile.left,
 		Awful.layout.suit.tile.bottom,
 		-- Awful.layout.suit.tile.top,
-		Awful.layout.suit.max,
 		Awful.layout.suit.magnifier,
 		Awful.layout.suit.corner.nw,
+		Awful.layout.suit.max,
 		-- Awful.layout.suit.floating,
 	})
 end)
