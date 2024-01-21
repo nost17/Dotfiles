@@ -1,4 +1,4 @@
--- 󰕾
+local dpi = Beautiful.xresources.apply_dpi
 local screen_height = screen.primary.geometry.height
 local screen_width = screen.primary.geometry.width
 local volume_icon = Wibox.widget({
@@ -52,7 +52,7 @@ wdg:setup({
 	valign = "center",
 })
 
-awesome.connect_signal("system::volume", function(volume, muted)
+awesome.connect_signal("lib::volume", function(volume, muted)
 	volume_bar.value = volume
 end)
 
