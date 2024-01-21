@@ -44,8 +44,8 @@ theme.useless_gap = dpi(4)
 theme.gap_single_client = false
 theme.awesome_icon = themes_path .. "images/awesome.png"
 theme.user_icon = themes_path .. "images/user_icon.jpeg"
-theme.small_radius = dpi(6)
-theme.medium_radius = dpi(10)
+theme.small_radius = dpi(4)
+theme.medium_radius = dpi(8)
 
 -- BORDER
 theme.border_width = 2
@@ -140,7 +140,7 @@ theme.tasklist_icon_size = dpi(29)
 theme.tasklist_spacing = dpi(5)
 
 -- TAGLIST
-theme.taglist_shape = Helpers.shape.rrect(theme.small_radius * 0.7)
+theme.taglist_shape = Helpers.shape.rrect(theme.small_radius)
 theme.taglist_font = theme.font_text .. "Bold 12"
 theme.taglist_spacing = dpi(6)
 theme.taglist_icon_padding = dpi(1.5)
