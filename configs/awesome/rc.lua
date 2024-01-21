@@ -25,8 +25,8 @@ User.config = {}
 User.config.dark_mode = true
 User.config.dnd_state = false
 User.config.music_notify = true
-User.config.theme = "onedark"
-User.config.theme_accent = "green"
+User.config.theme = "yoru"
+User.config.theme_accent = "yellow"
 
 User.vars = {}
 User.vars.modkey = "Mod4"
@@ -40,7 +40,7 @@ User.music_players = {
 	-- { player = "chromium", name = "Chromium", icon = "󰇩" },
 }
 User.current_player = User.music_players[1]
--- Playerctl = require("signal.playerctl")()
+Playerctl = require("lib.playerctl")()
 
 -- Desktop configuration
 require("theme")  -- Beautiful theme

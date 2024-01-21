@@ -44,6 +44,20 @@ local app_launcher = wbutton.text.normal({
   end,
   forced_height = dpi(35),
 })
+-- 󰫤 󰫥 󱥒 
+local user_icon = wbutton.text.normal({
+  text = "󱥒",
+  font = Beautiful.font_icon,
+  size = 18,
+  forced_height = dpi(44),
+  fg_normal = Beautiful.foreground_alt,
+  bg_normal = Beautiful.accent_color,
+  on_release = function(self)
+    Naughty.notify({
+      title = "xd",
+    })
+  end,
+})
 
 local main_panel = Awful.wibar({
   screen = main_panel_screen,
@@ -55,22 +69,28 @@ local main_panel = Awful.wibar({
 })
 
 main_panel:setup({
-  widget = Wibox.container.margin,
-  margins = dpi(5),
+  layout = Wibox.layout.fixed.vertical,
+  spacing = dpi(3),
+  fill_space = true,
+  user_icon,
   {
-    layout = Wibox.layout.align.vertical,
+    widget = Wibox.container.margin,
+    margins = dpi(5),
     {
-      layout = Wibox.layout.fixed.vertical,
-      spacing = dpi(5),
-      app_launcher,
-      taglist,
-    },
-    tasklist,
-    {
-      layout = Wibox.layout.fixed.vertical,
-      spacing = dpi(5),
-      status,
-      clock,
+      layout = Wibox.layout.align.vertical,
+      {
+        layout = Wibox.layout.fixed.vertical,
+        spacing = dpi(5),
+        app_launcher,
+        taglist,
+      },
+      tasklist,
+      {
+        layout = Wibox.layout.fixed.vertical,
+        spacing = dpi(5),
+        status,
+        clock,
+      },
     },
   },
 })

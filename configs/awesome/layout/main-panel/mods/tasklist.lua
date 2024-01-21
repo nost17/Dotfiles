@@ -79,7 +79,7 @@ local tasklist = function(s)
     {
       task,
       top = dpi(5),
-      left = dpi(1.5),
+      -- left = dpi(-1),
       bottom = dpi(5),
       widget = Wibox.container.margin,
     },

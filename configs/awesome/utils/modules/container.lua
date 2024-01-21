@@ -20,6 +20,10 @@ local function new(args)
 	args.shape = args.shape or nil
 	args.border_width = args.border_width or 0
 	args.border_color = args.border_color or "#00000000"
+  args.content_fill_vertical = args.content_fill_vertical or nil
+  args.content_fill_horizontal = args.content_fill_horizontal or nil
+  args.fill_vertical = args.fill_vertical or nil
+  args.fill_horizontal = args.fill_horizontal or nil
 	local widget = Wibox.widget({
 		widget = Wibox.container.rotate,
 		direction = args.direction,

@@ -26,7 +26,7 @@ setThene()
 
 -- OTHER
 theme.wallpaper              = theme.wallpaper or themes_path .. "/wallpapers/yoru.jpeg"
-theme.font_text              = "Sofia Sans "
+theme.font_text              = "IBM Plex Sans "
 theme.font_icon              = "Material Design Icons Desktop "
 theme.font                   = theme.font_text .. "Regular 12"
 theme.widget_radius          = 1
@@ -35,7 +35,7 @@ theme.default_app_icon       = "access"
 theme.accent_color           = theme[User.config.theme_accent or "blue"]
 theme.transparent            = "#00000000"
 theme.color_method           = User.config.dark_mode and "lighten" or "darken"
-theme.color_method_factor    = 15
+theme.color_method_factor    = 16
 
 --- MAIN
 theme.bg_normal              = theme.background
@@ -137,7 +137,7 @@ theme.tasklist_spacing                 = dpi(5)
 theme.taglist_shape                    = Helpers.shape.rrect(theme.small_radius * 0.7)
 theme.taglist_font                     = theme.font_text .. "Bold 12"
 theme.taglist_spacing                  = dpi(6)
-theme.taglist_icon_padding             = dpi(3)
+theme.taglist_icon_padding             = dpi(2)
 theme.taglist_shape_border_width       = 0
 theme.taglist_shape_border_color       = theme.background
 theme.taglist_bg_color                 = theme.widget_bg_alt
@@ -154,7 +154,7 @@ theme.taglist_shape_border_color_empty = "#00000000"
 -- NOTIFICATIONS
 theme.notification_position            = "top_right"
 theme.notification_icon                = themes_path .. "images/notification.png"
-theme.notification_bg                  = Helpers.color.ldColor(theme.color_method, theme.color_method_factor,
+theme.notification_bg                  = Helpers.color.ldColor(theme.color_method, theme.color_method_factor / 2,
   theme.bg_normal)
 theme.notification_fg                  = Helpers.color.ldColor('darken', 15, theme.fg_normal)
 theme.notification_font_title          = theme.font_text .. "SemiBold 12"
@@ -164,11 +164,11 @@ theme.notification_font_actions        = theme.font_text .. "Medium 10"
 theme.notification_font_hour           = theme.font_text .. "Bold 10"
 theme.notification_icon_shape          = Helpers.shape.rrect(6) -- Gears.shape.circle
 theme.notification_spacing             = dpi(6)
-theme.notification_icon_height         = dpi(52)
+theme.notification_icon_height         = dpi(54)
 theme.notification_border_width        = 0
 theme.notification_border_color        = theme.black
-theme.notification_border_radius       = dpi(6)
-theme.notification_padding             = dpi(8)
+theme.notification_border_radius       = theme.small_radius
+theme.notification_padding             = dpi(10)
 
 -- MENUBAR
 theme.menubar_fg_normal                = theme.fg_normal .. "bb"
