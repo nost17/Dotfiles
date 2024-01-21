@@ -255,8 +255,8 @@ Helpers.ui.add_click(input_prompt.promptbox, 1, function()
 	input_prompt.widget:start()
 end)
 
-local battery = require("layout.popups.logoutscreen.battery_lock")
-local music = require("layout.popups.logoutscreen.music_lock")
+local battery = require("layout.popups.lockscreen.battery_lock")
+local music = require("layout.popups.lockscreen.music_lock")
 
 lockscreen:setup({
 	layout = Wibox.layout.stack,
