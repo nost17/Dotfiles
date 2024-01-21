@@ -81,7 +81,7 @@ local system_status_widget = Wibox.widget({
     bottom = dpi(7),
     {
       layout = Wibox.layout.fixed.vertical,
-      spacing = dpi(7),
+      spacing = dpi(10),
       volume_bar,
       battery_bar,
     },

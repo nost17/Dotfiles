@@ -37,8 +37,9 @@ local app_launcher = wbutton.text.normal({
   size = 15,
   shape = Helpers.shape.rrect(Beautiful.small_radius),
   fg_normal = Beautiful.accent_color,
+  fg_hover = Beautiful.accent_color,
   bg_normal = Beautiful.widget_bg_alt,
-  bg_hover = Helpers.color.ldColor(Beautiful.color_method, 10, Beautiful.widget_bg_alt),
+  -- bg_hover = Helpers.color.ldColor(Beautiful.color_method, 10, Beautiful.widget_bg_alt),
   on_release = function()
     awesome.emit_signal("awesome::app_launcher", "toggle")
   end,
@@ -50,7 +51,7 @@ local user_icon = wbutton.text.normal({
   font = Beautiful.font_icon,
   size = 18,
   forced_height = dpi(44),
-  fg_normal = Beautiful.foreground_alt,
+  -- fg_normal = Beautiful.foreground_alt,
   bg_normal = Beautiful.accent_color,
   on_release = function(self)
     Naughty.notify({

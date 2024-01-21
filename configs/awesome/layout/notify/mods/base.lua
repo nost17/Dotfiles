@@ -95,7 +95,7 @@ local function mknotification(n)
     n_appicon,
     {
       widget = Wibox.container.margin,
-      left = Beautiful.notification_padding * 0.4,
+      left = Beautiful.notification_padding * 0.5,
       right = Beautiful.notification_padding * 0.5,
       n_appname,
     },

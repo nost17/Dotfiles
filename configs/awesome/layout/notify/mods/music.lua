@@ -27,16 +27,16 @@ function Playerctl:notify()
     message = "<u>"
         .. self._private.prev_metadata.artist
         .. "</u>"
-       -- .. "\n"
-        -- .. "<i>"
-        -- .. self._private.prev_metadata.album
-        -- .. self._private.prev_metadata.album:lower():gsub("^%l", string.upper)
-        -- .. "</i>"
+       .. "\n"
+        .. "<i>"
+        .. self._private.prev_metadata.album
+        .. self._private.prev_metadata.album:lower():gsub("^%l", string.upper)
+        .. "</i>"
     ,
     image = self._private.prev_metadata.cover_art,
     app_name = "Música",
     actions = { prev_button, toggle_button, next_button },
-    bg = Beautiful.red,
+    -- bg = Beautiful.red,
   }, music_notify)
 end
 
