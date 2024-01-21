@@ -838,10 +838,7 @@ local function new(args)
     Beautiful.yellow,
     Helpers.shape.rrect(Beautiful.small_radius),
     function()
-      Naughty.notify({
-        title = "bloqueo",
-      })
-      -- Awful.spawn("systemctl suspend", false)
+      Awful.spawn("systemctl suspend", false)
     end
   )
   local lockscreen_button = create_user_button(
@@ -849,10 +846,7 @@ local function new(args)
     Beautiful.blue,
     Helpers.shape.rrect(Beautiful.small_radius),
     function()
-      Naughty.notify({
-        title = "bloqueo",
-      })
-      -- awesome.emit_signal("awesome::lockscreen", "show")
+      awesome.emit_signal("awesome::lockscreen", "show")
     end
   )
   local logout_button = create_user_button(
@@ -860,10 +854,7 @@ local function new(args)
     Beautiful.magenta,
     Helpers.shape.rrect(Beautiful.small_radius),
     function()
-      Naughty.notify({
-        title = "bloqueo",
-      })
-      -- awesome.emit_signal("awesome::logoutscreen", "show")
+      awesome.emit_signal("awesome::logoutscreen", "show")
     end
   )
   local music_button = create_user_button(
@@ -872,7 +863,7 @@ local function new(args)
     Helpers.shape.rrect(Beautiful.small_radius),
     function()
       Awful.spawn.with_shell("kitty --class 'ncmpcpp-music' -e 'ncmpcpp' &> /dev/null &")
-      -- awesome.emit_signal("awesome::app_launcher", "hide")
+      awesome.emit_signal("awesome::app_launcher", "hide")
     end
   )
   ret._private.widget = Awful.popup({

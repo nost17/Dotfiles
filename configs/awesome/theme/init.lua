@@ -35,7 +35,7 @@ theme.default_app_icon = "access"
 theme.accent_color = theme[User.config.theme_accent or "blue"]
 theme.transparent = "#00000000"
 theme.color_method = User.config.dark_mode and "lighten" or "darken"
-theme.color_method_factor = User.config.dark_mode and 12 or 20
+theme.color_method_factor = User.config.dark_mode and 9 or 20
 
 --- MAIN
 theme.bg_normal = theme.background
@@ -58,7 +58,7 @@ theme.widget_bg_alt = Helpers.color.ldColor(theme.color_method, theme.color_meth
 theme.widget_clock_font = theme.font_text .. "Medium 12"
 theme.bg_systray = theme.widget_bg
 theme.main_panel_pos = "left"
-theme.main_panel_size = dpi(46)
+theme.main_panel_size = dpi(44)
 
 -- LOGOUT SCREEN
 theme.logoutscreen_buttons_shape = Helpers.shape.rrect(theme.small_radius)
@@ -142,7 +142,7 @@ theme.tasklist_spacing = dpi(5)
 theme.taglist_shape = Helpers.shape.rrect(theme.small_radius)
 theme.taglist_font = theme.font_text .. "Bold 12"
 theme.taglist_spacing = dpi(6)
-theme.taglist_icon_padding = dpi(1.5)
+theme.taglist_icon_padding = dpi(1.75)
 theme.taglist_shape_border_width = 0
 theme.taglist_shape_border_color = theme.background
 theme.taglist_bg_color = theme.widget_bg_alt
@@ -153,7 +153,7 @@ theme.taglist_bg_empty = theme.taglist_bg_color
 theme.taglist_fg_focus = theme.foreground_alt
 theme.taglist_fg_urgent = theme.foreground_alt
 theme.taglist_fg_occupied = theme.fg_normal
-theme.taglist_fg_empty = theme.fg_normal
+theme.taglist_fg_empty = theme.fg_normal .. "9F"
 theme.taglist_shape_border_color_empty = "#00000000"
 
 -- NOTIFICATIONS
@@ -163,7 +163,7 @@ theme.notification_bg = Helpers.color.ldColor(theme.color_method, theme.color_me
 theme.notification_fg = Helpers.color.ldColor("darken", 15, theme.fg_normal)
 theme.notification_font_title = theme.font_text .. "SemiBold 12"
 theme.notification_font_message = theme.font_text .. "Medium 11"
-theme.notification_font_appname = theme.font_text .. "Bold 11"
+theme.notification_font_appname = theme.font_text .. "SemiBold 11"
 theme.notification_font_actions = theme.font_text .. "Medium 10"
 theme.notification_font_hour = theme.font_text .. "Bold 10"
 theme.notification_icon_shape = Helpers.shape.rrect(6) -- Gears.shape.circle

@@ -1,7 +1,7 @@
 local wbutton = require("utils.button")
+local dpi = Beautiful.xresources.apply_dpi
 local main_panel_screen = screen.primary
 local screen_height = main_panel_screen.geometry.height
-local dpi = Beautiful.xresources.apply_dpi
 
 local taglist = require("layout.main-panel.mods.taglist")(main_panel_screen)
 local tasklist = require("layout.main-panel.mods.tasklist")(main_panel_screen)
@@ -34,31 +34,20 @@ local clock = Wibox.widget({
 local app_launcher = wbutton.text.normal({
   text = "󱓞",
   font = Beautiful.font_icon,
-  size = 15,
+  size = 14,
   shape = Helpers.shape.rrect(Beautiful.small_radius),
   fg_normal = Beautiful.accent_color,
   fg_hover = Beautiful.accent_color,
   bg_normal = Beautiful.widget_bg_alt,
+  paddings = 0,
   -- bg_hover = Helpers.color.ldColor(Beautiful.color_method, 10, Beautiful.widget_bg_alt),
   on_release = function()
     awesome.emit_signal("panels::app_launcher", "toggle")
   end,
-  forced_height = dpi(37),
+  forced_height = dpi(34),
 })
 -- 󰫤 󰫥 󱥒 󰂜 󰂞
-local user_icon = wbutton.text.normal({
-  text = "󱥒",
-  font = Beautiful.font_icon,
-  size = 18,
-  forced_height = dpi(44),
-  -- fg_normal = Beautiful.foreground_alt,
-  bg_normal = Beautiful.accent_color,
-  on_release = function()
-    Naughty.notify({
-      title = "TODO: Quicksettings xd",
-    })
-  end,
-})
+local user_icon = require("layout.qs-panel")(main_panel_screen)
 local notify_panel = wbutton.text.normal({
   text = "󰂜",
   font = Beautiful.font_icon,
