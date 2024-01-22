@@ -51,7 +51,8 @@ function text_button.state(args)
   args = args or {}
 
   args.fg_normal = args.fg_normal
-      or Helpers.color.isDark(args.bg_normal) and User.config.dark_mode and Beautiful.fg_normal
+      or Helpers.color.isDark(args.bg_normal or Beautiful.widget_bg_alt) and User.config.dark_mode and
+      Beautiful.fg_normal
       or Beautiful.foreground_alt
   args.fg_hover = args.fg_hover or Helpers.color.ldColor("lighten", Beautiful.color_method_factor, args.fg_normal)
   args.fg_press = args.fg_press or args.fg_hover
@@ -91,8 +92,12 @@ function text_button.state(args)
     text_widget:set_color(args.fg_normal)
   end
 
-  function text_widget:on_press()
-    text_widget:set_color(args.fg_press)
+  function text_widget:on_press(wdg)
+    if wdg._private.state then
+      text_widget:set_color(args.fg_press_on)
+    else
+      text_widget:set_color(args.fg_press)
+    end
   end
 
   function text_widget:on_release(wdg)
@@ -110,7 +115,8 @@ function text_button.normal(args)
   args = args or {}
 
   args.fg_normal = args.fg_normal
-      or Helpers.color.isDark(args.bg_normal or Beautiful.widget_bg_alt ) and User.config.dark_mode and Beautiful.fg_normal
+      or Helpers.color.isDark(args.bg_normal or Beautiful.widget_bg_alt) and User.config.dark_mode and
+      Beautiful.fg_normal
       or Beautiful.foreground_alt
   args.fg_hover = args.fg_hover or Helpers.color.ldColor("lighten", Beautiful.color_method_factor, args.fg_normal)
   args.fg_press = args.fg_press or args.fg_hover
