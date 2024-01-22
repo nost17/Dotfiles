@@ -4,6 +4,8 @@ Beautiful.quicksettings_bg = Beautiful.widget_bg
 Beautiful.quicksettings_widgets_bg = Beautiful.widget_bg_alt
 Beautiful.quicksettings_widgets_shape = Helpers.shape.rrect(Beautiful.small_radius)
 local function mkwidget(s)
+  local music = require("layout.qs-panel.mods.music_control")
+  local controls = require("layout.qs-panel.mods.controls")
   local sliders = require("layout.qs-panel.mods.sliders")
   local quicksettings = Awful.popup({
     screen = s,
@@ -11,7 +13,7 @@ local function mkwidget(s)
     ontop = true,
     bg = Beautiful.quicksettings_bg,
     maximum_height = s.geometry.height,
-    maximum_width = dpi(340),
+    maximum_width = dpi(360),
     placement = function(c)
       Helpers.placement(c, "top_left", nil, Beautiful.useless_gap * 2)
     end,
@@ -20,8 +22,10 @@ local function mkwidget(s)
       margins = dpi(10),
       {
         layout = Wibox.layout.fixed.vertical,
-        spacing = dpi(5),
+        spacing = dpi(10),
+        controls,
         sliders,
+        music,
       },
     },
   })
