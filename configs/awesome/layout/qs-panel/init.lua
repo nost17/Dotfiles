@@ -3,6 +3,8 @@ local dpi = Beautiful.xresources.apply_dpi
 Beautiful.quicksettings_bg = Beautiful.widget_bg
 Beautiful.quicksettings_widgets_bg = Beautiful.widget_bg_alt
 Beautiful.quicksettings_widgets_shape = Helpers.shape.rrect(Beautiful.small_radius)
+Beautiful.quicksettings_shape = Helpers.shape.rrect(Beautiful.small_radius)
+
 local function mkwidget(s)
   local music = require("layout.qs-panel.mods.music_control")
   local controls = require("layout.qs-panel.mods.controls")
@@ -12,6 +14,7 @@ local function mkwidget(s)
     visible = false,
     ontop = true,
     bg = Beautiful.quicksettings_bg,
+    shape = Beautiful.quicksettings_shape,
     maximum_height = s.geometry.height,
     maximum_width = dpi(360),
     placement = function(c)
