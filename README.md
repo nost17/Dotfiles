@@ -11,6 +11,27 @@ Repositorio de configuración del entorno AwesomeWM y otros programas
 - **Música:** MPD
 - **Música (CLI):** Ncmpcpp & mpc
 
+### Capturas
+| <b>Escritorio</b>                                                                                                                                 | 
+| ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a href="#--------"><img src="https://raw.githubusercontent.com/Lik-e/Dotfiles/main/.github/screenshots/01.png" alt="bottom panel preview"></a> |
+
+| <b>Ajustes rápidos</b>                                                                                                                                 |
+| ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a href="#--------"><img src="https://raw.githubusercontent.com/Lik-e/Dotfiles/main/.github/screenshots/01.png" alt="bottom panel preview"></a> |
+
+| <b>Lanzador de aplicaciones</b>                                                                                                                                 |
+| ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a href="#--------"><img src="https://raw.githubusercontent.com/Lik-e/Dotfiles/main/.github/screenshots/01.png" alt="bottom panel preview"></a> |
+
+| <b>Pantalla de salida</b>                                                                                                                                 |
+| ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a href="#--------"><img src="https://raw.githubusercontent.com/Lik-e/Dotfiles/main/.github/screenshots/01.png" alt="bottom panel preview"></a> |
+
+| <b>Pantalla de bloqueo</b>                                                                                                                                 |
+| ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a href="#--------"><img src="https://raw.githubusercontent.com/Lik-e/Dotfiles/main/.github/screenshots/01.png" alt="bottom panel preview"></a> |
+
 # ToDo
 
 #### AwesomeWM
