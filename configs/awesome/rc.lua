@@ -26,7 +26,7 @@ User.config.dark_mode = true
 User.config.dnd_state = false
 User.config.music_notify = true
 User.config.theme = "onedark"
-User.config.theme_accent = "green"
+User.config.theme_accent = "blue"
 
 User.vars = {}
 User.vars.modkey = "Mod4"

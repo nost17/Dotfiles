@@ -1,20 +1,46 @@
 # Dotfiles
 
----
+Repositorio de configuración del entorno AwesomeWM y otros programas
 
-Awesomewm dotfiles config
+### Programas
 
-# TODO
+- **WM:** AwesomeWM
+- **Notificaciones:** Naughty
+- **Terminal:** Kitty
+- **Web:** Firefox
+- **Música:** MPD
+- **Música (CLI):** Ncmpcpp & mpc
 
-- [ ] Implementacion y rediseño de ajustes rapidos (awesomewm)
-- [ ] Agregar barra de titulo para las ventanas (awesomewm)
-- [ ] Agregar calendario (awesomewm)
-- [ ] Agregar selector de distribucion de ventanas (awesomewm)
-- [ ] Agregar pizarron de estado (awesomewm)
-- [x] Pantalla de bloqueo (awesomewm)
-- [x] Menu de apagado (awesomewm)
-- [x] Lanzador de aplicaciones (awesomewm)
-- [x] Convertir get_icon.lua en un objecto y agregar metodos (awesomewm)
-- [x] Fusionar get_icon.lua y get_name.lua (awesomewm)
+# ToDo
+
+#### AwesomeWM
+
+- [ ] Implementación y re-diseño de ajustes rápidos 
+  - [ ] Agregar alternador de modo oscuro/claro
+  - [ ] Agregar boton de captura de Pantalla
+    - [ ] Captura instantánea
+    - [ ] Menu de selección
+        - [ ] Pantalla completa
+        - [ ] Seleccion
+        - [ ] Ventana
+  - [ ] Agregar boton de internet
+    - [ ] Agregar libreria de internet (señales)
+  - [ ] Agregar boton de bluetooth
+    - [ ] Agregar libreria de bluetooth (señales)
+- [ ] Agregar barra de titulo para las ventanas 
+  - [ ] Agregar alternador de modo flotante (ajustes rápidos)
+- [ ] Agregar calendario 
+- [ ] Agregar selector de distribucion de ventanas 
+- [ ] Agregar pizarron de estado 
+- [x] Pantalla de bloqueo 
+- [x] Menu de apagado 
+- [x] Lanzador de aplicaciones 
+- [x] Convertir get_icon.lua en un objecto y agregar metodos 
+- [x] Fusionar get_icon.lua y get_name.lua 
+
+#### Other
+
+- [ ] Agregar rc de picom al script
+- [ ] Agregar compilacion automatica de picom-ibhagwan
 - [ ] Agregar compilacion automatica de awesome-git en el script
 - [ ] Terminar el script xd

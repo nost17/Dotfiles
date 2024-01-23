@@ -60,9 +60,11 @@ function M.ldColor(method, brightness, color)
   b = math.min(255, b + brightness)
 
   -- Convertir los componentes RGB y alfa de vuelta a formato hexadecimal
-  local new_color = string.format("#%02X%02X%02X%02X", r, g, b, a)
-
-  return new_color
+  if #color == 7 then
+    return string.format("#%02X%02X%02X", r, g, b)
+  elseif #color == 9 then
+    return string.format("#%02X%02X%02X%02X", r, g, b, a)
+  end
 end
 
 function M.LDColor(method, factor, color)

@@ -89,7 +89,7 @@ local player_btn = wbutton.elevated.normal({
   },
   bg_normal = Helpers.color.ldColor(
     Beautiful.color_method,
-    Beautiful.color_method_factor,
+    Beautiful.color_method_factor * 0.5,
     Beautiful.quicksettings_widgets_bg
   ),
   shape = Gears.shape.rounded_bar,
@@ -107,11 +107,11 @@ local music_art = Wibox.widget({
   opacity = 0.7,
   resize = true,
   forced_height = dpi(140),
-  -- horizontal_fit_policy = "fit",
-  -- vertical_fit_policy = "fit",
+  horizontal_fit_policy = "fit",
+  vertical_fit_policy = "fit",
 })
 local function set_cover(art)
-  music_art:set_image(Helpers.cropSurface(1, Gears.surface.load_uncached(art)))
+  music_art:set_image(Helpers.cropSurface(2, Gears.surface.load_uncached(art)))
 end
 set_cover(Beautiful.music_cover_default)
 
@@ -158,19 +158,19 @@ local music_artist = wtext({
 
 -- [[ UPDATE DATA ]] "󰏤"
 Playerctl:connect_signal("metadata", function(_, title, artist, _, album_art, _)
-	set_cover(album_art)
-	music_title:set_text(title)
-	music_artist:set_text(artist)
+  set_cover(album_art)
+  music_title:set_text(title)
+  music_artist:set_text(artist)
 end)
 Playerctl:connect_signal("status", function(_, playing)
-	if playing then
-		toggle_btn:set_text("󰏤")
-	else
-		toggle_btn:set_text("󰐊")
-	end
+  if playing then
+    toggle_btn:set_text("󰏤")
+  else
+    toggle_btn:set_text("󰐊")
+  end
 end)
 Playerctl:connect_signal("new_player", function(_)
-	Helpers.gc(player_btn, "player_name"):set_text(User.current_player.name)
+  Helpers.gc(player_btn, "player_name"):set_text(User.current_player.name)
 end)
 
 -- [[ MAIN WIDGET ]]
@@ -186,7 +186,10 @@ return Wibox.widget({
       {
         layout = Wibox.layout.stack,
         music_art,
-        music_art_overlay,
+        {
+          widget = Wibox.container.background,
+          bg = Beautiful.quicksettings_bg .. "DA",
+        },
       },
     },
     {
