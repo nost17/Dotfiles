@@ -88,13 +88,13 @@ return {
   shape = Beautiful.quicksettings_widgets_shape,
   {
     widget = Wibox.container.margin,
-    top = dpi(5),
-    bottom = dpi(5),
+    top = dpi(8),
+    bottom = dpi(8),
     right = dpi(10),
     left = dpi(10),
     {
       layout = Wibox.layout.fixed.vertical,
-      spacing = dpi(5),
+      spacing = dpi(9),
       {
         layout = Wibox.layout.align.horizontal,
         volume_slider_icon,

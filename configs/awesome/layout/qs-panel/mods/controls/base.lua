@@ -2,8 +2,8 @@ local wbutton = require("utils.button")
 local dpi = Beautiful.xresources.apply_dpi
 
 local mktemplate = function(opts)
-  opts.state_label_on = "Encendido"
-  opts.state_label_off = "Apagado"
+  opts.state_label_on = opts.state_label_on or "Encendido"
+  opts.state_label_off = opts.state_label_off or "Apagado"
   local base_settings = opts.settings
       and wbutton.text.state({
         text = "󰅂",
@@ -23,7 +23,7 @@ local mktemplate = function(opts)
     widget = Wibox.container.background,
     {
       layout = Wibox.layout.fixed.horizontal,
-      spacing = 10,
+      spacing = dpi(10),
       {
         widget = Wibox.widget.textbox,
         id = "icon",
@@ -38,6 +38,8 @@ local mktemplate = function(opts)
           widget = Wibox.widget.textbox,
           id = "label",
           text = opts.name,
+          ellipsize = "none",
+          wrap = "word",
           font = Beautiful.font_text .. "Medium 10",
           halign = "left",
           valign = "top",
@@ -45,10 +47,11 @@ local mktemplate = function(opts)
         {
           widget = Wibox.widget.textbox,
           id = "label_state",
-          text = "Apagado",
+          text = opts.state_label_off,
           font = Beautiful.font_text .. "Medium 9",
           halign = "left",
           valign = "bottom",
+          visible = opts.state_label ~= false,
         },
       },
     },
@@ -73,6 +76,12 @@ local mktemplate = function(opts)
     bg_normal = Beautiful.quicksettings_widgets_bg,
     bg_normal_on = Beautiful.accent_color,
     halign = "left",
+    paddings = {
+      left = dpi(10),
+      right = dpi(6),
+      top = dpi(8),
+      bottom = dpi(8),
+    },
     on_turn_on = function()
       turn_on_btn()
       if opts.on_fn then
@@ -84,6 +93,9 @@ local mktemplate = function(opts)
       if opts.off_fn then
         opts.off_fn()
       end
+    end,
+    on_release = opts.on_release and function()
+      opts.on_release()
     end,
   })
 

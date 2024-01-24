@@ -22,7 +22,7 @@ local function mkwidget(s)
     end,
     widget = {
       widget = Wibox.container.margin,
-      margins = dpi(10),
+      margins = dpi(15),
       {
         layout = Wibox.layout.fixed.vertical,
         spacing = dpi(10),
@@ -32,6 +32,7 @@ local function mkwidget(s)
       },
     },
   })
+
   awesome.connect_signal("panels::quicksettings", function(action)
     if action == "toggle" then
       quicksettings.visible = not quicksettings.visible
@@ -40,7 +41,30 @@ local function mkwidget(s)
     elseif action == "hide" then
       quicksettings.visible = false
     end
+    awesome.emit_signal("visible::quicksettings", quicksettings.visible)
   end)
+
+  awesome.connect_signal("visible::app_launcher", function(vis)
+    if vis then
+      quicksettings.visible = false
+    end
+  end)
+
+  Awful.mouse.append_client_mousebinding(Awful.button({}, 1, function(c)
+    quicksettings.visible = false
+  end))
+
+  Awful.mouse.append_global_mousebinding(Awful.button({}, 1, function(c)
+    quicksettings.visible = false
+  end))
+  Awful.mouse.append_client_mousebinding(Awful.button({}, 3, function(c)
+    quicksettings.visible = false
+  end))
+
+  Awful.mouse.append_global_mousebinding(Awful.button({}, 3, function(c)
+    quicksettings.visible = false
+  end))
+
   return wbutton.text.normal({
     text = "󱥒",
     font = Beautiful.font_icon,

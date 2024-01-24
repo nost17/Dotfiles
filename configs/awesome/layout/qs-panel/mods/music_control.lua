@@ -106,12 +106,12 @@ local music_art = Wibox.widget({
   valign = "center",
   opacity = 0.7,
   resize = true,
-  forced_height = dpi(140),
+  -- forced_height = dpi(140),
   horizontal_fit_policy = "fit",
   vertical_fit_policy = "fit",
 })
 local function set_cover(art)
-  music_art:set_image(Helpers.cropSurface(2, Gears.surface.load_uncached(art)))
+  music_art:set_image(Helpers.cropSurface(1.85, Gears.surface.load_uncached(art)))
 end
 set_cover(Beautiful.music_cover_default)
 
@@ -144,7 +144,7 @@ local music_art_overlay = Wibox.widget({
 
 local music_title = wtext({
   text = "Titulo",
-  color = Beautiful.fg_normal,
+  color = User.config.dark_mode and Beautiful.fg_normal or Beautiful.foreground_alt,
   font = Beautiful.font_text .. "SemiBold",
   size = 12,
 })
@@ -176,6 +176,7 @@ end)
 -- [[ MAIN WIDGET ]]
 return Wibox.widget({
   layout = Wibox.layout.align.horizontal,
+  forced_height = dpi(140),
   nil,
   {
     layout = Wibox.layout.stack,
@@ -188,7 +189,8 @@ return Wibox.widget({
         music_art,
         {
           widget = Wibox.container.background,
-          bg = Beautiful.quicksettings_bg .. "DA",
+          -- bg = Beautiful.foreground_alt .. "7A",
+          bg = User.config.dark_mode and Beautiful.quicksettings_bg .. "CC" or Beautiful.foreground .. "BB",
         },
       },
     },

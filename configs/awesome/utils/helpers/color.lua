@@ -11,7 +11,7 @@ end
 local function clamp(component)
   return math.min(math.max(component, 0), 255)
 end
-local function hex_to_rgb(hexArg)
+function M.hex_to_rgb(hexArg)
   hexArg = hexArg:gsub("#", "")
   if string.len(hexArg) == 3 then
     return {
@@ -83,7 +83,7 @@ function M.LDColor(method, factor, color)
 end
 
 function M.isDark(hex)
-  local color = hex_to_rgb(hex)
+  local color = M.hex_to_rgb(hex)
   local r, g, b = color.r, color.g, color.b
 
   local R, G, B = r / 255, g / 255, b / 255
