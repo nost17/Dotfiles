@@ -50,10 +50,16 @@ end
 function text_button.state(args)
   args = args or {}
 
-  args.fg_normal = args.fg_normal
-      or Helpers.color.isDark(args.bg_normal or Beautiful.widget_bg_alt) and User.config.dark_mode and
-      Beautiful.fg_normal
-      or Beautiful.foreground_alt
+  if not args.fg_normal then
+    if User.config.dark_mode then
+      args.fg_normal = Helpers.color.isDark(args.bg_normal or Beautiful.widget_bg_alt) and Beautiful.fg_normal
+          or Beautiful.foreground_alt
+    else
+      args.fg_normal = Helpers.color.isDark(args.bg_normal or Beautiful.widget_bg_alt)
+          and Beautiful.foreground_alt
+          or Beautiful.fg_normal
+    end
+  end
   args.fg_hover = args.fg_hover or Helpers.color.ldColor("lighten", Beautiful.color_method_factor, args.fg_normal)
   args.fg_press = args.fg_press or args.fg_hover
 
@@ -114,10 +120,16 @@ end
 function text_button.normal(args)
   args = args or {}
 
-  args.fg_normal = args.fg_normal
-      or Helpers.color.isDark(args.bg_normal or Beautiful.widget_bg_alt) and User.config.dark_mode and
-      Beautiful.fg_normal
-      or Beautiful.foreground_alt
+  if not args.fg_normal then
+    if User.config.dark_mode then
+      args.fg_normal = Helpers.color.isDark(args.bg_normal or Beautiful.widget_bg_alt) and Beautiful.fg_normal
+          or Beautiful.foreground_alt
+    else
+      args.fg_normal = Helpers.color.isDark(args.bg_normal or Beautiful.widget_bg_alt)
+          and Beautiful.foreground_alt
+          or Beautiful.fg_normal
+    end
+  end
   args.fg_hover = args.fg_hover or Helpers.color.ldColor("lighten", Beautiful.color_method_factor, args.fg_normal)
   args.fg_press = args.fg_press or args.fg_hover
 

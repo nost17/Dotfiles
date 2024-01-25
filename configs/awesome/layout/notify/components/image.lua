@@ -47,7 +47,7 @@ local function new(args)
 	args = args or {}
 	local tb = imagebox()
 	tb.clip_shape = Beautiful.notification_icon_shape
-	tb.valign = "start"
+	tb.valign = "center"
 	tb.halign = "center"
 	-- tb.scaling_quality = "best"
 	-- tb.forced_width = beautiful.notification_icon_size
