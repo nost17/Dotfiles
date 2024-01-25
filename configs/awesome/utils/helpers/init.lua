@@ -68,7 +68,8 @@ function _module.getCmdOut(cmd)
   local handle = assert(io.popen(cmd, "r"))
   local output = assert(handle:read("*a"))
   handle:close()
-  local out = string.gsub(string.gsub(string.gsub(output, "^%s+", ""), "%s+$", ""), "[\n\r]+", " ")
+  -- local out = string.gsub(string.gsub(string.gsub(output, "^%s+", ""), "%s+$", ""), "[\n\r]+", " ")
+  local out = output:gsub("\n", "")
   return out
 end
 

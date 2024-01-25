@@ -7,7 +7,7 @@ local dpi = Beautiful.xresources.apply_dpi
 local toggle_btn = wbutton.text.normal({
   text = "󰐊",
   font = Beautiful.font_icon,
-  size = 14,
+  size = 16,
   shape = Gears.shape.circle,
   bg_normal = Beautiful.accent_color,
   fg_normal = Beautiful.foreground_alt,
@@ -22,7 +22,7 @@ local toggle_btn = wbutton.text.normal({
 local next_btn = wbutton.text.normal({
   text = "󰒭",
   font = Beautiful.font_icon,
-  size = 12,
+  size = 15,
   paddings = { bottom = dpi(10), top = dpi(10) },
   -- shape = Gears.shape.circle,
   bg_normal = Beautiful.quicksettings_widgets_bg,
@@ -35,7 +35,7 @@ local next_btn = wbutton.text.normal({
 local prev_btn = wbutton.text.normal({
   text = "󰒮",
   font = Beautiful.font_icon,
-  size = 12,
+  size = 15,
   paddings = { bottom = dpi(10), top = dpi(10) },
   -- shape = Gears.shape.circle,
   bg_normal = Beautiful.quicksettings_widgets_bg,

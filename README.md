@@ -44,8 +44,8 @@ Repositorio de configuración del entorno AwesomeWM y otros programas
         - [ ] Pantalla completa
         - [ ] Seleccion
         - [ ] Ventana
-  - [ ] Agregar boton de internet
-    - [ ] Agregar libreria de internet (señales)
+  - [X] Agregar boton de internet
+    - [X] Agregar libreria de internet (señales)
   - [ ] Agregar boton de bluetooth
     - [ ] Agregar libreria de bluetooth (señales)
 - [ ] Agregar barra de titulo para las ventanas 

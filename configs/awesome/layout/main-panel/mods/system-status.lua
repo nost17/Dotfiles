@@ -72,18 +72,32 @@ end)
 
 -- [[ SYSTEM STATUS ]]
 local system_status_widget = Wibox.widget({
-  widget = Wibox.container.background,
-  shape = Helpers.shape.rrect(Beautiful.small_radius),
-  bg = Beautiful.widget_bg_alt,
+  layout = Wibox.layout.fixed.vertical,
+  spacing = dpi(10),
   {
-    widget = Wibox.container.margin,
-    top = dpi(7),
-    bottom = dpi(7),
     {
-      layout = Wibox.layout.fixed.vertical,
-      spacing = dpi(10),
-      volume_bar,
-      battery_bar,
+      base_size = 24,
+      horizontal = false,
+      widget = Wibox.widget.systray,
+    },
+    valign = "center",
+    halign = "center",
+    layout = Wibox.container.place,
+  },
+  {
+    widget = Wibox.container.background,
+    shape = Helpers.shape.rrect(Beautiful.small_radius),
+    bg = Beautiful.widget_bg_alt,
+    {
+      widget = Wibox.container.margin,
+      top = dpi(7),
+      bottom = dpi(7),
+      {
+        layout = Wibox.layout.fixed.vertical,
+        spacing = dpi(10),
+        volume_bar,
+        battery_bar,
+      },
     },
   },
 })

@@ -648,7 +648,7 @@ local function create_user_button(icon, color, shape, fn)
     -- bg_normal = color .. "1F",
     bg_hover = color .. "3F",
     on_release = fn,
-    forced_height = dpi(46),
+    forced_height = dpi(50),
   })
   return wdg
 end
@@ -880,14 +880,15 @@ local function new(args)
       {
         widget = Wibox.container.background,
         bg = args.border_color,
-        forced_width = dpi(50) + args.border_width + args.grid_margins * 1.5,
+        forced_width = dpi(50) + dpi(16) + args.border_width,
+        -- visible = false,
         {
           widget = Wibox.container.margin,
           margins = {
-            top = args.grid_margins or 0,
-            bottom = args.grid_margins or 0,
-            right = args.grid_margins,
-            left = args.grid_margins - args.border_width,
+            top = dpi(8),
+            bottom = dpi(8),
+            right = dpi(8),
+            left = dpi(8) - args.border_width,
           },
           {
             layout = Wibox.layout.align.vertical,
@@ -905,7 +906,7 @@ local function new(args)
               content_fill_horizontal = true,
               {
                 layout = Wibox.layout.fixed.vertical,
-                spacing = args.grid_margins,
+                spacing = dpi(8),
                 music_button,
                 sleep_button,
                 lockscreen_button,
