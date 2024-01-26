@@ -26,12 +26,7 @@ function Playerctl:notify()
 		title = colorize_text("<b>" .. self._private.prev_metadata.title .. "</b>", Beautiful.accent_color),
 		message = "<u>"
 			.. self._private.prev_metadata.artist
-			.. "</u>"
-			.. "\n"
-			.. "<i>"
-			.. self._private.prev_metadata.album
-			-- .. self._private.prev_metadata.album:lower():gsub("^%l", string.upper)
-			.. "</i>",
+			.. "</u>",
 		image = self._private.prev_metadata.cover_art,
 		app_name = "Música",
 		actions = { prev_button, toggle_button, next_button },
