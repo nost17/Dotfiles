@@ -278,8 +278,13 @@ function elevated_button.normal(args)
   args.press_border_width = args.press_border_width or nil
 
   args.normal_border_color = args.normal_border_color or Beautiful.transparent
-  args.hover_border_color = args.hover_border_color or Beautiful.transparent
-  args.press_border_color = args.press_border_color or Beautiful.transparent
+  args.hover_border_color = args.hover_border_color
+      or Helpers.color.ldColor(
+        Helpers.color.isDark(args.bg_normal) and "lighten" or "darken",
+        16,
+        args.normal_border_color
+      )
+  args.press_border_color = args.press_border_color or Helpers.color.ldColor("darken", 20, args.normal_border_color)
 
   args.on_hover = args.on_hover or nil
   args.on_leave = args.on_leave or nil
@@ -375,7 +380,7 @@ function elevated_button.normal(args)
     widget.button = nil
     if button == 1 then
       if args.on_release ~= nil or args.on_press ~= nil then
-        effect(widget, args.bg_hover, args.shape, args.border_width, args.normal_border_color)
+        effect(widget, args.bg_hover, args.shape, args.normal_border_width, args.normal_border_color)
       end
       if args.on_release ~= nil then
         args.on_release(self, lx, ly, button, mods, find_widgets_result)

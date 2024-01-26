@@ -53,7 +53,8 @@ local notify_panel = wbutton.text.normal({
   size = 18,
   forced_height = dpi(44),
   fg_normal = Beautiful.accent_color,
-  bg_normal = Helpers.color.ldColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
+  -- bg_normal = Helpers.color.ldColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
+  bg_normal = Beautiful.widget_bg_alt,
   on_release = function()
     Naughty.notify({
       title = "TODO: Notification panel",

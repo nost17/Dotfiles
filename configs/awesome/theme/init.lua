@@ -35,7 +35,7 @@ theme.default_app_icon = "access"
 theme.accent_color = theme[User.config.theme_accent or "blue"]
 theme.transparent = "#00000000"
 theme.color_method = User.config.dark_mode and "lighten" or "darken"
-theme.color_method_factor = User.config.dark_mode and 9 or 20
+theme.color_method_factor = User.config.dark_mode and 7 or 20
 
 --- MAIN
 theme.bg_normal = theme.background

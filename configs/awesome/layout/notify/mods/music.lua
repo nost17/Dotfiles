@@ -34,7 +34,6 @@ function Playerctl:notify()
     image = self._private.prev_metadata.cover_art,
     app_name = "Música",
     actions = { prev_button, toggle_button, next_button },
-    -- bg = Beautiful.red,
   }, music_notify)
 end
 
