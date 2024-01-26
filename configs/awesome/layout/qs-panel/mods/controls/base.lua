@@ -11,6 +11,7 @@ local mktemplate = function(opts)
         fg_normal = Beautiful.fg_normal,
         fg_press_on = Beautiful.foreground_alt,
         fg_normal_on = Beautiful.foreground_alt,
+        bg_normal = Beautiful.quicksettings_ctrl_btn_bg,
         bg_normal_on = Beautiful.accent_color,
         size = 14,
         on_release = function()
@@ -21,67 +22,37 @@ local mktemplate = function(opts)
 
   local base_label = Wibox.widget({
     widget = Wibox.container.background,
+    fg = Beautiful.fg_normal .. "CF",
     {
-      layout = Wibox.layout.fixed.horizontal,
-      spacing = dpi(10),
-      {
-        widget = Wibox.widget.textbox,
-        id = "icon",
-        text = opts.icon,
-        font = Beautiful.font_icon .. "15",
-        halign = "center",
-        valign = "center",
-      },
-      {
-        layout = Wibox.layout.fixed.vertical,
-        {
-          widget = Wibox.widget.textbox,
-          id = "label",
-          text = opts.name,
-          ellipsize = "none",
-          wrap = "word",
-          font = Beautiful.font_text .. "Medium 10",
-          halign = "left",
-          valign = "top",
-        },
-        {
-          widget = Wibox.widget.textbox,
-          id = "label_state",
-          text = opts.state_label_off,
-          font = Beautiful.font_text .. "Medium 9",
-          halign = "left",
-          valign = "bottom",
-          visible = opts.state_label ~= false,
-        },
-      },
+      widget = Wibox.widget.textbox,
+      id = "label",
+      text = opts.name,
+      ellipsize = "none",
+      wrap = "word",
+      font = Beautiful.font_text .. "Medium 9",
+      halign = "center",
+      valign = "center",
     },
   })
 
   local function turn_on_btn()
-    base_label.fg = Beautiful.foreground_alt
     if base_settings then
       base_settings:turn_on()
     end
-    Helpers.gc(base_label, "label_state"):set_text(opts.state_label_on)
   end
   local function turn_off_btn()
-    base_label.fg = Beautiful.fg_normal
     if base_settings then
       base_settings:turn_off()
     end
-    Helpers.gc(base_label, "label_state"):set_text(opts.state_label_off)
   end
-  local base_button = wbutton.elevated.state({
-    child = base_label,
-    bg_normal = Beautiful.quicksettings_widgets_bg,
+  local base_button = wbutton.text.state({
+    text = opts.icon,
+    font = Beautiful.font_icon,
+    size = 14,
+    fg_normal_on = Beautiful.foreground_alt,
+    bg_normal = Beautiful.quicksettings_ctrl_btn_bg,
     bg_normal_on = Beautiful.accent_color,
-    halign = "left",
-    paddings = {
-      left = dpi(10),
-      right = dpi(6),
-      top = dpi(8),
-      bottom = dpi(8),
-    },
+    -- halign = "left",
     on_turn_on = function()
       turn_on_btn()
       if opts.on_fn then
@@ -100,14 +71,19 @@ local mktemplate = function(opts)
   })
 
   local base_layout = Wibox.widget({
-    widget = Wibox.container.background,
-    shape = Beautiful.quicksettings_ctrl_btn_shape,
+    layout = Wibox.layout.fixed.vertical,
+    spacing = dpi(4),
     {
-      layout = Wibox.layout.align.horizontal,
-      nil,
-      base_button,
-      base_settings,
+      widget = Wibox.container.background,
+      shape = Beautiful.quicksettings_ctrl_btn_shape,
+      {
+        layout = Wibox.layout.flex.horizontal,
+        forced_height = dpi(44),
+        base_button,
+        base_settings,
+      },
     },
+    base_label,
   })
   function base_layout:turn_on()
     base_button:turn_on()
@@ -120,11 +96,11 @@ local mktemplate = function(opts)
   end
 
   function base_layout:set_text(text)
-    Helpers.gc(base_label, "label_state"):set_text(text)
+    Helpers.gc(base_label, "label").text = text
   end
 
   function base_layout:set_icon(icon)
-    Helpers.gc(base_label, "icon"):set_text(icon)
+    base_button:set_text(icon)
   end
 
   if opts.on_by_default then

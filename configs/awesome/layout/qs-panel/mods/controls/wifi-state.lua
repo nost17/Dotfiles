@@ -16,9 +16,14 @@ awesome.connect_signal("lib::network", function(enabled, status, name, speed)
   if enabled then
     wifi:turn_on()
     if status then
-      wifi:set_text(name == "none" and "Encendido" or name)
+      wifi:set_text(name == "none" and "Internet" or name)
+      wifi:set_icon("󰤨")
+    else
+      wifi:set_icon("󰤭")
     end
   elseif enabled == false and first_time then
+    wifi:set_text("Internet")
+    wifi:set_icon("󰤮")
     wifi:turn_off()
   end
 end)

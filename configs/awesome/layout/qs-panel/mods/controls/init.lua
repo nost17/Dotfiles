@@ -11,25 +11,22 @@ local dark_mode_btn = require("layout.qs-panel.mods.controls.dark-mode")
 local screenshot_btn = require("layout.qs-panel.mods.controls.screenshots")
 local wifi_btn = require("layout.qs-panel.mods.controls.wifi-state")
 local bluetooth_btn = require("layout.qs-panel.mods.controls.bluetooth-state")
+local floating_btn = require("layout.qs-panel.mods.controls.floating-mode")
 
 return Wibox.widget({
-  layout = Wibox.layout.flex.vertical,
+  layout = Wibox.layout.fixed.vertical,
   spacing = dpi(10),
   {
     layout = Wibox.layout.flex.horizontal,
     spacing = dpi(10),
     wifi_btn,
     bluetooth_btn,
-  },
-  {
-    layout = Wibox.layout.flex.horizontal,
-    spacing = dpi(10),
     volume_btn,
-    dnd_btn,
   },
   {
     layout = Wibox.layout.flex.horizontal,
     spacing = dpi(10),
+    dnd_btn,
     night_light_btn,
     music_notify_btn,
   },
@@ -38,5 +35,6 @@ return Wibox.widget({
     spacing = dpi(10),
     dark_mode_btn,
     screenshot_btn,
+    floating_btn,
   },
 })

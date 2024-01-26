@@ -5,13 +5,15 @@ local dpi = Beautiful.xresources.apply_dpi
 -- [[ CONTROL BUTTONS ]]
 
 local toggle_btn = wbutton.text.normal({
-  text = "󰐊",
+  text = "󰐍",
   font = Beautiful.font_icon,
-  size = 16,
-  shape = Gears.shape.circle,
-  bg_normal = Beautiful.accent_color,
-  fg_normal = Beautiful.foreground_alt,
-  paddings = dpi(10),
+  size = 20,
+  -- shape = Gears.shape.circle,
+  -- normal_border_width = dpi(2),
+  -- normal_border_color = Beautiful.accent_color,
+  bg_normal = Beautiful.quicksettings_widgets_bg,
+  fg_normal = Beautiful.fg_normal,
+  paddings = dpi(8),
   -- forced_width = dpi(65),
   -- forced_height = dpi(65),
   on_release = function()
@@ -54,8 +56,8 @@ local control_btns = Wibox.widget({
     next_btn,
     {
       widget = Wibox.container.margin,
-      right = dpi(6),
-      left = dpi(6),
+      -- right = dpi(6),
+      -- left = dpi(6),
       toggle_btn,
     },
     prev_btn,
@@ -146,7 +148,7 @@ local music_title = wtext({
   text = "Titulo",
   color = User.config.dark_mode and Beautiful.fg_normal or Beautiful.foreground_alt,
   font = Beautiful.font_text .. "SemiBold",
-  size = 12,
+  size = 11,
 })
 local music_artist = wtext({
   text = "Artistas",
@@ -164,9 +166,9 @@ Playerctl:connect_signal("metadata", function(_, title, artist, _, album_art, _)
 end)
 Playerctl:connect_signal("status", function(_, playing)
   if playing then
-    toggle_btn:set_text("󰏤")
+    toggle_btn:set_text("󰏦")
   else
-    toggle_btn:set_text("󰐊")
+    toggle_btn:set_text("󰐍")
   end
 end)
 Playerctl:connect_signal("new_player", function(_)

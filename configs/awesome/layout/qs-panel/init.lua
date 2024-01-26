@@ -17,7 +17,7 @@ local function mkwidget(s)
     bg = Beautiful.quicksettings_bg,
     shape = Beautiful.quicksettings_shape,
     maximum_height = s.geometry.height,
-    maximum_width = dpi(360),
+    maximum_width = dpi(350),
     placement = function(c)
       Helpers.placement(c, "top_left", nil, Beautiful.useless_gap * 2)
     end,
@@ -28,8 +28,8 @@ local function mkwidget(s)
         layout = Wibox.layout.fixed.vertical,
         spacing = dpi(10),
         user_info,
-        controls,
         sliders,
+        controls,
         music,
       },
     },
