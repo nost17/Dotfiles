@@ -3,7 +3,7 @@ local wbutton = require("utils.button")
 local icon_theme = require("utils.modules.icon_theme")()
 
 Naughty.config.maximum_width = dpi(540)
-Naughty.config.minimum_width = dpi(240)
+Naughty.config.minimum_width = dpi(280)
 Naughty.config.defaults = {
   position = Beautiful.notification_position,
   timeout = 6,
@@ -16,7 +16,7 @@ local override_names = {
 }
 local colors = {
   ["low"] = Beautiful.green,
-  ["normal"] = Beautiful.blue,
+  ["normal"] = Beautiful.fg_normal .. "5F",
   ["critical"] = Beautiful.red,
 }
 

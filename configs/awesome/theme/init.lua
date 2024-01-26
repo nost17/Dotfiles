@@ -140,9 +140,9 @@ theme.tasklist_spacing = dpi(5)
 
 -- TAGLIST
 theme.taglist_shape = Helpers.shape.rrect(theme.small_radius)
-theme.taglist_font = theme.font_text .. "Bold 12"
+theme.taglist_font = theme.font_text .. "SemiBold 12"
 theme.taglist_spacing = dpi(6)
-theme.taglist_icon_padding = dpi(1.75)
+theme.taglist_icon_padding = 2
 theme.taglist_shape_border_width = 0
 theme.taglist_shape_border_color = theme.background
 theme.taglist_bg_color = theme.widget_bg_alt
