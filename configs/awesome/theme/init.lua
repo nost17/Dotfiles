@@ -58,7 +58,7 @@ theme.widget_bg_alt = Helpers.color.ldColor(theme.color_method, theme.color_meth
 theme.widget_clock_font = theme.font_text .. "Medium 12"
 theme.bg_systray = theme.widget_bg
 theme.main_panel_pos = "left"
-theme.main_panel_size = dpi(44)
+theme.main_panel_size = dpi(46)
 
 -- LOGOUT SCREEN
 theme.logoutscreen_buttons_shape = Helpers.shape.rrect(theme.small_radius)
