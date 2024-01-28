@@ -120,7 +120,7 @@ local function mknotification(n)
           left = dpi(8),
           {
             strategy = "max",
-            width = Naughty.config.maximum_width - Beautiful.notification_icon_height * 3,
+            width = Naughty.config.maximum_width - Beautiful.notification_icon_height - (Beautiful.notification_padding * 3),
             widget = Wibox.container.constraint,
             {
               layout = Wibox.layout.fixed.vertical,
@@ -134,7 +134,7 @@ local function mknotification(n)
     nil,
     {
       widget = Wibox.container.margin,
-      left = Beautiful.notification_padding * 1.5,
+      left = Beautiful.notification_padding,
       {
         n_image,
         strategy = "max",

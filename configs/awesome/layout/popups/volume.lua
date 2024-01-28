@@ -28,7 +28,7 @@ local wdg = Wibox({
 	visible = false,
 	ontop = true,
 	screen = screen.primary,
-	border_width = dpi(3),
+	-- border_width = dpi(3),
 	border_color = Beautiful.widget_bg_alt,
 })
 wdg.x = (screen_width / 2) - (wdg.width / 2)

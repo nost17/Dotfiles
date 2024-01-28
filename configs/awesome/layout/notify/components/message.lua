@@ -25,6 +25,7 @@ end
 local function new(args)
   args = args or {}
   local tb = textbox()
+  tb:set_wrap("char")
   tb._private.notification = {}
   Gears.table.crush(tb, message, true)
   function tb._private.title_changed_callback()
