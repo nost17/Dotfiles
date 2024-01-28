@@ -24,35 +24,53 @@ local mktemplate = function(opts)
     widget = Wibox.container.background,
     fg = Beautiful.fg_normal .. "CF",
     {
-      widget = Wibox.widget.textbox,
-      id = "label",
-      text = opts.name,
-      ellipsize = "none",
-      wrap = "word",
-      font = Beautiful.font_text .. "Medium 9",
-      halign = "center",
-      valign = "center",
+      layout = Wibox.layout.fixed.horizontal,
+      spacing = dpi(9),
+      {
+        widget = Wibox.widget.textbox,
+        id = "icon",
+        text = opts.icon,
+        font = Beautiful.font_icon .. "14",
+        halign = "center",
+        valign = "center",
+      },
+      {
+        widget = Wibox.widget.textbox,
+        id = "label",
+        text = opts.name,
+        ellipsize = "none",
+        wrap = "word",
+        font = Beautiful.font_text .. "Medium 10",
+        halign = "center",
+        valign = "center",
+      },
     },
   })
 
   local function turn_on_btn()
+    base_label.fg = Beautiful.foreground_alt
     if base_settings then
       base_settings:turn_on()
     end
   end
   local function turn_off_btn()
+    base_label.fg = Beautiful.fg_normal .. "CF"
     if base_settings then
       base_settings:turn_off()
     end
   end
-  local base_button = wbutton.text.state({
-    text = opts.icon,
-    font = Beautiful.font_icon,
-    size = 14,
+  local base_button = wbutton.elevated.state({
+    child = base_label,
     fg_normal_on = Beautiful.foreground_alt,
     bg_normal = Beautiful.quicksettings_ctrl_btn_bg,
     bg_normal_on = Beautiful.accent_color,
-    -- halign = "left",
+    halign = "left",
+    paddings = {
+      left = dpi(10),
+      right = dpi(8),
+      top = dpi(8),
+      bottom = dpi(8)
+    },
     on_turn_on = function()
       turn_on_btn()
       if opts.on_fn then
@@ -71,19 +89,15 @@ local mktemplate = function(opts)
   })
 
   local base_layout = Wibox.widget({
-    layout = Wibox.layout.fixed.vertical,
-    spacing = dpi(4),
+    widget = Wibox.container.background,
+    shape = Beautiful.quicksettings_ctrl_btn_shape,
     {
-      widget = Wibox.container.background,
-      shape = Beautiful.quicksettings_ctrl_btn_shape,
-      {
-        layout = Wibox.layout.flex.horizontal,
-        forced_height = dpi(44),
-        base_button,
-        base_settings,
-      },
+      layout = Wibox.layout.align.horizontal,
+      forced_height = dpi(44),
+      nil,
+      base_button,
+      base_settings,
     },
-    base_label,
   })
   function base_layout:turn_on()
     base_button:turn_on()
@@ -100,7 +114,8 @@ local mktemplate = function(opts)
   end
 
   function base_layout:set_icon(icon)
-    base_button:set_text(icon)
+    -- base_button:set_text(icon)
+    Helpers.gc(base_label, "icon"):set_text(icon)
   end
 
   if opts.on_by_default then
