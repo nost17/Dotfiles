@@ -21,25 +21,23 @@ local function button(icon, fn, size)
     end,
   })
 end
-
--- 󰄀 󰄄 󰄅 󰆞 󰔛 󰅀
--- 󰏝 󰄴
-
-local screenshot_normal = button("󰔂", function()
-  awesome.emit_signal("panels::quicksettings", "hide")
-  local ss = screenshot_lib.select({})
+local function screenshot_notify(ss)
+  local open_image = Naughty.action({ name = "Abrir imagen." })
   ss:connect_signal("file::saved", function(self, file_name, file_path)
-    local open_image = Naughty.action({ name = "Abrir imagen." })
     open_image:connect_signal("invoked", function()
       Awful.spawn.with_shell("feh " .. file_path .. file_name)
     end)
     Naughty.notify({
       title = file_name,
+      message = "Captura guardada.",
       image = file_path .. file_name,
       actions = { open_image },
     })
   end)
-end)
+end
+
+-- 󰄀 󰄄 󰄅 󰆞 󰔛 󰅀
+-- 󰏝 󰄴
 
 local delay_label = Wibox.widget({
   widget = Wibox.widget.textbox,
@@ -49,7 +47,23 @@ local delay_label = Wibox.widget({
   valign = "center",
 })
 
-local screenshot_selective = button("󰆞")
+local screenshot_normal = button("󰔂", function()
+  awesome.emit_signal("panels::quicksettings", "hide")
+  local ss = screenshot_lib.normal({
+    hide_cursor = hide_cursor,
+    delay = delay_count,
+  })
+  screenshot_notify(ss)
+end)
+
+local screenshot_selective = button("󰆞", function()
+  awesome.emit_signal("panels::quicksettings", "hide")
+  local ss = screenshot_lib.select({
+    hide_cursor = hide_cursor,
+    delay = delay_count,
+  })
+  screenshot_notify(ss)
+end)
 
 local screenshot_settings = Wibox.widget({
   layout = Wibox.layout.flex.horizontal,
@@ -58,6 +72,7 @@ local screenshot_settings = Wibox.widget({
     widget = Wibox.widget.background,
     wbutton.elevated.state({
       bg_normal_on = Beautiful.quicksettings_ctrl_btn_bg,
+      on_by_default = hide_cursor == false,
       paddings = { left = dpi(10), right = dpi(10) },
       halign = "left",
       child = {
@@ -124,10 +139,8 @@ local screenshot = Wibox.widget({
 
 awesome.connect_signal("visible::quicksettings:sc", function(vis)
   screenshot.visible = vis
-  if screenshot.visible == false then
-    delay_count = 0
-    delay_label:set_text(delay_count)
-  end
+  delay_count = 0
+  delay_label:set_text(delay_count)
 end)
 
 awesome.connect_signal("visible::quicksettings", function(vis)

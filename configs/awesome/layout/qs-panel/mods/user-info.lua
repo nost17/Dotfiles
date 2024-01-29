@@ -96,9 +96,11 @@ local show_sc_settings = require("utils.button").text.state({
   },
   size = 15,
   on_turn_on = function(self)
+    self:set_text("󰄄󰍞")
     awesome.emit_signal("visible::quicksettings:sc", true)
   end,
   on_turn_off = function(self)
+    self:set_text("󰄄󰍝")
     awesome.emit_signal("visible::quicksettings:sc", false)
   end,
 })
