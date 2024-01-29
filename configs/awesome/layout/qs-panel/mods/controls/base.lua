@@ -93,7 +93,7 @@ local mktemplate = function(opts)
     shape = Beautiful.quicksettings_ctrl_btn_shape,
     {
       layout = Wibox.layout.align.horizontal,
-      forced_height = dpi(44),
+      forced_height = dpi(42),
       nil,
       base_button,
       base_settings,

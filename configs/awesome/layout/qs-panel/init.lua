@@ -10,6 +10,7 @@ local function mkwidget(s)
   local controls = require("layout.qs-panel.mods.controls")
   local sliders = require("layout.qs-panel.mods.sliders")
   local user_info = require("layout.qs-panel.mods.user-info")
+  local screenshot = require("layout.qs-panel.mods.controls.screenshots")
   local quicksettings = Awful.popup({
     screen = s,
     visible = false,
@@ -28,6 +29,7 @@ local function mkwidget(s)
         layout = Wibox.layout.fixed.vertical,
         spacing = dpi(10),
         user_info,
+        screenshot,
         sliders,
         controls,
         music,

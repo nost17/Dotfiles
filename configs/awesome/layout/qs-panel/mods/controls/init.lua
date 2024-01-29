@@ -8,7 +8,6 @@ local dnd_btn = require("layout.qs-panel.mods.controls.dnd-state")
 local night_light_btn = require("layout.qs-panel.mods.controls.night-light")
 local music_notify_btn = require("layout.qs-panel.mods.controls.music-notify")
 local dark_mode_btn = require("layout.qs-panel.mods.controls.dark-mode")
-local screenshot_btn = require("layout.qs-panel.mods.controls.screenshots")
 local wifi_btn = require("layout.qs-panel.mods.controls.wifi-state")
 local bluetooth_btn = require("layout.qs-panel.mods.controls.bluetooth-state")
 local floating_btn = require("layout.qs-panel.mods.controls.floating-mode")
@@ -40,5 +39,5 @@ return Wibox.widget({
     music_notify_btn,
     night_light_btn,
   },
-  screenshot_btn,
+  -- screenshot_btn,
 })

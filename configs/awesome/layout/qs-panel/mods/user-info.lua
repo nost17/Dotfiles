@@ -44,7 +44,7 @@ awesome.connect_signal("lib::battery", function(capacity, charging)
   end
 end)
 
-return Wibox.widget({
+local battery = Wibox.widget({
   charging_icon,
   {
     {
@@ -71,4 +71,47 @@ return Wibox.widget({
   },
   spacing = dpi(8),
   layout = Wibox.layout.fixed.horizontal,
+})
+
+-- [[ SCREENSHOT ]]
+
+-- function(self)
+--   screenshot_settings.visible = not screenshot_settings.visible
+--   if screenshot_settings.visible then
+--     self:set_text("󰍟")
+--   else
+--     self:set_text("󰍝")
+--   end
+-- end
+
+local show_sc_settings = require("utils.button").text.state({
+  text = "󰄄󰍝",
+  font = Beautiful.font_icon,
+  shape = Beautiful.quicksettings_ctrl_btn_shape,
+  paddings = {
+    left = dpi(10),
+    right = dpi(6),
+    top = dpi(7),
+    bottom = dpi(7),
+  },
+  size = 15,
+  on_turn_on = function(self)
+    awesome.emit_signal("visible::quicksettings:sc", true)
+  end,
+  on_turn_off = function(self)
+    awesome.emit_signal("visible::quicksettings:sc", false)
+  end,
+})
+
+awesome.connect_signal("visible::quicksettings", function(vis)
+  if vis == false then
+    show_sc_settings:turn_off()
+  end
+end)
+
+return Wibox.widget({
+  layout = Wibox.layout.align.horizontal,
+  battery,
+  nil,
+  show_sc_settings,
 })
