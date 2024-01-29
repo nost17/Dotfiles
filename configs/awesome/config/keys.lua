@@ -47,18 +47,18 @@ Awful.keyboard.append_global_keybindings({
 -- MEDIA KEYS
 Awful.keyboard.append_global_keybindings({
   -- Mediua player keys
-  Awful.key({}, "XF86AudioPause", function()
-          Playerctl:pause()
-  end),
-  Awful.key({}, "XF86AudioPlay", function()
-          Playerctl:play()
-  end),
-  Awful.key({}, "XF86AudioNext", function()
-          Playerctl:next()
-  end),
-  Awful.key({}, "XF86AudioPrev", function()
-          Playerctl:previous()
-  end),
+  -- Awful.key({}, "XF86AudioPause", function()
+  --         Playerctl:pause()
+  -- end),
+  -- Awful.key({}, "XF86AudioPlay", function()
+  --         Playerctl:play()
+  -- end),
+  -- Awful.key({}, "XF86AudioNext", function()
+  --         Playerctl:next()
+  -- end),
+  -- Awful.key({}, "XF86AudioPrev", function()
+  --         Playerctl:previous()
+  -- end),
   -- Volume and Brightness keys
   Awful.key({ User.vars.modkey }, "-", function()
     Awful.spawn.with_shell("pamixer -d 5", false)

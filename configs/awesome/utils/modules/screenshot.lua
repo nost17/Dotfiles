@@ -30,7 +30,7 @@ local function main(self, opts)
       .. " "
       .. opts.path
       .. file_name
-  local timer = Gears.timer({
+  Gears.timer({
     timeout = opts.delay,
     autostart = true,
     single_shot = true,
@@ -54,13 +54,35 @@ end
 function module.select(opts)
   local self = new()
   self._private.cmd = self._private.cmd .. "-s "
-  main(self, opts)
+  if opts.delay == 0 then
+    Gears.timer({
+      timeout = 0.5,
+      autostart = true,
+      single_shot = true,
+      callback = function()
+        main(self, opts)
+      end,
+    })
+  else
+    main(self, opts)
+  end
   return self
 end
 
 function module.normal(opts)
   local self = new()
-  main(self, opts)
+  if opts.delay == 0 then
+    Gears.timer({
+      timeout = 0.5,
+      autostart = true,
+      single_shot = true,
+      callback = function()
+        main(self, opts)
+      end,
+    })
+  else
+    main(self, opts)
+  end
   return self
 end
 
