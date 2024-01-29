@@ -40,6 +40,7 @@ theme.color_method_factor = User.config.dark_mode and 7 or 20
 --- MAIN
 theme.bg_normal = theme.background
 theme.fg_normal = theme.foreground
+theme.master_width_factor = 0.60
 theme.useless_gap = dpi(4)
 theme.gap_single_client = false
 theme.awesome_icon = themes_path .. "images/awesome.png"

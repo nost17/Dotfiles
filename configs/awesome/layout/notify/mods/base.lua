@@ -108,13 +108,13 @@ local function mknotification(n)
       widget = Wibox.container.margin,
       -- top = dpi(-2),
       {
-        layout = Wibox.layout.align.vertical,
+        layout = Wibox.layout.fixed.vertical,
         {
           widget = Wibox.container.margin,
           bottom = dpi(6),
           attribution_area,
         },
-        nil,
+        -- nil,
         {
           widget = Wibox.container.margin,
           left = dpi(8),
