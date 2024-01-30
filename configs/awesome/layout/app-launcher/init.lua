@@ -792,6 +792,9 @@ local function new(args)
       ret._private.text = text
     end,
     keypressed_callback = function(mod, key, cmd)
+      if key == "Super_L" then
+        ret:hide()
+      end
       if key == "Escape" then
         ret:hide()
       end
@@ -1049,7 +1052,7 @@ awesome.connect_signal("panels::app_launcher", function(action)
   end
 end)
 
-awesome.connect_signal("visible::quicksettings", function (vis)
+awesome.connect_signal("visible::quicksettings", function(vis)
   if vis then
     my_launcher:hide()
   end

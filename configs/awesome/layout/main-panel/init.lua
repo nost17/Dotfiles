@@ -55,21 +55,17 @@ local notify_panel = wbutton.text.normal({
   fg_normal = Beautiful.accent_color,
   -- bg_normal = Helpers.color.ldColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
   bg_normal = Beautiful.widget_bg_alt,
-  on_release = function()
-    Naughty.notify({
-      title = "TODO: Notification panel",
-    })
-    User.notify_count = 0
-    Naughty.emit_signal("count")
+  on_release = function(self)
+    -- Naughty.notify({
+    --   title = "TODO: Notification panel",
+    -- })
+    self:set_text("󰂜")
+    awesome.emit_signal("panels::notification_center", "toggle")
   end,
 })
 
 Naughty.connect_signal("count", function()
-  if User.notify_count >= 1 then
-    notify_panel:set_text("󰂞")
-  else
-    notify_panel:set_text("󰂜")
-  end
+  notify_panel:set_text("󰂞")
 end)
 
 local layout_box = require("layout.main-panel.mods.layout-box")(main_panel_screen)

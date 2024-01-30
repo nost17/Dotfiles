@@ -29,7 +29,7 @@ local music_icon = wtext({
 })
 
 local player_name = wtext({
-	text = User.current_player.name,
+	text = User.music.names[User.music.current_player] or "none",
 	color = Beautiful.fg_normal,
 	bold = false,
 	font = "Rubik Medium ",

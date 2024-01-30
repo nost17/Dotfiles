@@ -76,7 +76,7 @@ local player_btn = wbutton.elevated.normal({
     },
     {
       widget = Wibox.widget.textbox,
-      text = User.current_player.name,
+      text = User.music.names[User.music.current_player] or "none",
       id = "player_name",
       font = Beautiful.font_text .. "11",
       halign = "left",
@@ -97,6 +97,9 @@ local player_btn = wbutton.elevated.normal({
   shape = Gears.shape.rounded_bar,
   on_release = function()
     Playerctl:next_player()
+  end,
+  on_secondary_release = function()
+    Playerctl:prev_player()
   end,
 })
 
@@ -172,7 +175,7 @@ Playerctl:connect_signal("status", function(_, playing)
   end
 end)
 Playerctl:connect_signal("new_player", function(_)
-  Helpers.gc(player_btn, "player_name"):set_text(User.current_player.name)
+  Helpers.gc(player_btn, "player_name"):set_text(User.music.names[User.music.current_player] or "none")
 end)
 
 -- [[ MAIN WIDGET ]]
