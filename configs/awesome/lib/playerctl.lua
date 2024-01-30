@@ -4,9 +4,12 @@ local setmetatable = setmetatable
 local player_count = 1
 local get_player_index = function(pos)
   if pos == "next" then
-    return (player_count % #User.music_players) + 1
+    return (player_count % #User.music.players) + 1
   elseif pos == "prev" then
-    return (player_count % #User.music_players) - 1
+    if player_count < 1 then
+      player_count = #User.music.players
+    end
+    return (player_count % #User.music.players) + 1
   end
 end
 
@@ -82,7 +85,7 @@ local function emit_metadata(self)
       album = album,
       cover_art = cover_art,
     }
-    self:emit_signal("metadata", title, artist, album, cover_art, User.current_player.name)
+    self:emit_signal("metadata", title, artist, album, cover_art, User.music.current_player)
     collectgarbage("collect")
   end)
 end
@@ -116,7 +119,7 @@ local function init_metadata_signal(self)
     Awful.spawn.with_line_callback(self._private.metadata_cmd .. " -F", {
       stdout = function()
         Gears.timer({
-          timeout = User.current_player.player == "firefox" and 0.25 or 0.10,
+          timeout = User.current_player == "firefox" and 0.25 or 0.10,
           call_now = false,
           autostart = true,
           single_shot = true,
@@ -130,8 +133,8 @@ local function init_metadata_signal(self)
 end
 
 local function set_player(self)
-  if User.current_player.player ~= "auto" then
-    self._private.cmd = "playerctl --player=" .. User.current_player.player .. " "
+  if User.current_player ~= "auto" then
+    self._private.cmd = "playerctl --player=" .. User.music.current_player .. " "
   else
     self._private.cmd = "playerctl "
   end
@@ -143,16 +146,23 @@ local function set_player(self)
 end
 
 -- TODO: add previous_player fn
-function playerctl:next_player(new_player)
-  -- if new_player then
-  -- 	User.current_player.player = new_player
-  -- 	User.current_player.name = new_player:gsub("^%l", string.upper)
-  -- 	set_player(self)
-  -- else
-  User.current_player = User.music_players[get_player_index("next")]
+function playerctl:next_player()
+  User.music.current_player = User.music.players[get_player_index("next")]
   player_count = player_count + 1
+  Naughty.notify({
+    title = tostring(player_count),
+  })
   set_player(self)
-  -- end
+  emit_metadata(self)
+end
+
+function playerctl:prev_player()
+  User.music.current_player = User.music.players[get_player_index("prev")]
+  player_count = player_count - 1
+  Naughty.notify({
+    title = tostring(player_count),
+  })
+  set_player(self)
   emit_metadata(self)
 end
 
@@ -169,8 +179,8 @@ local function new(args)
   ret._private.metadata_format =
   "metadata -f ARTIST@{{artist}}@TITLE@{{title}}@ALBUM@{{album}}@ART@{{mpris:artUrl}}@END"
   -- Set cmd
-  if User.current_player.player ~= "auto" then
-    ret._private.cmd = ret._private.cmd .. "--player=" .. User.current_player.player .. " "
+  if User.music.current_player ~= "auto" then
+    ret._private.cmd = ret._private.cmd .. "--player=" .. User.music.current_player .. " "
   else
     ret._private.cmd = "playerctl "
   end
