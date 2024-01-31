@@ -7,7 +7,7 @@ Repositorio de configuración del entorno AwesomeWM y otros programas
 - **WM:** AwesomeWM
 - **Notificaciones:** Naughty
 - **Terminal:** Kitty
-- **Web:** Firefox
+- **Web:** Vivaldi
 - **Música:** MPD
 - **Música (CLI):** Ncmpcpp & mpc
 
@@ -25,26 +25,38 @@ Repositorio de configuración del entorno AwesomeWM y otros programas
 | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | <a href="#--------"><img src="https://raw.githubusercontent.com/Lik-e/Dotfiles/main/.github/screenshots/03.png" alt="bottom panel preview"></a> |
 
-| <b>Pantalla de salida</b>                                                                                                                       |
+| <b>Panel de notificaciones</b>                                                                                                                  |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | <a href="#--------"><img src="https://raw.githubusercontent.com/Lik-e/Dotfiles/main/.github/screenshots/04.png" alt="bottom panel preview"></a> |
 
-| <b>Pantalla de bloqueo</b>                                                                                                                      |
+| <b>Distribucion de ventanas</b>                                                                                                                 |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | <a href="#--------"><img src="https://raw.githubusercontent.com/Lik-e/Dotfiles/main/.github/screenshots/05.png" alt="bottom panel preview"></a> |
+
+| <b>Modo claro</b>                                                                                                                               |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a href="#--------"><img src="https://raw.githubusercontent.com/Lik-e/Dotfiles/main/.github/screenshots/06.png" alt="bottom panel preview"></a> |
+
+| <b>Pantalla de salida</b>                                                                                                                       |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a href="#--------"><img src="https://raw.githubusercontent.com/Lik-e/Dotfiles/main/.github/screenshots/07.png" alt="bottom panel preview"></a> |
+
+| <b>Pantalla de bloqueo</b>                                                                                                                      |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a href="#--------"><img src="https://raw.githubusercontent.com/Lik-e/Dotfiles/main/.github/screenshots/08.png" alt="bottom panel preview"></a> |
 
 # ToDo
 
 #### AwesomeWM
 
 - [ ] Implementación y re-diseño de ajustes rápidos
-  - [X] Agregar alternador de modo oscuro/claro
-  - [X] Agregar boton de captura de Pantalla
-    - [X] Captura instantánea
-    - [X] Menu de selección
-      - [X] Pantalla completa
-      - [X] Seleccion
-      - [X] Ventana
+  - [x] Agregar alternador de modo oscuro/claro
+  - [x] Agregar boton de captura de Pantalla
+    - [x] Captura instantánea
+    - [x] Menu de selección
+      - [x] Pantalla completa
+      - [x] Seleccion
+      - [x] Ventana
   - [x] Agregar boton de internet
     - [x] Agregar libreria de internet (señales)
   - [ ] Agregar boton de bluetooth
@@ -52,7 +64,7 @@ Repositorio de configuración del entorno AwesomeWM y otros programas
 - [ ] Agregar barra de titulo para las ventanas
   - [ ] Agregar alternador de modo flotante (ajustes rápidos)
 - [ ] Agregar calendario
-- [ ] Agregar selector de distribucion de ventanas
+- [X] Agregar selector de distribucion de ventanas
 - [ ] Agregar pizarron de estado
 - [x] Pantalla de bloqueo
 - [x] Menu de apagado
@@ -62,6 +74,7 @@ Repositorio de configuración del entorno AwesomeWM y otros programas
 
 #### Other
 
+- [ ] Agregar configuración de nvchad
 - [ ] Agregar rc de picom al script
 - [ ] Agregar compilacion automatica de picom-ibhagwan
 - [ ] Agregar compilacion automatica de awesome-git en el script
