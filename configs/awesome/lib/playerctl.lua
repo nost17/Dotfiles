@@ -149,9 +149,6 @@ end
 function playerctl:next_player()
   User.music.current_player = User.music.players[get_player_index("next")]
   player_count = player_count + 1
-  Naughty.notify({
-    title = tostring(player_count),
-  })
   set_player(self)
   emit_metadata(self)
 end
@@ -159,9 +156,6 @@ end
 function playerctl:prev_player()
   User.music.current_player = User.music.players[get_player_index("prev")]
   player_count = player_count - 1
-  Naughty.notify({
-    title = tostring(player_count),
-  })
   set_player(self)
   emit_metadata(self)
 end

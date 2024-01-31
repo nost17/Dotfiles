@@ -89,11 +89,12 @@ local player_btn = wbutton.elevated.normal({
     left = dpi(8),
     right = dpi(8),
   },
-  bg_normal = Helpers.color.ldColor(
-    Beautiful.color_method,
-    Beautiful.color_method_factor * 0.5,
-    Beautiful.quicksettings_widgets_bg
-  ),
+  bg_normal = Beautiful.transparent,
+  -- bg_normal = Helpers.color.ldColor(
+  --   Beautiful.color_method,
+  --   Beautiful.color_method_factor * 0.5,
+  --   Beautiful.quicksettings_widgets_bg
+  -- ),
   shape = Gears.shape.rounded_bar,
   on_release = function()
     Playerctl:next_player()

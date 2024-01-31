@@ -39,8 +39,8 @@ User.music = {}
 User.music.players = {
   "mpd",
   "chromium",
-  -- "firefox",
   "auto",
+  -- "firefox",
 }
 User.music.names = {
   ["mpd"] = "Local",
