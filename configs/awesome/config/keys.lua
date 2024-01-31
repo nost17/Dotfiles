@@ -12,7 +12,7 @@ Awful.mouse.append_global_mousebindings({
 -- General Awesome keys
 Awful.keyboard.append_global_keybindings({
   Awful.key({ User.vars.modkey }, "d", function()
-    awesome.emit_signal("awesome::lockscreen", "toggle")
+    -- awesome.emit_signal("awesome::lockscreen", "toggle")
   end, { description = "mostrar panel de control", group = "awesome" }),
   Awful.key({ User.vars.modkey }, "a", function()
     awesome.emit_signal("panels::quicksettings", "toggle")
@@ -179,8 +179,10 @@ Awful.keyboard.append_global_keybindings({
   end, { description = "decrease the number of columns", group = "layout" }),
   Awful.key({ User.vars.modkey }, "space", function()
     Awful.layout.inc(1)
+    awesome.emit_signal("widget::layout_switcher")
   end, { description = "select next", group = "layout" }),
   Awful.key({ User.vars.modkey, "Shift" }, "space", function()
+    awesome.emit_signal("widget::layout_switcher")
     Awful.layout.inc(-1)
   end, { description = "select previous", group = "layout" }),
 })
