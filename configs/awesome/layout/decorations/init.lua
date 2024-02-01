@@ -1,0 +1,1 @@
+require("layout.decorations.base")
