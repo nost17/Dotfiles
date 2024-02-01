@@ -4,7 +4,7 @@ require("config.layouts")
 require("config.tags")
 require("config.keys")
 require("config.rules")
-require("config.border")
+-- require("config.border")
 require("config.wallpaper")
 
 -- Gears.timer({

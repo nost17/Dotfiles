@@ -27,6 +27,7 @@ User.config.dnd_state = false
 User.config.music_notify = true
 User.config.theme = "onedark"
 User.config.theme_accent = "green"
+User.config.floating_mode = false
 
 User.vars = {}
 User.vars.modkey = "Mod4"
@@ -57,7 +58,7 @@ require("config") -- AwesomeWM configuration files
 require("lib")    -- Awesome signal files
 require("layout") -- UI configuration files
 
--- collectgarbage("collect")
+collectgarbage("collect")
 
 -- Gears.timer({
 -- 	timeout = 5,

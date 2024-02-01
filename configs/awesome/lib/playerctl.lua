@@ -9,7 +9,8 @@ local get_player_index = function(pos)
     if player_count < 1 then
       player_count = #User.music.players
     end
-    return (player_count % #User.music.players) + 1
+    local new_index = player_count % #User.music.players
+    return new_index == 2 and new_index - 1 or new_index + 2
   end
 end
 
@@ -133,7 +134,7 @@ local function init_metadata_signal(self)
 end
 
 local function set_player(self)
-  if User.current_player ~= "auto" then
+  if User.music.current_player ~= "auto" then
     self._private.cmd = "playerctl --player=" .. User.music.current_player .. " "
   else
     self._private.cmd = "playerctl "

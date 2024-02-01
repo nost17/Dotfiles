@@ -129,6 +129,10 @@ function elevated_button.state(args)
     end
   end
 
+  function widget:get_state()
+    return widget._private.state
+  end
+
   widget:connect_signal("mouse::enter", function(self, find_widgets_result)
     if args.hover_effect == false then
       return

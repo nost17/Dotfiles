@@ -24,7 +24,7 @@ local ll = layoutlist({
     shape = Gears.shape.rounded_rect,
     {
       widget = Wibox.container.margin,
-      margins = dpi(10),
+      margins = dpi(20),
       {
         widget = Wibox.widget.imagebox,
         id = "icon_role",

@@ -114,8 +114,11 @@ local mktemplate = function(opts)
   end
 
   function base_layout:set_icon(icon)
-    -- base_button:set_text(icon)
     Helpers.gc(base_label, "icon"):set_text(icon)
+  end
+
+  function base_layout:get_state()
+    return base_button._private.state
   end
 
   if opts.on_by_default then

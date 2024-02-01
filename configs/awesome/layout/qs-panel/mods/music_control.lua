@@ -5,7 +5,7 @@ local dpi = Beautiful.xresources.apply_dpi
 -- [[ CONTROL BUTTONS ]]
 
 local toggle_btn = wbutton.text.normal({
-  text = "󰐍",
+  text = "󱖑",
   font = Beautiful.font_icon,
   size = 20,
   -- shape = Gears.shape.circle,
@@ -172,7 +172,7 @@ Playerctl:connect_signal("status", function(_, playing)
   if playing then
     toggle_btn:set_text("󰏦")
   else
-    toggle_btn:set_text("󰐍")
+    toggle_btn:set_text("󱖑")
   end
 end)
 Playerctl:connect_signal("new_player", function(_)

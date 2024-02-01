@@ -42,16 +42,25 @@ theme.bg_normal = theme.background
 theme.fg_normal = theme.foreground
 theme.master_width_factor = 0.60
 theme.useless_gap = dpi(4)
-theme.gap_single_client = false
+theme.gap_single_client = true
 theme.awesome_icon = themes_path .. "images/awesome.png"
 theme.user_icon = themes_path .. "images/user_icon.jpeg"
 theme.small_radius = dpi(4)
 theme.medium_radius = dpi(8)
 
 -- BORDER
-theme.border_width = 2
+theme.border_width = 0
+theme.border_width_normal = theme.border_width
+theme.border_width_active = theme.border_width
+theme.border_width_new = theme.border_width
+theme.border_width_floating = 0
+theme.border_width_floating_normal = 0
+theme.border_width_floating_active = 0
+theme.border_width_floating_urgent = 0
+theme.border_width_floating_new = 0
 theme.border_normal = "#0c0e0f"
 theme.border_focus = theme.yellow
+theme.border_color_urgent = theme.red
 
 -- WIDGETS
 theme.widget_bg = theme.bg_normal
@@ -91,9 +100,9 @@ theme.menu_width = 260
 -- theme.titlebar_bg_normal               = Helpers.color.ldColor(theme.bg_normal, 8)
 theme.titlebar_bg_normal = theme.widget_bg
 theme.titlebar_bg_focus = theme.titlebar_bg_normal
-theme.titlebar_fg_normal = theme.fg_normal
-theme.titlebar_fg_focus = theme.fg_normal .. "BF"
-theme.titlebar_font = theme.font_text .. "SemiBold 10"
+theme.titlebar_fg_normal = theme.fg_normal .. "AF"
+theme.titlebar_fg_focus = theme.fg_normal
+theme.titlebar_font = theme.font_text .. "Medium 10"
 theme.titlebar_size = dpi(40)
 local recolor_image = Gears.color.recolor_image
 local recolor = function(color, method)
