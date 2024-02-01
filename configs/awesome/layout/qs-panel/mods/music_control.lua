@@ -170,7 +170,7 @@ Playerctl:connect_signal("metadata", function(_, title, artist, _, album_art, _)
 end)
 Playerctl:connect_signal("status", function(_, playing)
   if playing then
-    toggle_btn:set_text("󰏦")
+    toggle_btn:set_text("󱖒")
   else
     toggle_btn:set_text("󱖑")
   end

@@ -61,8 +61,8 @@ Repositorio de configuración del entorno AwesomeWM y otros programas
     - [x] Agregar libreria de internet (señales)
   - [ ] Agregar boton de bluetooth
     - [ ] Agregar libreria de bluetooth (señales)
-- [ ] Agregar barra de titulo para las ventanas
-  - [ ] Agregar alternador de modo flotante (ajustes rápidos)
+- [X] Agregar barra de titulo para las ventanas
+  - [X] Agregar alternador de modo flotante (ajustes rápidos)
 - [ ] Agregar calendario
 - [X] Agregar selector de distribucion de ventanas
 - [ ] Agregar pizarron de estado
