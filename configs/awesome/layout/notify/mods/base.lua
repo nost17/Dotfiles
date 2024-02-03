@@ -3,7 +3,7 @@ local wbutton = require("utils.button")
 local icon_theme = require("utils.modules.icon_theme")()
 
 Naughty.config.maximum_width = dpi(540)
-Naughty.config.minimum_width = dpi(280)
+Naughty.config.minimum_width = dpi(300)
 Naughty.config.defaults = {
   position = Beautiful.notification_position,
   timeout = 6,
@@ -16,9 +16,17 @@ local override_names = {
 }
 local colors = {
   ["low"] = Beautiful.green,
-  ["normal"] = Beautiful.fg_normal .. "5F",
+  ["normal"] = Beautiful.fg_normal,
   ["critical"] = Beautiful.red,
 }
+
+Beautiful.notification_icon_height = dpi(52)
+Beautiful.notification_fg = Beautiful.fg_normal
+Beautiful.notification_bg =
+    Helpers.color.ldColor(Beautiful.color_method, Beautiful.color_method_factor * 0.5, Beautiful.widget_bg)
+Beautiful.notification_bg_alt =
+    Helpers.color.ldColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.notification_bg)
+Beautiful.notification_padding = Beautiful.notification_padding * 1.5
 
 local function get_oldest_notification()
   for _, notification in ipairs(Naughty.active) do
@@ -41,13 +49,14 @@ local function actions_widget(n)
     local button = wbutton.text.normal({
       text = action.name,
       font = Beautiful.font_text .. "Regular",
-      size = 11,
+      size = 10,
       halign = "center",
+      bg_normal = Beautiful.notification_bg_alt,
       paddings = {
-        top = dpi(5),
-        bottom = dpi(5),
-        left = dpi(8),
-        right = dpi(8),
+        top = dpi(4),
+        bottom = dpi(4),
+        left = dpi(6),
+        right = dpi(6),
       },
       on_press = function()
         action:invoke()
@@ -69,6 +78,9 @@ local function mknotification(n)
   if Helpers.inTable(override_names, n.app_name) then
     n.app_name = Naughty.config.defaults.app_name
   end
+  if n.title == "" then
+    n.title = Naughty.config.defaults.app_name
+  end
   local n_title = require("layout.notify.components.title")(n)
   local n_message = require("layout.notify.components.message")(n)
   local n_image = require("layout.notify.components.image")(n)
@@ -82,92 +94,68 @@ local function mknotification(n)
   local attribution_area = Wibox.widget({
     layout = Wibox.layout.align.horizontal,
     {
-      strategy = "exact",
-      width = dpi(10),
-      widget = Wibox.container.constraint,
-      {
-        widget = Wibox.widget.textbox,
-        markup = Helpers.text.colorize_text("󰄮", accent_color),
-        font = Beautiful.font_icon .. "6",
-        valign = "center",
-        halign = "left",
-      },
-    },
-    {
       widget = Wibox.container.margin,
-      left = Beautiful.notification_padding * 0.3,
-      right = Beautiful.notification_padding * 0.5,
-      n_appname,
+      left = Beautiful.notification_padding,
+      right = Beautiful.notification_padding,
+      top = Beautiful.notification_padding * 0.75,
+      bottom = Beautiful.notification_padding * 0.75,
+      {
+        widget = Wibox.container.background,
+        fg = accent_color,
+        n_title
+      },
     },
     nil,
   })
+  local action_area = action_exist and actions_widget(n) or nil
+
   local visual_area = Wibox.widget({
-    layout = Wibox.layout.align.horizontal,
-    expand = "none",
+    widget = Wibox.container.margin,
+    left = Beautiful.notification_padding,
+    right = Beautiful.notification_padding,
+    top = Beautiful.notification_padding,
+    bottom = Beautiful.notification_padding,
     {
-      widget = Wibox.container.margin,
-      -- top = dpi(-2),
-      {
-        layout = Wibox.layout.fixed.vertical,
-        {
-          widget = Wibox.container.margin,
-          bottom = dpi(6),
-          attribution_area,
-        },
-        -- nil,
-        {
-          widget = Wibox.container.margin,
-          left = dpi(8),
-          {
-            strategy = "max",
-            width = Naughty.config.maximum_width - Beautiful.notification_icon_height - (Beautiful.notification_padding * 3),
-            widget = Wibox.container.constraint,
-            {
-              layout = Wibox.layout.fixed.vertical,
-              n_title,
-              n_message,
-            },
-          },
-        },
-      },
-    },
-    nil,
-    {
-      widget = Wibox.container.margin,
-      left = Beautiful.notification_padding,
+      layout = Wibox.layout.fixed.horizontal,
+      fill_space = true,
+      spacing = Beautiful.notification_padding,
       {
         n_image,
         strategy = "max",
         height = Beautiful.notification_icon_height,
         widget = Wibox.container.constraint,
       },
+      {
+        layout = Wibox.layout.fixed.vertical,
+        fill_space = true,
+        {
+          layout = Wibox.container.place,
+          valign = "center",
+          halign = "left",
+          n_message,
+        },
+        action_exist and {
+          widget = Wibox.container.margin,
+          top = Beautiful.notification_padding * 0.5,
+          action_area,
+        },
+      },
     },
   })
-  local action_area = action_exist and actions_widget(n) or nil
   local notification = Naughty.layout.box({
     notification = n,
     type = "notification",
-    shape = Helpers.shape.rrect(Beautiful.notification_radius),
+    -- shape = Helpers.shape.rrect(Beautiful.notification_radius),
     minimum_width = Naughty.config.minimum_width,
     maximum_width = Naughty.config.maximum_width,
     widget_template = {
       layout = Wibox.layout.fixed.vertical,
-      spacing = Beautiful.notification_padding * 0.8,
       {
-        widget = Wibox.container.margin,
-        top = Beautiful.notification_padding,
-        bottom = action_exist and 0 or Beautiful.notification_padding,
-        right = Beautiful.notification_padding,
-        left = Beautiful.notification_padding,
-        visual_area,
+        widget = Wibox.container.background,
+        bg = Beautiful.notification_bg_alt,
+        attribution_area,
       },
-      action_exist and {
-        widget = Wibox.container.margin,
-        bottom = Beautiful.notification_padding * 0.8,
-        right = Beautiful.notification_padding,
-        left = Beautiful.notification_padding,
-        action_area,
-      },
+      visual_area,
     },
   })
 

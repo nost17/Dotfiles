@@ -59,7 +59,7 @@ local wdg_timer = Gears.timer({
   end,
 })
 
-awesome.connect_signal("widget::layout_switcher", function()
+tag.connect_signal("property::layout", function()
   layout_switcher.visible = true
   wdg_timer:again()
 end)

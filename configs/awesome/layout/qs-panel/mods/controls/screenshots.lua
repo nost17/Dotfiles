@@ -28,8 +28,8 @@ local function screenshot_notify(ss)
       Awful.spawn.with_shell("feh " .. file_path .. file_name)
     end)
     Naughty.notify({
-      title = file_name,
-      message = "Captura guardada.",
+      message = file_name,
+      title = "Captura guardada.",
       image = file_path .. file_name,
       actions = { open_image },
     })

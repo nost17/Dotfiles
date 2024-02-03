@@ -3,7 +3,7 @@ local firs_time = true
 local colorize_text = Helpers.text.colorize_text
 local next_button = Naughty.action({ name = "Siguiente" })
 local prev_button = Naughty.action({ name = "Anterior" })
-local toggle_button = Naughty.action({ name = "" })
+local toggle_button = Naughty.action({ name = "Continuar" })
 next_button:connect_signal("invoked", function()
   Playerctl:next()
 end)
@@ -17,7 +17,7 @@ Playerctl:connect_signal("status", function(_, playing)
   if playing then
     toggle_button.name = "Pausar"
   else
-    toggle_button.name = "Tocar"
+    toggle_button.name = "Continuar"
   end
 end)
 -- message = Helpers.text.colorize_text("<u>" .. music_data.artist .. "</u>", Beautiful.cyan_alt),
@@ -25,8 +25,9 @@ end)
 -- .. self._private.prev_metadata.album:lower():gsub("^%l", string.upper)
 function Playerctl:notify()
   music_notify = Helpers.notify_dwim({
-    title = self._private.prev_metadata.title,
-    message = colorize_text("<i>" .. self._private.prev_metadata.artist .. "</i>", Beautiful.yellow),
+    -- message = colorize_text("<i>" .. self._private.prev_metadata.artist .. "</i>", Beautiful.yellow),
+    title = self._private.prev_metadata.artist,
+    message = self._private.prev_metadata.title,
     image = self._private.prev_metadata.cover_art,
     app_name = "Música",
     actions = { prev_button, toggle_button, next_button },
