@@ -84,13 +84,13 @@ local function mknotification(n)
   local n_title = require("layout.notify.components.title")(n)
   local n_message = require("layout.notify.components.message")(n)
   local n_image = require("layout.notify.components.image")(n)
-  local n_appname = Wibox.widget({
-    widget = Wibox.widget.textbox,
-    text = n.app_name:gsub("^%l", string.upper),
-    font = Beautiful.notification_font_appname,
-    halign = "left",
-    valign = "center",
-  })
+  -- local n_appname = Wibox.widget({
+  --   widget = Wibox.widget.textbox,
+  --   text = n.app_name:gsub("^%l", string.upper),
+  --   font = Beautiful.notification_font_appname,
+  --   halign = "left",
+  --   valign = "center",
+  -- })
   local attribution_area = Wibox.widget({
     layout = Wibox.layout.align.horizontal,
     {

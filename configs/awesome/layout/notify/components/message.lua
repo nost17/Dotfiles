@@ -31,7 +31,7 @@ local function new(args)
   function tb._private.title_changed_callback()
     local n = tb._private.notification[1]
     if n then
-      tb:set_markup_silently(n.message)
+      tb:set_markup_silently(Helpers.text.escape_text(n.message))
     else
       markup(
         tb,

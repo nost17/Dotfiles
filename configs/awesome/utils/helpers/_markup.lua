@@ -26,7 +26,7 @@ function module.escape_text(text)
 
 	-- Try to set the text while only interpreting <br>.
 	text = text:gsub("<br[ /]*>", "\n")
-
+  text = text:gsub("\\n", "\n")
 	-- Since the title cannot contain markup, it must be escaped first so that
 	-- it is not interpreted by Pango later.
 	text = text:gsub(escape_pattern, escape_subs)

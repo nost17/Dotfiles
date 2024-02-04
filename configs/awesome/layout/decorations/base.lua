@@ -64,7 +64,7 @@ client.connect_signal("request::titlebars", function(c)
       buttons = buttons,
       { -- Title
         widget = Wibox.widget.textbox,
-        text = icon_theme:get_app_name(c.class or "default-application"),
+        text = icon_theme:get_app_name(c.class or "default-application") or c.class,
         font = Beautiful.titlebar_font,
         valign = "center",
         halign = "center",
