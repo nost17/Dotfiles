@@ -34,7 +34,7 @@ local function new(args)
   function tb._private.title_changed_callback()
     local n = tb._private.notification[1]
     if n then
-      tb:set_markup_silently(n.title)
+      tb:set_markup_silently(Helpers.text.escape_text(n.title))
     else
       markup(tb, n.title, Beautiful.notification_fg, Beautiful.notification_font_title)
       -- tb:set_markup_silently(mktext.colorize_text(mktext.text_for_markup(n.title), beautiful.notification_fg))

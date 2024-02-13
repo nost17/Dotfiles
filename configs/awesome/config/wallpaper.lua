@@ -6,6 +6,7 @@ screen.connect_signal("request::wallpaper", function(s)
       halign = "center",
       valign = "center",
 			image = Beautiful.wallpaper,
+      scaling_quality = "fast",
 			upscale = true,
 			downscale = true,
 			vertical_fit_policy = "fill",

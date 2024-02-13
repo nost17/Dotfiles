@@ -104,6 +104,7 @@ local background = Wibox.widget({
   vertical_fit_policy = "fit",
   forced_height = screen_height,
   forced_width = screen_width,
+  scaling_quality = "fast",
 })
 local overlay = Wibox.widget({
   widget = Wibox.container.background,
@@ -121,7 +122,8 @@ local setBlur = function()
     background:set_image(Gears.surface.load_uncached(cache_dir .. "exit.png"))
   end)
 end
-setBlur()
+background:set_image(Gears.surface.load_silently(Beautiful.wallpaper))
+-- setBlur()
 
 -- BUTTONS
 local sleep_button = create_user_button("󰒲", Beautiful.yellow, def_shape, function()

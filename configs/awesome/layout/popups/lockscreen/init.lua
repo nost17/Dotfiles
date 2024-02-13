@@ -158,6 +158,7 @@ local background = Wibox.widget({
   vertical_fit_policy = "fit",
   forced_height = screen_height,
   forced_width = screen_width,
+  scaling_quality = "fast",
 })
 local overlay = Wibox.widget({
   widget = Wibox.container.background,
@@ -176,7 +177,8 @@ local setBlur = function()
     background:set_image(Gears.surface.load_uncached(cache_dir .. "lock.png"))
   end)
 end
-setBlur()
+-- setBlur()
+background:set_image(Gears.surface.load_silently(Beautiful.lockscreen_wallpaper_bg))
 
 -- Clock
 local clock = Wibox.widget({

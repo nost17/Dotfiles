@@ -792,7 +792,7 @@ local function new(args)
       ret._private.text = text
     end,
     keypressed_callback = function(mod, key, cmd)
-      if key == "Super_L" then
+      if mod.Mod4 and key == "w" then
         ret:hide()
       end
       if key == "Escape" then
@@ -899,8 +899,8 @@ local function new(args)
               widget = Wibox.widget.imagebox,
               image = Beautiful.user_icon,
               clip_shape = Gears.shape.circle,
-              forced_width = dpi(46),
-              forced_height = dpi(46),
+              -- forced_width = dpi(50),
+              forced_height = dpi(50),
             },
             nil,
             {
@@ -930,11 +930,12 @@ local function new(args)
             {
               image = Helpers.cropSurface(
                 args.prompt_image_bg_ratio,
-                Gears.surface.load_uncached(Beautiful.wallpaper)
+                Gears.surface.load_silently(Beautiful.wallpaper)
               ),
               halign = "center",
               valign = "center",
               resize = true,
+              scaling_quality = "fast",
               vertical_fit_policy = "fill",
               horizontal_fit_policy = "fill",
               clip_shape = args.prompt_image_bg_shape or nil,
@@ -1047,6 +1048,7 @@ awesome.connect_signal("panels::app_launcher", function(action)
     my_launcher:toggle()
   elseif action == "show" then
     my_launcher:show()
+    search(my_launcher, "")
   elseif action == "hide" then
     my_launcher:hide()
   end

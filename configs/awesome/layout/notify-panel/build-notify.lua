@@ -73,7 +73,7 @@ local function mknotification(n)
   local n_message = Wibox.widget({
     widget = Wibox.widget.textbox,
     markup = Helpers.text.escape_text(n.message),
-    font = Beautiful.notification_font_title,
+    font = Beautiful.notification_font_message,
     halign = "left",
     valign = "center",
   })

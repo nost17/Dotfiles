@@ -75,15 +75,30 @@ end
 local function mknotification(n)
   local accent_color = colors[n.urgency]
   local action_exist = n.actions and #n.actions > 0
-  if Helpers.inTable(override_names, n.app_name) then
+  if Helpers.inTable(override_names, n.app_name) or n.app_name == "" or n.app_name == nil then
     n.app_name = Naughty.config.defaults.app_name
   end
-  if n.title == "" then
-    n.title = Naughty.config.defaults.app_name
-  end
+
+  -- if n.title == "" or n.title == " " then
+  --   n.title = Naughty.config.defaults.app_name
+  -- end
+  -- if n.message == "" or not n.message then
+  --   n.message = n.title
+  --   n.title = Naughty.config.defaults.app_name
+  -- end
+
   local n_title = require("layout.notify.components.title")(n)
   local n_message = require("layout.notify.components.message")(n)
   local n_image = require("layout.notify.components.image")(n)
+  if n.title == "" or n.title == " " or not n.title then
+    n_title = Wibox.widget({
+      widget = Wibox.widget.textbox,
+      text = n.app_name:gsub("^%l", string.upper),
+      font = Beautiful.notification_font_title,
+      halign = "left",
+      valign = "center",
+    })
+  end
   -- local n_appname = Wibox.widget({
   --   widget = Wibox.widget.textbox,
   --   text = n.app_name:gsub("^%l", string.upper),
@@ -102,7 +117,7 @@ local function mknotification(n)
       {
         widget = Wibox.container.background,
         fg = accent_color,
-        n_title
+        n_title,
       },
     },
     nil,
@@ -132,7 +147,7 @@ local function mknotification(n)
           layout = Wibox.container.place,
           valign = "center",
           halign = "left",
-          n_message,
+          n.message and n_message or n_title,
         },
         action_exist and {
           widget = Wibox.container.margin,

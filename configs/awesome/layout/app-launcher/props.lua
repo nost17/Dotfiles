@@ -1,5 +1,6 @@
 local dpi = Beautiful.xresources.apply_dpi
 return {
+  save_history = false,
   favorites = { "kitty", "firefox" },
   skip_empty_icons = false,
   shape = Helpers.shape.rrect(Beautiful.small_radius),
@@ -64,6 +65,6 @@ return {
   prompt_text_color = Beautiful.foreground .. "bb",
   prompt_icon_color = Beautiful.accent_color .. "DF",
   prompt_cursor_color = Beautiful.foreground .. "bb",
-  grid_margins = dpi(15),
+  grid_margins = dpi(6),
   grid_spacing = dpi(6),
 }

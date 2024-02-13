@@ -17,6 +17,7 @@ _G.floating_client_rule = {
     "veromix",
     "xtightvncviewer",
     "mpv",
+    "file_*",
   },
   -- Note that the name property shown in xprop might be set slightly after creation of the client
   -- and the name shown there might not match defined rules here.
@@ -53,7 +54,9 @@ ruled.client.connect_signal("request::rules", function()
   ruled.client.append_rule({
     except_any = _G.floating_client_rule,
     callback = function(c)
-      c.floating = User.config.floating_mode
+      if not c.floating then
+        c.floating = User.config.floating_mode
+      end
     end,
   })
 

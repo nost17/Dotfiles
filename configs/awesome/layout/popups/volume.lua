@@ -15,7 +15,7 @@ local volume_bar = Wibox.widget({
 	max_value = 100,
 	bg = Beautiful.widget_bg_alt,
 	start_angle = math.pi * 1.5,
-	rounded_edge = true,
+	-- rounded_edge = true,
 	colors = {
 		Beautiful.blue,
 	},
