@@ -9,7 +9,7 @@ local theme_dark_path = "theme.colors." .. User.config.theme
 local theme_light_path = "theme.colors." .. User.config.theme .. "_light"
 _G.light_theme_exist = check(theme_light_path)
 _G.dark_theme_exist = check(theme_dark_path)
-local setThene = function()
+local setTheme = function()
   if User.config.dark_mode and _G.dark_theme_exist then
     theme = require(theme_dark_path)
   else
@@ -22,7 +22,7 @@ local setThene = function()
     end
   end
 end
-setThene()
+setTheme()
 
 -- OTHER
 theme.wallpaper = theme.wallpaper or themes_path .. "/wallpapers/yoru.jpeg"
@@ -68,7 +68,7 @@ theme.widget_bg_alt = Helpers.color.ldColor(theme.color_method, theme.color_meth
 theme.widget_clock_font = theme.font_text .. "Medium 12"
 theme.bg_systray = theme.widget_bg
 theme.main_panel_pos = "left"
-theme.main_panel_size = dpi(46)
+theme.main_panel_size = dpi(44)
 
 -- LOGOUT SCREEN
 theme.logoutscreen_buttons_shape = Helpers.shape.rrect(theme.small_radius)
