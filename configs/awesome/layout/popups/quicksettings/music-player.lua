@@ -1,4 +1,5 @@
 local buttons = require("utils.button.text")
+local radius = Dpi(4)
 
 local music_art = Wibox.widget({
 	widget = Wibox.widget.imagebox,
@@ -8,7 +9,7 @@ local music_art = Wibox.widget({
 	valign = "center",
 	resize = true,
 	upscale = true,
-	clip_shape = Helpers.shape.rrect(Beautiful.small_radius),
+	clip_shape = Helpers.shape.rrect(radius),
 	vertical_fit_policy = "fit",
 	horizontal_fit_policy = "fit",
 	-- forced_height = Dpi(180),
@@ -41,7 +42,7 @@ local play_pause_button = buttons.normal({
 	text = "󰐍",
 	expand = true,
 	font = Beautiful.font_icon .. "18",
-	fg_normal = Beautiful.fg_normal,
+	fg_normal = Beautiful.accent_color,
 	bg_normal = Beautiful.widget_bg_alt,
 	-- fg_normal = User.config.dark_mode and Beautiful.foreground_alt or Beautiful.foreground,
 	-- bg_normal = Beautiful.accent_color,
@@ -162,7 +163,7 @@ local music_player_widget = Wibox.widget({
 			nil,
 			{
 				widget = Wibox.container.background,
-				shape = Helpers.shape.rrect(Beautiful.medium_radius),
+				shape = Helpers.shape.rrect(radius),
 				{
 					layout = Wibox.layout.stack,
 					forced_height = Dpi(145),
@@ -198,7 +199,7 @@ local music_player_widget = Wibox.widget({
 				{
 					widget = Wibox.container.background,
 					bg = Beautiful.widget_bg_alt,
-					shape = Beautiful.quicksettings_widgets_shape,
+					shape = Helpers.shape.rrect(radius),
 					{
 						widget = Wibox.container.margin,
 						top = Dpi(15),
