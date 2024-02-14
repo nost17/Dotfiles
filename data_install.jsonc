@@ -5,7 +5,9 @@
     "awesome",
     "mpd",
     "ncmpcpp",
-    "kitty"
+    "kitty",
+    "mpv",
+    "picom"
   ],
   "install": [
     "playerctl",
