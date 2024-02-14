@@ -27,8 +27,8 @@ User.config = {
 	dark_mode = true,
 	dnd_state = false,
 	music_notify = true,
-	modkey = "onedark",
-	theme = "everforest",
+	modkey = "Mod4",
+	theme = "onedark",
 	theme_accent = "green",
 }
 
