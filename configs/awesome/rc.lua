@@ -28,7 +28,7 @@ User.config = {
 	dnd_state = false,
 	music_notify = true,
 	modkey = "Mod4",
-	theme = "yoru",
+	theme = "everforest",
 	theme_accent = "green",
 }
 
