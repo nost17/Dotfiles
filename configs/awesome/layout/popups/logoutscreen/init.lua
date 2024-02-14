@@ -30,7 +30,7 @@ local function create_user_button(icon, color, shape, fn)
     -- border_width = 2,
     -- border_width = Dpi(1.5),
     border_color = color,
-    bg = Beautiful.bg_normal,
+    bg = Helpers.color.ldColor("darken", User.config.dark_mode and 5 or 20, Beautiful.bg_normal),
     wdg,
   })
 end
@@ -110,7 +110,7 @@ local overlay = Wibox.widget({
   widget = Wibox.container.background,
   -- bg = Helpers.color.ldColor(Beautiful.bg_normal .. "DF", 20, "darken"),
   -- bg = Helpers.color.LDColor("darken", 0.23, Beautiful.bg_normal) .. "DF",
-  bg = Beautiful.bg_normal .. "DF",
+  bg = Beautiful.bg_normal .. (Helpers.color.isDark(Beautiful.bg_normal) and "AA" or "55"),
   forced_height = screen_height,
   forced_width = screen_width,
 })
@@ -224,13 +224,22 @@ logoutscreen:setup({
           halign = "center",
           valign = "center",
           {
-            layout = Wibox.layout.flex.horizontal,
-            spacing = dpi(15),
-            shutdown_button,
-            reboot_button,
-            lockscreen_button,
-            sleep_button,
-            logout_button,
+            widget = Wibox.container.background,
+            shape = def_shape,
+            bg = Beautiful.bg_normal,
+            {
+              widget = Wibox.container.margin,
+              margins = dpi(15),
+              {
+                layout = Wibox.layout.flex.horizontal,
+                spacing = dpi(15),
+                shutdown_button,
+                reboot_button,
+                lockscreen_button,
+                sleep_button,
+                logout_button,
+              },
+            },
           },
         },
         close_button,

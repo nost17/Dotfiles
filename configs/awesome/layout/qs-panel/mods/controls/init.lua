@@ -1,7 +1,4 @@
 local dpi = Beautiful.xresources.apply_dpi
-Beautiful.quicksettings_ctrl_btn_shape = Helpers.shape.rrect(Beautiful.small_radius)
-Beautiful.quicksettings_ctrl_btn_bg = Beautiful.quicksettings_widgets_bg
-Beautiful.quicksettings_ctrl_btn_spacing = dpi(5)
 
 local volume_btn = require("layout.qs-panel.mods.controls.muted-state")
 local dnd_btn = require("layout.qs-panel.mods.controls.dnd-state")

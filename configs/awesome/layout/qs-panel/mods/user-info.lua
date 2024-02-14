@@ -88,6 +88,8 @@ local show_sc_settings = require("utils.button").text.state({
   text = "󰄄󰍝",
   font = Beautiful.font_icon,
   shape = Beautiful.quicksettings_ctrl_btn_shape,
+  bg_normal_on = Beautiful.accent_color,
+  fg_normal_on = Beautiful.foreground_alt,
   paddings = {
     left = dpi(10),
     right = dpi(6),
@@ -107,6 +109,8 @@ local show_sc_settings = require("utils.button").text.state({
 
 awesome.connect_signal("visible::quicksettings", function(vis)
   if vis == false then
+    show_sc_settings:set_text("󰄄󰍝")
+    awesome.emit_signal("visible::quicksettings:sc", false)
     show_sc_settings:turn_off()
   end
 end)

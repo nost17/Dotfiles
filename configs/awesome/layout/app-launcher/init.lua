@@ -647,7 +647,12 @@ local function create_user_button(icon, color, shape, fn)
     -- ),
     -- bg_normal = color .. "1F",
     bg_hover = color .. "3F",
-    on_release = fn,
+    on_release = function ()
+      awesome.emit_signal("panels::app_launcher", "hide")
+      if fn then
+        fn()
+      end
+    end,
     forced_height = dpi(50),
   })
   return wdg

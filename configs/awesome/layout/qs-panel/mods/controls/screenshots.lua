@@ -124,7 +124,6 @@ local screenshot = Wibox.widget({
   widget = Wibox.container.background,
   bg = Beautiful.quicksettings_ctrl_btn_bg,
   shape = Beautiful.quicksettings_ctrl_btn_shape,
-  visible = false,
   {
     layout = Wibox.layout.flex.vertical,
     {
@@ -138,15 +137,8 @@ local screenshot = Wibox.widget({
 })
 
 awesome.connect_signal("visible::quicksettings:sc", function(vis)
-  screenshot.visible = vis
   delay_count = 0
   delay_label:set_text(delay_count)
-end)
-
-awesome.connect_signal("visible::quicksettings", function(vis)
-  if vis == false then
-    screenshot.visible = false
-  end
 end)
 
 return screenshot

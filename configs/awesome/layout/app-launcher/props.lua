@@ -23,8 +23,8 @@ return {
   apps_per_column = 1,
   apps_margin = 0,
   -- app_height = Dpi(24),
-  app_icon_width = dpi(32),
-  app_icon_height = dpi(32),
+  app_icon_width = dpi(28),
+  app_icon_height = dpi(28),
   app_width = dpi(260),
   app_shape = Helpers.shape.rrect(Beautiful.small_radius),
   app_content_padding = {
@@ -35,15 +35,15 @@ return {
   },
   app_normal_color = Beautiful.widget_bg_color,
   app_normal_hover_color = Beautiful.widget_bg_alt,
-  app_selected_color = Beautiful.widget_bg_alt,
+  app_selected_color = Beautiful.accent_color,
   app_selected_hover_color = Helpers.color.ldColor(
-    Beautiful.color_method,
+    Helpers.color.isDark(Beautiful.accent_color) and "lighten" or "darken",
     Beautiful.color_method_factor,
-    Beautiful.widget_bg_alt
+    Beautiful.accent_color
   ),
-  app_name_selected_color = Beautiful.accent_color,
+  app_name_selected_color = Beautiful.foreground_alt,
   app_name_normal_color = Beautiful.foreground .. "6F",
-  app_name_font = Beautiful.font_text .. "Regular 12",
+  app_name_font = Beautiful.font_text .. "Medium 11",
   prompt_image_bg_ratio = 3,
   prompt_image_bg_height = dpi(130),
   prompt_image_bg_shape = Helpers.shape.rrect(Beautiful.small_radius),

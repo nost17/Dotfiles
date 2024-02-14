@@ -8,7 +8,7 @@ local input_prompt = {}
 if User.config.dark_mode then
   Beautiful.lockscreen_overlay_color = Beautiful.bg_normal .. "DF"
 else
-  Beautiful.lockscreen_overlay_color = Beautiful.bg_normal .. "8F"
+  Beautiful.lockscreen_overlay_color = Beautiful.bg_normal .. "88"
 end
 Beautiful.lockscreen_pass_halign = "center"
 Beautiful.lockscreen_wallpaper_bg = Beautiful.wallpaper_alt or Beautiful.wallpaper

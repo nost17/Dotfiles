@@ -8,11 +8,11 @@ local mktemplate = function(opts)
       and wbutton.text.state({
         text = "󰅂",
         font = Beautiful.font_icon,
-        fg_normal = Beautiful.fg_normal,
-        fg_press_on = Beautiful.foreground_alt,
-        fg_normal_on = Beautiful.foreground_alt,
+        -- fg_press_on = Beautiful.foreground_alt,
+        fg_normal = Beautiful.quicksettings_ctrl_btn_fg,
+        fg_normal_on = Beautiful.quicksettings_ctrl_btn_fg_on,
         bg_normal = Beautiful.quicksettings_ctrl_btn_bg,
-        bg_normal_on = Beautiful.accent_color,
+        bg_normal_on = Beautiful.quicksettings_ctrl_btn_bg_on,
         size = 14,
         on_release = function()
           opts.settings()
@@ -22,7 +22,7 @@ local mktemplate = function(opts)
 
   local base_label = Wibox.widget({
     widget = Wibox.container.background,
-    fg = Beautiful.fg_normal .. "CF",
+    fg = Beautiful.quicksettings_ctrl_btn_fg .. "CF",
     {
       layout = Wibox.layout.fixed.horizontal,
       spacing = dpi(9),
@@ -48,22 +48,22 @@ local mktemplate = function(opts)
   })
 
   local function turn_on_btn()
-    base_label.fg = Beautiful.foreground_alt
+    base_label.fg = Beautiful.quicksettings_ctrl_btn_fg_on
     if base_settings then
       base_settings:turn_on()
     end
   end
   local function turn_off_btn()
-    base_label.fg = Beautiful.fg_normal .. "CF"
+    base_label.fg = Beautiful.quicksettings_ctrl_btn_fg .. "CF"
     if base_settings then
       base_settings:turn_off()
     end
   end
   local base_button = wbutton.elevated.state({
     child = base_label,
-    fg_normal_on = Beautiful.foreground_alt,
+    fg_normal_on = Beautiful.quicksettings_ctrl_btn_fg_on,
     bg_normal = Beautiful.quicksettings_ctrl_btn_bg,
-    bg_normal_on = Beautiful.accent_color,
+    bg_normal_on = Beautiful.quicksettings_ctrl_btn_bg_on,
     halign = "left",
     paddings = {
       left = dpi(10),

@@ -36,8 +36,6 @@ local function button(args)
   args.border_width = args.normal_border_width or nil
   args.border_color = args.normal_border_color or Beautiful.transparent
 
-  args.hover_effect = args.hover_effect == nil and true or args.hover_effect
-
   local widget = wcontainer(args)
 
   if args.hover_effect == true then
@@ -92,7 +90,7 @@ function elevated_button.state(args)
   args.on_turn_on = args.on_turn_on or nil
   args.on_turn_off = args.on_turn_off or nil
 
-  args.hover_effect = args.hover_effect == nil and true or args.hover_effect
+  args.hover_effect = args.hover_effect or nil
 
   local widget = button(args)
   widget._private.state = false

@@ -4,7 +4,7 @@ local music_title = wtext({
 	text = "Titulo",
 	color = Beautiful.fg_normal,
 	bold = false,
-	font = "Rubik Medium",
+	font = Beautiful.font_text .. "Medium",
 	size = 13,
 	halign = "left",
 })
@@ -13,7 +13,7 @@ local music_artist = wtext({
 	text = "N/A",
 	color = Beautiful.fg_normal,
 	bold = false,
-	font = "Rubik Regular ",
+	font = Beautiful.font_text .. "Regular",
 	size = 11,
 	halign = "left",
 })
@@ -32,7 +32,7 @@ local player_name = wtext({
 	text = User.music.names[User.music.current_player] or "none",
 	color = Beautiful.fg_normal,
 	bold = false,
-	font = "Rubik Medium ",
+	font = Beautiful.font_text .. "Medium",
 	size = Beautiful.music_title_font_size or 11,
 	halign = "left",
 })
@@ -51,6 +51,11 @@ Playerctl:connect_signal("metadata", function(_, title, artist, _, album_art, _)
 	music_art:set_image(Helpers.cropSurface(1, Gears.surface.load_uncached(album_art)))
 	music_title:set_text(title)
 	music_artist:set_text(artist)
+end)
+
+Playerctl:connect_signal("new_player", function (_)
+  local new_player = User.music.names[User.music.current_player] or "none"
+  player_name:set_text(new_player)
 end)
 
 return Wibox.widget({

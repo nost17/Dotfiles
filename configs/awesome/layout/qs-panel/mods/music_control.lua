@@ -63,6 +63,8 @@ local control_btns = Wibox.widget({
     prev_btn,
   },
 })
+local player_fg = User.config.dark_mode and Beautiful.fg_normal
+    or Helpers.color.ldColor("darken", 15, Beautiful.foreground_alt)
 local player_btn = wbutton.elevated.normal({
   child = {
     layout = Wibox.layout.fixed.horizontal,
@@ -76,7 +78,7 @@ local player_btn = wbutton.elevated.normal({
     },
     {
       widget = Wibox.widget.textbox,
-      text = User.music.names[User.music.current_player] or "none",
+      markup = Helpers.text.colorize_text(User.music.names[User.music.current_player] or "none", player_fg),
       id = "player_name",
       font = Beautiful.font_text .. "11",
       halign = "left",
@@ -150,7 +152,8 @@ local music_art_overlay = Wibox.widget({
 
 local music_title = wtext({
   text = "Titulo",
-  color = User.config.dark_mode and Beautiful.fg_normal or Beautiful.foreground_alt,
+  color = User.config.dark_mode and Beautiful.fg_normal
+      or Helpers.color.ldColor("darken", 15, Beautiful.foreground_alt),
   font = Beautiful.font_text .. "SemiBold",
   size = 11,
 })
@@ -176,7 +179,9 @@ Playerctl:connect_signal("status", function(_, playing)
   end
 end)
 Playerctl:connect_signal("new_player", function(_)
-  Helpers.gc(player_btn, "player_name"):set_text(User.music.names[User.music.current_player] or "none")
+  local new_player = User.music.names[User.music.current_player] or "none"
+  new_player = Helpers.text.colorize_text(new_player, player_fg)
+  Helpers.gc(player_btn, "player_name"):set_markup_silently(new_player)
 end)
 
 -- [[ MAIN WIDGET ]]

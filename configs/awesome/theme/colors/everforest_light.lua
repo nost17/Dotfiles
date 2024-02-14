@@ -7,9 +7,9 @@ local walls = {
 return {
   wallpaper = walls[2],
   wallpaper_alt = walls[2],
-  foreground = "#272f35",
+  foreground = "#495157",
   background = "#fff9e8",
-  foreground_alt = "#272f35",
+  foreground_alt = "#fff9e8",
   black = "#363e44",
   red = "#ef615e",
   green = "#8da101",
