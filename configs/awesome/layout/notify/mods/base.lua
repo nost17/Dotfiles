@@ -74,38 +74,32 @@ end
 
 local function mknotification(n)
   local accent_color = colors[n.urgency]
+  local not_message = n.message == "" or n.message == " " or n.message == nil
+  local not_title = n.title == "" or n.title == " " or not n.title
   local action_exist = n.actions and #n.actions > 0
   if Helpers.inTable(override_names, n.app_name) or n.app_name == "" or n.app_name == nil then
     n.app_name = Naughty.config.defaults.app_name
   end
 
-  -- if n.title == "" or n.title == " " then
-  --   n.title = Naughty.config.defaults.app_name
-  -- end
-  -- if n.message == "" or not n.message then
-  --   n.message = n.title
-  --   n.title = Naughty.config.defaults.app_name
-  -- end
-
   local n_title = require("layout.notify.components.title")(n)
   local n_message = require("layout.notify.components.message")(n)
   local n_image = require("layout.notify.components.image")(n)
-  if n.title == "" or n.title == " " or not n.title then
-    n_title = Wibox.widget({
-      widget = Wibox.widget.textbox,
-      text = n.app_name:gsub("^%l", string.upper),
-      font = Beautiful.notification_font_title,
-      halign = "left",
-      valign = "center",
-    })
+  local n_appname = Wibox.widget({
+    widget = Wibox.widget.textbox,
+    text = n.app_name:gsub("^%l", string.upper),
+    font = Beautiful.notification_font_appname,
+    halign = "left",
+    valign = "center",
+  })
+  if not_title then
+    n_title = n_appname
   end
-  -- local n_appname = Wibox.widget({
-  --   widget = Wibox.widget.textbox,
-  --   text = n.app_name:gsub("^%l", string.upper),
-  --   font = Beautiful.notification_font_appname,
-  --   halign = "left",
-  --   valign = "center",
-  -- })
+  --
+  if not_message then
+    n_message = n_title
+    n_title = n_appname
+  end
+  --
   local attribution_area = Wibox.widget({
     layout = Wibox.layout.align.horizontal,
     {
@@ -147,7 +141,7 @@ local function mknotification(n)
           layout = Wibox.container.place,
           valign = "center",
           halign = "left",
-          n.message and n_message or n_title,
+          n_message,
         },
         action_exist and {
           widget = Wibox.container.margin,
