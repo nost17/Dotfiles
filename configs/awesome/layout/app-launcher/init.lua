@@ -640,7 +640,7 @@ local function create_user_button(icon, color, shape, fn)
     shape = shape,
     fg_normal = color,
     bg_normal = Beautiful.widget_bg_alt,
-    -- bg_normal = Helpers.color.ldColor(
+    -- bg_normal = color_lib.lightness(
     --   Beautiful.color_method,
     --   10,
     --   Beautiful.widget_bg_alt

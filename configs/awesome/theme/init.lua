@@ -1,3 +1,4 @@
+local color_lib = Helpers.color
 local theme = {}
 local themes_path = Gears.filesystem.get_configuration_dir() .. "theme/"
 local dpi = Beautiful.xresources.apply_dpi
@@ -64,7 +65,7 @@ theme.border_color_urgent = theme.red
 
 -- WIDGETS
 theme.widget_bg = theme.bg_normal
-theme.widget_bg_alt = Helpers.color.ldColor(theme.color_method, theme.color_method_factor, theme.widget_bg)
+theme.widget_bg_alt = color_lib.lightness(theme.color_method, theme.color_method_factor, theme.widget_bg)
 theme.widget_clock_font = theme.font_text .. "Medium 12"
 theme.bg_systray = theme.widget_bg
 theme.main_panel_pos = "left"
@@ -96,8 +97,8 @@ theme.menu_height = 26
 theme.menu_width = 260
 
 -- TITLEBAR
--- theme.titlebar_bg_focus                = Helpers.color.ldColor(theme.blue, -25)
--- theme.titlebar_bg_normal               = Helpers.color.ldColor(theme.bg_normal, 8)
+-- theme.titlebar_bg_focus                = color_lib.lightness(theme.blue, -25)
+-- theme.titlebar_bg_normal               = color_lib.lightness(theme.bg_normal, 8)
 theme.titlebar_bg_normal = theme.widget_bg
 theme.titlebar_bg_focus = theme.titlebar_bg_normal
 theme.titlebar_fg_normal = theme.fg_normal .. "AF"
@@ -106,7 +107,7 @@ theme.titlebar_font = theme.font_text .. "Medium 10"
 theme.titlebar_size = dpi(40)
 local recolor_image = Gears.color.recolor_image
 local recolor = function(color, method)
-	return Helpers.color.ldColor(method or "lighten", 35, color)
+	return color_lib.lightness(method or "lighten", 35, color)
 end
 theme.titlebar_close_button_normal =
 	recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.widget_bg_alt, "lighten"))
@@ -139,7 +140,7 @@ theme.titlebar_maximized_button_focus_inactive_hover = theme.titlebar_maximized_
 
 -- TASKLIST
 theme.tasklist_bg_color = theme.transparent
---[[ theme.tasklist_bg_focus                = Helpers.color.ldColor(theme.accent_color, 10) ]]
+--[[ theme.tasklist_bg_focus                = color_lib.lightness(theme.accent_color, 10) ]]
 theme.tasklist_bg_focus = theme.widget_bg_alt
 theme.tasklist_indicator_focus = theme.accent_color
 theme.tasklist_indicator_normal = theme.foreground .. "22"
@@ -158,7 +159,7 @@ theme.taglist_shape_border_color = theme.background
 theme.taglist_bg_color = theme.widget_bg_alt
 theme.taglist_bg_urgent = theme.red
 theme.taglist_bg_focus = theme.accent_color
-theme.taglist_bg_occupied = Helpers.color.ldColor(theme.color_method, theme.color_method_factor * 1.5, theme.taglist_bg_color)
+theme.taglist_bg_occupied = color_lib.lightness(theme.color_method, theme.color_method_factor * 1.5, theme.taglist_bg_color)
 theme.taglist_bg_empty = theme.taglist_bg_color
 theme.taglist_fg_focus = theme.foreground_alt
 theme.taglist_fg_urgent = theme.foreground_alt
@@ -169,8 +170,8 @@ theme.taglist_shape_border_color_empty = "#00000000"
 -- NOTIFICATIONS
 theme.notification_position = "top_right"
 theme.notification_icon = themes_path .. "images/notification.png"
-theme.notification_bg = Helpers.color.ldColor(theme.color_method, theme.color_method_factor / 2, theme.bg_normal)
-theme.notification_fg = Helpers.color.ldColor("darken", 15, theme.fg_normal)
+theme.notification_bg = color_lib.lightness(theme.color_method, theme.color_method_factor / 2, theme.bg_normal)
+theme.notification_fg = color_lib.lightness("darken", 15, theme.fg_normal)
 theme.notification_font_title = theme.font_text .. "SemiBold 11"
 theme.notification_font_message = theme.font_text .. "Medium 11"
 theme.notification_font_appname = theme.font_text .. "Regular 10"

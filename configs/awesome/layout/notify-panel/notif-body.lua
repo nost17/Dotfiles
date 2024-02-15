@@ -1,4 +1,5 @@
 local dpi = Beautiful.xresources.apply_dpi
+local color_lib = Helpers.color
 local buttons = require("utils.button.text")
 local core = require("layout.notify-panel.build-notifbox")
 local notifications_layout = core.notifbox_layout
@@ -8,7 +9,7 @@ local reset_wdg = buttons.normal({
   size = 14,
   fg_normal = Beautiful.red,
   bg_normal = Beautiful.widget_bg_alt,
-  -- bg_hover = Helpers.color.ldColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
+  -- bg_hover = color_lib.lightness(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
   paddings = {
     right = dpi(6),
     left = dpi(8),

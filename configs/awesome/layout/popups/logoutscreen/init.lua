@@ -1,4 +1,5 @@
 local dpi = Beautiful.xresources.apply_dpi
+local color_lib = Helpers.color
 local screen_height = screen.primary.geometry.height
 local screen_width = screen.primary.geometry.width
 local wbutton = require("utils.button").text
@@ -30,7 +31,7 @@ local function create_user_button(icon, color, shape, fn)
     -- border_width = 2,
     -- border_width = Dpi(1.5),
     border_color = color,
-    bg = Helpers.color.ldColor("darken", User.config.dark_mode and 5 or 20, Beautiful.bg_normal),
+    bg = color_lib.lightness("darken", User.config.dark_mode and 5 or 20, Beautiful.bg_normal),
     wdg,
   })
 end
@@ -108,9 +109,9 @@ local background = Wibox.widget({
 })
 local overlay = Wibox.widget({
   widget = Wibox.container.background,
-  -- bg = Helpers.color.ldColor(Beautiful.bg_normal .. "DF", 20, "darken"),
-  -- bg = Helpers.color.LDColor("darken", 0.23, Beautiful.bg_normal) .. "DF",
-  bg = Beautiful.bg_normal .. (Helpers.color.isDark(Beautiful.bg_normal) and "AA" or "55"),
+  -- bg = color_lib.lightness(Beautiful.bg_normal .. "DF", 20, "darken"),
+  -- bg = color_lib.LDColor("darken", 0.23, Beautiful.bg_normal) .. "DF",
+  bg = Beautiful.bg_normal .. (color_lib.isDark(Beautiful.bg_normal) and "AA" or "55"),
   forced_height = screen_height,
   forced_width = screen_width,
 })

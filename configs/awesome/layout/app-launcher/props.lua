@@ -1,4 +1,5 @@
 local dpi = Beautiful.xresources.apply_dpi
+local color_lib = Helpers.color
 return {
   save_history = false,
   favorites = { "kitty", "firefox" },
@@ -7,7 +8,7 @@ return {
   placement = function(c)
     Helpers.placement(c, "top_left", nil, Beautiful.useless_gap * 2)
   end,
-  border_color = Helpers.color.ldColor(
+  border_color = color_lib.lightness(
     Beautiful.color_method,
     Beautiful.color_method_factor / 2,
     Beautiful.widget_bg
@@ -36,8 +37,8 @@ return {
   app_normal_color = Beautiful.widget_bg_color,
   app_normal_hover_color = Beautiful.widget_bg_alt,
   app_selected_color = Beautiful.accent_color,
-  app_selected_hover_color = Helpers.color.ldColor(
-    Helpers.color.isDark(Beautiful.accent_color) and "lighten" or "darken",
+  app_selected_hover_color = color_lib.lightness(
+    color_lib.isDark(Beautiful.accent_color) and "lighten" or "darken",
     Beautiful.color_method_factor,
     Beautiful.accent_color
   ),

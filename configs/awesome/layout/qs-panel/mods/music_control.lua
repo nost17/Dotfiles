@@ -1,5 +1,6 @@
 local wbutton = require("utils.button")
 local wtext = require("utils.modules.text")
+local color_lib = Helpers.color
 local dpi = Beautiful.xresources.apply_dpi
 
 -- [[ CONTROL BUTTONS ]]
@@ -64,7 +65,7 @@ local control_btns = Wibox.widget({
   },
 })
 local player_fg = User.config.dark_mode and Beautiful.fg_normal
-    or Helpers.color.ldColor("darken", 15, Beautiful.foreground_alt)
+    or color_lib.lightness("darken", 15, Beautiful.foreground_alt)
 local player_btn = wbutton.elevated.normal({
   child = {
     layout = Wibox.layout.fixed.horizontal,
@@ -92,7 +93,7 @@ local player_btn = wbutton.elevated.normal({
     right = dpi(8),
   },
   bg_normal = Beautiful.transparent,
-  -- bg_normal = Helpers.color.ldColor(
+  -- bg_normal = color_lib.lightness(
   --   Beautiful.color_method,
   --   Beautiful.color_method_factor * 0.5,
   --   Beautiful.quicksettings_widgets_bg
@@ -153,7 +154,7 @@ local music_art_overlay = Wibox.widget({
 local music_title = wtext({
   text = "Titulo",
   color = User.config.dark_mode and Beautiful.fg_normal
-      or Helpers.color.ldColor("darken", 15, Beautiful.foreground_alt),
+      or color_lib.lightness("darken", 15, Beautiful.foreground_alt),
   font = Beautiful.font_text .. "SemiBold",
   size = 11,
 })

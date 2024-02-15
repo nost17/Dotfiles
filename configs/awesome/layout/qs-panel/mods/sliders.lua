@@ -1,4 +1,5 @@
 local dpi = Beautiful.xresources.apply_dpi
+local color_lib = Helpers.color
 local function mk_slider(opts)
   local slider = Wibox.widget({
     widget = Wibox.widget.slider,
@@ -9,7 +10,7 @@ local function mk_slider(opts)
     forced_height = dpi(24),
     shape = Gears.shape.rounded_bar,
     bar_shape = Gears.shape.rounded_bar,
-    bar_color = Helpers.color.ldColor(
+    bar_color = color_lib.lightness(
       Beautiful.color_method,
       Beautiful.color_method_factor,
       Beautiful.widget_bg_alt

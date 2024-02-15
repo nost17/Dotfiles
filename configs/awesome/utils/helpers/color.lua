@@ -37,7 +37,7 @@ function M.hex_to_rgb(color)
   }
 end
 
-function M.ldColor(method, brightness, color)
+function M.lightness(method, brightness, color)
   brightness = math.ceil(brightness)
 
   --- Establece el color a rgb

@@ -1,4 +1,5 @@
 local dpi = Beautiful.xresources.apply_dpi
+local color_lib = Helpers.color
 local wbutton = require("utils.button")
 local icon_theme = require("utils.modules.icon_theme")()
 
@@ -23,9 +24,9 @@ local colors = {
 Beautiful.notification_icon_height = dpi(52)
 Beautiful.notification_fg = Beautiful.fg_normal
 Beautiful.notification_bg =
-    Helpers.color.ldColor(Beautiful.color_method, Beautiful.color_method_factor * 0.5, Beautiful.widget_bg)
+    color_lib.lightness(Beautiful.color_method, Beautiful.color_method_factor * 0.5, Beautiful.widget_bg)
 Beautiful.notification_bg_alt =
-    Helpers.color.ldColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.notification_bg)
+    color_lib.lightness(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.notification_bg)
 Beautiful.notification_padding = Beautiful.notification_padding * 1.5
 
 local function get_oldest_notification()

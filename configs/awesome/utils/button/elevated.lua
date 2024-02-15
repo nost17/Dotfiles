@@ -4,6 +4,7 @@
 -------------------------------------------
 
 local wcontainer = require("utils.modules.container")
+local color_lib = Helpers.color
 local setmetatable = setmetatable
 
 local elevated_button = { mt = {} }
@@ -50,18 +51,18 @@ function elevated_button.state(args)
 
   args.bg_normal = args.bg_normal or Beautiful.widget_bg_alt
   args.bg_hover = args.bg_hover
-      or Helpers.color.ldColor(Helpers.color.isDark(args.bg_normal) and "lighten" or "darken", 10, args.bg_normal)
-  args.bg_press = args.bg_press or Helpers.color.ldColor("darken", 10, args.bg_hover)
+      or color_lib.lightness(color_lib.isDark(args.bg_normal) and "lighten" or "darken", 10, args.bg_normal)
+  args.bg_press = args.bg_press or color_lib.lightness("darken", 10, args.bg_hover)
 
   args.bg_normal_on = args.bg_normal_on or args.bg_press
   args.bg_hover_on = args.bg_hover_on
-      or Helpers.color.ldColor(
-        Helpers.color.isDark(args.bg_normal_on) and "lighten" or "darken",
+      or color_lib.lightness(
+        color_lib.isDark(args.bg_normal_on) and "lighten" or "darken",
         20,
         args.bg_normal_on
       )
   args.bg_press_on = args.bg_press_on
-      or Helpers.color.ldColor("darken", Helpers.color.isDark(args.bg_hover_on) and 10 or 20, args.bg_hover_on)
+      or color_lib.lightness("darken", color_lib.isDark(args.bg_hover_on) and 10 or 20, args.bg_hover_on)
 
   args.shape = args.shape or nil
 
@@ -268,8 +269,8 @@ function elevated_button.normal(args)
 
   args.bg_normal = args.bg_normal or Beautiful.widget_bg_alt
   args.bg_hover = args.bg_hover
-      or Helpers.color.ldColor(Helpers.color.isDark(args.bg_normal) and "lighten" or "darken", 16, args.bg_normal)
-  args.bg_press = args.bg_press or Helpers.color.ldColor("darken", 10, args.bg_hover)
+      or color_lib.lightness(color_lib.isDark(args.bg_normal) and "lighten" or "darken", 16, args.bg_normal)
+  args.bg_press = args.bg_press or color_lib.lightness("darken", 10, args.bg_hover)
 
   args.shape = args.shape or nil
   args.hover_shape = args.hover_shape or nil
@@ -281,12 +282,12 @@ function elevated_button.normal(args)
 
   args.normal_border_color = args.normal_border_color or Beautiful.transparent
   args.hover_border_color = args.hover_border_color
-      or Helpers.color.ldColor(
-        Helpers.color.isDark(args.bg_normal) and "lighten" or "darken",
+      or color_lib.lightness(
+        color_lib.isDark(args.bg_normal) and "lighten" or "darken",
         16,
         args.normal_border_color
       )
-  args.press_border_color = args.press_border_color or Helpers.color.ldColor("darken", 20, args.normal_border_color)
+  args.press_border_color = args.press_border_color or color_lib.lightness("darken", 20, args.normal_border_color)
 
   args.on_hover = args.on_hover or nil
   args.on_leave = args.on_leave or nil

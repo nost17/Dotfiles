@@ -1,4 +1,5 @@
 local dpi = Beautiful.xresources.apply_dpi
+local color_lib = Helpers.color
 
 -- [[ BATTERY ]]
 local battery_charging_icon = Wibox.widget({
@@ -14,7 +15,7 @@ local battery_bar = Wibox.widget({
   value = 0,
   min_value = 0,
   max_value = 100,
-  bg = Helpers.color.ldColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
+  bg = color_lib.lightness(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
   start_angle = math.pi * 1.5,
   rounded_edge = false,
   thickness = dpi(2),
@@ -54,7 +55,7 @@ local volume_bar = Wibox.widget({
   value = 0,
   min_value = 0,
   max_value = 100,
-  bg = Helpers.color.ldColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
+  bg = color_lib.lightness(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
   start_angle = math.pi * 1.5,
   rounded_edge = false,
   thickness = dpi(2),

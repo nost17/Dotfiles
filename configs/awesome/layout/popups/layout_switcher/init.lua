@@ -1,12 +1,13 @@
 local layoutlist = require("layout.popups.layout_switcher.layoutlist")
+local color_lib = Helpers.color
 local dpi = Beautiful.xresources.apply_dpi
 Beautiful.layout_switcher_shape = nil
 Beautiful.layoutlist_bg_color = Beautiful.widget_bg_alt
 Beautiful.layoutlist_shape_selected = Helpers.shape.rrect(Beautiful.small_radius)
 Beautiful.layoutlist_bg_selected =
-    Helpers.color.ldColor(Beautiful.color_method, Beautiful.color_method_factor * 1.5, Beautiful.layoutlist_bg_color)
+    color_lib.lightness(Beautiful.color_method, Beautiful.color_method_factor * 1.5, Beautiful.layoutlist_bg_color)
 Beautiful.layoutlist_icon_color =
-    Helpers.color.ldColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.layoutlist_bg_color)
+    color_lib.lightness(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.layoutlist_bg_color)
 
 local ll = layoutlist({
   screen = Awful.screen.focused(),

@@ -1,4 +1,5 @@
 local wbutton = require("utils.button")
+local color_lib = Helpers.color
 local dpi = Beautiful.xresources.apply_dpi
 local main_panel_screen = screen.primary
 local screen_height = main_panel_screen.geometry.height
@@ -39,7 +40,7 @@ local app_launcher = wbutton.text.normal({
   fg_normal = Beautiful.fg_normal,
   bg_normal = Beautiful.widget_bg_alt,
   paddings = 0,
-  -- bg_hover = Helpers.color.ldColor(Beautiful.color_method, 10, Beautiful.widget_bg_alt),
+  -- bg_hover = color_lib.lightness(Beautiful.color_method, 10, Beautiful.widget_bg_alt),
   on_release = function()
     awesome.emit_signal("panels::app_launcher", "toggle")
   end,
@@ -53,7 +54,7 @@ local notify_panel = wbutton.text.normal({
   size = 18,
   forced_height = dpi(44),
   fg_normal = Beautiful.accent_color,
-  -- bg_normal = Helpers.color.ldColor(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
+  -- bg_normal = color_lib.lightness(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
   bg_normal = Beautiful.widget_bg_alt,
   on_release = function(self)
     -- Naughty.notify({
