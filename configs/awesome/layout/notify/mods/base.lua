@@ -88,7 +88,7 @@ local function mknotification(n)
   local n_appname = Wibox.widget({
     widget = Wibox.widget.textbox,
     text = n.app_name:gsub("^%l", string.upper),
-    font = Beautiful.notification_font_appname,
+    font = Beautiful.notification_font_title,
     halign = "left",
     valign = "center",
   })

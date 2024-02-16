@@ -18,8 +18,10 @@ local colors = {
   ["normal"] = Beautiful.fg_normal .. "5F",
   ["critical"] = Beautiful.red,
 }
-local update_time = function (wdg, creation_time)
-  wdg:set_text(Helpers.text.to_time_ago(os.difftime(parse_date(os.date("%Y-%m-%dT%H:%M:%S")), parse_date(creation_time))))
+local update_time = function(wdg, creation_time)
+  wdg:set_text(
+    Helpers.text.to_time_ago(os.difftime(parse_date(os.date("%Y-%m-%dT%H:%M:%S")), parse_date(creation_time)))
+  )
 end
 
 local function actions_widget(n)
@@ -98,7 +100,7 @@ local function mknotification(n)
     halign = "left",
     valign = "center",
   })
-  awesome.connect_signal("visible::notification_center", function (vis)
+  awesome.connect_signal("visible::notification_center", function(vis)
     if vis then
       update_time(n_time, time)
     end
@@ -126,13 +128,13 @@ local function mknotification(n)
     n_time,
   })
   local visual_area = Wibox.widget({
-    layout = Wibox.layout.fixed.horizontal,
-    fill_space = true,
-    spacing = Beautiful.notification_padding,
-    -- expand = "none",
+    layout = Wibox.layout.fixed.vertical,
+    spacing = Beautiful.notification_padding * 0.75,
+    attribution_area,
     {
-      widget = Wibox.container.margin,
-      -- left = Beautiful.notification_padding,
+      layout = Wibox.layout.fixed.horizontal,
+      fill_space = true,
+      spacing = Beautiful.notification_padding * 0.75,
       {
         n_image,
         strategy = "max",
@@ -140,33 +142,12 @@ local function mknotification(n)
         width = Beautiful.notification_icon_height,
         widget = Wibox.container.constraint,
       },
-    },
-    {
-      widget = Wibox.container.margin,
-      -- top = dpi(-2),
       {
-        layout = Wibox.layout.fixed.vertical,
+        widget = Wibox.container.margin,
         {
-          widget = Wibox.container.margin,
-          bottom = dpi(6),
-          attribution_area,
-        },
-        -- nil,
-        {
-          widget = Wibox.container.margin,
-          left = dpi(8),
-          {
-            strategy = "max",
-            width = Naughty.config.maximum_width
-                - Beautiful.notification_icon_height
-                - (Beautiful.notification_padding * 3),
-            widget = Wibox.container.constraint,
-            {
-              layout = Wibox.layout.fixed.vertical,
-              n_title,
-              n_message,
-            },
-          },
+          layout = Wibox.layout.fixed.vertical,
+          n_title,
+          n_message,
         },
       },
     },
