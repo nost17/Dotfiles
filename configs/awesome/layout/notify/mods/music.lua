@@ -20,14 +20,47 @@ Playerctl:connect_signal("status", function(_, playing)
     toggle_button.name = "Continuar"
   end
 end)
--- message = Helpers.text.colorize_text("<u>" .. music_data.artist .. "</u>", Beautiful.cyan_alt),
---     title = colorize_text("<b>" .. self._private.prev_metadata.title .. "</b>", Beautiful.accent_color),
--- .. self._private.prev_metadata.album:lower():gsub("^%l", string.upper)
+local function generate_markup(opts)
+  local bold_start = ""
+  local bold_end = ""
+  local italic_start = ""
+  local italic_end = ""
+  local underline_start = ""
+  local underline_end = ""
+
+  if opts.bold == true then
+    bold_start = "<b>"
+    bold_end = "</b>"
+  end
+  if opts.italic == true then
+    italic_start = "<i>"
+    italic_end = "</i>"
+  end
+  if opts.underline == true then
+    underline_start = "<u>"
+    underline_end = "</u>"
+  end
+
+  return underline_start
+      .. bold_start
+      .. italic_start
+      .. Helpers.text.colorize_text(opts.text, opts.color or Beautiful.fg_normal)
+      .. italic_end
+      .. bold_end
+      .. underline_end
+end
 function Playerctl:notify()
   music_notify = Helpers.notify_dwim({
-    -- message = colorize_text("<i>" .. self._private.prev_metadata.artist .. "</i>", Beautiful.yellow),
-    title = self._private.prev_metadata.artist,
-    message = self._private.prev_metadata.title,
+    title = generate_markup({
+      text = self._private.prev_metadata.title,
+      color = Beautiful.accent_color,
+      bold = true,
+    }),
+    message = generate_markup({
+      text = self._private.prev_metadata.artist,
+      color = Beautiful.fg_normal .. "CC",
+      underline = true,
+    }),
     image = self._private.prev_metadata.cover_art,
     app_name = "Música",
     actions = { prev_button, toggle_button, next_button },

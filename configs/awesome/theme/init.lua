@@ -11,17 +11,17 @@ local theme_light_path = "theme.colors." .. User.config.theme .. "_light"
 _G.light_theme_exist = check(theme_light_path)
 _G.dark_theme_exist = check(theme_dark_path)
 local setTheme = function()
-  if User.config.dark_mode and _G.dark_theme_exist then
-    theme = require(theme_dark_path)
-  else
-    if _G.light_theme_exist then
-      theme = require(theme_light_path)
-      User.config.dark_mode = false
-    else
-      theme = require(theme_dark_path)
-      User.config.dark_mode = true
-    end
-  end
+	if User.config.dark_mode and _G.dark_theme_exist then
+		theme = require(theme_dark_path)
+	else
+		if _G.light_theme_exist then
+			theme = require(theme_light_path)
+			User.config.dark_mode = false
+		else
+			theme = require(theme_dark_path)
+			User.config.dark_mode = true
+		end
+	end
 end
 setTheme()
 
@@ -49,6 +49,14 @@ theme.user_icon = themes_path .. "images/user_icon.jpeg"
 theme.small_radius = dpi(4)
 theme.medium_radius = dpi(8)
 
+-- WIDGETS
+theme.widget_bg = theme.bg_normal
+theme.widget_bg_alt = color_lib.lightness(theme.color_method, theme.color_method_factor, theme.widget_bg)
+theme.widget_clock_font = theme.font_text .. "Medium 12"
+theme.bg_systray = theme.widget_bg
+theme.main_panel_pos = "left"
+theme.main_panel_size = dpi(44)
+
 -- BORDER
 theme.border_width = 0
 theme.border_width_normal = theme.border_width
@@ -59,17 +67,9 @@ theme.border_width_floating_normal = theme.border_width
 theme.border_width_floating_active = theme.border_width
 theme.border_width_floating_urgent = theme.border_width
 theme.border_width_floating_new = theme.border_width
-theme.border_normal = "#0c0e0f"
-theme.border_focus = theme.yellow
-theme.border_color_urgent = theme.red
-
--- WIDGETS
-theme.widget_bg = theme.bg_normal
-theme.widget_bg_alt = color_lib.lightness(theme.color_method, theme.color_method_factor, theme.widget_bg)
-theme.widget_clock_font = theme.font_text .. "Medium 12"
-theme.bg_systray = theme.widget_bg
-theme.main_panel_pos = "left"
-theme.main_panel_size = dpi(44)
+theme.border_normal = theme.widget_bg_alt
+theme.border_focus = theme.border_normal
+theme.border_color_urgent = theme.border_focus
 
 -- LOGOUT SCREEN
 theme.logoutscreen_buttons_shape = Helpers.shape.rrect(theme.small_radius)
@@ -160,7 +160,8 @@ theme.taglist_shape_border_color = theme.background
 theme.taglist_bg_color = theme.widget_bg_alt
 theme.taglist_bg_urgent = theme.red
 theme.taglist_bg_focus = theme.accent_color
-theme.taglist_bg_occupied = color_lib.lightness(theme.color_method, theme.color_method_factor * 1.5, theme.taglist_bg_color)
+theme.taglist_bg_occupied =
+	color_lib.lightness(theme.color_method, theme.color_method_factor * 1.5, theme.taglist_bg_color)
 theme.taglist_bg_empty = theme.taglist_bg_color
 theme.taglist_fg_focus = theme.foreground_alt
 theme.taglist_fg_urgent = theme.foreground_alt
@@ -173,7 +174,7 @@ theme.notification_position = "top_right"
 theme.notification_icon = themes_path .. "images/notification.png"
 theme.notification_bg = color_lib.lightness(theme.color_method, theme.color_method_factor / 2, theme.bg_normal)
 theme.notification_fg = color_lib.lightness("darken", 15, theme.fg_normal)
-theme.notification_font_title = theme.font_text .. "SemiBold 11"
+theme.notification_font_title = theme.font_text .. "Bold 11"
 theme.notification_font_message = theme.font_text .. "Medium 11"
 theme.notification_font_appname = theme.font_text .. "Regular 10"
 theme.notification_font_actions = theme.font_text .. "Medium 10"

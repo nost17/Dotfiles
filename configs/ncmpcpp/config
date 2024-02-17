@@ -42,7 +42,7 @@ startup_screen = "playlist"
 
 # PROGRESS BAR
 # ---
-progressbar_look = "━∙━"
+progressbar_look = "🬋🬋🬋"
 #progressbar_look = "▃▃▃"
 progressbar_elapsed_color = 5
 #progressbar_color = "white"
