@@ -17,7 +17,7 @@ local override_names = {
 }
 local colors = {
   ["low"] = Beautiful.green,
-  ["normal"] = Beautiful.fg_normal,
+  ["normal"] = Beautiful.blue,
   ["critical"] = Beautiful.red,
 }
 
@@ -92,14 +92,14 @@ local function mknotification(n)
     halign = "left",
     valign = "center",
   })
-  if not_title then
-    n_title = n_appname
-  end
-  --
-  if not_message then
-    n_message = n_title
-    n_title = n_appname
-  end
+  -- if not_title then
+  --   n_title = n_appname
+  -- end
+  -- --
+  -- if not_message then
+  --   n_message = n_title
+  --   n_title = n_appname
+  -- end
   --
   local attribution_area = Wibox.widget({
     layout = Wibox.layout.align.horizontal,
@@ -126,29 +126,34 @@ local function mknotification(n)
     top = Beautiful.notification_padding,
     bottom = Beautiful.notification_padding,
     {
-      layout = Wibox.layout.fixed.horizontal,
-      fill_space = true,
-      spacing = Beautiful.notification_padding,
+      layout = Wibox.layout.fixed.vertical,
       {
-        n_image,
-        strategy = "max",
-        height = Beautiful.notification_icon_height,
-        widget = Wibox.container.constraint,
-      },
-      {
-        layout = Wibox.layout.fixed.vertical,
+        layout = Wibox.layout.fixed.horizontal,
         fill_space = true,
+        spacing = Beautiful.notification_padding,
+        {
+          n_image,
+          strategy = "max",
+          height = Beautiful.notification_icon_height,
+          widget = Wibox.container.constraint,
+        },
         {
           layout = Wibox.container.place,
           valign = "center",
           halign = "left",
-          n_message,
+          {
+            layout = Wibox.layout.fixed.vertical,
+            spacing = dpi(1),
+            fill_space = true,
+            n_title,
+            n_message,
+          },
         },
-        action_exist and {
-          widget = Wibox.container.margin,
-          top = Beautiful.notification_padding * 0.5,
-          action_area,
-        },
+      },
+      action_exist and {
+        widget = Wibox.container.margin,
+        top = Beautiful.notification_padding * 0.75,
+        action_area,
       },
     },
   })
@@ -159,11 +164,12 @@ local function mknotification(n)
     minimum_width = Naughty.config.minimum_width,
     maximum_width = Naughty.config.maximum_width,
     widget_template = {
-      layout = Wibox.layout.fixed.vertical,
+      layout = Wibox.layout.fixed.horizontal,
+      fill_space = true,
       {
         widget = Wibox.container.background,
-        bg = Beautiful.notification_bg_alt,
-        attribution_area,
+        bg = accent_color,
+        forced_width = dpi(4),
       },
       visual_area,
     },
