@@ -54,11 +54,11 @@ theme.border_width = 0
 theme.border_width_normal = theme.border_width
 theme.border_width_active = theme.border_width
 theme.border_width_new = theme.border_width
-theme.border_width_floating = 0
-theme.border_width_floating_normal = 0
-theme.border_width_floating_active = 0
-theme.border_width_floating_urgent = 0
-theme.border_width_floating_new = 0
+theme.border_width_floating = theme.border_width
+theme.border_width_floating_normal = theme.border_width
+theme.border_width_floating_active = theme.border_width
+theme.border_width_floating_urgent = theme.border_width
+theme.border_width_floating_new = theme.border_width
 theme.border_normal = "#0c0e0f"
 theme.border_focus = theme.yellow
 theme.border_color_urgent = theme.red
@@ -97,12 +97,13 @@ theme.menu_height = 26
 theme.menu_width = 260
 
 -- TITLEBAR
--- theme.titlebar_bg_focus                = color_lib.lightness(theme.blue, -25)
--- theme.titlebar_bg_normal               = color_lib.lightness(theme.bg_normal, 8)
-theme.titlebar_bg_normal = theme.widget_bg
+
+theme.titlebar_bg_normal = theme.widget_bg_alt
 theme.titlebar_bg_focus = theme.titlebar_bg_normal
 theme.titlebar_fg_normal = theme.fg_normal .. "AF"
 theme.titlebar_fg_focus = theme.fg_normal
+theme.titlebar_bg_urgent = theme.titlebar_bg_normal
+theme.titlebar_fg_urgent = theme.red
 theme.titlebar_font = theme.font_text .. "Medium 10"
 theme.titlebar_size = dpi(40)
 local recolor_image = Gears.color.recolor_image

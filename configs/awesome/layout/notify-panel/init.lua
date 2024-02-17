@@ -3,13 +3,11 @@ local dpi = Beautiful.xresources.apply_dpi
 local notification_center = require("layout.notify-panel.notif-body")
 
 local main = Wibox({
-  height = screen_height - dpi(4) - Beautiful.useless_gap * 3,
+  height = screen_height - dpi(4) - Beautiful.useless_gap * 2,
   width = dpi(360),
   bg = Beautiful.bg_normal,
   visible = false,
   ontop = true,
-  border_width = dpi(2),
-  border_color = Beautiful.black,
   screen = screen.primary,
 })
 

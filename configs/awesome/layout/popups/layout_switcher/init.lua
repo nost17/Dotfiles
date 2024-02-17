@@ -13,9 +13,9 @@ local ll = layoutlist({
   screen = Awful.screen.focused(),
   base_layout = Wibox.widget({
     spacing = 5,
-    forced_num_cols = 6,
-    forced_num_rows = 1,
-    layout = Wibox.layout.grid.vertical,
+    -- forced_num_cols = 6,
+    -- forced_num_rows = 1,
+    layout = Wibox.layout.grid.horizontal,
   }),
   widget_template = {
     widget = Wibox.container.background,

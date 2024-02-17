@@ -269,18 +269,18 @@ function elevated_button.normal(args)
 
   args.bg_normal = args.bg_normal or Beautiful.widget_bg_alt
   args.bg_hover = args.bg_hover
-      or color_lib.lightness(color_lib.isDark(args.bg_normal) and "lighten" or "darken", 16, args.bg_normal)
+      or color_lib.lightness(color_lib.isDark(args.bg_normal) and "lighten" or "darken", 20, args.bg_normal)
   args.bg_press = args.bg_press or color_lib.lightness("darken", 10, args.bg_hover)
 
   args.shape = args.shape or nil
   args.hover_shape = args.hover_shape or nil
   args.press_shape = args.press_shape or nil
 
-  args.border_width = args.border_width or nil
+  args.normal_border_width = args.normal_border_width or nil
   args.hover_border_width = args.hover_border_width or nil
   args.press_border_width = args.press_border_width or nil
 
-  args.normal_border_color = args.normal_border_color or Beautiful.transparent
+  args.normal_border_color = args.normal_border_color or Beautiful.bg_normal
   args.hover_border_color = args.hover_border_color
       or color_lib.lightness(
         color_lib.isDark(args.bg_normal) and "lighten" or "darken",
@@ -304,7 +304,7 @@ function elevated_button.normal(args)
   local widget = button(args)
 
   widget:connect_signal("mouse::enter", function(self, find_widgets_result)
-    effect(widget, args.bg_hover, args.shape, args.border_width, args.hover_border_color)
+    effect(widget, args.bg_hover, args.shape, args.hover_border_width, args.hover_border_color)
     if args.on_hover ~= nil then
       args.on_hover(self, find_widgets_result)
     end
@@ -317,14 +317,14 @@ function elevated_button.normal(args)
     if widget.button ~= nil then
       if widget.button == 1 then
         if args.on_release ~= nil or args.on_press ~= nil then
-          effect(widget, args.bg_hover, args.shape, args.border_width, args.normal_border_color)
+          effect(widget, args.bg_hover, args.shape, args.hover_border_width, args.normal_border_color)
         end
         if args.child and args.child.on_release ~= nil then
           args.child:on_release(self, 1, 1, widget.button, {}, find_widgets_result)
         end
       elseif widget.button == 3 then
         if args.on_secondary_release ~= nil or args.on_secondary_press ~= nil then
-          effect(widget, args.bg_normal, args.shape, args.border_width, args.normal_border_color)
+          effect(widget, args.bg_normal, args.shape, args.normal_border_width, args.normal_border_color)
         end
         if args.child and args.child.on_secondary_release ~= nil then
           args.child:on_secondary_release(self, 1, 1, widget.button, {}, find_widgets_result)
@@ -332,7 +332,7 @@ function elevated_button.normal(args)
       end
       widget.button = nil
     end
-    effect(widget, args.bg_normal, args.shape, args.border_width, args.normal_border_color)
+    effect(widget, args.bg_normal, args.shape, args.normal_border_width, args.normal_border_color)
     if args.on_leave ~= nil then
       args.on_leave(self, find_widgets_result)
     end
@@ -355,10 +355,10 @@ function elevated_button.normal(args)
         effect(widget, args.bg_press, args.press_shape, args.press_border_width, args.press_border_color)
       end
 
-      if args.child and args.child.on_press ~= nil or args.child and args.child.on_release ~= nil then
-        effect(widget, args.bg_press, args.press_shape, args.press_border_width, args.press_border_color)
-        args.child:on_press(self, lx, ly, button, mods, find_widgets_result)
-      end
+      -- if args.child and args.child.on_press ~= nil or args.child and args.child.on_release ~= nil then
+      --   effect(widget, args.bg_press, args.press_shape, args.press_border_width, args.press_border_color)
+      --   args.child:on_press(self, lx, ly, button, mods, find_widgets_result)
+      -- end
     elseif button == 3 then
       if args.on_secondary_press ~= nil then
         args.on_secondary_press(self, lx, ly, button, mods, find_widgets_result)
@@ -383,7 +383,7 @@ function elevated_button.normal(args)
     widget.button = nil
     if button == 1 then
       if args.on_release ~= nil or args.on_press ~= nil then
-        effect(widget, args.bg_hover, args.shape, args.normal_border_width, args.normal_border_color)
+        effect(widget, args.bg_hover, args.shape, args.hover_border_width, args.normal_border_color)
       end
       if args.on_release ~= nil then
         args.on_release(self, lx, ly, button, mods, find_widgets_result)
@@ -393,7 +393,7 @@ function elevated_button.normal(args)
       end
     elseif button == 3 then
       -- if args.on_secondary_release ~= nil or args.on_secondary_press ~= nil then
-      effect(widget, args.bg_hover, args.shape, args.border_width, args.normal_border_color)
+      effect(widget, args.bg_hover, args.shape, args.hover_border_width, args.normal_border_color)
       -- end
       if args.on_secondary_release ~= nil then
         args.on_secondary_release(self, lx, ly, button, mods, find_widgets_result)
