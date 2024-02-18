@@ -154,7 +154,7 @@ local music_art_overlay = Wibox.widget({
 local music_title = wtext({
   text = "Titulo",
   color = User.config.dark_mode and Beautiful.fg_normal
-      or color_lib.lightness("darken", 15, Beautiful.foreground_alt),
+      or Beautiful.foreground_alt,
   font = Beautiful.font_text .. "SemiBold",
   size = 11,
 })

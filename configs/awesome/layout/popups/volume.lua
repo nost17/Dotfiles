@@ -1,9 +1,10 @@
 local dpi = Beautiful.xresources.apply_dpi
 local screen_height = screen.primary.geometry.height
 local screen_width = screen.primary.geometry.width
+local bar_radius = Beautiful.small_radius
 local volume_icon = Wibox.widget({
   markup = Helpers.text.colorize_text("󰕾", Beautiful.fg_normal),
-  font = Beautiful.font_icon .. "28",
+  font = Beautiful.font_icon .. "68",
   halign = "center",
   valign = "center",
   widget = Wibox.widget.textbox,
@@ -11,30 +12,32 @@ local volume_icon = Wibox.widget({
 local volume_bar = Wibox.widget({
   max_value = 100,
   value = 0,
-  forced_height = dpi(14),
-  -- forced_width = dpi(30),
-  -- paddings = dpi(2),
-  border_width = 0,
-  border_color = Beautiful.fg_normal,
+  forced_height = dpi(30),
+  -- forced_height = dpi(30),
+  paddings = dpi(2),
+  border_width = dpi(1.5),
+  border_color = Beautiful.accent_color,
   color = Beautiful.accent_color,
   background_color = Beautiful.widget_bg_alt,
-  bar_shape = Gears.shape.rounded_bar,
-  shape = Gears.shape.rounded_bar,
-  -- shape = Helpers.shape.rrect(dpi(4)),
+  bar_shape = Helpers.shape.rrect(bar_radius - dpi(2)),
+  shape = Helpers.shape.rrect(bar_radius),
   widget = Wibox.widget.progressbar,
 })
 local wdg = Wibox({
   bg = Beautiful.widget_bg,
-  width = dpi(240),
-  height = dpi(70),
+  width = dpi(180),
+  height = dpi(180),
   visible = false,
   ontop = true,
   screen = screen.primary,
   -- border_width = dpi(3),
   border_color = Beautiful.widget_bg_alt,
 })
-wdg.x = (screen_width / 2) - (wdg.width / 2)
-wdg.y = wdg.height * 0.5
+
+Helpers.placement(wdg, "bottom", nil, wdg.height * 0.5)
+
+-- wdg.x = (screen_width / 2) - (wdg.width / 2)
+-- wdg.y = wdg.height * 0.5
 local wdg_timer = Gears.timer({
   timeout = 0.8,
   autostart = false,
@@ -49,31 +52,20 @@ wdg:setup({
   valign = "center",
   {
     widget = Wibox.container.margin,
-    margins = dpi(15),
+    margins = dpi(20),
     {
-      layout = Wibox.layout.fixed.horizontal,
+      layout = Wibox.layout.align.vertical,
       spacing = dpi(10),
       {
         widget = Wibox.container.margin,
-        top = dpi(2),
+        -- top = dpi(2),
+        bottom = dpi(10),
         volume_icon,
       },
+      nil,
       {
         layout = Wibox.container.place,
-        halign = "center",
-        valign = "center",
-        {
-          layout = Wibox.layout.fixed.vertical,
-          spacing = dpi(6),
-          {
-            widget = Wibox.widget.textbox,
-            text = "Volumen",
-            font = Beautiful.font_text .. "Medium 11",
-            halign = "left",
-            valign = "center",
-          },
-          volume_bar,
-        },
+        volume_bar,
       },
     },
   },
