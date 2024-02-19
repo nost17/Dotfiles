@@ -1,8 +1,28 @@
 local M = {}
+local floor = math.floor
+local max = math.max
+local min = math.min
+local format = string.format
 
 local function clamp(component)
-  return math.min(math.max(component, 0), 255)
+  return min(max(component, 0), 255)
 end
+local function clip(num, min_num, max_num)
+  return max(min(num, max_num), min_num)
+end
+
+function M.rgb_to_hex(color)
+  local r = clip(color.r or color[1], 0, 255)
+  local g = clip(color.g or color[2], 0, 255)
+  local b = clip(color.b or color[3], 0, 255)
+  if color.a or color[4] then
+    local a = clip(color.a or color[4] or 255, 0, 255)
+    return "#" .. format("%02x%02x%02x%02x", floor(r), floor(g), floor(b), floor(a))
+  else
+    return "#" .. format("%02x%02x%02x", floor(r), floor(g), floor(b))
+  end
+end
+
 function M.hex_to_rgb(color)
   local r, g, b, a = 0, 0, 0, 255
 
@@ -61,6 +81,22 @@ function M.lightness(method, brightness, color)
   elseif #color == 9 then
     return string.format("#%02X%02X%02X%02X", r, g, b, a)
   end
+end
+
+function M.mixer(color1, color2)
+  -- Extraer componentes de cada color
+  local rgb1 = M.hex_to_rgb(color1)
+  local rgb2 = M.hex_to_rgb(color2)
+  local r1, g1, b1 = rgb1.r, rgb1.g, rgb1.b
+  local r2, g2, b2 = rgb2.r, rgb2.g, rgb2.b
+  -- Mezclar los componentes
+  local r3 = (r1 + r2) / 2
+  local g3 = (g1 + g2) / 2
+  local b3 = (b1 + b2) / 2
+
+  -- Devolver el nuevo color mezclado
+  local color3 = M.rgb_to_hex({ r = r3, g = g3, b = b3 })
+  return color3
 end
 
 function M.isDark(hex)
