@@ -24,6 +24,9 @@ _G.floating_client_rule = {
   name = {
     "Event Tester", -- xev.
   },
+  type = {
+    "dialog",
+  },
   role = {
     "AlarmWindow", -- Thunderbird's calendar.
     "ConfigManager", -- Thunderbird's about:config.
@@ -63,6 +66,7 @@ ruled.client.connect_signal("request::rules", function()
   -- Add titlebars to normal clients and dialogs
   ruled.client.append_rule({
     id = "titlebars",
+    -- except_any = { class = { "feh" } },
     rule_any = { type = { "normal", "dialog" } },
     properties = { titlebars_enabled = true },
   })

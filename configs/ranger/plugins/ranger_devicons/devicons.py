@@ -218,14 +218,14 @@ dir_node_exact_matches = {
     'Templates'                        : '',
     'Videos'                           : '',
 # Spanish
-    'Escritorio'                       : '',
-    'Documentos'                       : '',
-    'Descargas'                        : '',
-    'Música'                           : '',
-    'Imágenes'                         : '',
-    'Público'                          : '',
-    'Plantillas'                       : '',
-    'Vídeos'                           : '',
+    'Escritorio'                       : '',
+    'Documentos'                       : '',
+    'Descargas'                        : '',
+    'Música'                           : '󱍙',
+    'Imágenes'                         : '󰉏',
+    'Público'                          : '',
+    'Plantillas'                       : '󰚝',
+    'Vídeos'                           : '',
 # French  
     'Bureau'                           : '',
     'Documents'                        : '',
@@ -352,5 +352,5 @@ file_node_exact_matches = {
 }
 
 def devicon(file):
-  if file.is_directory: return dir_node_exact_matches.get(file.relative_path,'')
+  if file.is_directory: return dir_node_exact_matches.get(file.relative_path,'')
   return file_node_exact_matches.get(os.path.basename(file.relative_path), file_node_extensions.get(file.extension, ''))

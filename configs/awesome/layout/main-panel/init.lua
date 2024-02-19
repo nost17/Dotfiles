@@ -77,8 +77,21 @@ local main_panel = Awful.wibar({
   width = Beautiful.main_panel_size,
   bg = Beautiful.bg_normal,
   position = Beautiful.main_panel_pos,
-  visible = true,
+  -- visible = true,
 })
+-- client.connect_signal("property::fullscreen", function(c)
+--   if c.fullscreen  then
+--     main_panel.visible = false
+--   else
+--     main_panel.visible = true
+--   end
+-- end)
+--
+-- client.connect_signal("request::unmanage", function(c)
+--   if c.fullscreen or c.maximized then
+--     main_panel.visible = true
+--   end
+-- end)
 
 main_panel:setup({
   layout = Wibox.layout.align.vertical,

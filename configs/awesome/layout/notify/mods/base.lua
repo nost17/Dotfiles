@@ -3,6 +3,13 @@ local color_lib = Helpers.color
 local wbutton = require("utils.button")
 local icon_theme = require("utils.modules.icon_theme")()
 
+Beautiful.notification_icon_height = dpi(52)
+Beautiful.notification_fg = Beautiful.fg_normal
+Beautiful.notification_bg =
+    color_lib.lightness(Beautiful.color_method, Beautiful.color_method_factor * 0.5, Beautiful.widget_bg)
+Beautiful.notification_bg_alt =
+    color_lib.lightness(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.notification_bg)
+
 Naughty.config.maximum_width = dpi(540)
 Naughty.config.minimum_width = dpi(300)
 Naughty.config.defaults = {
@@ -17,17 +24,10 @@ local override_names = {
 }
 local colors = {
   ["low"] = Beautiful.green,
-  ["normal"] = Beautiful.blue,
+  -- ["normal"] = Beautiful.fg_normal .. "32",
+  ["normal"] = Beautiful.fg_normal,
   ["critical"] = Beautiful.red,
 }
-
-Beautiful.notification_icon_height = dpi(52)
-Beautiful.notification_fg = Beautiful.fg_normal
-Beautiful.notification_bg =
-    color_lib.lightness(Beautiful.color_method, Beautiful.color_method_factor * 0.5, Beautiful.widget_bg)
-Beautiful.notification_bg_alt =
-    color_lib.lightness(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.notification_bg)
-Beautiful.notification_padding = Beautiful.notification_padding * 1.5
 
 local function get_oldest_notification()
   for _, notification in ipairs(Naughty.active) do
@@ -120,41 +120,35 @@ local function mknotification(n)
   local action_area = action_exist and actions_widget(n) or nil
 
   local visual_area = Wibox.widget({
-    widget = Wibox.container.margin,
-    left = Beautiful.notification_padding,
-    right = Beautiful.notification_padding,
-    top = Beautiful.notification_padding,
-    bottom = Beautiful.notification_padding,
+    layout = Wibox.layout.fixed.vertical,
     {
-      layout = Wibox.layout.fixed.vertical,
+      layout = Wibox.layout.fixed.horizontal,
+      fill_space = true,
+      spacing = Beautiful.notification_padding * 0.75,
       {
-        layout = Wibox.layout.fixed.horizontal,
-        fill_space = true,
-        spacing = Beautiful.notification_padding,
+        n_image,
+        strategy = "max",
+        height = Beautiful.notification_icon_height,
+        width = Beautiful.notification_icon_height * 2,
+        widget = Wibox.container.constraint,
+      },
+      {
+        layout = Wibox.container.place,
+        valign = "center",
+        halign = "left",
         {
-          n_image,
-          strategy = "max",
-          height = Beautiful.notification_icon_height,
-          widget = Wibox.container.constraint,
-        },
-        {
-          layout = Wibox.container.place,
-          valign = "center",
-          halign = "left",
-          {
-            layout = Wibox.layout.fixed.vertical,
-            spacing = dpi(1),
-            fill_space = true,
-            n_title,
-            n_message,
-          },
+          layout = Wibox.layout.fixed.vertical,
+          spacing = dpi(1),
+          fill_space = true,
+          n_title,
+          n_message,
         },
       },
-      action_exist and {
-        widget = Wibox.container.margin,
-        top = Beautiful.notification_padding * 0.75,
-        action_area,
-      },
+    },
+    action_exist and {
+      widget = Wibox.container.margin,
+      top = Beautiful.notification_padding * 0.75,
+      action_area,
     },
   })
   local notification = Naughty.layout.box({
@@ -169,9 +163,17 @@ local function mknotification(n)
       {
         widget = Wibox.container.background,
         bg = accent_color,
+        shape = Gears.shape.rounded_bar,
         forced_width = dpi(4),
       },
-      visual_area,
+      {
+        widget = Wibox.container.margin,
+        left = Beautiful.notification_padding,
+        right = Beautiful.notification_padding,
+        top = Beautiful.notification_padding * 0.75,
+        bottom = Beautiful.notification_padding * 0.75,
+        visual_area,
+      },
     },
   })
 

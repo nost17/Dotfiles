@@ -185,7 +185,7 @@ theme.notification_icon_height = dpi(64)
 theme.notification_border_width = 0
 theme.notification_border_color = theme.black
 theme.notification_border_radius = theme.small_radius
-theme.notification_padding = dpi(10)
+theme.notification_padding = dpi(16)
 
 -- MENUBAR
 theme.menubar_fg_normal = theme.fg_normal .. "bb"
