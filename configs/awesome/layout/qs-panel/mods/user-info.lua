@@ -21,8 +21,8 @@ local battery_bar = Wibox.widget({
   border_color = Beautiful.fg_normal,
   color = Beautiful.green,
   background_color = Beautiful.transparent,
-  bar_shape = Helpers.shape.rrect(dpi(2)),
-  shape = Helpers.shape.rrect(dpi(4)),
+  -- bar_shape = Helpers.shape.rrect(dpi(2)),
+  -- shape = Helpers.shape.rrect(dpi(4)),
   widget = Wibox.widget.progressbar,
 })
 local battery_label = Wibox.widget({

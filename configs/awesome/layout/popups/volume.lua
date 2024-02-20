@@ -4,7 +4,7 @@ local screen_width = screen.primary.geometry.width
 local bar_radius = Beautiful.small_radius
 local volume_icon = Wibox.widget({
   markup = Helpers.text.colorize_text("󰕾", Beautiful.fg_normal),
-  font = Beautiful.font_icon .. "68",
+  font = Beautiful.font_icon .. "22",
   halign = "center",
   valign = "center",
   widget = Wibox.widget.textbox,
@@ -12,29 +12,23 @@ local volume_icon = Wibox.widget({
 local volume_bar = Wibox.widget({
   max_value = 100,
   value = 0,
-  forced_height = dpi(30),
-  -- forced_height = dpi(30),
-  paddings = dpi(2),
-  border_width = dpi(1.5),
-  border_color = Beautiful.accent_color,
+  forced_height = dpi(16),
   color = Beautiful.accent_color,
-  background_color = Beautiful.widget_bg_alt,
-  bar_shape = Helpers.shape.rrect(bar_radius - dpi(2)),
-  shape = Helpers.shape.rrect(bar_radius),
+  background_color = Beautiful.transparent,
   widget = Wibox.widget.progressbar,
 })
 local wdg = Wibox({
   bg = Beautiful.widget_bg,
-  width = dpi(180),
-  height = dpi(180),
+  width = dpi(220),
+  height = dpi(50),
   visible = false,
   ontop = true,
   screen = screen.primary,
-  -- border_width = dpi(3),
+  border_width = dpi(2),
   border_color = Beautiful.widget_bg_alt,
 })
 
-Helpers.placement(wdg, "bottom", nil, wdg.height * 0.5)
+Helpers.placement(wdg, "bottom", nil, wdg.height)
 
 -- wdg.x = (screen_width / 2) - (wdg.width / 2)
 -- wdg.y = wdg.height * 0.5
@@ -52,20 +46,39 @@ wdg:setup({
   valign = "center",
   {
     widget = Wibox.container.margin,
-    margins = dpi(20),
+    margins = dpi(10),
     {
-      layout = Wibox.layout.align.vertical,
+      layout = Wibox.layout.fixed.horizontal,
       spacing = dpi(10),
       {
         widget = Wibox.container.margin,
         -- top = dpi(2),
-        bottom = dpi(10),
-        volume_icon,
+        -- bottom = dpi(10),
+        {
+          layout = Wibox.container.place,
+          valign = "center",
+          halign = "center",
+          volume_icon,
+        },
       },
-      nil,
       {
         layout = Wibox.container.place,
-        volume_bar,
+        valign = "center",
+        halign = "center",
+        {
+          layout = Wibox.layout.stack,
+          {
+            widget = Wibox.container.background,
+            bg = Beautiful.widget_bg_alt,
+            border_width = 2,
+            border_color = Helpers.color.lightness(
+              Beautiful.color_method,
+              Beautiful.color_method_factor,
+              Beautiful.widget_bg_alt
+            ),
+          },
+          volume_bar,
+        },
       },
     },
   },
