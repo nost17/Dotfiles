@@ -58,7 +58,7 @@ function Playerctl:notify()
     }),
     message = generate_markup({
       text = self._private.prev_metadata.artist,
-      color = Beautiful.fg_normal .. "CC",
+      color = Beautiful.fg_normal,
       underline = true,
     }),
     image = self._private.prev_metadata.cover_art,
