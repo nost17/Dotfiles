@@ -9,6 +9,7 @@ Beautiful.notification_bg =
     color_lib.lightness(Beautiful.color_method, Beautiful.color_method_factor * 0.5, Beautiful.widget_bg)
 Beautiful.notification_bg_alt =
     color_lib.lightness(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.notification_bg)
+-- Beautiful.notification_icon_type = "hybrid"
 
 Naughty.config.maximum_width = dpi(540)
 Naughty.config.minimum_width = dpi(300)
@@ -22,10 +23,19 @@ local override_names = {
   "notify-send",
   "",
 }
+local icons = {
+  ["music"] = "󰝚",
+  ["música"] = "󰝚",
+  ["musica"] = "󰝚",
+  ["captura de pantalla"] = "󰋾",
+  ["screenshot"] = "󰋾",
+  ["spotify"] = "󰓇",
+  ["firefox"] = "󰈹",
+}
 local colors = {
   ["low"] = Beautiful.green,
-  -- ["normal"] = Beautiful.fg_normal .. "32",
   ["normal"] = Beautiful.fg_normal,
+  -- ["normal"] = Beautiful.blue,
   ["critical"] = Beautiful.red,
 }
 
@@ -75,48 +85,70 @@ end
 
 local function mknotification(n)
   local accent_color = colors[n.urgency]
-  local not_message = n.message == "" or n.message == " " or n.message == nil
-  local not_title = n.title == "" or n.title == " " or not n.title
+  -- local not_message = n.message == "" or n.message == " " or n.message == nil
+  -- local not_title = n.title == "" or n.title == " " or not n.title
   local action_exist = n.actions and #n.actions > 0
-  if Helpers.inTable(override_names, n.app_name) or n.app_name == "" or n.app_name == nil then
-    n.app_name = Naughty.config.defaults.app_name
-  end
+  -- if Helpers.inTable(override_names, n.app_name) or n.app_name == "" or n.app_name == nil then
+  --   n.app_name = Naughty.config.defaults.app_name
+  -- end
 
   local n_title = require("layout.notify.components.title")(n)
   local n_message = require("layout.notify.components.message")(n)
-  local n_image = require("layout.notify.components.image")(n)
-  local n_appname = Wibox.widget({
-    widget = Wibox.widget.textbox,
-    text = n.app_name:gsub("^%l", string.upper),
-    font = Beautiful.notification_font_title,
-    halign = "left",
-    valign = "center",
-  })
-  -- if not_title then
-  --   n_title = n_appname
-  -- end
-  -- --
-  -- if not_message then
-  --   n_message = n_title
-  --   n_title = n_appname
-  -- end
-  --
-  local attribution_area = Wibox.widget({
-    layout = Wibox.layout.align.horizontal,
-    {
-      widget = Wibox.container.margin,
-      left = Beautiful.notification_padding,
-      right = Beautiful.notification_padding,
-      top = Beautiful.notification_padding * 0.75,
-      bottom = Beautiful.notification_padding * 0.75,
+  local n_image
+  if Beautiful.notification_icon_type == "text" then
+    n_image = Wibox.widget({
+      widget = Wibox.container.background,
+      bg = color_lib.lightness(
+        Beautiful.color_method,
+        Beautiful.color_method_factor * 1.5,
+        Beautiful.notification_bg
+      ),
+      fg = accent_color,
+      forced_width = Beautiful.notification_icon_height * 1.10,
+      forced_height = Beautiful.notification_icon_height * 1.10,
       {
-        widget = Wibox.container.background,
-        fg = accent_color,
-        n_title,
+        widget = Wibox.widget.textbox,
+        text = icons[n.app_name:lower()] or "󰀿",
+        font = Beautiful.font_icon .. "15",
+        halign = "center",
       },
-    },
-    nil,
-  })
+    })
+  elseif Beautiful.notification_icon_type == "hybrid" then
+    n_image = n.icon
+        and Wibox.widget({
+          require("layout.notify.components.image")(n),
+          strategy = "max",
+          height = Beautiful.notification_icon_height,
+          width = Beautiful.notification_icon_height * 2,
+          widget = Wibox.container.constraint,
+        })
+        or Wibox.widget({
+          widget = Wibox.container.background,
+          bg = color_lib.lightness(
+            Beautiful.color_method,
+            Beautiful.color_method_factor * 1.5,
+            Beautiful.notification_bg
+          ),
+          fg = accent_color,
+          forced_width = Beautiful.notification_icon_height * 1.10,
+          forced_height = Beautiful.notification_icon_height * 1.10,
+          {
+            widget = Wibox.widget.textbox,
+            text = icons[n.app_name:lower()] or "󰀿",
+            font = Beautiful.font_icon .. "15",
+            halign = "center",
+          },
+        })
+  else
+    n_image = Wibox.widget({
+      require("layout.notify.components.image")(n),
+      strategy = "max",
+      height = Beautiful.notification_icon_height,
+      width = Beautiful.notification_icon_height * 2,
+      widget = Wibox.container.constraint,
+    })
+  end
+  --
   local action_area = action_exist and actions_widget(n) or nil
 
   local visual_area = Wibox.widget({
@@ -125,22 +157,34 @@ local function mknotification(n)
       layout = Wibox.layout.fixed.horizontal,
       fill_space = true,
       spacing = Beautiful.notification_padding * 0.75,
-      {
-        n_image,
-        strategy = "max",
-        height = Beautiful.notification_icon_height,
-        width = Beautiful.notification_icon_height * 2,
-        widget = Wibox.container.constraint,
-      },
+      n_image,
       {
         layout = Wibox.container.place,
         valign = "center",
         halign = "left",
         {
           layout = Wibox.layout.fixed.vertical,
-          spacing = dpi(1),
-          fill_space = true,
-          n_title,
+          -- spacing = dpi(1),
+          -- fill_space = true,
+          {
+            widget = Wibox.container.margin,
+            top = dpi(-3),
+            n_title,
+          },
+          {
+            widget = Wibox.container.margin,
+            bottom = dpi(3),
+            {
+              widget = Wibox.widget.textbox,
+              markup = Helpers.text.colorize_text(
+                n.app_name:gsub("^%l", string.upper),
+                Beautiful.notification_fg .. "CC"
+              ),
+              font = Beautiful.font_text .. "Medium 9",
+              halign = "left",
+              valign = "center",
+            },
+          },
           n_message,
         },
       },
@@ -163,13 +207,12 @@ local function mknotification(n)
       {
         widget = Wibox.container.background,
         bg = accent_color,
-        shape = Gears.shape.rounded_bar,
-        forced_width = dpi(4),
+        forced_width = dpi(3),
       },
       {
         widget = Wibox.container.margin,
-        left = Beautiful.notification_padding,
-        right = Beautiful.notification_padding,
+        left = Beautiful.notification_padding * 0.75,
+        right = Beautiful.notification_padding * 0.75,
         top = Beautiful.notification_padding * 0.75,
         bottom = Beautiful.notification_padding * 0.75,
         visual_area,
