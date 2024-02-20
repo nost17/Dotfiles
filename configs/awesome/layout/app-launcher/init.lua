@@ -647,7 +647,7 @@ local function create_user_button(icon, color, shape, fn)
     -- ),
     -- bg_normal = color .. "1F",
     bg_hover = color .. "3F",
-    on_release = function ()
+    on_release = function()
       awesome.emit_signal("panels::app_launcher", "hide")
       if fn then
         fn()
@@ -901,11 +901,15 @@ local function new(args)
           {
             layout = Wibox.layout.align.vertical,
             {
-              widget = Wibox.widget.imagebox,
-              image = Beautiful.user_icon,
-              clip_shape = Gears.shape.circle,
-              -- forced_width = dpi(50),
-              forced_height = dpi(50),
+              widget = Wibox.container.margin,
+              margins = dpi(5),
+              {
+                widget = Wibox.widget.imagebox,
+                image = Beautiful.user_icon,
+                clip_shape = Helpers.shape.rrect(Beautiful.medium_radius),
+                -- forced_width = dpi(50),
+                forced_height = dpi(50),
+              },
             },
             nil,
             {
@@ -932,22 +936,22 @@ local function new(args)
           spacing = args.grid_spacing or 0,
           {
             layout = Wibox.layout.stack,
-            {
-              image = Helpers.cropSurface(
-                args.prompt_image_bg_ratio,
-                Gears.surface.load_silently(Beautiful.wallpaper)
-              ),
-              halign = "center",
-              valign = "center",
-              resize = true,
-              scaling_quality = "fast",
-              vertical_fit_policy = "fill",
-              horizontal_fit_policy = "fill",
-              clip_shape = args.prompt_image_bg_shape or nil,
-              forced_width = grid_width,
-              forced_height = args.prompt_image_bg_height,
-              widget = Wibox.widget.imagebox,
-            },
+            -- {
+            --   image = Helpers.cropSurface(
+            --     args.prompt_image_bg_ratio,
+            --     Gears.surface.load_silently(Beautiful.wallpaper)
+            --   ),
+            --   halign = "center",
+            --   valign = "center",
+            --   resize = true,
+            --   scaling_quality = "fast",
+            --   vertical_fit_policy = "fill",
+            --   horizontal_fit_policy = "fill",
+            --   clip_shape = args.prompt_image_bg_shape or nil,
+            --   forced_width = grid_width,
+            --   forced_height = args.prompt_image_bg_height,
+            --   widget = Wibox.widget.imagebox,
+            -- },
             {
               widget = Wibox.container.margin,
               margins = ret.prompt_margins,
@@ -964,21 +968,34 @@ local function new(args)
                   border_width = ret.prompt_border_width,
                   border_color = ret.prompt_border_color,
                   {
-                    widget = Wibox.container.margin,
-                    margins = ret.prompt_paddings,
+                    layout = Wibox.layout.stack,
                     {
-                      widget = Wibox.container.place,
-                      halign = ret.prompt_text_halign,
-                      valign = ret.prompt_text_valign,
+                      layout = Wibox.container.place,
+                      halign = "left",
+                      content_fill_vertical = true,
                       {
-                        layout = Wibox.layout.fixed.horizontal,
-                        spacing = ret.prompt_icon_text_spacing,
+                        widget = Wibox.container.background,
+                        forced_width = ret.prompt_separator_size,
+                        bg = ret.prompt_separator_color,
+                      },
+                    },
+                    {
+                      widget = Wibox.container.margin,
+                      margins = ret.prompt_paddings,
+                      {
+                        widget = Wibox.container.place,
+                        halign = ret.prompt_text_halign,
+                        valign = ret.prompt_text_valign,
                         {
-                          widget = Wibox.widget.textbox,
-                          font = ret.prompt_icon_font,
-                          markup = ret.prompt_icon_markup,
+                          layout = Wibox.layout.fixed.horizontal,
+                          spacing = ret.prompt_icon_text_spacing,
+                          {
+                            widget = Wibox.widget.textbox,
+                            font = ret.prompt_icon_font,
+                            markup = ret.prompt_icon_markup,
+                          },
+                          ret._private.prompt.textbox,
                         },
-                        ret._private.prompt.textbox,
                       },
                     },
                   },
