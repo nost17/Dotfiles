@@ -30,7 +30,6 @@ theme.wallpaper = theme.wallpaper or themes_path .. "/wallpapers/yoru.jpeg"
 theme.font_text = "IBM Plex Sans "
 theme.font_icon = "Material Design Icons Desktop "
 theme.font = theme.font_text .. "Regular 12"
-theme.widget_radius = 1
 theme.default_app_icon = "access"
 -- theme.icon_theme                       = "ePapirus-Dark"
 theme.accent_color = theme[User.config.theme_accent or "blue"]
@@ -45,17 +44,17 @@ theme.master_width_factor = 0.60
 theme.useless_gap = dpi(4)
 theme.gap_single_client = true
 theme.awesome_icon = themes_path .. "images/awesome.png"
-theme.user_icon = themes_path .. "images/user_icon.jpeg"
-theme.small_radius = dpi(4)
-theme.medium_radius = dpi(8)
+theme.user_icon = themes_path .. "images/user_icon.png"
+theme.small_radius = 1
+theme.medium_radius = dpi(2)
 
 -- WIDGETS
 theme.widget_bg = theme.bg_normal
 theme.widget_bg_alt = color_lib.lightness(theme.color_method, theme.color_method_factor, theme.widget_bg)
-theme.widget_clock_font = theme.font_text .. "Medium 12"
+theme.widget_clock_font = theme.font_text .. "Medium 11"
 theme.bg_systray = theme.widget_bg
 theme.main_panel_pos = "left"
-theme.main_panel_size = dpi(44)
+theme.main_panel_size = dpi(43)
 
 -- BORDER
 theme.border_width = 0
@@ -68,8 +67,8 @@ theme.border_width_floating_active = theme.border_width
 theme.border_width_floating_urgent = theme.border_width
 theme.border_width_floating_new = theme.border_width
 theme.border_normal = theme.widget_bg_alt
-theme.border_focus = theme.border_normal
-theme.border_color_urgent = theme.border_focus
+theme.border_focus = theme.accent_color
+theme.border_color_urgent = theme.red
 
 -- LOGOUT SCREEN
 theme.logoutscreen_buttons_shape = Helpers.shape.rrect(theme.small_radius)
@@ -154,19 +153,18 @@ theme.tasklist_spacing = dpi(5)
 theme.taglist_shape = Helpers.shape.rrect(theme.small_radius)
 theme.taglist_font = theme.font_text .. "SemiBold 12"
 theme.taglist_spacing = dpi(6)
-theme.taglist_icon_padding = 1
+theme.taglist_icon_padding = 0
 theme.taglist_shape_border_width = 0
 theme.taglist_shape_border_color = theme.background
 theme.taglist_bg_color = theme.widget_bg_alt
 theme.taglist_bg_urgent = theme.red
 theme.taglist_bg_focus = theme.accent_color
-theme.taglist_bg_occupied =
-	color_lib.lightness(theme.color_method, theme.color_method_factor * 1.5, theme.taglist_bg_color)
+theme.taglist_bg_occupied = theme.taglist_bg_color
 theme.taglist_bg_empty = theme.taglist_bg_color
 theme.taglist_fg_focus = theme.foreground_alt
 theme.taglist_fg_urgent = theme.foreground_alt
 theme.taglist_fg_occupied = theme.fg_normal
-theme.taglist_fg_empty = theme.fg_normal .. "9F"
+theme.taglist_fg_empty = theme.fg_normal .. "55"
 theme.taglist_shape_border_color_empty = "#00000000"
 
 -- NOTIFICATIONS
@@ -179,7 +177,7 @@ theme.notification_font_message = theme.font_text .. "Medium 11"
 theme.notification_font_appname = theme.font_text .. "Regular 10"
 theme.notification_font_actions = theme.font_text .. "Medium 10"
 theme.notification_font_hour = theme.font_text .. "Bold 10"
-theme.notification_icon_shape = Helpers.shape.rrect(6) -- Gears.shape.circle
+theme.notification_icon_shape = Helpers.shape.rrect(theme.medium_radius) -- Gears.shape.circle
 theme.notification_spacing = dpi(6)
 theme.notification_icon_height = dpi(64)
 theme.notification_border_width = 0

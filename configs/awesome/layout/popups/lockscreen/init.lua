@@ -14,7 +14,7 @@ Beautiful.lockscreen_pass_halign = "center"
 Beautiful.lockscreen_wallpaper_bg = Beautiful.wallpaper_alt or Beautiful.wallpaper
 Beautiful.lockscreen_prompt_fg = Beautiful.fg_normal
 Beautiful.lockscreen_prompt_bg = Beautiful.widget_bg_alt
-Beautiful.lockscreen_prompt_shape = Gears.shape.rounded_bar
+Beautiful.lockscreen_prompt_shape = Helpers.shape.rrect(Beautiful.medium_radius)
 Beautiful.lockscreen_placeholder_text = "Contraseña"
 Beautiful.lockscreen_clock_font = Beautiful.font_text .. "Medium 60"
 Beautiful.lockscreen_promptbox_bg = Beautiful.widget_bg
@@ -38,8 +38,9 @@ local function create_prompt_icon(icon, color, bg, id)
       widget = Wibox.container.background,
       bg = bg,
       fg = color,
-      shape = Gears.shape.circle,
-      forced_width = size + 10,
+      shape = Helpers.shape.rrect(Beautiful.medium_radius),
+      -- shape = Gears.shape.circle,
+      forced_width = size,
       forced_height = size,
       id = id .. "_bg",
       {

@@ -8,9 +8,9 @@ Beautiful.logoutscreen_clock_bg = Beautiful.widget_bg .. "88"
 -- Beautiful.logoutscreen_buttons_bg = color_lib.lightness("darken", User.config.dark_mode and 5 or 15, Beautiful.widget_bg)
 Beautiful.logoutscreen_buttons_bg = Beautiful.logoutscreen_clock_bg
 -- Beautiful.logoutscreen_buttons_bg_hover = Beautiful.widget_bg_alt
-Beautiful.logoutscreen_buttons_shape = Gears.shape.circle
+Beautiful.logoutscreen_buttons_shape = nil
 Beautiful.logoutscreen_buttons_box_shape = Helpers.shape.rrect(Beautiful.medium_radius)
-Beautiful.logoutscreen_buttons_box_bg = Beautiful.logoutscreen_clock_bg
+Beautiful.logoutscreen_buttons_box_bg = Beautiful.widget_bg
 
 local function create_user_button(icon, color, fn)
   local size = dpi(110)
@@ -26,8 +26,8 @@ local function create_user_button(icon, color, fn)
     bg_hover = Beautiful.logoutscreen_buttons_bg_hover or color .. "18",
     on_release = function()
       if fn then
-        fn()
         awesome.emit_signal("awesome::logoutscreen", "hide")
+        fn()
       end
     end,
     expand = false,
@@ -111,7 +111,7 @@ local close_button = wbutton.text.normal({
   paddings = { top = dpi(2) },
   halign = "center",
   valign = "center",
-  shape = Gears.shape.circle,
+  shape = Beautiful.logoutscreen_buttons_shape,
   on_press = function()
     awesome.emit_signal("awesome::logoutscreen", "hide")
   end,
@@ -128,7 +128,7 @@ local restart_wm = wbutton.text.normal({
   paddings = 0,
   halign = "center",
   valign = "center",
-  shape = Gears.shape.circle,
+  shape = Beautiful.logoutscreen_buttons_shape,
   on_press = function()
     awesome.restart()
   end,
@@ -165,11 +165,11 @@ local user_info = Wibox.widget({
           layout = Wibox.container.place,
           {
             layout = Wibox.layout.fixed.horizontal,
-            spacing = dpi(5),
+            spacing = dpi(8),
             {
               widget = Wibox.widget.textclock,
               format = "%H",
-              font = Beautiful.font_text .. "Medium 32",
+              font = Beautiful.font_text .. "Medium 36",
               halign = "center",
             },
             {
@@ -177,17 +177,21 @@ local user_info = Wibox.widget({
               halign = "center",
               valign = "center",
               {
-                layout = Wibox.layout.fixed.vertical,
-                spacing = dpi(5),
-                make_point(Beautiful.magenta),
-                make_point(Beautiful.green),
-                make_point(Beautiful.yellow),
+                widget = Wibox.container.margin,
+                top = dpi(2),
+                {
+                  layout = Wibox.layout.fixed.vertical,
+                  spacing = dpi(5),
+                  make_point(Beautiful.magenta),
+                  make_point(Beautiful.green),
+                  make_point(Beautiful.yellow),
+                },
               },
             },
             {
               widget = Wibox.widget.textclock,
               format = "%M",
-              font = Beautiful.font_text .. "Medium 32",
+              font = Beautiful.font_text .. "Medium 36",
               halign = "center",
             },
           },
@@ -271,7 +275,7 @@ logoutscreen:setup({
               bg = Beautiful.logoutscreen_buttons_box_bg,
               {
                 widget = Wibox.container.margin,
-                margins = dpi(20),
+                margins = dpi(15),
                 {
                   layout = Wibox.layout.flex.horizontal,
                   spacing = dpi(30),

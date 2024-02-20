@@ -44,22 +44,23 @@ local app_launcher = wbutton.text.normal({
   on_release = function()
     awesome.emit_signal("panels::app_launcher", "toggle")
   end,
-  forced_height = dpi(34),
+  forced_height = dpi(32),
 })
 -- 󰫤 󰫥 󱥒 󰂜 󰂞
-local user_icon = require("layout.qs-panel")(main_panel_screen)
+local quicksettings = require("layout.qs-panel")(main_panel_screen)
 local notify_panel = wbutton.text.normal({
   text = "󰂜",
   font = Beautiful.font_icon,
+  halign = "center",
   size = 18,
-  forced_height = dpi(44),
+  paddings = {
+    left = 1,
+    top = dpi(5),
+    bottom = dpi(5),
+  },
   fg_normal = Beautiful.accent_color,
-  -- bg_normal = color_lib.lightness(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
   bg_normal = Beautiful.widget_bg_alt,
   on_release = function(self)
-    -- Naughty.notify({
-    --   title = "TODO: Notification panel",
-    -- })
     self:set_text("󰂜")
     awesome.emit_signal("panels::notification_center", "toggle")
   end,
@@ -94,31 +95,28 @@ local main_panel = Awful.wibar({
 -- end)
 
 main_panel:setup({
-  layout = Wibox.layout.align.vertical,
-  user_icon,
+  widget = Wibox.container.margin,
+  top = dpi(8),
+  bottom = dpi(8),
+  right = dpi(5),
+  left = dpi(5),
   {
-    widget = Wibox.container.margin,
-    top = dpi(8),
-    bottom = dpi(8),
-    right = dpi(5),
-    left = dpi(5),
+    layout = Wibox.layout.align.vertical,
     {
-      layout = Wibox.layout.align.vertical,
-      {
-        layout = Wibox.layout.fixed.vertical,
-        spacing = dpi(5),
-        app_launcher,
-        layout_box,
-        taglist,
-      },
-      tasklist,
-      {
-        layout = Wibox.layout.fixed.vertical,
-        spacing = dpi(5),
-        status,
-        clock,
-      },
+      layout = Wibox.layout.fixed.vertical,
+      spacing = dpi(5),
+      quicksettings,
+      app_launcher,
+      layout_box,
+      taglist,
+    },
+    tasklist,
+    {
+      layout = Wibox.layout.fixed.vertical,
+      spacing = dpi(5),
+      status,
+      clock,
+      notify_panel,
     },
   },
-  notify_panel,
 })
