@@ -7,30 +7,28 @@ local screen_height = main_panel_screen.geometry.height
 local taglist = require("layout.main-panel.mods.taglist")(main_panel_screen)
 local tasklist = require("layout.main-panel.mods.tasklist")(main_panel_screen)
 local status = require("layout.main-panel.mods.system-status")
-local clock = Wibox.widget({
-  widget = Wibox.container.background,
-  bg = Beautiful.widget_bg_alt,
-  shape = Helpers.shape.rrect(Beautiful.small_radius),
-  {
-    widget = Wibox.container.margin,
-    bottom = dpi(5),
-    top = dpi(5),
+
+local clock = wbutton.elevated.normal({
+  child = {
+    layout = Wibox.layout.fixed.vertical,
     {
-      layout = Wibox.layout.fixed.vertical,
-      {
-        widget = Wibox.widget.textclock,
-        format = "%H",
-        font = Beautiful.font_text .. "Medium 15",
-        halign = "center",
-      },
-      {
-        widget = Wibox.widget.textclock,
-        format = "%M",
-        font = Beautiful.font_text .. "Medium 15",
-        halign = "center",
-      },
+      widget = Wibox.widget.textclock,
+      format = "%H",
+      font = Beautiful.font_text .. "Medium 13",
+      halign = "center",
+    },
+    {
+      widget = Wibox.widget.textclock,
+      format = "%M",
+      font = Beautiful.font_text .. "Medium 13",
+      halign = "center",
     },
   },
+  shape = Helpers.shape.rrect(Beautiful.small_radius),
+  paddings = { bottom = dpi(5), top = dpi(5) },
+  on_press = function ()
+    awesome.emit_signal("open::calendar")
+  end
 })
 local app_launcher = wbutton.text.normal({
   text = "󱓞",
@@ -41,7 +39,7 @@ local app_launcher = wbutton.text.normal({
   bg_normal = Beautiful.widget_bg_alt,
   paddings = 0,
   -- bg_hover = color_lib.lightness(Beautiful.color_method, 10, Beautiful.widget_bg_alt),
-  on_release = function()
+  on_press = function()
     awesome.emit_signal("panels::app_launcher", "toggle")
   end,
   forced_height = dpi(32),
@@ -52,15 +50,16 @@ local notify_panel = wbutton.text.normal({
   text = "󰂜",
   font = Beautiful.font_icon,
   halign = "center",
-  size = 18,
+  size = 16,
   paddings = {
     left = 1,
-    top = dpi(5),
-    bottom = dpi(5),
+    top = dpi(7),
+    bottom = dpi(7),
   },
+  shape = Helpers.shape.rrect(Beautiful.small_radius),
   fg_normal = Beautiful.accent_color,
   bg_normal = Beautiful.widget_bg_alt,
-  on_release = function(self)
+  on_press = function(self)
     self:set_text("󰂜")
     awesome.emit_signal("panels::notification_center", "toggle")
   end,
@@ -96,10 +95,10 @@ local main_panel = Awful.wibar({
 
 main_panel:setup({
   widget = Wibox.container.margin,
-  top = dpi(8),
-  bottom = dpi(8),
-  right = dpi(5),
-  left = dpi(5),
+  top = dpi(6),
+  bottom = dpi(6),
+  right = dpi(4),
+  left = dpi(4),
   {
     layout = Wibox.layout.align.vertical,
     {
@@ -110,6 +109,7 @@ main_panel:setup({
       layout_box,
       taglist,
     },
+    -- nil,
     tasklist,
     {
       layout = Wibox.layout.fixed.vertical,

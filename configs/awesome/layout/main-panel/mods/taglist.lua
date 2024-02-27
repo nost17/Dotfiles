@@ -2,7 +2,7 @@ local dpi = Beautiful.xresources.apply_dpi
 local function taglist(s)
 	local mytaglist = Awful.widget.taglist({
 		screen = s,
-		filter = Awful.widget.taglist.filter.all,
+		filter = Awful.widget.taglist.filter.noempty,
 		layout = { layout = Wibox.layout.fixed.vertical },
 		buttons = {
 			Awful.button({}, 1, function(t)
