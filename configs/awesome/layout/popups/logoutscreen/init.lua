@@ -8,7 +8,7 @@ Beautiful.logoutscreen_clock_bg = Beautiful.widget_bg .. "88"
 -- Beautiful.logoutscreen_buttons_bg = color_lib.lightness("darken", User.config.dark_mode and 5 or 15, Beautiful.widget_bg)
 Beautiful.logoutscreen_buttons_bg = Beautiful.logoutscreen_clock_bg
 -- Beautiful.logoutscreen_buttons_bg_hover = Beautiful.widget_bg_alt
-Beautiful.logoutscreen_buttons_shape = nil
+Beautiful.logoutscreen_buttons_shape = Helpers.shape.rrect(Beautiful.small_radius)
 Beautiful.logoutscreen_buttons_box_shape = Helpers.shape.rrect(Beautiful.medium_radius)
 Beautiful.logoutscreen_buttons_box_bg = Beautiful.widget_bg
 

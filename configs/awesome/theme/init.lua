@@ -45,13 +45,13 @@ theme.useless_gap = dpi(4)
 theme.gap_single_client = true
 theme.awesome_icon = themes_path .. "images/awesome.png"
 theme.user_icon = themes_path .. "images/user_icon.png"
-theme.small_radius = 1
-theme.medium_radius = dpi(2)
+theme.small_radius = dpi(2)
+theme.medium_radius = dpi(4)
 
 -- WIDGETS
 theme.widget_bg = theme.bg_normal
 theme.widget_bg_alt = color_lib.lightness(theme.color_method, theme.color_method_factor, theme.widget_bg)
-theme.widget_clock_font = theme.font_text .. "Medium 11"
+theme.widget_clock_font = theme.font_text .. "Medium 10"
 theme.bg_systray = theme.widget_bg
 theme.main_panel_pos = "left"
 theme.main_panel_size = dpi(43)
@@ -146,14 +146,14 @@ theme.tasklist_indicator_focus = theme.accent_color
 theme.tasklist_indicator_normal = theme.foreground .. "22"
 theme.tasklist_indicator_minimized = theme.transparent
 theme.tasklist_indicator_position = "left"
-theme.tasklist_icon_size = dpi(29)
+theme.tasklist_icon_size = dpi(24)
 theme.tasklist_spacing = dpi(5)
 
 -- TAGLIST
 theme.taglist_shape = Helpers.shape.rrect(theme.small_radius)
 theme.taglist_font = theme.font_text .. "SemiBold 12"
 theme.taglist_spacing = dpi(6)
-theme.taglist_icon_padding = 0
+theme.taglist_icon_padding = 2
 theme.taglist_shape_border_width = 0
 theme.taglist_shape_border_color = theme.background
 theme.taglist_bg_color = theme.widget_bg_alt
@@ -170,7 +170,8 @@ theme.taglist_shape_border_color_empty = "#00000000"
 -- NOTIFICATIONS
 theme.notification_position = "top_right"
 theme.notification_icon = themes_path .. "images/notification.png"
-theme.notification_bg = color_lib.lightness(theme.color_method, theme.color_method_factor / 2, theme.bg_normal)
+theme.notification_bg = color_lib.lightness(theme.color_method, theme.color_method_factor * 0.5, theme.widget_bg)
+theme.notification_bg_alt = color_lib.lightness(theme.color_method, theme.color_method_factor, Beautiful.notification_bg)
 theme.notification_fg = color_lib.lightness("darken", 15, theme.fg_normal)
 theme.notification_font_title = theme.font_text .. "Bold 11"
 theme.notification_font_message = theme.font_text .. "Medium 11"
@@ -179,10 +180,11 @@ theme.notification_font_actions = theme.font_text .. "Medium 10"
 theme.notification_font_hour = theme.font_text .. "Bold 10"
 theme.notification_icon_shape = Helpers.shape.rrect(theme.medium_radius) -- Gears.shape.circle
 theme.notification_spacing = dpi(6)
-theme.notification_icon_height = dpi(64)
+theme.notification_icon_height = dpi(56)
 theme.notification_border_width = 0
 theme.notification_border_color = theme.black
 theme.notification_border_radius = theme.small_radius
+theme.notification_icon_type = "image"
 theme.notification_padding = dpi(16)
 
 -- MENUBAR

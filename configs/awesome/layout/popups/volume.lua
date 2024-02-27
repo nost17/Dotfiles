@@ -14,6 +14,8 @@ local volume_bar = Wibox.widget({
   value = 0,
   forced_height = dpi(16),
   color = Beautiful.accent_color,
+  -- shape = Helpers.shape.rrect(Beautiful.small_radius),
+  bar_shape = Helpers.shape.rrect(Beautiful.small_radius),
   background_color = Beautiful.transparent,
   widget = Wibox.widget.progressbar,
 })
@@ -70,6 +72,7 @@ wdg:setup({
           {
             widget = Wibox.container.background,
             bg = Beautiful.widget_bg_alt,
+            shape = Helpers.shape.rrect(Beautiful.small_radius),
             border_width = 2,
             border_color = Helpers.color.lightness(
               Beautiful.color_method,

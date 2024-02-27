@@ -4,10 +4,11 @@ local wallpapers = {
 	themes_path .. "/wallpapers/onedark_2.png",
 	themes_path .. "/wallpapers/onedark_3.png",
 	themes_path .. "/wallpapers/waves.png",
+	themes_path .. "/wallpapers/waves_2.jpg",
 }
 
 return {
-	wallpaper = wallpapers[3],
+	wallpaper = wallpapers[5],
 	wallpaper_alt = wallpapers[4],
 	foreground = "#abb2bf",
 	background = "#282c34",

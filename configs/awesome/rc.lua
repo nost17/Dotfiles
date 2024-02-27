@@ -25,7 +25,7 @@ User.config = {}
 User.config.dark_mode = true
 User.config.dnd_state = false
 User.config.music_notify = true
-User.config.theme = "everforest"
+User.config.theme = "onedark"
 User.config.theme_accent = "blue"
 User.config.floating_mode = false
 
@@ -39,9 +39,8 @@ User.notify_count = 0
 User.music = {}
 User.music.players = {
   "mpd",
-  "chromium",
+  "firefox",
   "auto",
-  -- "firefox",
 }
 User.music.names = {
   ["mpd"] = "Local",

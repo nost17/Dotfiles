@@ -137,8 +137,10 @@ local screenshot = Wibox.widget({
 })
 
 awesome.connect_signal("visible::quicksettings:sc", function(vis)
-  delay_count = 0
-  delay_label:set_text(delay_count)
+  if vis then
+    delay_count = 0
+    delay_label:set_text(delay_count)
+  end
 end)
 
 return screenshot

@@ -17,7 +17,7 @@ local toggle_btn = wbutton.text.normal({
   paddings = dpi(8),
   -- forced_width = dpi(65),
   -- forced_height = dpi(65),
-  on_release = function()
+  on_press = function()
     Playerctl:play_pause()
   end,
 })
@@ -30,7 +30,7 @@ local next_btn = wbutton.text.normal({
   -- shape = Gears.shape.circle,
   bg_normal = Beautiful.quicksettings_widgets_bg,
   fg_normal = Beautiful.fg_normal,
-  on_release = function()
+  on_press = function()
     Playerctl:next()
   end,
 })
@@ -43,7 +43,7 @@ local prev_btn = wbutton.text.normal({
   -- shape = Gears.shape.circle,
   bg_normal = Beautiful.quicksettings_widgets_bg,
   fg_normal = Beautiful.fg_normal,
-  on_release = function()
+  on_press = function()
     Playerctl:previous()
   end,
 })
@@ -153,8 +153,7 @@ local music_art_overlay = Wibox.widget({
 
 local music_title = wtext({
   text = "Titulo",
-  color = User.config.dark_mode and Beautiful.fg_normal
-      or Beautiful.foreground_alt,
+  color = User.config.dark_mode and Beautiful.fg_normal or Beautiful.foreground_alt,
   font = Beautiful.font_text .. "SemiBold",
   size = 11,
 })

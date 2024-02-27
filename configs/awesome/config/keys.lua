@@ -1,5 +1,5 @@
 local menubar = require("menubar")
-local hotkeys_popup = require("awful.hotkeys_popup")
+local hotkeys_popup = require("utils.modules.hotkeys_popup")
 menubar.left_label = ""
 menubar.right_label = ""
 
