@@ -3,13 +3,6 @@ local color_lib = Helpers.color
 local wbutton = require("utils.button")
 local icon_theme = require("utils.modules.icon_theme")()
 
-Beautiful.notification_icon_height = dpi(52)
-Beautiful.notification_fg = Beautiful.fg_normal
-Beautiful.notification_bg =
-    color_lib.lightness(Beautiful.color_method, Beautiful.color_method_factor * 0.5, Beautiful.widget_bg)
-Beautiful.notification_bg_alt =
-    color_lib.lightness(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.notification_bg)
--- Beautiful.notification_icon_type = "hybrid"
 
 Naughty.config.maximum_width = dpi(540)
 Naughty.config.minimum_width = dpi(300)
@@ -35,7 +28,6 @@ local icons = {
 local colors = {
   ["low"] = Beautiful.green,
   ["normal"] = Beautiful.fg_normal,
-  -- ["normal"] = Beautiful.blue,
   ["critical"] = Beautiful.red,
 }
 
@@ -98,11 +90,7 @@ local function mknotification(n)
   if Beautiful.notification_icon_type == "text" then
     n_image = Wibox.widget({
       widget = Wibox.container.background,
-      bg = color_lib.lightness(
-        Beautiful.color_method,
-        Beautiful.color_method_factor * 1.5,
-        Beautiful.notification_bg
-      ),
+      bg = Beautiful.notification_bg_alt,
       fg = accent_color,
       forced_width = Beautiful.notification_icon_height * 1.10,
       forced_height = Beautiful.notification_icon_height * 1.10,
@@ -164,16 +152,8 @@ local function mknotification(n)
         halign = "left",
         {
           layout = Wibox.layout.fixed.vertical,
-          -- spacing = dpi(1),
-          -- fill_space = true,
           {
             widget = Wibox.container.margin,
-            top = dpi(-3),
-            n_title,
-          },
-          {
-            widget = Wibox.container.margin,
-            bottom = dpi(3),
             {
               widget = Wibox.widget.textbox,
               markup = Helpers.text.colorize_text(
@@ -185,6 +165,8 @@ local function mknotification(n)
               valign = "center",
             },
           },
+          widget = Wibox.container.margin,
+          n_title,
           n_message,
         },
       },
