@@ -171,7 +171,7 @@ theme.taglist_shape_border_color_empty = "#00000000"
 theme.notification_position = "top_right"
 theme.notification_icon = themes_path .. "images/notification.png"
 theme.notification_bg = color_lib.lightness(theme.color_method, theme.color_method_factor * 0.5, theme.widget_bg)
-theme.notification_bg_alt = color_lib.lightness(theme.color_method, theme.color_method_factor, Beautiful.notification_bg)
+theme.notification_bg_alt = color_lib.lightness(theme.color_method, theme.color_method_factor, theme.notification_bg)
 theme.notification_fg = color_lib.lightness("darken", 15, theme.fg_normal)
 theme.notification_font_title = theme.font_text .. "Bold 11"
 theme.notification_font_message = theme.font_text .. "Medium 11"
@@ -195,6 +195,13 @@ theme.menubar_border_color = theme.black
 theme.menubar_fg_focus = theme.foreground_alt
 theme.menubar_bg_focus = theme.magenta
 theme.menubar_font = theme.font_text .. "Medium 16"
+
+-- HOTKEYS POPUP
+theme.hotkeys_bg = theme.widget_bg_alt
+theme.hotkeys_modifiers_fg = theme.orange
+theme.hotkeys_font = theme.font_text .. "Medium 11"
+theme.hotkeys_label_font = theme.font_text .. "SemiBold 12"
+theme.hotkeys_group_margin = dpi(20)
 
 -- LAYOUT BOX
 theme.layouts_icons_color = theme.fg_normal
