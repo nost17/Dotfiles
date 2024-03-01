@@ -24,9 +24,9 @@ _G.floating_client_rule = {
   name = {
     "Event Tester", -- xev.
   },
-  type = {
-    "dialog",
-  },
+  -- type = {
+  --   "dialog",
+  -- },
   role = {
     "AlarmWindow", -- Thunderbird's calendar.
     "ConfigManager", -- Thunderbird's about:config.
@@ -45,7 +45,8 @@ ruled.client.connect_signal("request::rules", function()
       focus = Awful.client.focus.filter,
       raise = true,
       screen = Awful.screen.preferred,
-      placement = Awful.placement.no_overlap + Awful.placement.no_offscreen,
+      -- placement = Awful.placement.no_overlap + Awful.placement.no_offscreen,
+      placement = Awful.placement.centered + Awful.placement.no_offscreen,
     },
   })
   -- Floating clients.

@@ -11,17 +11,6 @@ Awful.mouse.append_global_mousebindings({
 
 -- General Awesome keys
 Awful.keyboard.append_global_keybindings({
-  Awful.key({ User.vars.modkey }, "d", function()
-    -- awesome.emit_signal("awesome::lockscreen", "toggle")
-  end, { description = "mostrar panel de control", group = "awesome" }),
-  Awful.key({ User.vars.modkey }, "a", function()
-    awesome.emit_signal("panels::quicksettings", "toggle")
-  end, { description = "mostrar panel de control", group = "awesome" }),
-  Awful.key({ User.vars.modkey }, "w", function()
-    -- Awful.spawn("rofi -show drun -show-icons", false)
-    awesome.emit_signal("panels::app_launcher", "show")
-  end, { description = "mostrar lanzador de aplicaciones", group = "awesome" }),
-  Awful.key({ User.vars.modkey }, "s", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
   Awful.key({ User.vars.modkey }, "q", function()
     awesome.emit_signal("awesome::logoutscreen", "toggle")
   end, { description = "mostrar pantalla de salida", group = "awesome" }),
@@ -35,15 +24,36 @@ Awful.keyboard.append_global_keybindings({
   Awful.key({ User.vars.modkey }, "Return", function()
     Awful.spawn(User.vars.terminal)
   end, { description = "open a terminal", group = "launcher" }),
-  -- Awful.key({ "Mod1" }, "d", function() app_launcher:toggle() end,
-  --     { description = "run prompt", group = "launcher" }),
-  Awful.key({ "Mod1" }, "a", function()
-    awesome.emit_signal("awesome::notification_center", "toggle")
-  end, { description = "run prompt", group = "launcher" }),
   Awful.key({ User.vars.modkey }, "p", function()
     menubar.show()
   end, { description = "show the menubar", group = "launcher" }),
 })
+
+-- WIDGET KEYS
+Awful.keyboard.append_global_keybindings({
+  Awful.key(
+    { User.vars.modkey },
+    "s",
+    hotkeys_popup.show_help,
+    { description = "mostrar atajos de teclado", group = "awesome" }
+  ),
+  Awful.key({ User.vars.modkey }, "c", function()
+    awesome.emit_signal("open::calendar")
+  end, { description = "Mostrar/Ocultar calendario", group = "awesome" }),
+  Awful.key({ User.vars.modkey }, "b", function()
+    awesome.emit_signal("panels::main-panel", "toggle")
+  end, { description = "Mostrar/Ocultar barra principal", group = "awesome" }),
+  Awful.key({ User.vars.modkey }, "a", function()
+    awesome.emit_signal("panels::quicksettings", "toggle")
+  end, { description = "mostrar ajustes rapidos", group = "awesome" }),
+  Awful.key({ User.vars.modkey }, "w", function()
+    awesome.emit_signal("panels::app_launcher", "show")
+  end, { description = "mostrar lanzador de aplicaciones", group = "awesome" }),
+  Awful.key({ User.vars.modkey }, "d", function()
+    awesome.emit_signal("panels::notification_center", "toggle")
+  end, { description = "mostrar panel de notificaciones", group = "awesome" }),
+})
+
 -- MEDIA KEYS
 Awful.keyboard.append_global_keybindings({
   -- Mediua player keys
