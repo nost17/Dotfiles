@@ -26,9 +26,9 @@ local clock = wbutton.elevated.normal({
   },
   shape = Helpers.shape.rrect(Beautiful.small_radius),
   paddings = { bottom = dpi(5), top = dpi(5) },
-  on_press = function ()
+  on_press = function()
     awesome.emit_signal("open::calendar")
-  end
+  end,
 })
 local app_launcher = wbutton.text.normal({
   text = "󱓞",
@@ -93,6 +93,17 @@ local main_panel = Awful.wibar({
 --   end
 -- end)
 
+awesome.connect_signal("panels::main-panel", function(action)
+  if action == "toggle" then
+    main_panel.visible = not main_panel.visible
+  elseif action == "show" then
+    main_panel.visible = true
+  elseif action == "hide" then
+    main_panel.visible = false
+  end
+  awesome.emit_signal("visible::main-panel", main_panel.visible)
+end)
+
 main_panel:setup({
   widget = Wibox.container.margin,
   top = dpi(6),
@@ -101,6 +112,7 @@ main_panel:setup({
   left = dpi(4),
   {
     layout = Wibox.layout.align.vertical,
+    expand = "none",
     {
       layout = Wibox.layout.fixed.vertical,
       spacing = dpi(5),

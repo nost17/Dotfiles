@@ -77,13 +77,16 @@ local system_status_widget = Wibox.widget({
   spacing = dpi(10),
   {
     {
-      base_size = 24,
-      horizontal = false,
-      widget = Wibox.widget.systray,
+      {
+        base_size = 24,
+        horizontal = false,
+        widget = Wibox.widget.systray,
+      },
+      halign = "center",
+      layout = Wibox.container.place,
     },
-    valign = "center",
-    halign = "center",
-    layout = Wibox.container.place,
+    widget = Wibox.container.margin,
+    margins = 1,
   },
   {
     widget = Wibox.container.background,
