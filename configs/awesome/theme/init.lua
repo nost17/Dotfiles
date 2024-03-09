@@ -180,7 +180,7 @@ theme.notification_font_actions = theme.font_text .. "Medium 10"
 theme.notification_font_hour = theme.font_text .. "Bold 10"
 theme.notification_icon_shape = Helpers.shape.rrect(theme.medium_radius) -- Gears.shape.circle
 theme.notification_spacing = dpi(6)
-theme.notification_icon_height = dpi(56)
+theme.notification_icon_height = dpi(58)
 theme.notification_border_width = 0
 theme.notification_border_color = theme.black
 theme.notification_border_radius = theme.small_radius
@@ -200,6 +200,7 @@ theme.menubar_font = theme.font_text .. "Medium 16"
 theme.hotkeys_bg = theme.widget_bg_alt
 theme.hotkeys_modifiers_fg = theme.orange
 theme.hotkeys_font = theme.font_text .. "Medium 11"
+theme.hotkeys_description_font = theme.font_text .. "Medium 10"
 theme.hotkeys_label_font = theme.font_text .. "SemiBold 12"
 theme.hotkeys_group_margin = dpi(20)
 

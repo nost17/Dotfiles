@@ -45,7 +45,7 @@ local function actions_widget(n)
     layout = Wibox.layout.grid.horizontal,
     horizontal_expand = true,
     -- fill_space = true,
-    spacing = dpi(5),
+    spacing = dpi(2),
   })
 
   for _, action in ipairs(n.actions) do
@@ -69,7 +69,7 @@ local function actions_widget(n)
   end
 
   return Wibox.widget({
-    widget = Wibox.widget.background,
+    widget = Wibox.container.background,
     shape = Helpers.shape.rrect(Beautiful.small_radius),
     actions,
   })

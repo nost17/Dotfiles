@@ -803,7 +803,11 @@ local function new(args)
       if key == "Escape" then
         ret:hide()
       end
-      if key == "Return" then
+
+      if mod.Control and key == "Return" then
+        Awful.spawn(ret._private.text)
+        ret:hide()
+      elseif key == "Return" then
         if ret._private.active_widget ~= nil then
           ret._private.active_widget.spawn()
         end

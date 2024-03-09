@@ -3,6 +3,7 @@ local dpi = Beautiful.xresources.apply_dpi
 local create_task = function(self, c, _, _)
   self:get_children_by_id("icon_client")[1].image = icon_theme:get_icon_path({
     client = c,
+    manual_fallback = c.icon,
   })
 end
 local update_task = function(self, c, _, _)
