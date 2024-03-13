@@ -46,9 +46,29 @@ Repositorio de configuración del entorno AwesomeWM y otros programas
 | <a href="#--------"><img src="https://raw.githubusercontent.com/Lik-e/Dotfiles/main/.github/screenshots/08.png" alt="bottom panel preview"></a> |
 
 # ToDo
+- [ ] Actualizar capturas de pantalla
 
 #### AwesomeWM
 
+- [ ] Mover herramienta de captura de pantalla
+  - [ ] Intercambiar boton de "No molestar" con el de captura de pantalla
+  - [ ] Mover boton de Alerta de musica al widget de control de musica
+  - [ ] Intercambiar boton de "Alerta de Música" con el de "No molestar"
+- [ ] Implementar monitores de estado al panel de ajustes rapidos
+  - [ ] Reorganizar ajustes rapidos
+    - [ ] Agregar monitores en el widget de controles
+    - [ ] Cambiar diseño de botones a simple
+      - [ ] Modo oscuro
+      - [ ] Alerta de canciones
+      - [ ] Modo flotante
+      - [ ] Luz nocturna
+  - [ ] Agregar monitores
+    - [ ] Agregar libreria de señales para CPU
+    - [ ] Agregar libreria de señales para RAM
+    - [ ] Agregar libreria de señales para DISCO
+    - [ ] Agregar libreria de señales para TEMPERATURA
+  - [ ] Agregar plantilla para los monitores
+  - [ ] Agregar nueva plantilla simple para botones de ajustes rapidos
 - [ ] Implementación y re-diseño de ajustes rápidos
   - [x] Agregar alternador de modo oscuro/claro
   - [x] Agregar boton de captura de Pantalla
@@ -61,10 +81,10 @@ Repositorio de configuración del entorno AwesomeWM y otros programas
     - [x] Agregar libreria de internet (señales)
   - [ ] Agregar boton de bluetooth
     - [ ] Agregar libreria de bluetooth (señales)
-- [X] Agregar barra de titulo para las ventanas
-  - [X] Agregar alternador de modo flotante (ajustes rápidos)
-- [ ] Agregar calendario
-- [X] Agregar selector de distribucion de ventanas
+- [x] Agregar barra de titulo para las ventanas
+  - [x] Agregar alternador de modo flotante (ajustes rápidos)
+- [x] Agregar calendario
+- [x] Agregar selector de distribucion de ventanas
 - [ ] Agregar pizarron de estado
 - [x] Pantalla de bloqueo
 - [x] Menu de apagado
