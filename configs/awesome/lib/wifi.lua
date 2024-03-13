@@ -16,7 +16,7 @@ local function emit_network_signal()
 end
 
 Gears.timer{
-	timeout = 4,
+	timeout = 3,
 	call_now = true,
 	autostart = true,
 	single_shot = false,

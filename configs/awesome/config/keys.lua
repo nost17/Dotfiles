@@ -63,12 +63,12 @@ Awful.keyboard.append_global_keybindings({
   -- Awful.key({}, "XF86AudioPlay", function()
   --         Playerctl:play()
   -- end),
-  -- Awful.key({}, "XF86AudioNext", function()
-  --         Playerctl:next()
-  -- end),
-  -- Awful.key({}, "XF86AudioPrev", function()
-  --         Playerctl:previous()
-  -- end),
+  Awful.key({}, "XF86AudioNext", function()
+          Playerctl:next()
+  end),
+  Awful.key({}, "XF86AudioPrev", function()
+          Playerctl:previous()
+  end),
   -- Volume and Brightness keys
   Awful.key({ User.vars.modkey }, "-", function()
     Awful.spawn.with_shell("pamixer -d 5", false)

@@ -57,12 +57,66 @@ function M.hex_to_rgb(color)
   }
 end
 
+------------------
+
+function M.darken(color, amount)
+  --- Establece el color a rgb
+  color = color or "#FFFFFFFF"
+  local rgb = M.hex_to_rgb(color)
+  local red, green, blue, alpha = rgb.r, rgb.g, rgb.b, rgb.a
+
+  red = red * (1 - amount)
+  green = green * (1 - amount)
+  blue = blue * (1 - amount)
+
+  red = math.ceil(red)
+  green = math.ceil(green)
+  blue = math.ceil(blue)
+
+  if #color == 7 or #color == 4 then
+    return string.format("#%02X%02X%02X", red, green, blue)
+  elseif #color == 9 then
+    return string.format("#%02X%02X%02X%02X", red, green, blue, alpha)
+  end
+end
+
+function M.lighten(color, amount)
+  --- Establece el color a rgb
+  color = color or "#FFFFFFFF"
+  local rgb = M.hex_to_rgb(color)
+  local red, green, blue, alpha = rgb.r, rgb.g, rgb.b, rgb.a
+
+  red = red + (255 - red) * amount
+  green = green + (255 - green) * amount
+  blue = blue + (255 - blue) * amount
+
+  red = math.ceil(red)
+  green = math.ceil(green)
+  blue = math.ceil(blue)
+
+  if #color == 7 or #color == 4 then
+    return string.format("#%02X%02X%02X", red, green, blue)
+  elseif #color == 9 then
+    return string.format("#%02X%02X%02X%02X", red, green, blue, alpha)
+  end
+end
+
+--------------
+
 function M.lightness(method, brightness, color)
+  if method == "darken" then
+    return M.darken(color, brightness / 255)
+  else
+    return M.lighten(color, brightness / 255)
+  end
+end
+
+function M.bak_lightness(method, brightness, color)
   brightness = math.ceil(brightness)
 
   --- Establece el color a rgb
   color = color or "#FFFFFFFF"
-  rgb = M.hex_to_rgb(color)
+  local rgb = M.hex_to_rgb(color)
   local r, g, b, a = rgb.r, rgb.g, rgb.b, rgb.a
 
   --- Establece el metodo

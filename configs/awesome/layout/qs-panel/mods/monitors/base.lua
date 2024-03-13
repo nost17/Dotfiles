@@ -9,7 +9,7 @@ local function template(opts)
     max_value = 100,
     bg = Helpers.color.lightness(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
     thickness = dpi(4),
-    -- start_angle = math.pi * 1.5,
+    start_angle = math.pi * 1.5,
     rounded_edge = false,
     colors = {
       opts.color,
