@@ -27,7 +27,7 @@ local clock = wbutton.elevated.normal({
   shape = Helpers.shape.rrect(Beautiful.small_radius),
   paddings = { bottom = dpi(5), top = dpi(5) },
   on_press = function()
-    awesome.emit_signal("open::calendar")
+    awesome.emit_signal("panels::calendar", "toggle")
   end,
 })
 local app_launcher = wbutton.text.normal({
