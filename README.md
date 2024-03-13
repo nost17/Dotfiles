@@ -56,7 +56,7 @@ Repositorio de configuración del entorno AwesomeWM y otros programas
   - [ ] Intercambiar boton de "Alerta de Música" con el de "No molestar"
 - [ ] Implementar monitores de estado al panel de ajustes rapidos
   - [ ] Reorganizar ajustes rapidos
-    - [ ] Agregar monitores en el widget de controles
+    - [X] Agregar monitores en el widget de controles
     - [X] Cambiar diseño de botones a simple
       - [X] Modo oscuro
       - [X] Alerta de canciones

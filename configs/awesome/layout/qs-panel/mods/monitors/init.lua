@@ -19,10 +19,18 @@ local temp_monitor = mkmonitor({
 })
 
 return Wibox.widget({
-  layout = Wibox.layout.flex.horizontal,
+  layout = Wibox.layout.flex.vertical,
   spacing = dpi(10),
-  disk_monitor,
-  cpu_monitor,
-  ram_monitor,
-  temp_monitor,
+  {
+    layout = Wibox.layout.flex.horizontal,
+    spacing = dpi(10),
+    ram_monitor,
+    temp_monitor,
+  },
+  {
+    layout = Wibox.layout.flex.horizontal,
+    spacing = dpi(10),
+    disk_monitor,
+    cpu_monitor,
+  },
 })
