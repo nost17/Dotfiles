@@ -6,7 +6,7 @@ local wbutton = require("utils.button")
 
 Beautiful.logoutscreen_clock_bg = Beautiful.widget_bg .. "88"
 -- Beautiful.logoutscreen_buttons_bg = color_lib.lightness("darken", User.config.dark_mode and 5 or 15, Beautiful.widget_bg)
-Beautiful.logoutscreen_buttons_bg = Beautiful.logoutscreen_clock_bg
+Beautiful.logoutscreen_buttons_bg = Beautiful.widget_bg_alt
 -- Beautiful.logoutscreen_buttons_bg_hover = Beautiful.widget_bg_alt
 Beautiful.logoutscreen_buttons_shape = Helpers.shape.rrect(Beautiful.small_radius)
 Beautiful.logoutscreen_buttons_box_shape = Helpers.shape.rrect(Beautiful.medium_radius)
@@ -17,13 +17,13 @@ local function create_user_button(icon, color, fn)
   local wdg = wbutton.text.normal({
     text = icon,
     font = Beautiful.font_icon,
-    size = 30,
+    size = 32,
     shape = Beautiful.logoutscreen_buttons_shape,
-    normal_border_width = 2.5,
+    normal_border_width = 0,
     normal_border_color = color,
     fg_normal = color,
     bg_normal = Beautiful.logoutscreen_buttons_bg,
-    bg_hover = Beautiful.logoutscreen_buttons_bg_hover or color .. "18",
+    -- bg_hover = Beautiful.logoutscreen_buttons_bg_hover or color .. "18",
     on_release = function()
       if fn then
         awesome.emit_signal("awesome::logoutscreen", "hide")
@@ -208,36 +208,24 @@ local user_info = Wibox.widget({
       forced_width = dpi(160),
     },
     {
-      layout = Wibox.layout.stack,
+      widget = Wibox.container.background,
+      forced_height = dpi(46),
+      bg = Beautiful.logoutscreen_clock_bg,
+      fg = Beautiful.fg_normal,
       {
-        widget = Wibox.container.radialprogressbar,
-        value = 0,
-        border_width = dpi(3),
-        paddings = 5,
-        color = Beautiful.logoutscreen_clock_bg,
-        border_color = Beautiful.logoutscreen_clock_bg,
-        {
-          widget = Wibox.container.background,
-          forced_height = dpi(46),
-          bg = Beautiful.logoutscreen_clock_bg,
-          fg = Beautiful.fg_normal,
-          {
-            widget = Wibox.widget.textbox,
-            text = os.getenv("USER"):gsub("^%l", string.upper),
-            halign = "center",
-            valign = "center",
-            font = Beautiful.font_text .. "SemiBold 13",
-          },
-        },
+        widget = Wibox.widget.textbox,
+        text = os.getenv("USER"):gsub("^%l", string.upper),
+        halign = "center",
+        valign = "center",
+        font = Beautiful.font_text .. "SemiBold 13",
       },
     },
   },
 })
 
 logoutscreen:setup({
-  layout = Wibox.layout.stack,
-  background,
-  overlay,
+  widget = Wibox.container.background,
+  bg = Beautiful.bg_normal .. "DD",
   {
     widget = Wibox.container.margin,
     margins = dpi(50),
@@ -246,47 +234,30 @@ logoutscreen:setup({
       {
         layout = Wibox.container.place,
         halign = "right",
+        valign = "top",
+        close_button,
+      },
+      {
+        layout = Wibox.container.place,
+        halign = "right",
         valign = "bottom",
         restart_wm,
       },
       {
-        layout = Wibox.layout.fixed.vertical,
+        layout = Wibox.layout.flex.vertical,
+        user_info,
         {
           layout = Wibox.container.place,
-          -- content_fill_horizontal = true,
-          halign = "right",
-          valign = "top",
-          close_button,
-        },
-        {
-          layout = Wibox.container.place,
-          -- halign = "center",
-          -- valign = "center",
+          halign = "center",
+          valign = "center",
           {
-            layout = Wibox.layout.fixed.vertical,
+            layout = Wibox.layout.flex.horizontal,
             spacing = dpi(30),
-            {
-              layout = Wibox.container.place,
-              user_info,
-            },
-            {
-              widget = Wibox.container.background,
-              shape = Beautiful.logoutscreen_buttons_box_shape,
-              bg = Beautiful.logoutscreen_buttons_box_bg,
-              {
-                widget = Wibox.container.margin,
-                margins = dpi(15),
-                {
-                  layout = Wibox.layout.flex.horizontal,
-                  spacing = dpi(30),
-                  shutdown_button,
-                  reboot_button,
-                  lockscreen_button,
-                  sleep_button,
-                  logout_button,
-                },
-              },
-            },
+            shutdown_button,
+            reboot_button,
+            lockscreen_button,
+            sleep_button,
+            logout_button,
           },
         },
       },
