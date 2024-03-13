@@ -64,45 +64,46 @@ local control_btns = Wibox.widget({
     prev_btn,
   },
 })
-local player_fg = User.config.dark_mode and Beautiful.fg_normal
-    or color_lib.lightness("darken", 15, Beautiful.foreground_alt)
+local player_fg = User.config.dark_mode and Beautiful.fg_normal or Beautiful.foreground_alt
+-- local player_fg = User.config.dark_mode and Beautiful.fg_normal
+--     or color_lib.lightness("darken", 15, Beautiful.foreground_alt)
 local player_btn = wbutton.elevated.normal({
   child = {
     layout = Wibox.layout.fixed.horizontal,
     spacing = dpi(6),
-    {
-      widget = Wibox.widget.textbox,
-      markup = Helpers.text.colorize_text("󰃨", Beautiful.yellow),
-      font = Beautiful.font_icon .. "14",
-      halign = "left",
-      valign = "center",
-    },
+    -- {
+    --   widget = Wibox.widget.textbox,
+    --   markup = Helpers.text.colorize_text("󰃨", Beautiful.accent_color),
+    --   font = Beautiful.font_icon .. "14",
+    --   halign = "left",
+    --   valign = "center",
+    -- },
     {
       widget = Wibox.widget.textbox,
       markup = Helpers.text.colorize_text(User.music.names[User.music.current_player] or "none", player_fg),
       id = "player_name",
-      font = Beautiful.font_text .. "11",
-      halign = "left",
+      font = Beautiful.font_text .. "SemiBold 11",
+      halign = "center",
       valign = "center",
     },
   },
   paddings = {
     top = dpi(4),
     bottom = dpi(4),
-    left = dpi(8),
-    right = dpi(8),
+    left = dpi(10),
+    right = dpi(10),
   },
-  bg_normal = Beautiful.transparent,
+  bg_normal = player_fg .. "33",
   -- bg_normal = color_lib.lightness(
   --   Beautiful.color_method,
   --   Beautiful.color_method_factor * 0.5,
   --   Beautiful.quicksettings_widgets_bg
   -- ),
   shape = Gears.shape.rounded_bar,
-  on_release = function()
+  on_press = function()
     Playerctl:next_player()
   end,
-  on_secondary_release = function()
+  on_secondary_press = function()
     Playerctl:prev_player()
   end,
 })
@@ -153,13 +154,13 @@ local music_art_overlay = Wibox.widget({
 
 local music_title = wtext({
   text = "Titulo",
-  color = User.config.dark_mode and Beautiful.fg_normal or Beautiful.foreground_alt,
+  color = player_fg,
   font = Beautiful.font_text .. "SemiBold",
   size = 11,
 })
 local music_artist = wtext({
   text = "Artistas",
-  color = Beautiful.yellow,
+  color = player_fg,
   font = Beautiful.font_text .. "Medium",
   size = 10,
   italic = true,
@@ -184,6 +185,7 @@ Playerctl:connect_signal("new_player", function(_)
   Helpers.gc(player_btn, "player_name"):set_markup_silently(new_player)
 end)
 
+
 -- [[ MAIN WIDGET ]]
 return Wibox.widget({
   layout = Wibox.layout.align.horizontal,
@@ -201,7 +203,7 @@ return Wibox.widget({
         {
           widget = Wibox.container.background,
           -- bg = Beautiful.foreground_alt .. "7A",
-          bg = User.config.dark_mode and Beautiful.quicksettings_bg .. "CC" or Beautiful.foreground .. "BB",
+          bg = User.config.dark_mode and Beautiful.quicksettings_bg .. "CB" or Beautiful.foreground .. "A8",
         },
       },
     },
@@ -209,10 +211,16 @@ return Wibox.widget({
       widget = Wibox.container.margin,
       margins = dpi(6),
       {
-        layout = Wibox.layout.align.vertical,
+        layout = Wibox.layout.fixed.vertical,
+        spacing = dpi(6),
+        {
+          layout = Wibox.container.place,
+          halign = "left",
+          player_btn,
+        },
         {
           widget = Wibox.container.margin,
-          left = dpi(4),
+          left = dpi(8),
           {
             layout = Wibox.layout.fixed.vertical,
             music_title,
@@ -220,11 +228,6 @@ return Wibox.widget({
           },
         },
         nil,
-        {
-          layout = Wibox.container.place,
-          halign = "left",
-          player_btn,
-        },
       },
     },
   },
