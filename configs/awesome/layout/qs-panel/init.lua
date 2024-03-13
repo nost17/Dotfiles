@@ -65,12 +65,6 @@ local function mkwidget(s)
     end
   end)
 
-  awesome.connect_signal("visible::app_launcher", function(vis)
-    if vis then
-      quicksettings.visible = false
-    end
-  end)
-
   Awful.mouse.append_client_mousebinding(Awful.button({}, 1, function(_)
     quicksettings.visible = false
   end))

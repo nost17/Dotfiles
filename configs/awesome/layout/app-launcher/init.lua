@@ -1082,8 +1082,4 @@ awesome.connect_signal("panels::app_launcher", function(action)
   end
 end)
 
-awesome.connect_signal("visible::quicksettings", function(vis)
-  if vis then
-    my_launcher:hide()
-  end
-end)
+

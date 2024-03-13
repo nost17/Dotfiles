@@ -32,11 +32,13 @@ awesome.connect_signal("panels::notification_center", function(action)
   awesome.emit_signal("visible::notification_center", main.visible)
 end)
 
-awesome.connect_signal("visible::quicksettings", function(vis)
-  if vis then
-    main.visible = false
-  end
-end)
+Awful.mouse.append_client_mousebinding(Awful.button({}, 1, function(c)
+  main.visible = false
+end))
+
+Awful.mouse.append_global_mousebinding(Awful.button({}, 1, function(c)
+  main.visible = false
+end))
 
 main:setup({
   {
