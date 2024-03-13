@@ -1,9 +1,9 @@
 local music_notify
 local firs_time = true
 local colorize_text = Helpers.text.colorize_text
-local next_button = Naughty.action({ name = "Siguiente" })
-local prev_button = Naughty.action({ name = "Anterior" })
-local toggle_button = Naughty.action({ name = "Continuar" })
+local next_button = Naughty.action({ name = "󰒭" })
+local prev_button = Naughty.action({ name = "󰒮" })
+local toggle_button = Naughty.action({ name = "󰐊" })
 next_button:connect_signal("invoked", function()
   Playerctl:next()
 end)
@@ -15,11 +15,19 @@ prev_button:connect_signal("invoked", function()
 end)
 Playerctl:connect_signal("status", function(_, playing)
   if playing then
-    toggle_button.name = "Pausar"
+    toggle_button.name = "󰏤"
   else
-    toggle_button.name = "Continuar"
+    toggle_button.name = "󰐊"
   end
 end)
+prev_button.font = Beautiful.font_icon
+toggle_button.font = prev_button.font
+next_button.font = prev_button.font
+
+prev_button.font_size = 14
+toggle_button.font_size = prev_button.font_size
+next_button.font_size = prev_button.font_size
+
 local function generate_markup(opts)
   local bold_start = ""
   local bold_end = ""
@@ -59,7 +67,7 @@ function Playerctl:notify()
     message = generate_markup({
       text = self._private.prev_metadata.artist,
       color = Beautiful.fg_normal,
-      underline = true,
+      underline = false,
     }),
     image = self._private.prev_metadata.cover_art,
     app_name = "Música",

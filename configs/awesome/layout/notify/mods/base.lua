@@ -3,7 +3,6 @@ local color_lib = Helpers.color
 local wbutton = require("utils.button")
 local icon_theme = require("utils.modules.icon_theme")()
 
-
 Naughty.config.maximum_width = dpi(540)
 Naughty.config.minimum_width = dpi(300)
 Naughty.config.defaults = {
@@ -51,10 +50,12 @@ local function actions_widget(n)
   for _, action in ipairs(n.actions) do
     local button = wbutton.text.normal({
       text = action.name,
-      font = Beautiful.font_text .. "Regular",
-      size = 10,
+      font = action.font or Beautiful.font_text .. "Regular",
+      size = action.font_size or 10,
       halign = "center",
       bg_normal = Beautiful.notification_bg_alt,
+      bg_hover = Beautiful.accent_color .. "32",
+      fg_hover =  Beautiful.accent_color,
       paddings = {
         top = dpi(4),
         bottom = dpi(4),
@@ -165,7 +166,6 @@ local function mknotification(n)
               valign = "center",
             },
           },
-          widget = Wibox.container.margin,
           n_title,
           n_message,
         },
@@ -180,23 +180,24 @@ local function mknotification(n)
   local notification = Naughty.layout.box({
     notification = n,
     type = "notification",
-    -- shape = Helpers.shape.rrect(Beautiful.notification_radius),
+    shape = Helpers.shape.rrect(Beautiful.small_radius),
     minimum_width = Naughty.config.minimum_width,
     maximum_width = Naughty.config.maximum_width,
     widget_template = {
-      layout = Wibox.layout.fixed.horizontal,
-      fill_space = true,
+      widget = Wibox.container.margin,
+      left = Beautiful.notification_padding * 0.75,
+      right = Beautiful.notification_padding * 0.75,
+      top = Beautiful.notification_padding * 0.75,
+      bottom = Beautiful.notification_padding * 0.75,
       {
-        widget = Wibox.container.background,
-        bg = accent_color,
-        forced_width = dpi(3),
-      },
-      {
-        widget = Wibox.container.margin,
-        left = Beautiful.notification_padding * 0.75,
-        right = Beautiful.notification_padding * 0.75,
-        top = Beautiful.notification_padding * 0.75,
-        bottom = Beautiful.notification_padding * 0.75,
+        layout = Wibox.layout.fixed.horizontal,
+        fill_space = true,
+        spacing = Beautiful.notification_padding * 0.75,
+        {
+          widget = Wibox.container.background,
+          bg = accent_color,
+          forced_width = dpi(3),
+        },
         visual_area,
       },
     },
