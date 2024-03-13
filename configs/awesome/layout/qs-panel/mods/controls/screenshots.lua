@@ -69,10 +69,10 @@ local screenshot_settings = Wibox.widget({
   layout = Wibox.layout.flex.horizontal,
   forced_height = dpi(42),
   {
-    widget = Wibox.widget.background,
+    widget = Wibox.container.background,
     wbutton.elevated.state({
       bg_normal_on = Beautiful.quicksettings_ctrl_btn_bg,
-      on_by_default = hide_cursor == false,
+      on_by_default = hide_cursor,
       paddings = { left = dpi(10), right = dpi(10) },
       halign = "left",
       child = {
@@ -80,7 +80,7 @@ local screenshot_settings = Wibox.widget({
         spacing = dpi(6),
         {
           widget = Wibox.widget.textbox,
-          text = hide_cursor == false and "󰄴" or "󰏝",
+          text = hide_cursor and "󰄴" or "󰏝",
           font = Beautiful.font_icon .. "13",
           id = "hide_cursor_icon",
           halign = "center",
