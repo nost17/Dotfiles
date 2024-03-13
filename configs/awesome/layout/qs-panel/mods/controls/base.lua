@@ -146,8 +146,8 @@ function templates.simple(opts)
     bg_normal_on = Beautiful.quicksettings_ctrl_btn_bg_on,
     halign = "center",
     paddings = {
-      top = dpi(19),
-      bottom = dpi(19),
+      -- top = dpi(19),
+      -- bottom = dpi(19),
     },
     on_turn_on = function()
       if opts.on_fn then

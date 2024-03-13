@@ -19,7 +19,7 @@ local calendar_widget = Awful.popup({
   end,
   widget = {
     widget = Wibox.container.margin,
-    margins = dpi(10),
+    margins = dpi(15),
     {
       layout = Wibox.layout.fixed.vertical,
       spacing = dpi(10),
