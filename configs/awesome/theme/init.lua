@@ -46,7 +46,7 @@ theme.gap_single_client = true
 theme.awesome_icon = themes_path .. "images/awesome.png"
 theme.user_icon = themes_path .. "images/user_icon.png"
 theme.small_radius = dpi(2)
-theme.medium_radius = dpi(4)
+theme.medium_radius = dpi(5)
 
 -- WIDGETS
 theme.widget_bg = theme.bg_normal
@@ -185,7 +185,7 @@ theme.notification_border_width = 0
 theme.notification_border_color = theme.black
 theme.notification_border_radius = theme.small_radius
 theme.notification_icon_type = "image"
-theme.notification_padding = dpi(16)
+theme.notification_padding = dpi(12)
 
 -- MENUBAR
 theme.menubar_fg_normal = theme.fg_normal .. "bb"

@@ -7,17 +7,17 @@ local function mk_slider(opts)
 		value = 10,
 		maximum = 100,
 		minimum = opts.min or 0,
-		forced_height = dpi(14),
+		forced_height = dpi(15),
 		bar_color = color_lib.lightness(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
 		bar_active_color = opts.color,
 		bar_margins = {
 			top = dpi(5),
 			bottom = dpi(5),
 		},
-		handle_width = dpi(14),
-		handle_shape = Helpers.shape.rrect(Beautiful.medium_radius),
+		handle_width = dpi(15),
+		handle_shape = Helpers.shape.rrect(Beautiful.small_radius),
 		handle_color = opts.color,
-		handle_border_width = dpi(2),
+		handle_border_width = dpi(3),
 		handle_border_color = Beautiful.widget_bg_alt,
 	})
 	local slider_icon = Wibox.widget({
@@ -101,7 +101,11 @@ return {
 					bottom = dpi(4),
 					volume_slider,
 				},
-				volume_slider_label,
+        {
+          layout = Wibox.container.place,
+          valign = "center",
+          volume_slider_label
+        },
 			},
 			{
 				layout = Wibox.layout.align.horizontal,
@@ -114,7 +118,11 @@ return {
 					bottom = dpi(4),
 					brightness_slider,
 				},
-				brightness_slider_label,
+        {
+          layout = Wibox.container.place,
+          valign = "center",
+          brightness_slider_label
+        },
 			},
 		},
 	},

@@ -420,8 +420,8 @@ end
 local function scroll_down(self)
   if #self._private.grid.children < 1 then
     self._private.active_widget = nil
-    -- return
-    page_forward(self, "down")
+    return
+    -- page_forward(self, "down")
   end
 
   local rows, columns = self._private.grid:get_dimension()
@@ -593,6 +593,7 @@ function app_launcher:show()
   self._private.prompt:start()
 
   screen.app_launcher.visible = true
+  reset(self)
 
   awesome.emit_signal("visible::app_launcher", true)
 end
@@ -768,6 +769,7 @@ local function new(args)
       and dpi((ret.app_height * ret.apps_per_row) + ((ret.apps_per_row - 1) * ret.apps_spacing))
       or nil
 
+  local first_time = true
   -- These widgets need to be later accessed
   ret._private.prompt = prompt({
     prompt = ret.prompt_text,
@@ -797,10 +799,9 @@ local function new(args)
       ret._private.text = text
     end,
     keypressed_callback = function(mod, key, cmd)
-      if mod.Mod4 and key == "w" then
+      if key == "Escape"  then
         ret:hide()
-      end
-      if key == "Escape" then
+      elseif mod.Mod4 and key == "w" then
         ret:hide()
       end
 
@@ -1074,7 +1075,8 @@ awesome.connect_signal("panels::app_launcher", function(action)
     my_launcher:toggle()
   elseif action == "show" then
     my_launcher:show()
-    search(my_launcher, "")
+    reset(my_launcher)
+    -- search(my_launcher, "")
   elseif action == "hide" then
     my_launcher:hide()
   end

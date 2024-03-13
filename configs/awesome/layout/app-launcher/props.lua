@@ -8,6 +8,7 @@ local hover_color = color_lib.lightness(
 return {
   save_history = false,
   terminal = "kitty",
+  reset_on_hide = true,
   favorites = { "kitty", "firefox" },
   skip_empty_icons = false,
   shape = Helpers.shape.rrect(Beautiful.small_radius),
