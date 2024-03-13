@@ -38,7 +38,7 @@ Awful.keyboard.append_global_keybindings({
     { description = "mostrar atajos de teclado", group = "awesome" }
   ),
   Awful.key({ User.vars.modkey }, "c", function()
-    awesome.emit_signal("open::calendar")
+    awesome.emit_signal("panels::calendar", "toggle")
   end, { description = "Mostrar/Ocultar calendario", group = "awesome" }),
   Awful.key({ User.vars.modkey }, "b", function()
     awesome.emit_signal("panels::main-panel", "toggle")
