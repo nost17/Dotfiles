@@ -1,12 +1,8 @@
-local gobject = require("gears.object")
-local gtable = require("gears.table")
-local gshape = require("gears.shape")
-local wibox = require("wibox")
-local beautiful = require("beautiful")
-local helpers = require("utils.helpers")
 local wtext = require("utils.modules.text")
 local wbutton = require("utils.button")
-local dpi = beautiful.xresources.apply_dpi
+local gobject = Gears.object
+local gtable = Gears.table
+local dpi = Beautiful.xresources.apply_dpi
 local setmetatable = setmetatable
 local os = os
 
@@ -17,25 +13,25 @@ local calendar = { mt = {} }
 
 local style = {
   header = {
-    bg_normal = beautiful.widget_bg,
-    bg_hover = beautiful.widget_bg_alt,
-    fg_normal = beautiful.fg_normal,
+    bg_normal = Beautiful.widget_bg,
+    bg_hover = Beautiful.widget_bg_alt,
+    fg_normal = Beautiful.fg_normal,
   },
   days = {
-    font = beautiful.font_text .. "Medium 11",
-    fg_normal = beautiful.fg_normal .. "DD",
-    fg_other = beautiful.fg_normal .. "44",
+    font = Beautiful.font_text .. "Medium 11",
+    fg_normal = Beautiful.fg_normal .. "DD",
+    fg_other = Beautiful.fg_normal .. "44",
   },
 }
 
 local function day_name_widget(name)
-  return wibox.widget({
-    widget = wibox.container.background,
-    forced_width = dpi(30),
-    forced_height = dpi(30),
+  return Wibox.widget({
+    widget = Wibox.container.background,
+    forced_width = dpi(34),
+    forced_height = dpi(34),
     wtext({
       halign = "center",
-      color = beautiful.accent_color,
+      color = Beautiful.accent_color,
       size = 11,
       bold = true,
       text = name,
@@ -46,24 +42,24 @@ end
 local function date_widget(date, is_current, is_another_month)
   local text_color = style.days.fg_normal
   if is_current == true then
-    text_color = beautiful.foreground_alt
+    text_color = Beautiful.foreground_alt
   elseif is_another_month == true then
     text_color = style.days.fg_other
   end
 
-  return wibox.widget({
-    widget = wibox.container.background,
-    forced_width = dpi(30),
-    forced_height = dpi(30),
-    shape = helpers.shape.rrect(beautiful.small_radius),
-    bg = is_current and beautiful.accent_color,
+  return Wibox.widget({
+    widget = Wibox.container.background,
+    forced_width = dpi(34),
+    forced_height = dpi(34),
+    shape = Helpers.shape.rrect(Beautiful.small_radius),
+    bg = is_current and Beautiful.accent_color,
     fg = text_color,
     {
       text = tostring(date),
       halign = "center",
       valign = "center",
       font = style.days.font,
-      widget = wibox.widget.textbox,
+      widget = Wibox.widget.textbox,
     },
   })
 end
@@ -129,7 +125,7 @@ local function new()
   ret.month = wbutton.text.normal({
     text = tostring(os.date("%B %Y")):gsub("^%l", string.upper),
     size = 13,
-    font = beautiful.font_text .. "Medium",
+    font = Beautiful.font_text .. "Medium",
     halign = "left",
     bg_normal = style.header.bg_normal,
     bg_hover = style.header.bg_hover,
@@ -139,15 +135,15 @@ local function new()
     end,
   })
 
-  local month = wibox.widget({
-    layout = wibox.layout.align.horizontal,
+  local month = Wibox.widget({
+    layout = Wibox.layout.align.horizontal,
     nil,
     ret.month,
     {
-      layout = wibox.layout.flex.horizontal,
+      layout = Wibox.layout.flex.horizontal,
       wbutton.text.normal({
         text = "󰅃",
-        font = beautiful.font_icon,
+        font = Beautiful.font_icon,
         size = 18,
         bg_normal = style.header.bg_normal,
         bg_hover = style.header.bg_hover,
@@ -158,7 +154,7 @@ local function new()
       }),
       wbutton.text.normal({
         text = "󰅀",
-        font = beautiful.font_icon,
+        font = Beautiful.font_icon,
         size = 18,
         bg_normal = style.header.bg_normal,
         bg_hover = style.header.bg_hover,
@@ -170,16 +166,16 @@ local function new()
     },
   })
 
-  ret.days = wibox.widget({
-    layout = wibox.layout.grid,
+  ret.days = Wibox.widget({
+    layout = Wibox.layout.grid,
     forced_num_rows = 6,
     forced_num_cols = 7,
     spacing = dpi(8),
     expand = true,
   })
 
-  local widget = wibox.widget({
-    layout = wibox.layout.fixed.vertical,
+  local widget = Wibox.widget({
+    layout = Wibox.layout.fixed.vertical,
     -- spacing = dpi(0),
     month,
     ret.days,
@@ -193,12 +189,12 @@ end
 
 local main = new()
 
-local clock = wibox.widget({
-  widget = wibox.container.margin,
-  left = 10,
-  right = 10,
+local clock = Wibox.widget({
+  widget = Wibox.container.margin,
+  -- left = 10,
+  -- right = 10,
   {
-    layout = wibox.layout.fixed.vertical,
+    layout = Wibox.layout.fixed.vertical,
     {
       widget = Wibox.widget.textclock,
       format = "%H:%M:%S",
@@ -207,8 +203,8 @@ local clock = wibox.widget({
       halign = "left",
     },
     {
-      widget = wibox.container.background,
-      fg = beautiful.fg_normal .. "CC",
+      widget = Wibox.container.background,
+      fg = Beautiful.fg_normal .. "CC",
       {
         widget = Wibox.widget.textclock,
         format = "%A, %B %d, %Y",
@@ -226,28 +222,29 @@ local calendar_widget = Awful.popup({
   border_color = Beautiful.border_color_normal,
   minimum_height = 330,
   -- maximum_height = 500,
-  minimum_width = 346,
-  maximum_width = 500,
+  -- minimum_width = 400,
+  maximum_width = 400,
   placement = function(d)
     Awful.placement.bottom_left(d, {
       honor_workarea = true,
-      margins = Beautiful.useless_gap * 4 + Beautiful.border_width * 2,
+      margins = Beautiful.useless_gap * 2 + Beautiful.border_width * 2,
     })
   end,
   widget = {
-    widget = wibox.container.margin,
+    widget = Wibox.container.margin,
     margins = dpi(10),
     {
-      layout = wibox.layout.fixed.vertical,
+      layout = Wibox.layout.fixed.vertical,
       spacing = dpi(10),
-      clock,
       {
-        widget = wibox.container.margin,
-        top = dpi(4),
+        widget = Wibox.container.background,
+        bg = Beautiful.widget_bg_alt,
         {
-          widget = wibox.container.background,
-          forced_height = 3,
-          bg = beautiful.fg_normal .. "AA",
+          widget = Wibox.container.margin,
+          bottom = dpi(10),
+          left = dpi(10),
+          right = dpi(10),
+          clock,
         },
       },
       main,
