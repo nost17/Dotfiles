@@ -57,18 +57,18 @@ Repositorio de configuración del entorno AwesomeWM y otros programas
 - [ ] Implementar monitores de estado al panel de ajustes rapidos
   - [ ] Reorganizar ajustes rapidos
     - [ ] Agregar monitores en el widget de controles
-    - [ ] Cambiar diseño de botones a simple
-      - [ ] Modo oscuro
-      - [ ] Alerta de canciones
-      - [ ] Modo flotante
-      - [ ] Luz nocturna
+    - [X] Cambiar diseño de botones a simple
+      - [X] Modo oscuro
+      - [X] Alerta de canciones
+      - [X] Modo flotante
+      - [X] Luz nocturna
   - [ ] Agregar monitores
     - [ ] Agregar libreria de señales para CPU
     - [ ] Agregar libreria de señales para RAM
     - [ ] Agregar libreria de señales para DISCO
     - [ ] Agregar libreria de señales para TEMPERATURA
-  - [ ] Agregar plantilla para los monitores
-  - [ ] Agregar nueva plantilla simple para botones de ajustes rapidos
+  - [X] Agregar plantilla para los monitores
+  - [X] Agregar nueva plantilla simple para botones de ajustes rapidos
 - [ ] Implementación y re-diseño de ajustes rápidos
   - [x] Agregar alternador de modo oscuro/claro
   - [x] Agregar boton de captura de Pantalla

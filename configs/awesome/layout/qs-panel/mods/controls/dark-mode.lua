@@ -30,6 +30,7 @@ end
 local dark_mode_state = button_template({
   icon = "󰤄",
   name = "Modo oscuro",
+  type = "simple",
   on_by_default = User.config.dark_mode,
   on_fn = function()
     changeTheme("dark")

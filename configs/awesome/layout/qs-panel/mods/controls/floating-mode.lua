@@ -5,6 +5,7 @@ local prev_clients = {}
 local floating_mode = button_template({
   icon = "󰀿",
   name = "Modo flotante",
+  type = "simple",
   on_fn = function()
     User.config.floating_mode = true
     for _, c in ipairs(client.get(Awful.screen.focused())) do

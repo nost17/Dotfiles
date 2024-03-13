@@ -1,7 +1,8 @@
 local wbutton = require("utils.button")
 local dpi = Beautiful.xresources.apply_dpi
+local templates = {}
 
-local mktemplate = function(opts)
+function templates.default(opts)
   opts.state_label_on = opts.state_label_on or "Encendido"
   opts.state_label_off = opts.state_label_off or "Apagado"
   local base_settings = opts.settings
@@ -69,7 +70,7 @@ local mktemplate = function(opts)
       left = dpi(10),
       right = dpi(8),
       top = dpi(8),
-      bottom = dpi(8)
+      bottom = dpi(8),
     },
     on_turn_on = function()
       turn_on_btn()
@@ -128,4 +129,51 @@ local mktemplate = function(opts)
   return base_layout
 end
 
-return mktemplate
+function templates.simple(opts)
+  local base_button = wbutton.text.state({
+    text = opts.icon,
+    font = Beautiful.font_icon,
+    size = 16,
+    shape = Beautiful.quicksettings_ctrl_btn_shape,
+    -- shape = Gears.shape.circle,
+    -- bg_normal = Beautiful.quicksettings_ctrl_btn_bg,
+    fg_normal_on = Beautiful.quicksettings_ctrl_btn_fg_on,
+    bg_normal = Helpers.color.lightness(
+      Beautiful.color_method,
+      Beautiful.color_method_factor,
+      Beautiful.quicksettings_ctrl_btn_bg
+    ),
+    bg_normal_on = Beautiful.quicksettings_ctrl_btn_bg_on,
+    halign = "center",
+    paddings = {
+      top = dpi(19),
+      bottom = dpi(19),
+    },
+    on_turn_on = function()
+      if opts.on_fn then
+        opts.on_fn()
+      end
+    end,
+    on_turn_off = function()
+      if opts.off_fn then
+        opts.off_fn()
+      end
+    end,
+    on_release = opts.on_release and function()
+      opts.on_release()
+    end,
+  })
+
+  if opts.on_by_default then
+    base_button:turn_on()
+  end
+  return base_button
+end
+
+return function(opts)
+  if opts.type == "simple" then
+    return templates.simple(opts)
+  else
+    return templates.default(opts)
+  end
+end
