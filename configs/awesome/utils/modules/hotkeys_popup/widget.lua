@@ -101,7 +101,7 @@ local function join_plus_sort(modifiers)
         return "none"
     end
     table.sort(modifiers)
-    return table.concat(modifiers, "+")
+    return table.concat(modifiers, "  " .. markup.bg(beautiful.hotkeys_bg, " +  ") .. "  ")
 end
 
 local function get_screen(s)
@@ -177,7 +177,7 @@ widget.labels = {
     Control = "Ctrl",
     Mod1 = "Alt",
     ISO_Level3_Shift = "Alt Gr",
-    Mod4 = "Super",
+    Mod4 = "󰖳\t",
     Insert = "Ins",
     Delete = "Del",
     Next = "PgDn",
@@ -570,7 +570,18 @@ function widget.new(args)
             table.insert(keys, { key = "▽", description = "" })
         end
         if not current_column then
-            current_column = { layout = wibox.layout.fixed.vertical() }
+            current_column = {
+                layout = wibox.layout.fixed.vertical(),
+                -- layout = wibox.widget({
+                --     layout = wibox.layout.grid,
+                --     forced_num_cols = 2,
+                --     spacing = 8,
+                --     vertical_spacing = 8,
+                --     horizontal_expand = false,
+                --     horizontal_homogeneous = false,
+                --     expand = false,
+                -- }),
+            }
         end
         current_column.layout.spacing = dpi(self.group_margin * 0.3)
         current_column.layout:add(self:_group_label(group))
@@ -583,7 +594,7 @@ function widget.new(args)
                 if not modifiers or modifiers == "none" then
                     modifiers = ""
                 else
-                    modifiers = markup.fg(self.modifiers_fg, modifiers .. " + ")
+                    modifiers = markup.bg(beautiful.gray .. "22", "  " .. modifiers .. "  ") .. " + "
                 end
                 local key_label = ""
                 if key.keylist and #key.keylist > 1 then
@@ -598,11 +609,12 @@ function widget.new(args)
                     key_label = gstring.xml_escape(key.key)
                 end
                 local rendered_hotkey = markup.font(self.font, modifiers .. key_label .. " ")
-                    .. markup.font(self.description_font, key.description or "")
+                    .. markup.font(self.description_font, markup.fg(beautiful.fg_normal .. "99", key.description or ""))
                 local label_width = wibox.widget.textbox.get_markup_geometry(rendered_hotkey, s).width
                 if label_width > max_label_width then
                     max_label_width = label_width
                 end
+                -- current_column.layout:add(wibox.widget.textbox(rendered_hotkey))
                 joined_labels = joined_labels .. rendered_hotkey .. (i ~= #ik_keys and "\n" or "")
             end
             current_column.layout:add(wibox.widget.textbox(joined_labels))
@@ -647,7 +659,11 @@ function widget.new(args)
         -- arrange columns into pages
         local available_width_px = wibox_width
         local pages = {}
-        local columns = wibox.layout.fixed.horizontal()
+        local columns = wibox.widget({
+            layout = wibox.layout.grid.horizontal,
+            horizontal_homogeneous = false,
+            spacing = self.group_margin,
+        })
         local previous_page_last_layout
         for _, item in ipairs(column_layouts) do
             if item.max_width > available_width_px then
@@ -661,8 +677,8 @@ function widget.new(args)
             end
             local column_margin = wibox.container.margin()
             column_margin:set_widget(item.layout)
-            column_margin:set_left(self.group_margin)
-            column_margin:set_top(self.group_margin)
+            -- column_margin:set_left(self.group_margin)
+            -- column_margin:set_top(self.group_margin)
             columns:add(column_margin)
             previous_page_last_layout = item.layout
         end
@@ -675,9 +691,16 @@ function widget.new(args)
             awful.placement.centered(c, { honor_workarea = true })
         end
 
+        local set_margin = function(wdg, margins)
+            return wibox.widget({
+                widget = wibox.container.margin,
+                margins = margins,
+                wdg,
+            })
+        end
         -- Construct the popup with the widget
         local mypopup = awful.popup({
-            widget = pages[1],
+            widget = set_margin(pages[1], self.group_margin),
             ontop = true,
             bg = self.bg,
             fg = self.fg,
@@ -713,7 +736,7 @@ function widget.new(args)
                 return
             end
             w_self.current_page = w_self.current_page + 1
-            w_self.popup:set_widget(pages[w_self.current_page])
+            w_self.popup:set_widget(set_margin(pages[w_self.current_page], self.group_margin))
         end
 
         function widget_obj.page_prev(w_self)
@@ -721,7 +744,7 @@ function widget.new(args)
                 return
             end
             w_self.current_page = w_self.current_page - 1
-            w_self.popup:set_widget(pages[w_self.current_page])
+            w_self.popup:set_widget(set_margin(pages[w_self.current_page], self.group_margin))
         end
 
         function widget_obj.show(w_self)
