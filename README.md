@@ -54,19 +54,19 @@ Repositorio de configuración del entorno AwesomeWM y otros programas
   - [ ] Intercambiar boton de "No molestar" con el de captura de pantalla
   - [ ] Mover boton de Alerta de musica al widget de control de musica
   - [ ] Intercambiar boton de "Alerta de Música" con el de "No molestar"
-- [ ] Implementar monitores de estado al panel de ajustes rapidos
-  - [ ] Reorganizar ajustes rapidos
+- [X] Implementar monitores de estado al panel de ajustes rapidos
+  - [X] Reorganizar ajustes rapidos
     - [X] Agregar monitores en el widget de controles
     - [X] Cambiar diseño de botones a simple
       - [X] Modo oscuro
       - [X] Alerta de canciones
       - [X] Modo flotante
       - [X] Luz nocturna
-  - [ ] Agregar monitores
-    - [ ] Agregar libreria de señales para CPU
-    - [ ] Agregar libreria de señales para RAM
-    - [ ] Agregar libreria de señales para DISCO
-    - [ ] Agregar libreria de señales para TEMPERATURA
+  - [X] Agregar monitores
+    - [X] Agregar libreria de señales para CPU
+    - [X] Agregar libreria de señales para RAM
+    - [X] Agregar libreria de señales para DISCO
+    - [X] Agregar libreria de señales para TEMPERATURA
   - [X] Agregar plantilla para los monitores
   - [X] Agregar nueva plantilla simple para botones de ajustes rapidos
 - [ ] Implementación y re-diseño de ajustes rápidos
