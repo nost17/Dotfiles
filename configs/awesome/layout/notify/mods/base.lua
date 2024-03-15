@@ -145,7 +145,7 @@ local function mknotification(n)
     {
       layout = Wibox.layout.fixed.horizontal,
       fill_space = true,
-      spacing = Beautiful.notification_padding * 0.75,
+      spacing = Beautiful.notification_padding,
       n_image,
       {
         layout = Wibox.container.place,
@@ -185,14 +185,14 @@ local function mknotification(n)
     maximum_width = Naughty.config.maximum_width,
     widget_template = {
       widget = Wibox.container.margin,
-      left = Beautiful.notification_padding * 0.75,
-      right = Beautiful.notification_padding * 0.75,
-      top = Beautiful.notification_padding * 0.75,
-      bottom = Beautiful.notification_padding * 0.75,
+      left = Beautiful.notification_padding,
+      right = Beautiful.notification_padding,
+      top = Beautiful.notification_padding,
+      bottom = Beautiful.notification_padding,
       {
         layout = Wibox.layout.fixed.horizontal,
         fill_space = true,
-        spacing = Beautiful.notification_padding * 0.75,
+        spacing = Beautiful.notification_padding,
         {
           widget = Wibox.container.background,
           bg = accent_color,
