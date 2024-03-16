@@ -6,6 +6,7 @@ local main = Wibox({
   height = screen_height - dpi(4) - Beautiful.useless_gap * 2,
   width = dpi(360),
   bg = Beautiful.bg_normal,
+  shape = Helpers.shape.rrect(Beautiful.small_radius),
   visible = false,
   ontop = true,
   screen = screen.primary,

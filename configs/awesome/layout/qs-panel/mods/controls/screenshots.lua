@@ -149,7 +149,7 @@ screenshot.settings = Wibox.widget({
 })
 
 screenshot.button = button_template({
-  icon = "󰄅",
+  icon = "󰄀",
   name = "Captura de pantalla",
   halign = "center",
   on_fn = function()
