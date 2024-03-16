@@ -1,19 +1,20 @@
 local screenshot_lib = require("utils.modules.screenshot")
 local wbutton = require("utils.button")
+local button_template = require("layout.qs-panel.mods.controls.base")
 local dpi = Beautiful.xresources.apply_dpi
 local delay_count = 0
 local hide_cursor = false
+local new_bg =
+    Helpers.color.lightness(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.quicksettings_ctrl_btn_bg)
 
 local function button(icon, fn, size)
   return wbutton.text.normal({
     text = icon,
     font = Beautiful.font_icon,
     size = size or 14,
-    bg_normal = Beautiful.quicksettings_ctrl_btn_bg,
-    paddings = {
-      left = dpi(10),
-      right = dpi(10),
-    },
+    bg_normal = new_bg,
+    shape = Beautiful.quicksettings_ctrl_btn_shape,
+    paddings = dpi(10),
     on_release = fn or function()
       Naughty.notification({
         title = "holis",
@@ -66,14 +67,17 @@ local screenshot_selective = button("󰆞", function()
 end)
 
 local screenshot_settings = Wibox.widget({
-  layout = Wibox.layout.flex.horizontal,
-  forced_height = dpi(42),
+  layout = Wibox.layout.flex.vertical,
+  spacing = dpi(10),
+  -- forced_height = dpi(42),
   {
     widget = Wibox.container.background,
     wbutton.elevated.state({
-      bg_normal_on = Beautiful.quicksettings_ctrl_btn_bg,
+      bg_normal = new_bg,
+      bg_normal_on = new_bg,
       on_by_default = hide_cursor,
-      paddings = { left = dpi(10), right = dpi(10) },
+      shape = Beautiful.quicksettings_ctrl_btn_shape,
+      paddings = dpi(10),
       halign = "left",
       child = {
         layout = Wibox.layout.fixed.horizontal,
@@ -105,42 +109,75 @@ local screenshot_settings = Wibox.widget({
     }),
   },
   {
-    layout = Wibox.layout.flex.horizontal,
-    button("󰍝", function()
-      if delay_count > 0 then
-        delay_count = delay_count - 1
+    widget = Wibox.container.background,
+    shape = Beautiful.quicksettings_ctrl_btn_shape,
+    bg = new_bg,
+    {
+      layout = Wibox.layout.flex.horizontal,
+      button("󰍝", function()
+        if delay_count > 0 then
+          delay_count = delay_count - 1
+          delay_label:set_text(delay_count)
+        end
+      end),
+      delay_label,
+      button("󰍠", function()
+        delay_count = delay_count + 1
         delay_label:set_text(delay_count)
-      end
-    end),
-    delay_label,
-    button("󰍠", function()
-      delay_count = delay_count + 1
-      delay_label:set_text(delay_count)
-    end),
+      end),
+    },
   },
 })
 
 local screenshot = Wibox.widget({
   widget = Wibox.container.background,
-  bg = Beautiful.quicksettings_ctrl_btn_bg,
+  bg = Beautiful.quicksettings_widgets_bg,
   shape = Beautiful.quicksettings_ctrl_btn_shape,
   {
-    layout = Wibox.layout.flex.vertical,
+    widget = Wibox.container.margin,
+    margins = dpi(10),
     {
       layout = Wibox.layout.flex.horizontal,
-      forced_height = dpi(42),
-      screenshot_normal,
-      screenshot_selective,
+      spacing = dpi(10),
+      screenshot_settings,
+      {
+        layout = Wibox.layout.flex.horizontal,
+        spacing = dpi(10),
+        -- forced_height = dpi(42),
+        screenshot_normal,
+        screenshot_selective,
+      },
     },
-    screenshot_settings,
   },
 })
 
-awesome.connect_signal("visible::quicksettings:sc", function(vis)
+local screenshot_btn
+screenshot_btn = button_template({
+  icon = "󰄄",
+  name = "Capturar",
+  on_fn = function(self)
+    screenshot_btn:emit_signal("visible::settings", true)
+  end,
+  off_fn = function(self)
+    screenshot_btn:emit_signal("visible::settings", false)
+  end,
+})
+
+screenshot_btn:connect_signal("visible::settings", function(self, vis)
   if vis then
     delay_count = 0
     delay_label:set_text(delay_count)
   end
 end)
 
-return screenshot
+awesome.connect_signal("visible::quicksettings", function(vis)
+  if vis == false then
+    screenshot_btn:emit_signal("visible::settings", false)
+    screenshot_btn:turn_off()
+  end
+end)
+
+return {
+  setttings = screenshot,
+  button = screenshot_btn,
+}

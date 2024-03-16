@@ -108,6 +108,52 @@ local player_btn = wbutton.elevated.normal({
   end,
 })
 
+local notify_button = wbutton.text.state({
+  text = "󰂚",
+  font = Beautiful.font_icon,
+  size = 15,
+  shape = Gears.shape.circle,
+  fg_normal = player_fg .. "54",
+  bg_normal = Beautiful.transparent,
+  fg_normal_on = player_fg,
+  on_by_default = User.config.music_notify,
+  on_turn_on = function()
+    User.config.music_notify = true
+  end,
+  on_turn_off = function()
+    User.config.music_notify = false
+  end,
+  paddings = {},
+})
+
+local random_button = wbutton.text.state({
+  text = "󰒝",
+  font = Beautiful.font_icon,
+  size = 15,
+  bold = true,
+  shape = Gears.shape.circle,
+  fg_normal = player_fg .. "54",
+  bg_normal = Beautiful.transparent,
+  fg_normal_on = player_fg,
+  on_turn_on = function() end,
+  on_turn_off = function() end,
+  paddings = {},
+})
+
+local repeat_button = wbutton.text.state({
+  text = "󰑖",
+  font = Beautiful.font_icon,
+  size = 15,
+  bold = true,
+  shape = Gears.shape.circle,
+  fg_normal = player_fg .. "54",
+  bg_normal = Beautiful.transparent,
+  fg_normal_on = player_fg,
+  on_turn_on = function() end,
+  on_turn_off = function() end,
+  paddings = {},
+})
+
 -- [[ COVERT ART ]]
 
 local music_art = Wibox.widget({
@@ -185,7 +231,6 @@ Playerctl:connect_signal("new_player", function(_)
   Helpers.gc(player_btn, "player_name"):set_markup_silently(new_player)
 end)
 
-
 -- [[ MAIN WIDGET ]]
 return Wibox.widget({
   layout = Wibox.layout.align.horizontal,
@@ -203,24 +248,21 @@ return Wibox.widget({
         {
           widget = Wibox.container.background,
           -- bg = Beautiful.foreground_alt .. "7A",
-          bg = User.config.dark_mode and Beautiful.quicksettings_bg .. "CB" or Beautiful.foreground .. "A8",
+          bg = User.config.dark_mode and Beautiful.quicksettings_bg .. "CC" or Beautiful.foreground .. "AA",
         },
       },
     },
     {
       widget = Wibox.container.margin,
-      margins = dpi(6),
+      top = dpi(6),
+      bottom = dpi(10),
+      left = dpi(10),
+      right = dpi(10),
       {
-        layout = Wibox.layout.fixed.vertical,
+        layout = Wibox.layout.align.vertical,
         spacing = dpi(6),
         {
-          layout = Wibox.container.place,
-          halign = "left",
-          player_btn,
-        },
-        {
           widget = Wibox.container.margin,
-          left = dpi(8),
           {
             layout = Wibox.layout.fixed.vertical,
             music_title,
@@ -228,6 +270,34 @@ return Wibox.widget({
           },
         },
         nil,
+        {
+          widget = Wibox.container.margin,
+          {
+            layout = Wibox.layout.align.horizontal,
+            player_btn,
+            nil,
+            -- halign = "left",
+            {
+              widget = Wibox.container.background,
+              bg = player_fg .. "33",
+              shape = Gears.shape.rounded_bar,
+              {
+                widget = Wibox.container.margin,
+                top = dpi(4),
+                bottom = dpi(4),
+                left = dpi(10),
+                right = dpi(10),
+                {
+                  layout = Wibox.layout.fixed.horizontal,
+                  spacing = dpi(6),
+                  repeat_button,
+                  random_button,
+                  notify_button,
+                },
+              },
+            },
+          },
+        },
       },
     },
   },

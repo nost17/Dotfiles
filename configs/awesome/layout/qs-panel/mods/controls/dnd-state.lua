@@ -3,6 +3,7 @@ local button_template = require("layout.qs-panel.mods.controls.base")
 local dnd_state = button_template({
   icon = "󰍶",
   name = "No molestar",
+  type = "simple",
   on_by_default = User.config.dnd_state,
   on_fn = function()
     Naughty.destroy_all_notifications(nil, 1)
