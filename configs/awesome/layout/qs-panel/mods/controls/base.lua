@@ -26,7 +26,7 @@ function templates.default(opts)
     fg = Beautiful.quicksettings_ctrl_btn_fg .. "CF",
     {
       layout = Wibox.layout.fixed.horizontal,
-      spacing = dpi(9),
+      spacing = dpi(8),
       {
         widget = Wibox.widget.textbox,
         id = "icon",
@@ -41,7 +41,7 @@ function templates.default(opts)
         text = opts.name,
         ellipsize = "none",
         wrap = "word",
-        font = Beautiful.font_text .. "Medium 10",
+        font = Beautiful.font_text .. "Medium 11",
         halign = "center",
         valign = "center",
       },
@@ -65,7 +65,7 @@ function templates.default(opts)
     fg_normal_on = Beautiful.quicksettings_ctrl_btn_fg_on,
     bg_normal = Beautiful.quicksettings_ctrl_btn_bg,
     bg_normal_on = Beautiful.quicksettings_ctrl_btn_bg_on,
-    halign = "left",
+    halign = opts.halign or "left",
     paddings = {
       left = dpi(10),
       right = dpi(8),
