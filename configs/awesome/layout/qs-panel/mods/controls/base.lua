@@ -72,16 +72,16 @@ function templates.default(opts)
       top = dpi(8),
       bottom = dpi(8),
     },
-    on_turn_on = function()
+    on_turn_on = function(...)
       turn_on_btn()
       if opts.on_fn then
-        opts.on_fn()
+        opts.on_fn(...)
       end
     end,
-    on_turn_off = function()
+    on_turn_off = function(...)
       turn_off_btn()
       if opts.off_fn then
-        opts.off_fn()
+        opts.off_fn(...)
       end
     end,
     on_release = opts.on_release and function()

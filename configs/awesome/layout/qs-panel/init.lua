@@ -18,12 +18,10 @@ local function mkwidget(s)
   local controls = require("layout.qs-panel.mods.controls")
   local sliders = require("layout.qs-panel.mods.sliders")
   local user_info = require("layout.qs-panel.mods.user-info")
-  local screenshot = require("layout.qs-panel.mods.controls.screenshots")
   local quicksettings_layout = Wibox.widget({
     layout = Wibox.layout.fixed.vertical,
     spacing = dpi(10),
     user_info,
-    -- screenshot,
     sliders,
     controls,
     music,
@@ -57,13 +55,6 @@ local function mkwidget(s)
     awesome.emit_signal("visible::quicksettings", quicksettings.visible)
   end)
 
-  awesome.connect_signal("visible::quicksettings:sc", function(vis)
-    if vis then
-      quicksettings_layout:insert(2, screenshot)
-    else
-      quicksettings_layout:remove_widgets(screenshot, true)
-    end
-  end)
 
   Awful.mouse.append_client_mousebinding(Awful.button({}, 1, function(_)
     quicksettings.visible = false

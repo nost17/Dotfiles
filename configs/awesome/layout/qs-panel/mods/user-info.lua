@@ -73,51 +73,9 @@ local battery = Wibox.widget({
   layout = Wibox.layout.fixed.horizontal,
 })
 
--- [[ SCREENSHOT ]]
-
--- function(self)
---   screenshot_settings.visible = not screenshot_settings.visible
---   if screenshot_settings.visible then
---     self:set_text("󰍟")
---   else
---     self:set_text("󰍝")
---   end
--- end
-
-local show_sc_settings = require("utils.button").text.state({
-  text = "󰄄󰍝",
-  font = Beautiful.font_icon,
-  shape = Beautiful.quicksettings_ctrl_btn_shape,
-  bg_normal_on = Beautiful.accent_color,
-  fg_normal_on = Beautiful.foreground_alt,
-  paddings = {
-    left = dpi(10),
-    right = dpi(6),
-    top = dpi(7),
-    bottom = dpi(7),
-  },
-  size = 15,
-  on_turn_on = function(self)
-    self:set_text("󰄄󰍞")
-    awesome.emit_signal("visible::quicksettings:sc", true)
-  end,
-  on_turn_off = function(self)
-    self:set_text("󰄄󰍝")
-    awesome.emit_signal("visible::quicksettings:sc", false)
-  end,
-})
-
-awesome.connect_signal("visible::quicksettings", function(vis)
-  if vis == false then
-    show_sc_settings:set_text("󰄄󰍝")
-    awesome.emit_signal("visible::quicksettings:sc", false)
-    show_sc_settings:turn_off()
-  end
-end)
-
 return Wibox.widget({
   layout = Wibox.layout.align.horizontal,
   battery,
   nil,
-  show_sc_settings,
+  nil,
 })
