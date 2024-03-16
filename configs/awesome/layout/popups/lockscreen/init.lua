@@ -3,6 +3,8 @@ local screen_width = screen.primary.geometry.width
 local dpi = Beautiful.xresources.apply_dpi
 local lua_pam = require("liblua_pam")
 local prompt = require("layout.app-launcher.prompt")
+local battery = require("layout.popups.lockscreen.battery_lock")
+local music = require("layout.popups.lockscreen.music_lock")
 local input_prompt = {}
 
 if User.config.dark_mode then
@@ -19,6 +21,7 @@ Beautiful.lockscreen_placeholder_text = "Contraseña"
 Beautiful.lockscreen_clock_font = Beautiful.font_text .. "Medium 60"
 Beautiful.lockscreen_promptbox_bg = Beautiful.widget_bg
 Beautiful.lockscreen_promptbox_shape = Helpers.shape.rrect(Beautiful.medium_radius)
+Beautiful.lockscreen_promptbox_bar_padding = dpi(12)
 Beautiful.lockscreen_usericon_bg = Beautiful.yellow
 Beautiful.lockscreen_usericon_fg = Beautiful.foreground_alt
 Beautiful.lockscreen_passicon_bg = Beautiful.blue
@@ -38,7 +41,7 @@ local function create_prompt_icon(icon, color, bg, id)
       widget = Wibox.container.background,
       bg = bg,
       fg = color,
-      shape = Helpers.shape.rrect(Beautiful.medium_radius),
+      shape = Helpers.shape.rrect(Beautiful.small_radius),
       -- shape = Gears.shape.circle,
       forced_width = size,
       forced_height = size,
@@ -54,6 +57,25 @@ local function create_prompt_icon(icon, color, bg, id)
     },
   })
 end
+local function create_prompt_bar(icon, children, fg)
+  return Wibox.widget({
+    widget = Wibox.container.background,
+    forced_width = dpi(320),
+    shape = Beautiful.lockscreen_prompt_shape,
+    bg = Beautiful.lockscreen_prompt_bg,
+    fg = fg or Beautiful.fg_normal,
+    {
+      widget = Wibox.container.margin,
+      margins = Beautiful.lockscreen_promptbox_bar_padding,
+      {
+        layout = Wibox.layout.stack,
+        children,
+        icon,
+      },
+    },
+  })
+end
+
 local user_icon =
     create_prompt_icon("󰀄", Beautiful.lockscreen_usericon_fg, Beautiful.lockscreen_usericon_bg, "user_icon")
 local pass_icon =
@@ -123,7 +145,7 @@ input_prompt.widget = prompt({
       Helpers.gc(pass_icon, "pass_icon_bg").bg = Beautiful.lockscreen_passicon_bg
     end
   end,
-  keypressed_callback = function(_, key, _)
+  keypressed_callback = function(mod, key, _)
     if key == "Escape" then
       input_prompt.widget:stop()
     end
@@ -161,97 +183,34 @@ local background = Wibox.widget({
   forced_width = screen_width,
   scaling_quality = "fast",
 })
-local overlay = Wibox.widget({
-  widget = Wibox.container.background,
-  bg = Beautiful.lockscreen_overlay_color,
-  forced_height = background.forced_height,
-  forced_width = background.forced_width,
-})
-local setBlur = function()
-  local cache_dir = Gears.filesystem.get_cache_dir()
-  local cmd = "convert "
-      .. Beautiful.lockscreen_wallpaper_bg
-      .. " -filter Gaussian -blur 0x6 "
-      .. cache_dir
-      .. "lock.png"
-  Awful.spawn.easy_async_with_shell(cmd, function()
-    background:set_image(Gears.surface.load_uncached(cache_dir .. "lock.png"))
-  end)
-end
 -- setBlur()
 background:set_image(Gears.surface.load_silently(Beautiful.lockscreen_wallpaper_bg))
 
 -- Clock
 local clock = Wibox.widget({
-  layout = Wibox.layout.fixed.vertical,
-  {
-    font = Beautiful.font_text .. "Medium 110",
-    id = "hour",
-    format = "%H:%M",
-    halign = "center",
-    valign = "center",
-    widget = Wibox.widget.textclock,
-  },
-  {
-    font = Beautiful.font_text .. "Light 22",
-    id = "day",
-    halign = "center",
-    valign = "center",
-    widget = Wibox.widget.textbox,
-  },
+  widget = Wibox.widget.textclock,
+  font = Beautiful.font_text .. "Medium 18",
+  format = "%H:%M",
+  halign = "center",
+  valign = "center",
 })
-local function set_custom_date(wdg, child)
-  local a, b, c = tostring(os.date("%a")), tostring(os.date("%d")), tostring(os.date("%B"))
-  local new_day = a:gsub("^%l", string.upper) .. ", " .. b .. " " .. c:gsub("^%l", string.upper)
-  Helpers.gc(wdg, child):set_markup_silently(new_day)
-end
-set_custom_date(clock, "day")
-Helpers.gc(clock, "hour"):connect_signal("widget::redraw_needed", function()
-  set_custom_date(clock, "day")
-end)
 
 -- 󰀄 󰌆  󰌋 󰌊
-local promptbox_padding = dpi(12)
+local user_name = Wibox.widget({
+  widget = Wibox.widget.textbox,
+  markup = "<i>" .. os.getenv("USER") .. "</i>",
+  halign = Beautiful.lockscreen_pass_halign,
+  valign = "center",
+  font = input_prompt.new_textbox.font,
+})
 input_prompt.promptbox = Wibox.widget({
-  layout = Wibox.layout.flex.vertical,
-  spacing = dpi(24),
+  layout = Wibox.layout.fixed.vertical,
+  spacing = dpi(12),
   {
-    widget = Wibox.container.background,
-    forced_width = dpi(290),
-    shape = Beautiful.lockscreen_prompt_shape,
-    bg = Beautiful.lockscreen_prompt_bg,
-    fg = Beautiful.yellow,
-    {
-      widget = Wibox.container.margin,
-      margins = promptbox_padding,
-      {
-        layout = Wibox.layout.stack,
-        {
-          widget = Wibox.widget.textbox,
-          markup = "<i>" .. os.getenv("USER") .. "</i>",
-          halign = Beautiful.lockscreen_pass_halign,
-          valign = "center",
-          font = input_prompt.new_textbox.font,
-        },
-        user_icon,
-      },
-    },
-  },
-  {
-    widget = Wibox.container.background,
-    forced_width = dpi(290),
-    shape = Beautiful.lockscreen_prompt_shape,
-    bg = Beautiful.lockscreen_prompt_bg,
-    fg = Beautiful.lockscreen_prompt_fg,
-    {
-      widget = Wibox.container.margin,
-      margins = promptbox_padding,
-      {
-        layout = Wibox.layout.stack,
-        input_prompt.new_textbox,
-        pass_icon,
-      },
-    },
+    layout = Wibox.layout.flex.vertical,
+    spacing = dpi(24),
+    create_prompt_bar(user_icon, user_name, Beautiful.yellow),
+    create_prompt_bar(pass_icon, input_prompt.new_textbox),
   },
 })
 Helpers.ui.add_click(input_prompt.promptbox, 1, function()
@@ -267,20 +226,17 @@ Helpers.ui.add_click(input_prompt.promptbox, 1, function()
   })
 end)
 
-local battery = require("layout.popups.lockscreen.battery_lock")
-local music = require("layout.popups.lockscreen.music_lock")
-
 lockscreen:setup({
   layout = Wibox.layout.stack,
   background,
-  overlay,
+  -- overlay,
   {
     layout = Wibox.container.place,
     valign = "center",
     halign = "center",
     {
       widget = Wibox.container.margin,
-      top = dpi(80),
+      -- top = dpi(80),
       {
         widget = Wibox.container.background,
         bg = Beautiful.lockscreen_promptbox_bg,
@@ -288,8 +244,8 @@ lockscreen:setup({
         {
           widget = Wibox.container.margin,
           margins = {
-            top = dpi(40),
-            bottom = dpi(40),
+            top = dpi(30),
+            bottom = dpi(30),
             right = dpi(30),
             left = dpi(30),
           },
@@ -299,32 +255,43 @@ lockscreen:setup({
     },
   },
   {
-    layout = Wibox.container.place,
-    valign = "top",
-    halign = "center",
+    widget = Wibox.container.margin,
+    margins = dpi(30),
     {
-      widget = Wibox.container.margin,
-      top = dpi(60),
-      clock,
-    },
-  },
-  {
-    layout = Wibox.container.place,
-    content_fill_horizontal = true,
-    fill_horizontal = true,
-    valign = "bottom",
-    halign = "center",
-    {
-      widget = Wibox.container.margin,
-      bottom = 0,
-      right = dpi(40),
-      left = dpi(40),
+      layout = Wibox.container.place,
+      valign = "bottom",
+      content_fill_horizontal = true,
+      fill_horizontal = true,
       {
-        layout = Wibox.layout.align.horizontal,
-        expand = "none",
-        music,
-        battery,
-        nil,
+        widget = Wibox.container.background,
+        bg = Beautiful.lockscreen_promptbox_bg,
+        shape = Beautiful.lockscreen_promptbox_shape,
+        {
+          widget = Wibox.container.margin,
+          margins = dpi(20),
+          {
+            layout = Wibox.layout.align.horizontal,
+            expand = "none",
+            music,
+            battery,
+            {
+              layout = Wibox.container.place,
+              halign = "center",
+              {
+                layout = Wibox.layout.fixed.horizontal,
+                spacing = dpi(10),
+                clock,
+                {
+                  widget = Wibox.widget.textbox,
+                  markup = Helpers.text.colorize_text("󰀠", Beautiful.accent_color),
+                  font = Beautiful.font_icon .. "Bold 18",
+                  halign = "center",
+                  valign = "center",
+                },
+              },
+            },
+          },
+        },
       },
     },
   },
