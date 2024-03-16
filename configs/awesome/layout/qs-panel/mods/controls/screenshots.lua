@@ -4,6 +4,7 @@ local button_template = require("layout.qs-panel.mods.controls.base")
 local dpi = Beautiful.xresources.apply_dpi
 local delay_count = 0
 local hide_cursor = false
+local screenshot = Gears.object({})
 local new_bg =
     Helpers.color.lightness(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.quicksettings_ctrl_btn_bg)
 
@@ -15,40 +16,29 @@ local function button(icon, fn, size)
     bg_normal = new_bg,
     shape = Beautiful.quicksettings_ctrl_btn_shape,
     paddings = dpi(10),
-    on_release = fn or function()
-      Naughty.notification({
-        title = "holis",
-      })
-    end,
+    on_release = fn,
   })
 end
 local function screenshot_notify(ss)
-  local open_image = Naughty.action({ name = "Abrir imagen." })
+  local open_image = Naughty.action({ name = "Abrir" })
+  local delete_image = Naughty.action({ name = "Eliminar" })
   ss:connect_signal("file::saved", function(self, file_name, file_path)
     open_image:connect_signal("invoked", function()
       Awful.spawn.with_shell("feh " .. file_path .. file_name)
+    end)
+    delete_image:connect_signal("invoked", function()
+      Awful.spawn.with_shell("rm " .. file_path .. file_name)
     end)
     Naughty.notify({
       message = file_name,
       title = "Captura guardada.",
       image = file_path .. file_name,
-      actions = { open_image },
+      actions = { open_image, delete_image },
     })
   end)
 end
 
--- 󰄀 󰄄 󰄅 󰆞 󰔛 󰅀
--- 󰏝 󰄴
-
-local delay_label = Wibox.widget({
-  widget = Wibox.widget.textbox,
-  text = delay_count,
-  font = Beautiful.font_text .. "Regular 10",
-  halign = "center",
-  valign = "center",
-})
-
-local screenshot_normal = button("󰔂", function()
+local screenshot_normal = button("󰆟", function()
   awesome.emit_signal("panels::quicksettings", "hide")
   local ss = screenshot_lib.normal({
     hide_cursor = hide_cursor,
@@ -66,7 +56,15 @@ local screenshot_selective = button("󰆞", function()
   screenshot_notify(ss)
 end)
 
-local screenshot_settings = Wibox.widget({
+local delay_label = Wibox.widget({
+  widget = Wibox.widget.textbox,
+  text = delay_count,
+  font = Beautiful.font_text .. "Regular 10",
+  halign = "center",
+  valign = "center",
+})
+
+local screenshot_options = Wibox.widget({
   layout = Wibox.layout.flex.vertical,
   spacing = dpi(10),
   -- forced_height = dpi(42),
@@ -114,22 +112,22 @@ local screenshot_settings = Wibox.widget({
     bg = new_bg,
     {
       layout = Wibox.layout.flex.horizontal,
-      button("󰍝", function()
+      button("󰅀", function()
         if delay_count > 0 then
           delay_count = delay_count - 1
           delay_label:set_text(delay_count)
         end
-      end),
+      end, 15),
       delay_label,
-      button("󰍠", function()
+      button("󰅃", function()
         delay_count = delay_count + 1
         delay_label:set_text(delay_count)
-      end),
+      end, 15),
     },
   },
 })
 
-local screenshot = Wibox.widget({
+screenshot.settings = Wibox.widget({
   widget = Wibox.container.background,
   bg = Beautiful.quicksettings_widgets_bg,
   shape = Beautiful.quicksettings_ctrl_btn_shape,
@@ -139,11 +137,10 @@ local screenshot = Wibox.widget({
     {
       layout = Wibox.layout.flex.horizontal,
       spacing = dpi(10),
-      screenshot_settings,
+      screenshot_options,
       {
         layout = Wibox.layout.flex.horizontal,
         spacing = dpi(10),
-        -- forced_height = dpi(42),
         screenshot_normal,
         screenshot_selective,
       },
@@ -151,19 +148,19 @@ local screenshot = Wibox.widget({
   },
 })
 
-local screenshot_btn
-screenshot_btn = button_template({
-  icon = "󰄄",
-  name = "Capturar",
-  on_fn = function(self)
-    screenshot_btn:emit_signal("visible::settings", true)
+screenshot.button = button_template({
+  icon = "󰄅",
+  name = "Captura de pantalla",
+  halign = "center",
+  on_fn = function()
+    screenshot:emit_signal("visible::settings", true)
   end,
-  off_fn = function(self)
-    screenshot_btn:emit_signal("visible::settings", false)
+  off_fn = function()
+    screenshot:emit_signal("visible::settings", false)
   end,
 })
 
-screenshot_btn:connect_signal("visible::settings", function(self, vis)
+screenshot:connect_signal("visible::settings", function(_, vis)
   if vis then
     delay_count = 0
     delay_label:set_text(delay_count)
@@ -172,12 +169,9 @@ end)
 
 awesome.connect_signal("visible::quicksettings", function(vis)
   if vis == false then
-    screenshot_btn:emit_signal("visible::settings", false)
-    screenshot_btn:turn_off()
+    screenshot:emit_signal("visible::settings", false)
+    screenshot.button:turn_off()
   end
 end)
 
-return {
-  setttings = screenshot,
-  button = screenshot_btn,
-}
+return screenshot

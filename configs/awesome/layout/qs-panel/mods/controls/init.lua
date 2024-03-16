@@ -9,22 +9,28 @@ local wifi_btn = require("layout.qs-panel.mods.controls.wifi-state")
 local bluetooth_btn = require("layout.qs-panel.mods.controls.bluetooth-state")
 local floating_btn = require("layout.qs-panel.mods.controls.floating-mode")
 local screenshot_btn = require("layout.qs-panel.mods.controls.screenshots")
+local music_notify_btn = require("layout.qs-panel.mods.controls.music-alert")
 
 local controls = Wibox.widget({
   layout = Wibox.layout.fixed.vertical,
   spacing = dpi(10),
   {
-    layout = Wibox.layout.flex.horizontal,
+    layout = Wibox.layout.flex.vertical,
     spacing = dpi(10),
-    wifi_btn,
-    volume_btn,
+    {
+      layout = Wibox.layout.flex.horizontal,
+      spacing = dpi(10),
+      wifi_btn,
+      volume_btn,
+    },
+    {
+      layout = Wibox.layout.flex.horizontal,
+      spacing = dpi(10),
+      bluetooth_btn,
+      music_notify_btn,
+    },
   },
-  {
-    layout = Wibox.layout.flex.horizontal,
-    spacing = dpi(10),
-    bluetooth_btn,
-    screenshot_btn.button,
-  },
+  screenshot_btn.button,
   {
     layout = Wibox.layout.flex.horizontal,
     spacing = dpi(10),
@@ -57,11 +63,11 @@ local controls = Wibox.widget({
   -- screenshot_btn,
 })
 
-screenshot_btn.button:connect_signal("visible::settings", function(self, vis)
+screenshot_btn:connect_signal("visible::settings", function(self, vis)
   if vis then
-    controls:insert(3, screenshot_btn.setttings)
+    controls:insert(3, screenshot_btn.settings)
   else
-    controls:remove_widgets(screenshot_btn.setttings, true)
+    controls:remove_widgets(screenshot_btn.settings, true)
   end
 end)
 

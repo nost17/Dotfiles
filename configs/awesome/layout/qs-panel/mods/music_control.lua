@@ -54,38 +54,23 @@ local control_btns = Wibox.widget({
   shape = Beautiful.quicksettings_widgets_shape,
   {
     layout = Wibox.layout.align.vertical,
-    next_btn,
+    prev_btn,
     {
       widget = Wibox.container.margin,
-      -- right = dpi(6),
-      -- left = dpi(6),
       toggle_btn,
     },
-    prev_btn,
+    next_btn,
   },
 })
 local player_fg = User.config.dark_mode and Beautiful.fg_normal or Beautiful.foreground_alt
--- local player_fg = User.config.dark_mode and Beautiful.fg_normal
---     or color_lib.lightness("darken", 15, Beautiful.foreground_alt)
 local player_btn = wbutton.elevated.normal({
   child = {
-    layout = Wibox.layout.fixed.horizontal,
-    spacing = dpi(6),
-    -- {
-    --   widget = Wibox.widget.textbox,
-    --   markup = Helpers.text.colorize_text("󰃨", Beautiful.accent_color),
-    --   font = Beautiful.font_icon .. "14",
-    --   halign = "left",
-    --   valign = "center",
-    -- },
-    {
       widget = Wibox.widget.textbox,
       markup = Helpers.text.colorize_text(User.music.names[User.music.current_player] or "none", player_fg),
       id = "player_name",
       font = Beautiful.font_text .. "SemiBold 11",
       halign = "center",
       valign = "center",
-    },
   },
   paddings = {
     top = dpi(4),
@@ -94,11 +79,6 @@ local player_btn = wbutton.elevated.normal({
     right = dpi(10),
   },
   bg_normal = player_fg .. "33",
-  -- bg_normal = color_lib.lightness(
-  --   Beautiful.color_method,
-  --   Beautiful.color_method_factor * 0.5,
-  --   Beautiful.quicksettings_widgets_bg
-  -- ),
   shape = Gears.shape.rounded_bar,
   on_press = function()
     Playerctl:next_player()
@@ -106,24 +86,6 @@ local player_btn = wbutton.elevated.normal({
   on_secondary_press = function()
     Playerctl:prev_player()
   end,
-})
-
-local notify_button = wbutton.text.state({
-  text = "󰂚",
-  font = Beautiful.font_icon,
-  size = 15,
-  shape = Gears.shape.circle,
-  fg_normal = player_fg .. "54",
-  bg_normal = Beautiful.transparent,
-  fg_normal_on = player_fg,
-  on_by_default = User.config.music_notify,
-  on_turn_on = function()
-    User.config.music_notify = true
-  end,
-  on_turn_off = function()
-    User.config.music_notify = false
-  end,
-  paddings = {},
 })
 
 local random_button = wbutton.text.state({
@@ -171,30 +133,6 @@ local function set_cover(art)
 end
 set_cover(Beautiful.music_cover_default)
 
-local music_art_overlay = Wibox.widget({
-  layout = Wibox.container.place,
-  halign = "right",
-  {
-    widget = Wibox.container.rotate,
-    direction = "east",
-    {
-      widget = Wibox.container.background,
-      forced_height = dpi(140),
-      forced_width = dpi(140),
-      -- forced_height = dpi(180),
-      -- forced_width = dpi(180),
-      bg = {
-        type = "linear",
-        from = { 0, 0 },
-        to = { 0, dpi(300) },
-        stops = {
-          { 0.04, Beautiful.quicksettings_widgets_bg },
-          { 0.7,  Beautiful.quicksettings_widgets_bg .. "79" },
-        },
-      },
-    },
-  },
-})
 
 -- [[ METADATA ]]
 
@@ -228,7 +166,7 @@ end)
 Playerctl:connect_signal("new_player", function(_)
   local new_player = User.music.names[User.music.current_player] or "none"
   new_player = Helpers.text.colorize_text(new_player, player_fg)
-  Helpers.gc(player_btn, "player_name"):set_markup_silently(new_player)
+  player_btn:set_markup_silently(new_player)
 end)
 
 -- [[ MAIN WIDGET ]]
@@ -292,7 +230,6 @@ return Wibox.widget({
                   spacing = dpi(6),
                   repeat_button,
                   random_button,
-                  notify_button,
                 },
               },
             },
