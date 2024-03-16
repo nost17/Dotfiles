@@ -65,21 +65,26 @@ local control_btns = Wibox.widget({
 local player_fg = User.config.dark_mode and Beautiful.fg_normal or Beautiful.foreground_alt
 local player_btn = wbutton.elevated.normal({
   child = {
-      widget = Wibox.widget.textbox,
-      markup = Helpers.text.colorize_text(User.music.names[User.music.current_player] or "none", player_fg),
-      id = "player_name",
-      font = Beautiful.font_text .. "SemiBold 11",
-      halign = "center",
-      valign = "center",
+    widget = Wibox.widget.textbox,
+    markup = Helpers.text.colorize_text(
+      "Reproduciendo via: " .. (User.music.names[User.music.current_player] or "none"),
+      player_fg .. "CC"
+    ),
+    id = "player_name",
+    font = Beautiful.font_text .. "Medium 10",
+    halign = "center",
+    valign = "center",
   },
+  halign = "left",
   paddings = {
-    top = dpi(4),
-    bottom = dpi(4),
-    left = dpi(10),
-    right = dpi(10),
+    -- top = dpi(4),
+    -- bottom = dpi(4),
+    -- left = dpi(10),
+    -- right = dpi(10),
   },
-  bg_normal = player_fg .. "33",
-  shape = Gears.shape.rounded_bar,
+  -- bg_normal = player_fg .. "33",
+  bg_normal = Beautiful.transparent,
+  -- shape = Gears.shape.rounded_bar,
   on_press = function()
     Playerctl:next_player()
   end,
@@ -133,7 +138,6 @@ local function set_cover(art)
 end
 set_cover(Beautiful.music_cover_default)
 
-
 -- [[ METADATA ]]
 
 local music_title = wtext({
@@ -165,8 +169,8 @@ Playerctl:connect_signal("status", function(_, playing)
 end)
 Playerctl:connect_signal("new_player", function(_)
   local new_player = User.music.names[User.music.current_player] or "none"
-  new_player = Helpers.text.colorize_text(new_player, player_fg)
-  player_btn:set_markup_silently(new_player)
+  new_player = Helpers.text.colorize_text("Reproduciendo via: " .. new_player, player_fg .. "cc")
+  Helpers.gc(player_btn, "player_name"):set_markup_silently(new_player)
 end)
 
 -- [[ MAIN WIDGET ]]
@@ -203,6 +207,8 @@ return Wibox.widget({
           widget = Wibox.container.margin,
           {
             layout = Wibox.layout.fixed.vertical,
+            player_btn,
+
             music_title,
             music_artist,
           },
@@ -211,14 +217,14 @@ return Wibox.widget({
         {
           widget = Wibox.container.margin,
           {
-            layout = Wibox.layout.align.horizontal,
-            player_btn,
-            nil,
+            layout = Wibox.layout.fixed.horizontal,
+            -- nil,
+            -- nil,
             -- halign = "left",
             {
               widget = Wibox.container.background,
               bg = player_fg .. "33",
-              shape = Gears.shape.rounded_bar,
+              shape = Helpers.shape.rrect(Beautiful.small_radius),
               {
                 widget = Wibox.container.margin,
                 top = dpi(4),
