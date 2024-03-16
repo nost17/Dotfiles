@@ -35,8 +35,10 @@ local function main(self, opts)
     autostart = true,
     single_shot = true,
     callback = function()
-      Awful.spawn.easy_async_with_shell(cmd, function()
-        self:emit_signal("file::saved", file_name, opts.path)
+      Awful.spawn.easy_async_with_shell(cmd, function(_, _, _, exitcode)
+        if exitcode == 0 then
+          self:emit_signal("file::saved", file_name, opts.path)
+        end
       end)
     end,
   })
