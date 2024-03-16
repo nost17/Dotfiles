@@ -153,7 +153,7 @@ local function prompt_text_with_cursor(args)
         text_start = ""
         text_end = ""
     elseif #text < args.cursor_pos then
-        char = "  "
+        char = " "
         spacer = ""
         text_start = gstring.xml_escape(text)
         text_end = ""
