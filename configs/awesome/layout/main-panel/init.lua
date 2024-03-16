@@ -37,12 +37,15 @@ local app_launcher = wbutton.text.normal({
   shape = Helpers.shape.rrect(Beautiful.small_radius),
   fg_normal = Beautiful.fg_normal,
   bg_normal = Beautiful.widget_bg_alt,
-  paddings = 0,
+  paddings = {
+    top = dpi(10),
+    bottom = dpi(10),
+  },
   -- bg_hover = color_lib.lightness(Beautiful.color_method, 10, Beautiful.widget_bg_alt),
   on_press = function()
     awesome.emit_signal("panels::app_launcher", "toggle")
   end,
-  forced_height = dpi(32),
+  -- forced_height = dpi(32),
 })
 -- 󰫤 󰫥 󱥒 󰂜 󰂞
 local quicksettings = require("layout.qs-panel")(main_panel_screen)

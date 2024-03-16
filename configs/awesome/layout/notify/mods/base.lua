@@ -44,7 +44,7 @@ local function actions_widget(n)
     layout = Wibox.layout.grid.horizontal,
     horizontal_expand = true,
     -- fill_space = true,
-    spacing = dpi(2),
+    spacing = dpi(4),
   })
 
   for _, action in ipairs(n.actions) do

@@ -190,7 +190,7 @@ return Wibox.widget({
         {
           widget = Wibox.container.background,
           -- bg = Beautiful.foreground_alt .. "7A",
-          bg = User.config.dark_mode and Beautiful.quicksettings_bg .. "CC" or Beautiful.foreground .. "AA",
+          bg = User.config.dark_mode and Beautiful.quicksettings_bg .. "DC" or Beautiful.foreground .. "AA",
         },
       },
     },
