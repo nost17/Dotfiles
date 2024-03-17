@@ -113,22 +113,22 @@ screenshot.settings = Wibox.widget({
     widget = Wibox.container.margin,
     margins = dpi(10),
     {
-      layout = Wibox.layout.grid.vertical,
-      forced_num_rows = 2,
-      vertical_homogeneous = false,
-      horizontal_expand = true,
-      vertical_expand = true,
+      layout = Wibox.layout.flex.horizontal,
+      -- forced_num_rows = 2,
+      -- vertical_homogeneous = false,
+      -- horizontal_expand = true,
+      -- vertical_expand = true,
       spacing = dpi(10),
-      screenshot_options,
       {
-        layout = Wibox.layout.flex.horizontal,
+        layout = Wibox.layout.flex.vertical,
         spacing = dpi(10),
+        screenshot_options,
         {
           widget = Wibox.container.background,
           shape = Beautiful.quicksettings_ctrl_btn_shape,
           bg = new_bg,
           {
-            layout = Wibox.layout.flex.vertical,
+            layout = Wibox.layout.flex.horizontal,
             button("󰅃", function()
               delay_count = delay_count + 1
               delay_label:set_text(delay_count)
@@ -142,12 +142,12 @@ screenshot.settings = Wibox.widget({
             end, 15),
           },
         },
-        {
-          layout = Wibox.layout.flex.vertical,
-          spacing = dpi(10),
-          screenshot_normal,
-          screenshot_selective,
-        },
+      },
+      {
+        layout = Wibox.layout.flex.horizontal,
+        spacing = dpi(10),
+        screenshot_normal,
+        screenshot_selective,
       },
     },
   },
@@ -155,8 +155,13 @@ screenshot.settings = Wibox.widget({
 
 screenshot.button = button_template({
   icon = "󰄀",
-  name = "Captura de pantalla",
-  type = "simple",
+  name = "Capturar",
+  -- type = "simple",
+  -- bg = Helpers.color.lightness(
+  --   Beautiful.color_method,
+  --   Beautiful.color_method_factor,
+  --   Beautiful.quicksettings_ctrl_btn_bg
+  -- ),
   halign = "center",
   on_fn = function()
     screenshot:emit_signal("visible::settings", true)

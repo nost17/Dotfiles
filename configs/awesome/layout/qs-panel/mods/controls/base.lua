@@ -63,7 +63,7 @@ function templates.default(opts)
   local base_button = wbutton.elevated.state({
     child = base_label,
     fg_normal_on = Beautiful.quicksettings_ctrl_btn_fg_on,
-    bg_normal = Beautiful.quicksettings_ctrl_btn_bg,
+    bg_normal = opts.bg or Beautiful.quicksettings_ctrl_btn_bg,
     bg_normal_on = Beautiful.quicksettings_ctrl_btn_bg_on,
     halign = opts.halign or "left",
     paddings = {
@@ -136,18 +136,18 @@ function templates.simple(opts)
     size = 15,
     shape = Beautiful.quicksettings_ctrl_btn_shape,
     -- shape = Gears.shape.circle,
-    -- bg_normal = Beautiful.quicksettings_ctrl_btn_bg,
+    bg_normal = Beautiful.quicksettings_ctrl_btn_bg,
     fg_normal_on = Beautiful.quicksettings_ctrl_btn_fg_on,
-    bg_normal = Helpers.color.lightness(
-      Beautiful.color_method,
-      Beautiful.color_method_factor,
-      Beautiful.quicksettings_ctrl_btn_bg
-    ),
+    -- bg_normal = Helpers.color.lightness(
+    --   Beautiful.color_method,
+    --   Beautiful.color_method_factor,
+    --   Beautiful.quicksettings_ctrl_btn_bg
+    -- ),
     bg_normal_on = Beautiful.quicksettings_ctrl_btn_bg_on,
     halign = "center",
     paddings = {
-      top = dpi(15),
-      bottom = dpi(15),
+      top = dpi(10),
+      bottom = dpi(10),
     },
     on_turn_on = function()
       if opts.on_fn then

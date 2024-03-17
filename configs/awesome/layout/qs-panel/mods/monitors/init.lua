@@ -50,8 +50,8 @@ return Wibox.widget({
     widget = Wibox.container.margin,
     margins = dpi(10),
     {
-      layout = Wibox.layout.flex.horizontal,
-      spacing = dpi(15),
+      layout = Wibox.layout.flex.vertical,
+      spacing = dpi(10),
       ram_monitor,
       temp_monitor,
       disk_monitor,
