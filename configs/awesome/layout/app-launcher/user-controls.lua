@@ -75,16 +75,10 @@ local function create_user_button(icon, color, fn)
 end
 
 local lockscreen_button = create_user_button("󰌾", Beautiful.blue, function()
-  Naughty.notify({
-    title = "uno",
-  })
-  -- awesome.emit_signal("awesome::lockscreen", "show")
+  awesome.emit_signal("awesome::lockscreen", "show")
 end)
 local logout_button = create_user_button("󰈆", Beautiful.magenta, function()
-  Naughty.notify({
-    title = "uno",
-  })
-  -- awesome.emit_signal("awesome::logoutscreen", "show")
+  awesome.emit_signal("awesome::logoutscreen", "show")
 end)
 
 return Wibox.widget({
