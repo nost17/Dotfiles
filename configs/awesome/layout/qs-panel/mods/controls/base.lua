@@ -133,7 +133,7 @@ function templates.simple(opts)
   local base_button = wbutton.text.state({
     text = opts.icon,
     font = Beautiful.font_icon,
-    size = 16,
+    size = 15,
     shape = Beautiful.quicksettings_ctrl_btn_shape,
     -- shape = Gears.shape.circle,
     -- bg_normal = Beautiful.quicksettings_ctrl_btn_bg,
@@ -146,8 +146,8 @@ function templates.simple(opts)
     bg_normal_on = Beautiful.quicksettings_ctrl_btn_bg_on,
     halign = "center",
     paddings = {
-      -- top = dpi(19),
-      -- bottom = dpi(19),
+      top = dpi(15),
+      bottom = dpi(15),
     },
     on_turn_on = function()
       if opts.on_fn then

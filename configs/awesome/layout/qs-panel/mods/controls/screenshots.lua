@@ -64,70 +64,48 @@ local delay_label = Wibox.widget({
   valign = "center",
 })
 
-local screenshot_options = Wibox.widget({
-  layout = Wibox.layout.flex.vertical,
-  spacing = dpi(10),
-  -- forced_height = dpi(42),
-  {
-    widget = Wibox.container.background,
-    wbutton.elevated.state({
-      bg_normal = new_bg,
-      bg_normal_on = new_bg,
-      on_by_default = hide_cursor,
-      shape = Beautiful.quicksettings_ctrl_btn_shape,
-      paddings = dpi(10),
-      halign = "left",
-      child = {
-        layout = Wibox.layout.fixed.horizontal,
-        spacing = dpi(6),
-        {
-          widget = Wibox.widget.textbox,
-          text = hide_cursor and "󰄴" or "󰏝",
-          font = Beautiful.font_icon .. "13",
-          id = "hide_cursor_icon",
-          halign = "center",
-          valign = "center",
-        },
-        {
-          widget = Wibox.widget.textbox,
-          text = "Ocultar cursor",
-          font = Beautiful.font_text .. "Regular 11",
-          halign = "center",
-          valign = "center",
-        },
-      },
-      on_turn_on = function(self)
-        hide_cursor = true
-        Helpers.gc(self, "hide_cursor_icon").text = "󰄴"
-      end,
-      on_turn_off = function(self)
-        hide_cursor = false
-        Helpers.gc(self, "hide_cursor_icon").text = "󰏝"
-      end,
-    }),
+local screenshot_options = wbutton.elevated.state({
+  bg_normal = new_bg,
+  bg_normal_on = new_bg,
+  on_by_default = hide_cursor,
+  shape = Beautiful.quicksettings_ctrl_btn_shape,
+  paddings = {
+    left = dpi(8),
+    top = dpi(10),
+    bottom = dpi(10),
   },
-  {
-    widget = Wibox.container.background,
-    shape = Beautiful.quicksettings_ctrl_btn_shape,
-    bg = new_bg,
+  halign = "left",
+  child = {
+    layout = Wibox.layout.fixed.horizontal,
+    spacing = dpi(6),
     {
-      layout = Wibox.layout.flex.horizontal,
-      button("󰅀", function()
-        if delay_count > 0 then
-          delay_count = delay_count - 1
-          delay_label:set_text(delay_count)
-        end
-      end, 15),
-      delay_label,
-      button("󰅃", function()
-        delay_count = delay_count + 1
-        delay_label:set_text(delay_count)
-      end, 15),
+      widget = Wibox.widget.textbox,
+      text = hide_cursor and "󰄴" or "󰏝",
+      font = Beautiful.font_icon .. "13",
+      id = "hide_cursor_icon",
+      halign = "center",
+      valign = "center",
+    },
+    {
+      widget = Wibox.widget.textbox,
+      markup = Helpers.text.colorize_text("Ocultar cursor", Beautiful.quicksettings_ctrl_btn_fg .. "CF"),
+      font = Beautiful.font_text .. "Medium 11",
+      halign = "left",
+      valign = "center",
     },
   },
+  on_turn_on = function(self)
+    hide_cursor = true
+    Helpers.gc(self, "hide_cursor_icon").text = "󰄴"
+  end,
+  on_turn_off = function(self)
+    hide_cursor = false
+    Helpers.gc(self, "hide_cursor_icon").text = "󰏝"
+  end,
 })
 
 screenshot.settings = Wibox.widget({
+  visible = false,
   widget = Wibox.container.background,
   bg = Beautiful.quicksettings_widgets_bg,
   shape = Beautiful.quicksettings_ctrl_btn_shape,
@@ -135,14 +113,41 @@ screenshot.settings = Wibox.widget({
     widget = Wibox.container.margin,
     margins = dpi(10),
     {
-      layout = Wibox.layout.flex.horizontal,
+      layout = Wibox.layout.grid.vertical,
+      forced_num_rows = 2,
+      vertical_homogeneous = false,
+      horizontal_expand = true,
+      vertical_expand = true,
       spacing = dpi(10),
       screenshot_options,
       {
         layout = Wibox.layout.flex.horizontal,
         spacing = dpi(10),
-        screenshot_normal,
-        screenshot_selective,
+        {
+          widget = Wibox.container.background,
+          shape = Beautiful.quicksettings_ctrl_btn_shape,
+          bg = new_bg,
+          {
+            layout = Wibox.layout.flex.vertical,
+            button("󰅃", function()
+              delay_count = delay_count + 1
+              delay_label:set_text(delay_count)
+            end, 15),
+            delay_label,
+            button("󰅀", function()
+              if delay_count > 0 then
+                delay_count = delay_count - 1
+                delay_label:set_text(delay_count)
+              end
+            end, 15),
+          },
+        },
+        {
+          layout = Wibox.layout.flex.vertical,
+          spacing = dpi(10),
+          screenshot_normal,
+          screenshot_selective,
+        },
       },
     },
   },
@@ -151,6 +156,7 @@ screenshot.settings = Wibox.widget({
 screenshot.button = button_template({
   icon = "󰄀",
   name = "Captura de pantalla",
+  type = "simple",
   halign = "center",
   on_fn = function()
     screenshot:emit_signal("visible::settings", true)

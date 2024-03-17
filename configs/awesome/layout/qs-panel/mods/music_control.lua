@@ -1,6 +1,7 @@
 local wbutton = require("utils.button")
 local wtext = require("utils.modules.text")
 local color_lib = Helpers.color
+local player_preffix = "Via: "
 local dpi = Beautiful.xresources.apply_dpi
 
 -- [[ CONTROL BUTTONS ]]
@@ -67,7 +68,7 @@ local player_btn = wbutton.elevated.normal({
   child = {
     widget = Wibox.widget.textbox,
     markup = Helpers.text.colorize_text(
-      "Reproduciendo via: " .. (User.music.names[User.music.current_player] or "none"),
+      player_preffix .. (User.music.names[User.music.current_player] or "none"),
       player_fg .. "CC"
     ),
     id = "player_name",
@@ -169,7 +170,7 @@ Playerctl:connect_signal("status", function(_, playing)
 end)
 Playerctl:connect_signal("new_player", function(_)
   local new_player = User.music.names[User.music.current_player] or "none"
-  new_player = Helpers.text.colorize_text("Reproduciendo via: " .. new_player, player_fg .. "cc")
+  new_player = Helpers.text.colorize_text(player_preffix .. new_player, player_fg .. "cc")
   Helpers.gc(player_btn, "player_name"):set_markup_silently(new_player)
 end)
 
@@ -189,8 +190,11 @@ return Wibox.widget({
         music_art,
         {
           widget = Wibox.container.background,
-          -- bg = Beautiful.foreground_alt .. "7A",
-          bg = User.config.dark_mode and Beautiful.quicksettings_bg .. "DC" or Beautiful.foreground .. "AA",
+          bg = User.config.dark_mode and Beautiful.quicksettings_bg .. "CC" or Beautiful.foreground .. "AA",
+        },
+        {
+          widget = Wibox.container.background,
+          bg = User.config.dark_mode and Beautiful.quicksettings_bg .. "22" or Beautiful.foreground .. "22",
         },
       },
     },

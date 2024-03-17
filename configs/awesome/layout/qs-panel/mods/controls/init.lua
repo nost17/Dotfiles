@@ -1,6 +1,5 @@
 local dpi = Beautiful.xresources.apply_dpi
 
-local monitors = require("layout.qs-panel.mods.monitors")
 local volume_btn = require("layout.qs-panel.mods.controls.muted-state")
 local dnd_btn = require("layout.qs-panel.mods.controls.dnd-state")
 local night_light_btn = require("layout.qs-panel.mods.controls.night-light")
@@ -10,6 +9,7 @@ local bluetooth_btn = require("layout.qs-panel.mods.controls.bluetooth-state")
 local floating_btn = require("layout.qs-panel.mods.controls.floating-mode")
 local screenshot_btn = require("layout.qs-panel.mods.controls.screenshots")
 local music_notify_btn = require("layout.qs-panel.mods.controls.music-alert")
+local monitors = require("layout.qs-panel.mods.monitors")
 
 local controls = Wibox.widget({
   layout = Wibox.layout.fixed.vertical,
@@ -30,19 +30,20 @@ local controls = Wibox.widget({
       music_notify_btn,
     },
   },
-  screenshot_btn.button,
   {
     layout = Wibox.layout.flex.horizontal,
     spacing = dpi(10),
     {
       widget = Wibox.container.background,
-      bg = Beautiful.widget_bg_alt,
+      bg = Beautiful.quicksettings_widgets_bg,
+      shape = Beautiful.quicksettings_widgets_shape,
       {
         widget = Wibox.container.margin,
         margins = dpi(10),
         {
           layout = Wibox.layout.flex.vertical,
           spacing = dpi(10),
+          screenshot_btn.button,
           {
             layout = Wibox.layout.flex.horizontal,
             spacing = dpi(10),
@@ -58,17 +59,17 @@ local controls = Wibox.widget({
         },
       },
     },
-    monitors,
+    {
+      layout = Wibox.layout.stack,
+      monitors,
+      screenshot_btn.settings,
+    },
   },
   -- screenshot_btn,
 })
 
 screenshot_btn:connect_signal("visible::settings", function(self, vis)
-  if vis then
-    controls:insert(3, screenshot_btn.settings)
-  else
-    controls:remove_widgets(screenshot_btn.settings, true)
-  end
+  screenshot_btn.settings.visible = vis
 end)
 
 return controls

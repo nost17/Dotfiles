@@ -10,7 +10,7 @@ local disk_monitor = mkmonitor({
   update_fn = function(self)
     awesome.connect_signal("lib:disk", function(disk)
       local partition = disk["/home"]
-      self:set_value(partition.perc)
+      self:set_value(tonumber(partition.perc))
     end)
   end,
 })
@@ -48,19 +48,14 @@ return Wibox.widget({
   bg = Beautiful.quicksettings_widgets_bg,
   {
     widget = Wibox.container.margin,
-    margins = dpi(3),
+    margins = dpi(10),
     {
-      layout = Wibox.layout.flex.vertical,
-      {
-        layout = Wibox.layout.flex.horizontal,
-        ram_monitor,
-        temp_monitor,
-      },
-      {
-        layout = Wibox.layout.flex.horizontal,
-        disk_monitor,
-        cpu_monitor,
-      },
+      layout = Wibox.layout.flex.horizontal,
+      spacing = dpi(15),
+      ram_monitor,
+      temp_monitor,
+      disk_monitor,
+      cpu_monitor,
     },
   },
 })

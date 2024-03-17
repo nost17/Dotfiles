@@ -1,8 +1,9 @@
+local dpi = Beautiful.xresources.apply_dpi
+
 ----------------------
 -- BATTERY WIDGET
 ----------------------
 
-local dpi = Beautiful.xresources.apply_dpi
 local charging_icon = Wibox.widget({
   markup = Helpers.text.colorize_text(Helpers.text.escape_text("󰉁"), Beautiful.yellow),
   font = Beautiful.font_icon .. "12",
@@ -22,7 +23,7 @@ local battery_bar = Wibox.widget({
   color = Beautiful.green,
   background_color = Beautiful.transparent,
   bar_shape = Helpers.shape.rrect(Beautiful.small_radius),
-  shape = Helpers.shape.rrect(Beautiful.medium_radius),
+  shape = Helpers.shape.rrect(Beautiful.small_radius),
   widget = Wibox.widget.progressbar,
 })
 local battery_label = Wibox.widget({
@@ -45,24 +46,27 @@ awesome.connect_signal("lib::battery", function(capacity, charging)
 end)
 
 local battery = Wibox.widget({
-  charging_icon,
   {
+    layout = Wibox.layout.fixed.horizontal,
+    charging_icon,
     {
-      battery_bar,
       {
+        battery_bar,
         {
-          forced_height = dpi(9),
-          forced_width = dpi(2),
-          shape = Gears.shape.rounded_bar,
-          bg = Beautiful.fg_normal,
-          widget = Wibox.container.background,
+          {
+            forced_height = dpi(9),
+            forced_width = dpi(2),
+            shape = Gears.shape.rounded_bar,
+            bg = Beautiful.fg_normal,
+            widget = Wibox.container.background,
+          },
+          layout = Wibox.container.place,
         },
-        layout = Wibox.container.place,
+        spacing = dpi(2),
+        layout = Wibox.layout.fixed.horizontal,
       },
-      spacing = dpi(2),
-      layout = Wibox.layout.fixed.horizontal,
+      layout = Wibox.container.place,
     },
-    layout = Wibox.container.place,
   },
   {
     widget = Wibox.container.margin,
@@ -73,9 +77,4 @@ local battery = Wibox.widget({
   layout = Wibox.layout.fixed.horizontal,
 })
 
-return Wibox.widget({
-  layout = Wibox.layout.align.horizontal,
-  battery,
-  nil,
-  nil,
-})
+return battery

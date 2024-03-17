@@ -13,18 +13,25 @@ Beautiful.quicksettings_ctrl_btn_bg_on = Beautiful.accent_color
 Beautiful.quicksettings_ctrl_btn_fg = Beautiful.fg_normal
 Beautiful.quicksettings_ctrl_btn_fg_on = Beautiful.foreground_alt
 
+local battery = require("layout.qs-panel.mods.battery")
+
 local function mkwidget(s)
   local music = require("layout.qs-panel.mods.music_control")
   local controls = require("layout.qs-panel.mods.controls")
   local sliders = require("layout.qs-panel.mods.sliders")
-  local user_info = require("layout.qs-panel.mods.user-info")
+  -- local user_info = require("layout.qs-panel.mods.user-info")
   local quicksettings_layout = Wibox.widget({
     layout = Wibox.layout.fixed.vertical,
     spacing = dpi(10),
-    user_info,
+    -- user_info,
     sliders,
     controls,
     music,
+    {
+      widget = Wibox.container.margin,
+      top = dpi(5),
+      battery,
+    },
   })
   local quicksettings = Awful.popup({
     screen = s,
@@ -54,7 +61,6 @@ local function mkwidget(s)
     end
     awesome.emit_signal("visible::quicksettings", quicksettings.visible)
   end)
-
 
   Awful.mouse.append_client_mousebinding(Awful.button({}, 1, function(_)
     quicksettings.visible = false
