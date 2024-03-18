@@ -59,16 +59,7 @@ local controls = Wibox.widget({
         night_light_btn,
       },
     },
-    {
-      layout = Wibox.layout.stack,
-      require("layout.qs-panel.mods.monitors"),
-      screenshot_btn.settings,
-    },
   },
 })
-
-screenshot_btn:connect_signal("visible::settings", function(_, vis)
-  screenshot_btn.settings.visible = vis
-end)
 
 return controls

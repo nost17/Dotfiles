@@ -1,5 +1,5 @@
 local dpi = Beautiful.xresources.apply_dpi
-local mkmonitor = require("layout.qs-panel.mods.monitors.base")
+local mkmonitor = require("layout.popups.calendar.mods.monitors.base")
 local function getPercentage(value, total)
   return (value / total) * 100 + 0.5
 end

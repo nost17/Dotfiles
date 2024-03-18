@@ -1,6 +1,7 @@
 local dpi = Beautiful.xresources.apply_dpi
 local clock = require("layout.popups.calendar.mods.clock")
 local calendar = require("layout.popups.calendar.mods.base")()
+local monitors = require("layout.popups.calendar.mods.monitors")
 
 local calendar_widget = Awful.popup({
   visible = false,
@@ -23,6 +24,7 @@ local calendar_widget = Awful.popup({
     {
       layout = Wibox.layout.fixed.vertical,
       spacing = dpi(10),
+      monitors,
       {
         widget = Wibox.container.background,
         bg = Beautiful.widget_bg_alt,
