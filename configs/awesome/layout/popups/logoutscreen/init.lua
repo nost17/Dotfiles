@@ -8,33 +8,83 @@ Beautiful.logoutscreen_clock_bg = Beautiful.widget_bg .. "88"
 -- Beautiful.logoutscreen_buttons_bg = color_lib.lightness("darken", User.config.dark_mode and 5 or 15, Beautiful.widget_bg)
 Beautiful.logoutscreen_buttons_bg = Beautiful.widget_bg_alt
 -- Beautiful.logoutscreen_buttons_bg_hover = Beautiful.widget_bg_alt
-Beautiful.logoutscreen_buttons_shape = Helpers.shape.rrect(Beautiful.small_radius)
+Beautiful.logoutscreen_buttons_shape = Gears.shape.circle
 Beautiful.logoutscreen_buttons_box_shape = Helpers.shape.rrect(Beautiful.medium_radius)
 Beautiful.logoutscreen_buttons_box_bg = Beautiful.widget_bg
 
-local function create_user_button(icon, color, fn)
-  local size = dpi(110)
+local size = dpi(110)
+local function create_user_button(opts)
+  local label = Wibox.widget({
+    widget = Wibox.widget.textbox,
+    markup = Helpers.text.colorize_text(opts.name, Beautiful.fg_normal .. "BB"),
+    font = Beautiful.font_text .. "Medium 12",
+    halign = "center",
+  })
   local wdg = wbutton.text.normal({
-    text = icon,
+    text = opts.icon,
     font = Beautiful.font_icon,
     size = 32,
+    normal_border_width = dpi(2),
     shape = Beautiful.logoutscreen_buttons_shape,
-    normal_border_width = 0,
-    normal_border_color = color,
-    fg_normal = color,
+    normal_border_color = Beautiful.logoutscreen_buttons_bg,
+    hover_border_color = opts.color,
+    fg_normal = Beautiful.fg_normal .. "AA",
+    fg_hover = opts.color,
     bg_normal = Beautiful.logoutscreen_buttons_bg,
+    -- bg_hover = Beautiful.logoutscreen_buttons_bg,
     -- bg_hover = Beautiful.logoutscreen_buttons_bg_hover or color .. "18",
     on_release = function()
-      if fn then
+      if opts.fn then
         awesome.emit_signal("awesome::logoutscreen", "hide")
-        fn()
+        opts.fn()
       end
+    end,
+    on_hover = function()
+      label:set_markup_silently(Helpers.text.colorize_text(opts.name, opts.color))
+    end,
+    on_leave = function()
+      label:set_markup_silently(Helpers.text.colorize_text(opts.name, Beautiful.fg_normal .. "99"))
     end,
     expand = false,
     forced_height = size,
     forced_width = size,
   })
-  return wdg
+  return Wibox.widget({
+    layout = Wibox.layout.fixed.vertical,
+    spacing = dpi(8),
+    {
+      layout = Wibox.container.place,
+      {
+        widget = Wibox.container.background,
+        shape = Helpers.shape.rrect(Beautiful.medium_radius),
+        border_width = dpi(2),
+        border_color = Beautiful.fg_normal .. "66",
+        {
+          widget = Wibox.container.margin,
+          top = dpi(7),
+          bottom = dpi(7),
+          left = dpi(12),
+          right = dpi(12),
+          {
+            widget = Wibox.widget.textbox,
+            text = opts.pos,
+            font = Beautiful.font_text .. "SemiBold 12",
+            halign = "center",
+            valign = "center",
+          },
+        },
+      },
+    },
+    {
+      widget = Wibox.container.background,
+      shape = Beautiful.logoutscreen_buttons_shape,
+      {
+        layout = Wibox.container.place,
+        wdg,
+      },
+    },
+    label,
+  })
 end
 
 local logoutscreen = Wibox({
@@ -84,181 +134,76 @@ local overlay = Wibox.widget({
 background:set_image(Gears.surface.load_silently(Beautiful.wallpaper))
 
 -- BUTTONS
-local sleep_button = create_user_button("󰒲", Beautiful.yellow, function()
-  Awful.spawn.with_shell("systemctl suspend")
-end)
-local lockscreen_button = create_user_button("󰌾", Beautiful.blue, function()
-  awesome.emit_signal("awesome::lockscreen", "show")
-end)
-local logout_button = create_user_button("󰿅", Beautiful.magenta, function()
-  awesome.quit()
-end)
-local shutdown_button = create_user_button("󰐥", Beautiful.red, function()
-  Awful.spawn.with_shell("systemctl poweroff")
-end)
-local reboot_button = create_user_button("󰑐", Beautiful.green, function()
-  Awful.spawn.with_shell("systemctl reboot")
-end)
-local close_button = wbutton.text.normal({
-  text = "󰖭",
-  fg_normal = Beautiful.foreground_alt,
-  bg_normal = Beautiful.red,
-  font = Beautiful.font_icon,
-  bold = true,
-  size = 14,
-  forced_width = dpi(34),
-  forced_height = dpi(34),
-  paddings = { top = dpi(2) },
-  halign = "center",
-  valign = "center",
-  shape = Beautiful.logoutscreen_buttons_shape,
-  on_press = function()
-    awesome.emit_signal("awesome::logoutscreen", "hide")
+local sleep_button = create_user_button({
+  icon = "󰒲",
+  name = "Suspender",
+  color = Beautiful.yellow,
+  pos = "4",
+  fn = function()
+    Awful.spawn.with_shell("systemctl suspend")
   end,
 })
--- 󰚪 󰹻 󱇝 󱇞
-local restart_wm = wbutton.text.normal({
-  text = "󱇝",
-  fg_normal = Beautiful.foreground_alt,
-  bg_normal = Beautiful.gray,
-  font = Beautiful.font_icon,
-  size = 22,
-  forced_width = dpi(38),
-  forced_height = dpi(38),
-  paddings = 0,
-  halign = "center",
-  valign = "center",
-  shape = Beautiful.logoutscreen_buttons_shape,
-  on_press = function()
-    awesome.restart()
+local lockscreen_button = create_user_button({
+  icon = "󰌾",
+  name = "Bloquear\nequipo",
+  color = Beautiful.blue,
+  pos = "3",
+  fn = function()
+    awesome.emit_signal("awesome::lockscreen", "show")
   end,
 })
-local function make_point(color)
-  return Wibox.widget({
-    layout = Wibox.container.place,
-    {
-      widget = Wibox.container.background,
-      bg = color,
-      -- shape = Gears.shape.circle,
-      {
-        widget = Wibox.container.margin,
-        margins = 3,
-      },
-    },
-  })
-end
-
-local user_info = Wibox.widget({
-  widget = Wibox.container.background,
-  fg = Beautiful.fg_normal,
-  {
-    layout = Wibox.layout.fixed.vertical,
-    spacing = dpi(5),
-    {
-      layout = Wibox.container.place,
-      {
-        widget = Wibox.container.background,
-        bg = Beautiful.logoutscreen_clock_bg,
-        shape = Helpers.shape.rrect(Beautiful.medium_radius),
-        forced_width = dpi(160),
-        {
-          layout = Wibox.container.place,
-          {
-            layout = Wibox.layout.fixed.horizontal,
-            spacing = dpi(8),
-            {
-              widget = Wibox.widget.textclock,
-              format = "%H",
-              font = Beautiful.font_text .. "Medium 36",
-              halign = "center",
-            },
-            {
-              layout = Wibox.container.place,
-              halign = "center",
-              valign = "center",
-              {
-                widget = Wibox.container.margin,
-                top = dpi(2),
-                {
-                  layout = Wibox.layout.fixed.vertical,
-                  spacing = dpi(5),
-                  make_point(Beautiful.magenta),
-                  make_point(Beautiful.green),
-                  make_point(Beautiful.yellow),
-                },
-              },
-            },
-            {
-              widget = Wibox.widget.textclock,
-              format = "%M",
-              font = Beautiful.font_text .. "Medium 36",
-              halign = "center",
-            },
-          },
-        },
-      },
-    },
-    {
-      widget = Wibox.widget.imagebox,
-      image = Beautiful.user_icon,
-      clip_shape = Helpers.shape.rrect(Beautiful.medium_radius),
-      halign = "center",
-      valign = "center",
-      forced_height = dpi(160),
-      forced_width = dpi(160),
-    },
-    {
-      widget = Wibox.container.background,
-      forced_height = dpi(46),
-      bg = Beautiful.logoutscreen_clock_bg,
-      fg = Beautiful.fg_normal,
-      {
-        widget = Wibox.widget.textbox,
-        text = os.getenv("USER"):gsub("^%l", string.upper),
-        halign = "center",
-        valign = "center",
-        font = Beautiful.font_text .. "SemiBold 13",
-      },
-    },
-  },
+local logout_button = create_user_button({
+  icon = "󰿅",
+  name = "Cerrar sesion",
+  color = Beautiful.magenta,
+  pos = "5",
+  fn = function()
+    awesome.quit()
+  end,
+})
+local shutdown_button = create_user_button({
+  icon = "󰐥",
+  name = "Apagar",
+  color = Beautiful.red,
+  pos = "1",
+  fn = function()
+    Awful.spawn.with_shell("systemctl poweroff")
+  end,
+})
+local reboot_button = create_user_button({
+  icon = "󰑐",
+  name = "Reiniciar",
+  color = Beautiful.green,
+  pos = "2",
+  fn = function()
+    Awful.spawn.with_shell("systemctl reboot")
+  end,
 })
 
 logoutscreen:setup({
   widget = Wibox.container.background,
-  bg = Beautiful.bg_normal .. "DD",
+  bg = Beautiful.bg_normal .. "01",
   {
-    widget = Wibox.container.margin,
-    margins = dpi(50),
+    layout = Wibox.container.place,
+    valign = "bottom",
+    halign = "center",
     {
-      layout = Wibox.layout.stack,
+      widget = Wibox.container.background,
+      bg = Beautiful.widget_bg,
+      shape = Helpers.shape.prrect(dpi(30), true, true, false, false),
+      -- border_width = dpi(2),
+      -- border_color = Beautiful.fg_normal,
       {
-        layout = Wibox.container.place,
-        halign = "right",
-        valign = "top",
-        close_button,
-      },
-      {
-        layout = Wibox.container.place,
-        halign = "right",
-        valign = "bottom",
-        restart_wm,
-      },
-      {
-        layout = Wibox.layout.flex.vertical,
-        user_info,
+        widget = Wibox.container.margin,
+        margins = dpi(30),
         {
-          layout = Wibox.container.place,
-          halign = "center",
-          valign = "center",
-          {
-            layout = Wibox.layout.flex.horizontal,
-            spacing = dpi(30),
-            shutdown_button,
-            reboot_button,
-            lockscreen_button,
-            sleep_button,
-            logout_button,
-          },
+          layout = Wibox.layout.flex.horizontal,
+          spacing = dpi(30),
+          shutdown_button,
+          reboot_button,
+          lockscreen_button,
+          sleep_button,
+          logout_button,
         },
       },
     },
