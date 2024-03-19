@@ -5,6 +5,7 @@ local colorize_text = Helpers.text.colorize_text
 local override_names = {
   ["firefox"] = "Mozilla Firefox",
   ["kitty"] = "Terminal",
+  ["ncmpcpppad"] = "SINFONIA",
 }
 
 client.connect_signal("request::titlebars", function(c)

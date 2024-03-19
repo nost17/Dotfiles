@@ -180,8 +180,8 @@ local bottom = function(c)
 			widget = Wibox.container.margin,
 			top = paddings / 2,
 			bottom = paddings / 2,
-			left = dpi(2) + paddings / 2,
-			right = dpi(2) + paddings / 2,
+			left = paddings / 2,
+			right = paddings / 2,
 			{
 				widget = Wibox.container.background,
 				{
