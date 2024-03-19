@@ -34,7 +34,7 @@ local function button(args)
 
   args.bg = args.normal_bg
   args.shape = args.shape or nil
-  args.border_width = args.normal_border_width or nil
+  args.border_width = args.border_width or args.normal_border_width or nil
   args.border_color = args.normal_border_color or Beautiful.transparent
 
   local widget = wcontainer(args)
@@ -70,11 +70,11 @@ function elevated_button.state(args)
   args.border_width_on = args.border_width_on or args.border_width
 
   args.normal_border_color = args.normal_border_color or Beautiful.transparent
-  args.hover_border_color = args.hover_border_color or Beautiful.transparent
-  args.press_border_color = args.press_border_color or Beautiful.transparent
-  args.on_normal_border_color = args.on_normal_border_color or Beautiful.transparent
-  args.on_hover_border_color = args.on_hover_border_color or Beautiful.transparent
-  args.on_press_border_color = args.on_press_border_color or Beautiful.transparent
+  args.hover_border_color = args.hover_border_color or args.normal_border_color
+  args.press_border_color = args.press_border_color or args.hover_border_color
+  args.on_normal_border_color = args.on_normal_border_color or args.normal_border_color
+  args.on_hover_border_color = args.on_hover_border_color or args.on_normal_border_color
+  args.on_press_border_color = args.on_press_border_color or args.on_hover_border_color
 
   args.on_hover = args.on_hover or nil
   args.on_leave = args.on_leave or nil
