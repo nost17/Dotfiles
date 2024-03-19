@@ -77,4 +77,13 @@ local battery = Wibox.widget({
   layout = Wibox.layout.fixed.horizontal,
 })
 
-return battery
+return Wibox.widget({
+  layout = Wibox.layout.align.horizontal,
+  nil,
+  {
+    layout = Wibox.container.place,
+    halign = "center",
+    battery
+  },
+  nil,
+})

@@ -134,21 +134,18 @@ function templates.simple(opts)
     text = opts.icon,
     font = Beautiful.font_icon,
     size = 15,
-    shape = Beautiful.quicksettings_ctrl_btn_shape,
-    -- shape = Gears.shape.circle,
-    bg_normal = Beautiful.quicksettings_ctrl_btn_bg,
+    -- shape = Beautiful.quicksettings_ctrl_btn_shape,
+    shape = Gears.shape.circle,
+    -- bg_normal = Beautiful.quicksettings_ctrl_btn_bg,
     fg_normal_on = Beautiful.quicksettings_ctrl_btn_fg_on,
-    -- bg_normal = Helpers.color.lightness(
-    --   Beautiful.color_method,
-    --   Beautiful.color_method_factor,
-    --   Beautiful.quicksettings_ctrl_btn_bg
-    -- ),
+    bg_normal = Helpers.color.lightness(
+      Beautiful.color_method,
+      Beautiful.color_method_factor,
+      Beautiful.quicksettings_ctrl_btn_bg
+    ),
     bg_normal_on = Beautiful.quicksettings_ctrl_btn_bg_on,
     halign = "center",
-    paddings = {
-      top = dpi(10),
-      bottom = dpi(10),
-    },
+    paddings = dpi(16),
     on_turn_on = function()
       if opts.on_fn then
         opts.on_fn()

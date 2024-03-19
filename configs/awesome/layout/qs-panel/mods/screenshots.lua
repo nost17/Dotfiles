@@ -1,10 +1,8 @@
 local screenshot_lib = require("utils.modules.screenshot")
 local wbutton = require("utils.button")
-local button_template = require("layout.qs-panel.mods.controls.base")
 local dpi = Beautiful.xresources.apply_dpi
 local delay_count = 0
 local hide_cursor = false
-local screenshot = Gears.object({})
 local new_bg =
     Helpers.color.lightness(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.quicksettings_ctrl_btn_bg)
 
@@ -104,8 +102,7 @@ local screenshot_options = wbutton.elevated.state({
   end,
 })
 
-screenshot.settings = Wibox.widget({
-  visible = false,
+local screenshot_menu = Wibox.widget({
   widget = Wibox.container.background,
   bg = Beautiful.quicksettings_widgets_bg,
   shape = Beautiful.quicksettings_ctrl_btn_shape,
@@ -153,36 +150,15 @@ screenshot.settings = Wibox.widget({
   },
 })
 
-screenshot.button = button_template({
-  icon = "󰄀",
-  name = "Capturar",
-  -- type = "simple",
-  -- bg = Helpers.color.lightness(
-  --   Beautiful.color_method,
-  --   Beautiful.color_method_factor,
-  --   Beautiful.quicksettings_ctrl_btn_bg
-  -- ),
-  halign = "center",
-  on_fn = function()
-    screenshot:emit_signal("visible::settings", true)
-  end,
-  off_fn = function()
-    screenshot:emit_signal("visible::settings", false)
-  end,
-})
-
-screenshot:connect_signal("visible::settings", function(_, vis)
-  if vis then
+function screenshot_menu:reset()
     delay_count = 0
     delay_label:set_text(delay_count)
-  end
-end)
+end
 
 awesome.connect_signal("visible::quicksettings", function(vis)
   if vis == false then
-    screenshot:emit_signal("visible::settings", false)
-    screenshot.button:turn_off()
+    screenshot_menu:reset()
   end
 end)
 
-return screenshot
+return screenshot_menu

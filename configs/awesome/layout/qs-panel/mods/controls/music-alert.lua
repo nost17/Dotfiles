@@ -4,7 +4,7 @@ local music_notify_state = button_template({
   icon = "󰎇",
   name = "Sinfonia",
   settings = function()
-    Awful.spawn("kitty -e ncmpcpp")
+    Awful.spawn("kitty --class 'ncmpcpppad' e ncmpcpp")
   end,
   on_by_default = User.config.music_notify,
   on_fn = function()

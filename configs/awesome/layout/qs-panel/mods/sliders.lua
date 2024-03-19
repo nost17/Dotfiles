@@ -32,8 +32,8 @@ local function mk_slider(opts)
     bar_color = color_lib.lightness(Beautiful.color_method, Beautiful.color_method_factor, Beautiful.widget_bg_alt),
     bar_active_color = opts.color,
     bar_margins = {
-      -- top = dpi(4),
-      -- bottom = dpi(4),
+      top = dpi(3),
+      bottom = dpi(3),
     },
     handle_width = dpi(12),
     bar_shape = Helpers.shape.rrect(Beautiful.small_radius),
@@ -53,13 +53,13 @@ local function mk_slider(opts)
   local slider_label = Wibox.widget({
     widget = Wibox.widget.textbox,
     forced_width = dpi(40),
-    text = tostring(slider.value) .. "%",
+    text = tostring(slider.value),
     font = Beautiful.font_text .. "11",
-    halign = "right",
+    halign = "center",
     valign = "center",
   })
   slider:connect_signal("property::value", function(_, new_value)
-    slider_label:set_text(new_value .. "%")
+    slider_label:set_text(new_value)
   end)
   return slider, slider_icon, slider_label
 end
