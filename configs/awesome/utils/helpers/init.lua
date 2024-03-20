@@ -26,7 +26,7 @@ function _module.checkFile(file_path)
   local f = io.open(file_path, "r")
   if f ~= nil then
     io.close(f)
-    return file_path
+    return true
   else
     return false
   end

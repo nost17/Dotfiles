@@ -35,7 +35,6 @@ local function create_user_button(opts)
     -- bg_hover = Beautiful.logoutscreen_buttons_bg_hover or color .. "18",
     on_release = function()
       if opts.fn then
-        awesome.emit_signal("awesome::logoutscreen", "hide")
         opts.fn()
       end
     end,
@@ -108,9 +107,9 @@ awesome.connect_signal("awesome::logoutscreen", function(action)
     awesome.emit_signal("visible::logoutscreen", true)
   end
   if logoutscreen.visible then
-    awesome.emit_signal("awesome::app_launcher", "hide")
-    awesome.emit_signal("awesome::quicksettings_panel", "hide")
-    awesome.emit_signal("awesome::notification_center", "hide")
+    awesome.emit_signal("panels::app_launcher", "hide")
+    awesome.emit_signal("panels::quicksettings", "hide")
+    awesome.emit_signal("panels::notification_center", "hide")
   end
 end)
 
@@ -126,12 +125,15 @@ local background = Wibox.widget({
 })
 local overlay = Wibox.widget({
   widget = Wibox.container.background,
-  bg = Beautiful.bg_normal .. (color_lib.isDark(Beautiful.bg_normal) and "AA" or "55"),
+  bg = Beautiful.bg_normal .. "01",
   forced_height = screen_height,
   forced_width = screen_width,
 })
 
-background:set_image(Gears.surface.load_silently(Beautiful.wallpaper))
+-- background:set_image(Gears.surface.load_silently(Beautiful.wallpaper))
+overlay:connect_signal("button::release", function(c)
+  awesome.emit_signal("awesome::logoutscreen", "hide")
+end)
 
 -- BUTTONS
 local sleep_button = create_user_button({
@@ -181,8 +183,8 @@ local reboot_button = create_user_button({
 })
 
 logoutscreen:setup({
-  widget = Wibox.container.background,
-  bg = Beautiful.bg_normal .. "01",
+  layout = Wibox.layout.stack,
+  overlay,
   {
     layout = Wibox.container.place,
     valign = "bottom",

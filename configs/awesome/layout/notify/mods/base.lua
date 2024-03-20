@@ -50,7 +50,7 @@ local function actions_widget(n)
   for _, action in ipairs(n.actions) do
     local button = wbutton.text.normal({
       text = action.name,
-      font = action.font or Beautiful.font_text .. "Regular",
+      font = action.font or Beautiful.font_text .. "Medium",
       size = action.font_size or 10,
       halign = "center",
       bg_normal = Beautiful.notification_bg_alt,

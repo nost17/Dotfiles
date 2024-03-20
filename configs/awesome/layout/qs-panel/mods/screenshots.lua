@@ -18,20 +18,26 @@ local function button(icon, fn, size)
   })
 end
 local function screenshot_notify(ss)
-  local open_image = Naughty.action({ name = "Abrir" })
-  local delete_image = Naughty.action({ name = "Eliminar" })
+  local screenshot_open = Naughty.action({ name = "Abrir" })
+  local screenshot_copy = Naughty.action({ name = "Copiar" })
+  local screenshot_delete = Naughty.action({ name = "Eliminar" })
   ss:connect_signal("file::saved", function(self, file_name, file_path)
-    open_image:connect_signal("invoked", function()
+    screenshot_open:connect_signal("invoked", function()
       Awful.spawn.with_shell("feh " .. file_path .. file_name)
     end)
-    delete_image:connect_signal("invoked", function()
+    screenshot_delete:connect_signal("invoked", function()
       Awful.spawn.with_shell("rm " .. file_path .. file_name)
+    end)
+    screenshot_copy:connect_signal("invoked", function()
+      Awful.spawn.with_shell(
+        "xclip -selection clipboard -t image/png " .. file_path .. file_name .. " &>/dev/null"
+      )
     end)
     Naughty.notify({
       message = file_name,
       title = "Captura guardada.",
       image = file_path .. file_name,
-      actions = { open_image, delete_image },
+      actions = { screenshot_copy, screenshot_open, screenshot_delete },
     })
   end)
 end
@@ -151,8 +157,8 @@ local screenshot_menu = Wibox.widget({
 })
 
 function screenshot_menu:reset()
-    delay_count = 0
-    delay_label:set_text(delay_count)
+  delay_count = 0
+  delay_label:set_text(delay_count)
 end
 
 awesome.connect_signal("visible::quicksettings", function(vis)
