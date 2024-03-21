@@ -146,18 +146,18 @@ function templates.simple(opts)
     bg_normal_on = Beautiful.quicksettings_ctrl_btn_bg_on,
     halign = "center",
     paddings = dpi(16),
-    on_turn_on = function()
+    on_turn_on = function(self)
       if opts.on_fn then
-        opts.on_fn()
+        opts.on_fn(self)
       end
     end,
-    on_turn_off = function()
+    on_turn_off = function(self)
       if opts.off_fn then
-        opts.off_fn()
+        opts.off_fn(self)
       end
     end,
-    on_release = opts.on_release and function()
-      opts.on_release()
+    on_release = opts.on_release and function(self)
+      opts.on_release(self)
     end,
   })
 

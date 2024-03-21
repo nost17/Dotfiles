@@ -1,4 +1,4 @@
-local script = [[cat /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp*_input]]
+local script = [[cat /sys/devices/platform/coretemp.0/hwmon/hwmon*/temp*_input]]
 
 local function emit_signal(stdout)
   local temp = 0
