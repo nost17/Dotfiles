@@ -1,32 +1,33 @@
 local color_lib = Helpers.color
 local theme = {}
+local _colors = {}
 local themes_path = Gears.filesystem.get_configuration_dir() .. "theme/"
 local dpi = Beautiful.xresources.apply_dpi
-local function check(file)
-	file_path = themes_path:gsub("theme/", "") .. file:gsub("%.", "/") .. ".lua"
-	return Helpers.checkFile(file_path)
+
+local colorpalette_path = "theme.colors." .. User.config.theme
+
+if Helpers.checkFile(themes_path .. "colors/" .. User.config.theme .. ".lua") then
+	_colors = require(colorpalette_path)
 end
-local theme_dark_path = "theme.colors." .. User.config.theme
-local theme_light_path = "theme.colors." .. User.config.theme .. "_light"
-_G.light_theme_exist = check(theme_light_path)
-_G.dark_theme_exist = check(theme_dark_path)
-local setTheme = function()
-	if User.config.dark_mode and _G.dark_theme_exist then
-		theme = require(theme_dark_path)
+
+if User.config.dark_mode then
+	if _colors["dark"] then
+		theme = _colors["dark"]
 	else
-		if _G.light_theme_exist then
-			theme = require(theme_light_path)
-			User.config.dark_mode = false
-		else
-			theme = require(theme_dark_path)
-			User.config.dark_mode = true
-		end
+		theme = _colors["light"]
+		User.config.dark_mode = false
+	end
+else
+	if _colors["light"] then
+		theme = _colors["light"]
+	else
+		theme = _colors["dark"]
+		User.config.dark_mode = true
 	end
 end
-setTheme()
 
 -- OTHER
-theme.wallpaper = theme.wallpaper or themes_path .. "/wallpapers/yoru.jpeg"
+theme.wallpaper = theme.wallpaper or themes_path .. "/wallpapers/default.png"
 theme.font_text = "IBM Plex Sans "
 theme.font_icon = "Material Design Icons Desktop "
 theme.font = theme.font_text .. "Regular 12"
@@ -244,3 +245,4 @@ for _, layout_name in ipairs({
 end
 
 Beautiful.init(theme)
+Beautiful._colors = _colors
