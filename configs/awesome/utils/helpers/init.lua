@@ -32,6 +32,15 @@ function _module.checkFile(file_path)
   end
 end
 
+function _module.writeFile(filename, contents)
+  if _module.checkFile(filename) then
+    local fh = assert(io.open(filename, "wb"))
+    fh:write(contents)
+    fh:flush()
+    fh:close()
+  end
+end
+
 function _module.cropSurface(ratio, surf)
   local old_w, old_h = Gears.surface.get_size(surf)
   local old_ratio = old_w / old_h
@@ -101,11 +110,9 @@ function _module.placement(wdg, pos, props, margins)
   end
 end
 
-_module = Gears.table.crush(_module, {
-  color = require(... .. ".color"),
-  shape = require(... .. ".shape"),
-  ui = require(... .. ".ui"),
-  text = require(... .. ".text"),
-})
+_module.color = require(... .. ".color")
+_module.shape = require(... .. ".shape")
+_module.ui = require(... .. ".ui")
+_module.text = require(... .. ".text")
 
 return _module

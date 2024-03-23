@@ -46,7 +46,7 @@ theme.useless_gap = dpi(4)
 theme.gap_single_client = true
 theme.awesome_icon = themes_path .. "images/awesome.png"
 theme.user_icon = themes_path .. "images/user_icon.png"
-theme.small_radius = dpi(3)
+theme.small_radius = dpi(4)
 theme.medium_radius = dpi(5)
 
 -- WIDGETS

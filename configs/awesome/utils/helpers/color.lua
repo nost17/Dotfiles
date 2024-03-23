@@ -60,6 +60,9 @@ end
 ------------------
 
 function M.darken(color, amount)
+  if amount > 1 then
+    amount = math.ceil(amount) / 255
+  end
   --- Establece el color a rgb
   color = color or "#FFFFFFFF"
   local rgb = M.hex_to_rgb(color)
@@ -81,6 +84,9 @@ function M.darken(color, amount)
 end
 
 function M.lighten(color, amount)
+  if amount > 1 then
+    amount = math.ceil(amount) / 255
+  end
   --- Establece el color a rgb
   color = color or "#FFFFFFFF"
   local rgb = M.hex_to_rgb(color)
