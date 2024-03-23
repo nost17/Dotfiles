@@ -37,6 +37,10 @@ Awful.keyboard.append_global_keybindings({
     hotkeys_popup.show_help,
     { description = "mostrar atajos de teclado", group = "awesome" }
   ),
+  Awful.key({ User.vars.modkey }, "Tab", function()
+    awesome.emit_signal("widgets::windows_switcher")
+    Awful.client.focus.byidx(1)
+  end, { description = "Mostrar el selector de ventanas", group = "awesome" }),
   Awful.key({ User.vars.modkey }, "c", function()
     awesome.emit_signal("panels::calendar", "toggle")
   end, { description = "Mostrar/Ocultar calendario", group = "awesome" }),
@@ -64,10 +68,10 @@ Awful.keyboard.append_global_keybindings({
   --         Playerctl:play()
   -- end),
   Awful.key({}, "XF86AudioNext", function()
-          Playerctl:next()
+    Playerctl:next()
   end),
   Awful.key({}, "XF86AudioPrev", function()
-          Playerctl:previous()
+    Playerctl:previous()
   end),
   -- Volume and Brightness keys
   Awful.key({ User.vars.modkey }, "-", function()
@@ -134,12 +138,12 @@ Awful.keyboard.append_global_keybindings({
   Awful.key({ User.vars.modkey }, "k", function()
     Awful.client.focus.byidx(-1)
   end, { description = "focus previous by index", group = "client" }),
-  Awful.key({ User.vars.modkey }, "Tab", function()
-    Awful.client.focus.history.previous()
-    if client.focus then
-      client.focus:raise()
-    end
-  end, { description = "go back", group = "client" }),
+  -- Awful.key({ User.vars.modkey }, "Tab", function()
+  --   Awful.client.focus.history.previous()
+  --   if client.focus then
+  --     client.focus:raise()
+  --   end
+  -- end, { description = "go back", group = "client" }),
   Awful.key({ User.vars.modkey, "Control" }, "j", function()
     Awful.screen.focus_relative(1)
   end, { description = "focus the next screen", group = "screen" }),
