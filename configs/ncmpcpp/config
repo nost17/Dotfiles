@@ -16,8 +16,10 @@ ignore_leading_the               = "yes"
 allow_for_physical_item_deletion = "no"
 lines_scrolled = "1"
 follow_now_playing_lyrics = "yes"
-lyrics_fetchers = musixmatch
+lyrics_fetchers = justsomelyrics, jahlyrics, plyrics, tekstowo, internet
+# lyrics_fetchers = genius
 # execute_on_song_change = "~/scripts/covers_ncmpcpp.sh extract"
+# execute_on_song_change = notify-send -i ~/.local/share/icons/vinyl.svg "Now Playing" "$(mpc --format '%title% \n%artist% - %album%' current)"
 
 # visualizer
 visualizer_data_source = /tmp/mpd.fifo
