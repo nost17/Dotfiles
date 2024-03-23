@@ -6,6 +6,7 @@ require("config.keys")
 require("config.rules")
 -- require("config.border")
 require("config.wallpaper")
+require("config.kitty")
 
 -- Gears.timer({
 -- 	timeout = 1,
