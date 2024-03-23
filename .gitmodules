@@ -1,6 +1,0 @@
-[submodule "utils/mods/bling"]
-	path = utils/mods/bling
-	url = https://github.com/BlingCorp/bling.git
-[submodule "utils/mods/freedesktop"]
-	path = utils/mods/freedesktop
-	url = https://github.com/lcpz/awesome-freedesktop.git
