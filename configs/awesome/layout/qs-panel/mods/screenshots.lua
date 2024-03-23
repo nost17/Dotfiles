@@ -43,20 +43,20 @@ local function screenshot_notify(ss)
 end
 
 local screenshot_normal = button("󰆟", function()
-  awesome.emit_signal("panels::quicksettings", "hide")
   local ss = screenshot_lib.normal({
     hide_cursor = hide_cursor,
     delay = delay_count,
   })
+  awesome.emit_signal("panels::quicksettings", "hide")
   screenshot_notify(ss)
 end)
 
 local screenshot_selective = button("󰆞", function()
-  awesome.emit_signal("panels::quicksettings", "hide")
   local ss = screenshot_lib.select({
     hide_cursor = hide_cursor,
     delay = delay_count,
   })
+  awesome.emit_signal("panels::quicksettings", "hide")
   screenshot_notify(ss)
 end)
 
