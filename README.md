@@ -2,6 +2,15 @@
 
 Repositorio de configuración del entorno AwesomeWM y otros programas
 
+### Novedades
+- **AwesomeWM:**
+    - Modo oscuro / claro
+    - Soporta cualquier paleta de colores
+    - Ncmpcpp con decoracion personalizada
+    - Alternador de tema automatico para Terminal Kitty
+    - Notificaciones de musica con acciones
+    - Herramienta de capturas de pantalla en ajustes rapidos
+
 ### Programas
 
 - **WM:** AwesomeWM
@@ -33,27 +42,34 @@ Repositorio de configuración del entorno AwesomeWM y otros programas
 | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | <a href="#--------"><img src="https://raw.githubusercontent.com/Lik-e/Dotfiles/main/.github/screenshots/05.png" alt="bottom panel preview"></a> |
 
-| <b>Modo claro</b>                                                                                                                               |
+| <b>Calendaria y Musica</b>                                                                                                                               |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | <a href="#--------"><img src="https://raw.githubusercontent.com/Lik-e/Dotfiles/main/.github/screenshots/06.png" alt="bottom panel preview"></a> |
 
-| <b>Pantalla de salida</b>                                                                                                                       |
+| <b>Selector de ventanas</b>                                                                                                                               |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | <a href="#--------"><img src="https://raw.githubusercontent.com/Lik-e/Dotfiles/main/.github/screenshots/07.png" alt="bottom panel preview"></a> |
 
-| <b>Pantalla de bloqueo</b>                                                                                                                      |
+| <b>Modo claro</b>                                                                                                                               |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | <a href="#--------"><img src="https://raw.githubusercontent.com/Lik-e/Dotfiles/main/.github/screenshots/08.png" alt="bottom panel preview"></a> |
 
+| <b>Pantalla de salida</b>                                                                                                                       |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a href="#--------"><img src="https://raw.githubusercontent.com/Lik-e/Dotfiles/main/.github/screenshots/09.png" alt="bottom panel preview"></a> |
+
+| <b>Pantalla de bloqueo</b>                                                                                                                      |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a href="#--------"><img src="https://raw.githubusercontent.com/Lik-e/Dotfiles/main/.github/screenshots/10.png" alt="bottom panel preview"></a> |
+
 # ToDo
-- [ ] Actualizar capturas de pantalla
+- [X] Actualizar capturas de pantalla
 
 #### AwesomeWM
 
-- [ ] Mover herramienta de captura de pantalla
-  - [ ] Intercambiar boton de "No molestar" con el de captura de pantalla
-  - [ ] Mover boton de Alerta de musica al widget de control de musica
-  - [ ] Intercambiar boton de "Alerta de Música" con el de "No molestar"
+- [ ] Playerctl lib
+  - [ ] Agregar REPEAT and RANDOM señal
+  - [ ] Agregar funcionalidad a los botones de los ajustes rapidos/control de musica
 - [X] Implementar monitores de estado al panel de ajustes rapidos
   - [X] Reorganizar ajustes rapidos
     - [X] Agregar monitores en el widget de controles
@@ -94,7 +110,7 @@ Repositorio de configuración del entorno AwesomeWM y otros programas
 
 #### Other
 
-- [ ] Agregar configuración de nvchad
+- [X] Agregar configuración de nvchad
 - [ ] Agregar rc de picom al script
 - [ ] Agregar compilacion automatica de picom-ibhagwan
 - [ ] Agregar compilacion automatica de awesome-git en el script
