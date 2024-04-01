@@ -86,9 +86,6 @@ theme.tooltip_bg = theme.bg_normal
 theme.tooltip_fg = theme.fg_normal
 theme.tooltip_margins = dpi(10)
 
--- BLING
-theme.GtkBling = require("utils.mods.bling.helpers.icon_theme")(theme.icon_theme)
-
 -- MENU
 theme.menu_bg_normal = theme.widget_bg
 theme.menu_bg_focus = theme.red
