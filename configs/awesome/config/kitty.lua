@@ -1,9 +1,10 @@
 local CONFIG_PATH = Gears.filesystem.get_xdg_config_home() .. "kitty/"
+-- local inactive_tab_foreground = Helpers.color.lighten(Beautiful.black, Beautiful.color_method_factor)
+local black_color = Helpers.color.mixer(Beautiful.bg_normal, Beautiful.fg_normal)
 local selection_background = Beautiful.green
-local inactive_tab_foreground = Helpers.color.lighten(Beautiful.black, Beautiful.color_method_factor)
+local inactive_tab_foreground = black_color
 local selection_foreground = Helpers.color.isDark(selection_background) and Beautiful.fg_normal or
     Beautiful.foreground_alt
-
 
 local TEMPLATE = [[]] ..
     "url_color                  " .. Beautiful.green .. "\n" ..
@@ -23,8 +24,8 @@ local TEMPLATE = [[]] ..
     "background  " .. Beautiful.bg_normal .. "\n" ..
     "" .. "\n" ..
     "# black" .. "\n" ..
-    "color0  " .. Beautiful.black .. "\n" ..
-    "color8  " .. Beautiful.black .. "\n" ..
+    "color0  " .. black_color .. "\n" ..
+    "color8  " .. black_color .. "\n" ..
     "" .. "\n" ..
     "# red" .. "\n" ..
     "color1  " .. Beautiful.red .. "\n" ..

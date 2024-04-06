@@ -25,7 +25,7 @@ User.config = {}
 User.config.dark_mode = true
 User.config.dnd_state = false
 User.config.music_notify = true
-User.config.theme = "onedark"
+User.config.theme = "tomorrow"
 User.config.theme_accent = "blue"
 User.config.floating_mode = false
 
@@ -37,6 +37,7 @@ User.vars.editor = os.getenv("EDITOR") or "nano"
 User.notify_count = 0
 
 User.music = {}
+User.music.notify_buttons = false
 User.music.players = {
   "mpd",
   "firefox",
