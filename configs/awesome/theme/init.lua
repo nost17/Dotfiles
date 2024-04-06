@@ -176,7 +176,10 @@ theme.notification_font_message = theme.font_text .. "Medium 11"
 theme.notification_font_appname = theme.font_text .. "Regular 10"
 theme.notification_font_actions = theme.font_text .. "Medium 10"
 theme.notification_font_hour = theme.font_text .. "Bold 10"
-theme.notification_icon_shape = Helpers.shape.rrect(theme.small_radius) -- Gears.shape.circle
+-- theme.notification_icon_shape = Helpers.shape.rrect(theme.small_radius) -- Gears.shape.circle
+theme.notification_icon_shape = function (cr, w, h)
+  Gears.shape.squircle(cr, w, h, 2.5)
+end
 theme.notification_spacing = dpi(6)
 theme.notification_icon_height = dpi(58)
 theme.notification_border_width = 0

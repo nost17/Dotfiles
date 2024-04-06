@@ -7,9 +7,9 @@ return {
 	["dark"] = {
 		wallpaper = wallpapers[1],
 		foreground = "#c5c8c6",
-		background = "#27292C",
+		background = "#1d1f21",
 		foreground_alt = "#27292C",
-		black = "#35383C",
+		black = "#27292C",
 		red = "#D77C79",
 		green = "#C2C77B",
 		orange = "#C78E63",
@@ -17,7 +17,7 @@ return {
 		blue = "#92B2CA",
 		magenta = "#C0A7C7",
 		cyan = "#9AC9C4",
-		gray = "#abb2bf",
+		gray = "#b4b7b4",
 	},
 	["light"] = {
 		wallpaper = wallpapers[1],
