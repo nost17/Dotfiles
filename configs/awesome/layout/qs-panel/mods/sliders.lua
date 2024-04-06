@@ -39,7 +39,7 @@ local function mk_slider(opts)
     bar_shape = Helpers.shape.rrect(Beautiful.small_radius),
     handle_shape = Helpers.shape.rrect(Beautiful.small_radius),
     handle_color = opts.color,
-    handle_border_width = 0,
+    handle_border_width = 2,
     handle_border_color = Beautiful.widget_bg_alt,
   })
   local slider_icon = Wibox.widget({

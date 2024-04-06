@@ -134,10 +134,11 @@ function templates.simple(opts)
     text = opts.icon,
     font = Beautiful.font_icon,
     size = 15,
-    -- shape = Beautiful.quicksettings_ctrl_btn_shape,
-    shape = Gears.shape.circle,
+    shape = Beautiful.quicksettings_ctrl_btn_shape,
+    -- shape = Gears.shape.circle,
     -- bg_normal = Beautiful.quicksettings_ctrl_btn_bg,
     fg_normal_on = Beautiful.quicksettings_ctrl_btn_fg_on,
+    fg_normal = Beautiful.quicksettings_ctrl_btn_fg .. "CF",
     bg_normal = Helpers.color.lightness(
       Beautiful.color_method,
       Beautiful.color_method_factor,
