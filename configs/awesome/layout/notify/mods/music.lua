@@ -71,7 +71,7 @@ function Playerctl:notify()
     }),
     image = self._private.prev_metadata.cover_art,
     app_name = "Música",
-    actions = { prev_button, toggle_button, next_button },
+    actions = User.music.notify_buttons and { prev_button, toggle_button, next_button },
   }, music_notify)
 end
 

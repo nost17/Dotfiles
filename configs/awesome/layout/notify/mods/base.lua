@@ -239,6 +239,6 @@ Naughty.connect_signal("request::display", function(n)
   if not User.config.dnd_state then
     mknotification(n)
     User.notify_count = User.notify_count + 1
-    Naughty.emit_signal("count")
   end
+  Naughty.emit_signal("count")
 end)
