@@ -43,24 +43,6 @@ local screenshot_button = create_user_button("󰄀", Beautiful.yellow, function(
   screenshot_menu:reset()
 end)
 
-local uptime = Wibox.widget({
-  widget = Wibox.widget.textbox,
-  text = Helpers.getCmdOut("uptime -p | sed -e 's/up //;s/ hours,/h/;s/ hour,/h/;s/ minutes/m/;s/ minute/m/'"),
-  font = Beautiful.font_text .. "Medium 10",
-  halign = "left",
-  valign = "top",
-})
-
-Gears.timer({
-  timeout = 240,
-  autostart = true,
-  callback = function()
-    uptime:set_text(
-      Helpers.getCmdOut("uptime -p | sed -e 's/up //;s/ hours,/h/;s/ hour,/h/;s/ minutes/m/;s/ minute/m/'")
-    )
-  end,
-})
-
 awesome.connect_signal("visible::quicksettings", function(vis)
   if vis then
     screenshot_menu_container.visible = false
@@ -107,7 +89,12 @@ return Wibox.widget({
           {
             widget = Wibox.container.background,
             fg = Beautiful.fg_normal .. "CC",
-            uptime,
+            {
+              widget = Wibox.widget.textbox,
+              text = "@Lik-e",
+              font = Beautiful.font_text .. "Regular 10",
+              halign = "left",
+            },
           },
         },
       },

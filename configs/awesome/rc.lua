@@ -58,14 +58,15 @@ require("config") -- AwesomeWM configuration files
 require("lib")    -- Awesome signal files
 require("layout") -- UI configuration files
 
-collectgarbage("collect")
 
--- Gears.timer({
--- 	timeout = 5,
--- 	autostart = true,
--- 	call_now = true,
--- 	callback = function()
--- 	end,
--- })
+Gears.timer({
+  timeout = 5,
+	autostart = true,
+	call_now = true,
+	callback = function()
+    collectgarbage("collect")
+	end,
+})
+
 -- collectgarbage("setpause", 110)
 -- collectgarbage("setstepmul", 1000)

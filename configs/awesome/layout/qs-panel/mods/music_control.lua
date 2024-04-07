@@ -211,8 +211,6 @@ return Wibox.widget({
           widget = Wibox.container.margin,
           {
             layout = Wibox.layout.fixed.vertical,
-            player_btn,
-
             music_title,
             music_artist,
           },
@@ -222,9 +220,7 @@ return Wibox.widget({
           widget = Wibox.container.margin,
           {
             layout = Wibox.layout.fixed.horizontal,
-            -- nil,
-            -- nil,
-            -- halign = "left",
+            spacing = dpi(10),
             {
               widget = Wibox.container.background,
               bg = player_fg .. "33",
@@ -243,6 +239,7 @@ return Wibox.widget({
                 },
               },
             },
+            player_btn,
           },
         },
       },

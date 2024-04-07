@@ -7,23 +7,23 @@ local dpi = Beautiful.xresources.apply_dpi
 local colorpalette_path = "theme.colors." .. User.config.theme
 
 if Helpers.checkFile(themes_path .. "colors/" .. User.config.theme .. ".lua") then
-	_colors = require(colorpalette_path)
+  _colors = require(colorpalette_path)
 end
 
 if User.config.dark_mode then
-	if _colors["dark"] then
-		theme = _colors["dark"]
-	else
-		theme = _colors["light"]
-		User.config.dark_mode = false
-	end
+  if _colors["dark"] then
+    theme = _colors["dark"]
+  else
+    theme = _colors["light"]
+    User.config.dark_mode = false
+  end
 else
-	if _colors["light"] then
-		theme = _colors["light"]
-	else
-		theme = _colors["dark"]
-		User.config.dark_mode = true
-	end
+  if _colors["light"] then
+    theme = _colors["light"]
+  else
+    theme = _colors["dark"]
+    User.config.dark_mode = true
+  end
 end
 
 -- OTHER
@@ -103,33 +103,35 @@ theme.titlebar_bg_urgent = theme.titlebar_bg_normal
 theme.titlebar_fg_urgent = theme.red
 theme.titlebar_font = theme.font_text .. "Medium 10"
 theme.titlebar_size = dpi(40)
-local recolor_image = Gears.color.recolor_image
+local recolor_image = function (name, color)
+  return Gears.color.recolor_image(themes_path .. "images/" .. name, color)
+end
 local recolor = function(color, method)
-	return color_lib.lightness(method or "lighten", 35, color)
+  return color_lib.lightness(method or "lighten", 35, color)
 end
 theme.titlebar_close_button_normal =
-	recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.widget_bg_alt, "lighten"))
-theme.titlebar_close_button_focus = recolor_image(themes_path .. "images/titlebar/close_icon.png", theme.red)
+    recolor_image("titlebar/close_icon.png", recolor(theme.widget_bg_alt, "lighten"))
+theme.titlebar_close_button_focus = recolor_image("titlebar/close_icon.png", theme.red)
 theme.titlebar_minimize_button_normal =
-	recolor_image(themes_path .. "images/titlebar/minimize_icon.png", recolor(theme.widget_bg_alt, "lighten"))
-theme.titlebar_minimize_button_focus = recolor_image(themes_path .. "images/titlebar/minimize_icon.png", theme.green)
+    recolor_image("titlebar/minimize_icon.png", recolor(theme.widget_bg_alt, "lighten"))
+theme.titlebar_minimize_button_focus = recolor_image("titlebar/minimize_icon.png", theme.green)
 theme.titlebar_maximized_button_normal_active =
-	recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.widget_bg_alt, "lighten"))
+    recolor_image("titlebar/close_icon.png", recolor(theme.widget_bg_alt, "lighten"))
 theme.titlebar_maximized_button_normal_inactive =
-	recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.widget_bg_alt, "lighten"))
+    recolor_image("titlebar/close_icon.png", recolor(theme.widget_bg_alt, "lighten"))
 theme.titlebar_maximized_button_focus_active =
-	recolor_image(themes_path .. "images/titlebar/close_icon.png", theme.orange or theme.yellow)
+    recolor_image("titlebar/close_icon.png", theme.orange or theme.yellow)
 theme.titlebar_maximized_button_focus_inactive =
-	recolor_image(themes_path .. "images/titlebar/close_icon.png", theme.orange or theme.yellow)
+    recolor_image("titlebar/close_icon.png", theme.orange or theme.yellow)
 -- TITLEBAR NORMAL HOVER
 theme.titlebar_close_button_normal_hover =
-	recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.red))
+    recolor_image("titlebar/close_icon.png", recolor(theme.red))
 theme.titlebar_minimize_button_normal_hover =
-	recolor_image(themes_path .. "images/titlebar/minimize_icon.png", recolor(theme.green))
+    recolor_image("titlebar/minimize_icon.png", recolor(theme.green))
 theme.titlebar_maximized_button_normal_active_hover =
-	recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.orange or theme.yellow))
+    recolor_image("titlebar/close_icon.png", recolor(theme.orange or theme.yellow))
 theme.titlebar_maximized_button_normal_inactive_hover =
-	recolor_image(themes_path .. "images/titlebar/close_icon.png", recolor(theme.orange or theme.yellow))
+    recolor_image("titlebar/close_icon.png", recolor(theme.orange or theme.yellow))
 -- TITLEBAR FOCUS HOVER
 theme.titlebar_close_button_focus_hover = theme.titlebar_close_button_normal_hover
 theme.titlebar_minimize_button_focus_hover = theme.titlebar_minimize_button_normal_hover
@@ -177,8 +179,12 @@ theme.notification_font_appname = theme.font_text .. "Regular 10"
 theme.notification_font_actions = theme.font_text .. "Medium 10"
 theme.notification_font_hour = theme.font_text .. "Bold 10"
 -- theme.notification_icon_shape = Helpers.shape.rrect(theme.small_radius) -- Gears.shape.circle
-theme.notification_icon_shape = function (cr, w, h)
-  Gears.shape.squircle(cr, w, h, 2.5)
+theme.notification_icon_shape = function(cr, w, h)
+  if math.abs(w - h) <= (h * 0.1) then
+      Gears.shape.squircle(cr, w, h, 2.5)
+  else
+      Gears.shape.squircle(cr, w, h, 4)
+  end
 end
 theme.notification_spacing = dpi(6)
 theme.notification_icon_height = dpi(58)
@@ -207,41 +213,25 @@ theme.hotkeys_group_margin = dpi(20)
 
 -- LAYOUT BOX
 theme.layouts_icons_color = theme.fg_normal
-theme.layout_fairh = themes_path .. "images/layouts/fairhw.png"
-theme.layout_fairv = themes_path .. "images/layouts/fairvw.png"
-theme.layout_floating = themes_path .. "images/layouts/floatingw.png"
-theme.layout_magnifier = themes_path .. "images/layouts/magnifierw.png"
-theme.layout_max = themes_path .. "images/layouts/maxw.png"
-theme.layout_fullscreen = themes_path .. "images/layouts/fullscreenw.png"
-theme.layout_tilebottom = themes_path .. "images/layouts/tilebottomw.png"
-theme.layout_tileleft = themes_path .. "images/layouts/tileleftw.png"
-theme.layout_tile = themes_path .. "images/layouts/tilew.png"
-theme.layout_tiletop = themes_path .. "images/layouts/tiletopw.png"
-theme.layout_spiral = themes_path .. "images/layouts/spiralw.png"
-theme.layout_dwindle = themes_path .. "images/layouts/dwindlew.png"
-theme.layout_cornernw = themes_path .. "images/layouts/cornernww.png"
-theme.layout_cornerne = themes_path .. "images/layouts/cornernew.png"
-theme.layout_cornersw = themes_path .. "images/layouts/cornersww.png"
-theme.layout_cornerse = themes_path .. "images/layouts/cornersew.png"
-for _, layout_name in ipairs({
-	"layout_fairh",
-	"layout_fairv",
-	"layout_floating",
-	"layout_magnifier",
-	"layout_max",
-	"layout_fullscreen",
-	"layout_tilebottom",
-	"layout_tileleft",
-	"layout_tile",
-	"layout_tiletop",
-	"layout_spiral",
-	"layout_dwindle",
-	"layout_cornernw",
-	"layout_cornerne",
-	"layout_cornersw",
-	"layout_cornerse",
+for layout_name, layout_path in pairs({
+  layout_fairh = "fairhw.png",
+  layout_fairv = "fairvw.png",
+  layout_floating = "floatingw.png",
+  layout_magnifier = "magnifierw.png",
+  layout_max = "maxw.png",
+  layout_fullscreen = "fullscreenw.png",
+  layout_tilebottom = "tilebottomw.png",
+  layout_tileleft = "tileleftw.png",
+  layout_tile = "tilew.png",
+  layout_tiletop = "tiletopw.png",
+  layout_spiral = "spiralw.png",
+  layout_dwindle = "dwindlew.png",
+  layout_cornernw = "cornernww.png",
+  layout_cornerne = "cornernew.png",
+  layout_cornersw = "cornersww.png",
+  layout_cornerse = "cornersew.png",
 }) do
-	theme[layout_name] = Gears.color.recolor_image(theme[layout_name], theme.layouts_icons_color)
+  theme[layout_name] = recolor_image("layouts/" .. layout_path, theme.layouts_icons_color)
 end
 
 Beautiful.init(theme)

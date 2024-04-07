@@ -77,13 +77,42 @@ local battery = Wibox.widget({
   layout = Wibox.layout.fixed.horizontal,
 })
 
+local uptime = Wibox.widget({
+  widget = Wibox.widget.textbox,
+  text = Helpers.getCmdOut("uptime -p | sed -e 's/up //;s/ hours,/h/;s/ hour,/h/;s/ minutes/m/;s/ minute/m/'"),
+  font = Beautiful.font_text .. "Medium 10",
+  halign = "left",
+  valign = "center",
+})
+
+Gears.timer({
+  timeout = 240,
+  autostart = true,
+  callback = function()
+    uptime:set_text(
+      Helpers.getCmdOut("uptime -p | sed -e 's/up //;s/ hours,/h/;s/ hour,/h/;s/ minutes/m/;s/ minute/m/'")
+    )
+  end,
+})
+
 return Wibox.widget({
   layout = Wibox.layout.align.horizontal,
-  nil,
   {
     layout = Wibox.container.place,
     halign = "center",
     battery
   },
   nil,
+  {
+    layout = Wibox.layout.fixed.horizontal,
+    spacing = dpi(6),
+    {
+      widget = Wibox.widget.textbox,
+      markup = Helpers.text.colorize_text("󰗎", Beautiful.accent_color),
+      font = Beautiful.font_icon .. "15",
+      halign = "center",
+      valign = "center",
+    },
+    uptime
+  },
 })
