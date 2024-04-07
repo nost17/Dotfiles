@@ -94,6 +94,11 @@ Playerctl:connect_signal("metadata", function(_, title, _, _, _, _)
           autostart = true,
           single_shot = true,
           callback = function()
+            -- Naughty.alert({
+            --   text = title,
+            --   bold = false,
+            --   icon = "music"
+            -- })
             Playerctl:notify()
           end,
         })

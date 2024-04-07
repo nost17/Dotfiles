@@ -2,7 +2,7 @@ local button_template = require("layout.qs-panel.mods.controls.base")
 
 local RC_FILE = Gears.filesystem.get_configuration_dir() .. "rc.lua"
 local timer = Gears.timer({
-	timeout = 0.75,
+	timeout = 1,
 	call_now = false,
 	autostart = false,
 	single_shot = true,
@@ -14,6 +14,10 @@ local function changeTheme(self, mode)
 	if mode == "dark" then
 		if Beautiful._colors["dark"] then
 			self:turn_on()
+			Naughty.alert({
+				text = "Modo oscuro: " .. "<b>" .. "Encendido" .. "</b>",
+				icon = "󰤄",
+			})
 			Awful.spawn.easy_async_with_shell(
 				"sed -i 's/User.config.dark_mode = .*/User.config.dark_mode = true/' " .. RC_FILE,
 				function()
@@ -31,6 +35,10 @@ local function changeTheme(self, mode)
 	elseif mode == "light" then
 		if Beautiful._colors["light"] then
 			self:turn_off()
+			Naughty.alert({
+				text = "Modo oscuro: " .. "<b>" .. "Apagado" .. "</b>",
+				icon = "󰤄",
+			})
 			Awful.spawn.easy_async_with_shell(
 				"sed -i 's/User.config.dark_mode = .*/User.config.dark_mode = false/' " .. RC_FILE,
 				function()
