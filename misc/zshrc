@@ -85,6 +85,7 @@ alias nv="nvim"
 alias awc="awesome-client"
 alias ls="exa --group-directories-first"
 alias la="ls -a"
+alias gdiff="git difftool --no-symlinks --dir-diff"
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
