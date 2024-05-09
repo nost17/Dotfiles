@@ -2,12 +2,20 @@ local wbutton = require("utils.button")
 local wtext = require("utils.modules.text")
 local color_lib = Helpers.color
 local player_preffix = "Via: "
+local icons = {
+  play = "󰐌",
+  pause = "󰏥",
+  next = "󰒭",
+  prev = "󰒮",
+  random = "󰒝",
+  again = "󰑖"
+}
 local dpi = Beautiful.xresources.apply_dpi
 
 -- [[ CONTROL BUTTONS ]]
 
 local toggle_btn = wbutton.text.normal({
-  text = "󱖑",
+  text = icons.play,
   font = Beautiful.font_icon,
   size = 20,
   -- shape = Gears.shape.circle,
@@ -24,7 +32,7 @@ local toggle_btn = wbutton.text.normal({
 })
 
 local next_btn = wbutton.text.normal({
-  text = "󰒭",
+  text = icons.next,
   font = Beautiful.font_icon,
   size = 15,
   paddings = { bottom = dpi(10), top = dpi(10) },
@@ -37,7 +45,7 @@ local next_btn = wbutton.text.normal({
 })
 
 local prev_btn = wbutton.text.normal({
-  text = "󰒮",
+  text = icons.prev,
   font = Beautiful.font_icon,
   size = 15,
   paddings = { bottom = dpi(10), top = dpi(10) },
@@ -95,7 +103,7 @@ local player_btn = wbutton.elevated.normal({
 })
 
 local random_button = wbutton.text.state({
-  text = "󰒝",
+  text = icons.random,
   font = Beautiful.font_icon,
   size = 15,
   bold = true,
@@ -109,7 +117,7 @@ local random_button = wbutton.text.state({
 })
 
 local repeat_button = wbutton.text.state({
-  text = "󰑖",
+  text = icons.again,
   font = Beautiful.font_icon,
   size = 15,
   bold = true,
@@ -163,9 +171,9 @@ Playerctl:connect_signal("metadata", function(_, title, artist, _, album_art, _)
 end)
 Playerctl:connect_signal("status", function(_, playing)
   if playing then
-    toggle_btn:set_text("󱖒")
+    toggle_btn:set_text(icons.pause)
   else
-    toggle_btn:set_text("󱖑")
+    toggle_btn:set_text(icons.play)
   end
 end)
 Playerctl:connect_signal("new_player", function(_)

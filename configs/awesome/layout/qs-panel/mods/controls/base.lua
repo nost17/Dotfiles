@@ -136,17 +136,17 @@ function templates.simple(opts)
     size = 15,
     shape = Beautiful.quicksettings_ctrl_btn_shape,
     -- shape = Gears.shape.circle,
-    -- bg_normal = Beautiful.quicksettings_ctrl_btn_bg,
     fg_normal_on = Beautiful.quicksettings_ctrl_btn_fg_on,
     fg_normal = Beautiful.quicksettings_ctrl_btn_fg .. "CF",
-    bg_normal = Helpers.color.lightness(
-      Beautiful.color_method,
-      Beautiful.color_method_factor,
-      Beautiful.quicksettings_ctrl_btn_bg
-    ),
+    bg_normal = Beautiful.quicksettings_ctrl_btn_bg,
+    -- bg_normal = Helpers.color.lightness(
+      -- Beautiful.color_method,
+      -- Beautiful.color_method_factor,
+      -- Beautiful.quicksettings_ctrl_btn_bg
+    -- ),
     bg_normal_on = Beautiful.quicksettings_ctrl_btn_bg_on,
     halign = "center",
-    paddings = dpi(16),
+    paddings = dpi(17),
     on_turn_on = function(self)
       if opts.on_fn then
         opts.on_fn(self)

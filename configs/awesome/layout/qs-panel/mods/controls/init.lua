@@ -30,11 +30,11 @@ local controls = Wibox.widget({
   },
   {
     widget = Wibox.container.background,
-    bg = Beautiful.quicksettings_widgets_bg,
-    shape = Beautiful.quicksettings_widgets_shape,
+    -- bg = Beautiful.quicksettings_widgets_bg,
+    -- shape = Beautiful.quicksettings_widgets_shape,
     {
       widget = Wibox.container.margin,
-      margins = dpi(10),
+      -- margins = dpi(10),
       {
         layout = Wibox.layout.flex.horizontal,
         spacing = dpi(10),

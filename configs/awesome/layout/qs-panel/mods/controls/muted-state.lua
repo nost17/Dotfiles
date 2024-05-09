@@ -3,7 +3,7 @@ local first_time = true
 
 local volume = button_template({
   icon = "󰖁",
-  name = "Silencio",
+  name = "Silenciar",
   on_fn = function()
     Awful.spawn("pamixer -m", false)
   end,
