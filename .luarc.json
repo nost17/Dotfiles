@@ -1,0 +1,19 @@
+{
+    "diagnostics": {
+        "disable": [
+            "lowercase-global"
+        ]
+    },
+    "diagnostics.globals": [
+        "client",
+        "awesome",
+        "screen",
+        "tag",
+        "mouse",
+        "root"
+    ],
+    "format.defaultConfig": {
+        "indent_style": "tab",
+        "indent_size": "2"
+    }
+}
