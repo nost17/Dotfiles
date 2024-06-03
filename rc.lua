@@ -27,6 +27,9 @@ require("awful.autofocus")
 require("awful.hotkeys_popup.keys")
 
 User = require("config.user")
+Lib = require("lib")
+Helpers = require("utils.helpers")
+Utils = require("utils")
 
 -- Load the theme. In other words, defines the variables within the `beautiful`
 -- table.
@@ -34,7 +37,6 @@ require("theme")
 
 -- Treat all signals. Bear in mind this implies creating all tags, attaching
 -- their layouts, setting client behavior and loading UI.
-Lib = require("lib")
 
 -- Set all keybinds.
 require("binds")
