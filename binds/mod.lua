@@ -5,5 +5,5 @@ return {
    ctrl  = 'Control',
 
    -- Set Super as default modkey if none is present.
-   modkey = require('config.user').mod or 'Mod4'
+   modkey = User.vars.modkey or 'Mod4'
 }

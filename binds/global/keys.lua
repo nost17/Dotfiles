@@ -3,7 +3,7 @@ local awful = require('awful')
 local mod    = require('binds.mod')
 local modkey = mod.modkey
 
-local apps    = require('config.apps')
+local apps    = User.vars
 local widgets = require('ui')
 
 --- Global key bindings
