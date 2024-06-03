@@ -1,7 +1,0 @@
-require("layout.popups.volume")
-require("layout.popups.logoutscreen")
-require("layout.popups.lockscreen")
-require("layout.popups.layout_switcher")
-require("layout.popups.calendar")
-require("layout.popups.windows_switcher")
-collectgarbage("collect")
