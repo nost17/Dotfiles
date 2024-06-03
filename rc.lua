@@ -34,10 +34,10 @@ require("theme")
 
 -- Treat all signals. Bear in mind this implies creating all tags, attaching
 -- their layouts, setting client behavior and loading UI.
-require("signal")
+Lib = require("lib")
 
 -- Set all keybinds.
 require("binds")
 
 -- Load all client rules.
-require("config.rules")
+require("config")

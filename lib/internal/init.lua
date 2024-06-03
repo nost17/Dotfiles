@@ -2,4 +2,3 @@
 
 require(... .. '.client')
 require(... .. '.tag')
-require(... .. '.client')
