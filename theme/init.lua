@@ -1,7 +1,8 @@
 -- Theme handling library
-local beautiful = require('beautiful')
 -- Standard awesome library
-local gears     = require('gears')
+local color_lib = Helpers.color
+local theme = {}
+local themes_path = Gears.filesystem.get_configuration_dir() .. "theme/"
+local dpi = Beautiful.xresources.apply_dpi
 
--- Themes define colors, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. 'default/theme.lua')
+Beautiful.init(theme)
