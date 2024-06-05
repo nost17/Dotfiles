@@ -49,11 +49,18 @@ function M.hex_to_rgb(color)
     b = 00
   end
 
+  if #color == 9 then
+    return {
+      r = r,
+      g = g,
+      b = b,
+      a = a,
+    }
+  end
   return {
     r = r,
     g = g,
     b = b,
-    a = a,
   }
 end
 
@@ -109,38 +116,23 @@ end
 
 --------------
 
-function M.lightness(method, brightness, color)
+function M.lightness(color, brightness, method)
   if method == "darken" then
-    return M.darken(color, brightness / 255)
+    return M.darken(color, brightness)
   else
-    return M.lighten(color, brightness / 255)
+    return M.lighten(color, brightness)
   end
 end
 
-function M.bak_lightness(method, brightness, color)
-  brightness = math.ceil(brightness)
+function M.blend(color1, color2)
+  color1 = M.hex_to_rgb(color1)
+  color2 = M.hex_to_rgb(color2)
 
-  --- Establece el color a rgb
-  color = color or "#FFFFFFFF"
-  local rgb = M.hex_to_rgb(color)
-  local r, g, b, a = rgb.r, rgb.g, rgb.b, rgb.a
-
-  --- Establece el metodo
-  if method == "darken" then
-    brightness = -brightness
-  end
-
-  -- Aumentar el brillo
-  r = math.min(255, clamp(r + brightness))
-  g = math.min(255, clamp(g + brightness))
-  b = math.min(255, clamp(b + brightness))
-
-  -- Convertir los componentes RGB y alfa de vuelta a formato hexadecimal
-  if #color == 7 or #color == 4 then
-    return string.format("#%02X%02X%02X", r, g, b)
-  elseif #color == 9 then
-    return string.format("#%02X%02X%02X%02X", r, g, b, a)
-  end
+  return M.rgb_to_hex({
+    r = floor((color1.r + color2.r) * 0.5),
+    g = floor((color1.g + color2.g) * 0.5),
+    b = floor((color1.b + color2.b) * 0.5),
+  })
 end
 
 function M.mixer(color1, color2)
@@ -170,31 +162,31 @@ function M.isDark(hex)
 end
 
 function M.mixer_dom(color1, color2)
-	-- Convertir los colores de hexadecimal a componentes RGB
-	local rgb1 = M.hex_to_rgb(color1)
-	local rgb2 = M.hex_to_rgb(color2)
-	local r1, g1, b1 = rgb1.r, rgb1.g, rgb1.b
-	local r2, g2, b2 = rgb2.r, rgb2.g, rgb2.b
+  -- Convertir los colores de hexadecimal a componentes RGB
+  local rgb1 = M.hex_to_rgb(color1)
+  local rgb2 = M.hex_to_rgb(color2)
+  local r1, g1, b1 = rgb1.r, rgb1.g, rgb1.b
+  local r2, g2, b2 = rgb2.r, rgb2.g, rgb2.b
 
-	-- Mezclar los componentes RGB
-	local r = r1
-	local g = g1
-	local b = b1
+  -- Mezclar los componentes RGB
+  local r = r1
+  local g = g1
+  local b = b1
 
-	-- Ajustar los componentes mezclados con una parte del segundo color
-	local porcentaje = User.config.dark_mode and 0.1 or 0.24
-	r = r + (r2 - r1) * porcentaje
-	g = g + (g2 - g1) * porcentaje
-	b = b + (b2 - b1) * porcentaje
+  -- Ajustar los componentes mezclados con una parte del segundo color
+  local porcentaje = User.config.dark_mode and 0.1 or 0.24
+  r = r + (r2 - r1) * porcentaje
+  g = g + (g2 - g1) * porcentaje
+  b = b + (b2 - b1) * porcentaje
 
-	-- Asegurar que los valores de RGB estén en el rango válido (0-255)
-	r = math.min(255, math.max(0, r))
-	g = math.min(255, math.max(0, g))
-	b = math.min(255, math.max(0, b))
+  -- Asegurar que los valores de RGB estén en el rango válido (0-255)
+  r = math.min(255, math.max(0, r))
+  g = math.min(255, math.max(0, g))
+  b = math.min(255, math.max(0, b))
 
-	-- Convertir los componentes RGB mezclados de nuevo a hexadecimal
-	local color3 = M.rgb_to_hex({ r = r, g = g, b = b })
-	return color3
+  -- Convertir los componentes RGB mezclados de nuevo a hexadecimal
+  local color3 = M.rgb_to_hex({ r = r, g = g, b = b })
+  return color3
 end
 
 return M

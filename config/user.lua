@@ -19,7 +19,7 @@ user.config.tags = { '1', '2', '3', '4', '5' }
 
 user.vars = {}
 user.vars.modkey = "Mod4"
-user.vars.terminal = "kitty"
+user.vars.terminal = "wezterm"
 user.vars.editor = os.getenv("EDITOR") or "nano"
 
 user.notify_count = 0
