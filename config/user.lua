@@ -1,11 +1,16 @@
 -- User configuration
 user = {}
 
+user.theme = {
+  name = "onedark",
+  dark = "dark",
+  light = "light",
+}
+
 user.config = {}
-user.config.dark_mode = true
 user.config.dnd_state = false
-user.config.theme = "onedark"
-user.config.theme_accent = "blue"
+-- user.config.theme = "onedark"
+-- user.config.theme_accent = "blue"
 user.config.floating_mode = false
 user.config.layouts = {
   Awful.layout.suit.tile,
