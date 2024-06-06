@@ -15,7 +15,7 @@ awful.keyboard.append_global_keybindings({
       { description = 'show main menu', group = 'awesome' }),
    awful.key({ modkey, mod.ctrl  }, 'r', awesome.restart,
       { description = 'reload awesome', group = 'awesome' }),
-   awful.key({ modkey, mod.shift }, 'q', awesome.quit,
+   awful.key({ modkey, mod.ctrl }, 'q', awesome.quit,
       { description = 'quit awesome', group = 'awesome' }),
    awful.key({ modkey            }, 'x', function() awful.prompt.run({
       prompt       = 'Run Lua code: ',
