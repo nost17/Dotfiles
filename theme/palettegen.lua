@@ -39,6 +39,8 @@ return function(theme, style)
   cscheme.neutral[400] = lib_color.blend(cscheme.neutral[300], nbase)
   cscheme.neutral[200] = lib_color.blend(nlight, cscheme.neutral[300])
 
+  cscheme.neutral[850] = lib_color.blend(cscheme.neutral[900], cscheme.neutral[800])
+
   -- Generate 5 reds
   local red_base = cscheme.colors.red
 
