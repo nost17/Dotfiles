@@ -1,0 +1,225 @@
+local dpi = Beautiful.xresources.apply_dpi
+
+local bg_focus = Beautiful.type == "light" and Beautiful.neutral[800] or Beautiful.neutral[850]
+
+local create_task = function(self, c, app_name)
+  self:get_children_by_id("icon_client")[1].image = Utils.apps_info:get_icon_path({
+    client = c,
+    manual_fallback = c.icon,
+  })
+  -- self:get_children_by_id("app_name")[1].text = Utils.apps_info:get_app_name(c.class)
+end
+
+local update_task = function(self, c, app_name)
+  if c.minimized then
+    self:get_children_by_id("icon_client")[1].opacity = 0.4
+  else
+    self:get_children_by_id("icon_client")[1].opacity = 1
+  end
+
+  -- if client.focus then
+  --   app_name.visible = true
+  --   app_name:get_children_by_id("app_name")[1].text = Utils.apps_info:get_app_name(client.focus.class)
+  --   app_name:get_children_by_id("icon_client")[1].image = Utils.apps_info:get_icon_path({
+  --     client = client.focus,
+  --     manual_fallback = client.focus.icon,
+  --   })
+  -- else
+  --   app_name.visible = false
+  -- end
+
+  -- if c == client.focus then
+  --   self:get_children_by_id("app_name_c")[1].visible = true
+  -- else
+  --   self:get_children_by_id("app_name_c")[1].visible = false
+  -- end
+end
+
+local icon_with_label = Wibox.widget({
+  widget = Wibox.container.background,
+  bg = bg_focus,
+  shape = Helpers.shape.rrect(Beautiful.radius),
+  {
+    widget = Wibox.container.margin,
+    left = dpi(4),
+    right = dpi(4),
+    top = dpi(2),
+    bottom = dpi(2),
+    {
+      layout = Wibox.layout.fixed.horizontal,
+      {
+        widget = Wibox.container.place,
+        {
+          widget = Wibox.widget.imagebox,
+          id = "icon_client",
+          forced_height = Beautiful.tasklist_icon_size,
+          forced_width = Beautiful.tasklist_icon_size,
+          halign = "center",
+          valign = "center",
+        },
+      },
+      {
+        widget = Wibox.container.margin,
+        visible = false,
+        left = Beautiful.widget_spacing / 2,
+        id = "app_name_c",
+        {
+          widget = Wibox.widget.textbox,
+          id = "app_name",
+          font = Beautiful.font_med_s,
+        },
+      },
+    },
+  },
+})
+
+local only_icon = {
+  widget = Wibox.container.place,
+  {
+    widget = Wibox.widget.imagebox,
+    id = "icon_client",
+    forced_height = Beautiful.tasklist_icon_size,
+    forced_width = Beautiful.tasklist_icon_size,
+    halign = "center",
+    valign = "center",
+  },
+}
+
+return function(s)
+  local app_name = Wibox.widget({
+    widget = Wibox.container.background,
+    bg = bg_focus,
+    shape = Helpers.shape.rrect(Beautiful.radius),
+    visible = false,
+    {
+      widget = Wibox.container.margin,
+      left = dpi(4),
+      right = dpi(4),
+      top = dpi(2),
+      bottom = dpi(2),
+      {
+        layout = Wibox.layout.fixed.horizontal,
+        spacing = Beautiful.widget_spacing / 2,
+        only_icon,
+        {
+          widget = Wibox.widget.textbox,
+          id = "app_name",
+          font = Beautiful.font_med_s,
+        },
+      },
+    },
+  })
+  -- Create a tasklist widget
+  local tasklist = Awful.widget.tasklist({
+    screen = s,
+    filter = Awful.widget.tasklist.filter.currenttags,
+    layout = {
+      layout = Wibox.layout.fixed.horizontal,
+      spacing = Beautiful.widget_spacing,
+    },
+    buttons = {
+      Awful.button(nil, 1, function(c)
+        c:activate({ context = "tasklist", action = "toggle_minimization" })
+      end),
+      Awful.button(nil, 3, function()
+        Awful.menu.client_list({ theme = { width = 250 } })
+      end),
+      -- Mousewheel scrolling cycles through clients.
+      Awful.button(nil, 4, function()
+        Awful.client.focus.byidx(-1)
+      end),
+      Awful.button(nil, 5, function()
+        Awful.client.focus.byidx(1)
+      end),
+    },
+    widget_template = {
+      widget = Wibox.container.place,
+      valign = "center",
+      {
+        layout = Wibox.layout.fixed.vertical,
+        {
+          widget = Wibox.container.place,
+          halign = "center",
+          valign = "center",
+          {
+            widget = Wibox.container.margin,
+            top = dpi(2),
+            {
+              widget = Wibox.container.background,
+              id = "background_role",
+              forced_height = dpi(3),
+              forced_width = dpi(8),
+            },
+          },
+        },
+        only_icon,
+      },
+      update_callback = function(self, c, index, objects)
+        update_task(self, c, app_name)
+      end,
+      create_callback = function(self, c, _, _)
+        create_task(self, c, app_name)
+        update_task(self, c, app_name)
+      end,
+    },
+  })
+
+  for j, k in pairs(s.tags) do
+    k:connect_signal("property::selected", function()
+      if #k:clients() > 0 then
+        app_name.visible = true
+      else
+        app_name.visible = false
+      end
+    end)
+    k:connect_signal("untagged", function()
+      if #k:clients() > 0 then
+        app_name.visible = true
+      else
+        app_name.visible = false
+      end
+    end)
+  end
+
+  Gears.timer({
+    timeout = 0.5,
+    autostart = true,
+    single_shot = true,
+    callback = function()
+      if #s.selected_tag:clients() > 0 then
+        app_name.visible = true
+      else
+        app_name.visible = false
+      end
+
+      if app_name.visible then
+        app_name:get_children_by_id("app_name")[1].text = Utils.apps_info:get_app_name(client.focus.class)
+        app_name:get_children_by_id("icon_client")[1].image = Utils.apps_info:get_icon_path({
+          client = client.focus,
+          manual_fallback = client.focus.icon,
+        })
+      end
+    end,
+  })
+
+  client.connect_signal("focus", function(c)
+    if app_name.visible then
+      app_name:get_children_by_id("app_name")[1].text = Utils.apps_info:get_app_name(c.class)
+      app_name:get_children_by_id("icon_client")[1].image = Utils.apps_info:get_icon_path({
+        client = c,
+        manual_fallback = c.icon,
+      })
+    end
+  end)
+  -- client.connect_signal("")
+
+  return Wibox.widget({
+    layout = Wibox.layout.fixed.horizontal,
+    spacing = Beautiful.widget_spacing,
+    {
+      widget = Wibox.container.place,
+      app_name,
+    },
+    tasklist,
+  })
+end

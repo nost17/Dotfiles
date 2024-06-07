@@ -11,6 +11,7 @@ return function(s)
     height = dpi(30),
     widget = {
       layout = Wibox.layout.align.horizontal,
+      expand = "none",
       -- Left widgets.
       {
         layout = Wibox.layout.fixed.horizontal,
@@ -26,13 +27,12 @@ return function(s)
         module.tasklist(s),
       },
       -- Middle widgets.
-      nil,
+      Wibox.widget.textclock("%a %d, %H:%M"), -- Create a textclock widget.
       -- Right widgets.
       {
         layout = Wibox.layout.fixed.horizontal,
         spacing = Beautiful.widget_spacing,
         Wibox.widget.systray(),
-        Wibox.widget.textclock(), -- Create a textclock widget.
         -- module.layoutbox(s),
       },
     },

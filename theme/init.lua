@@ -68,6 +68,9 @@ theme.widget_spacing = theme.widget_padding.inner
 theme.taglist_bg_focus = cscheme.primary[500]
 theme.taglist_bg_empty = cscheme.neutral[800]
 theme.taglist_bg_occupied = cscheme.neutral[500]
+theme.taglist_shape = Gears.shape.rounded_bar
+theme.taglist_shape_border_width_focus = 0
+theme.taglist_shape_border_color_focus = cscheme.neutral[100]
 
 -- tasklist
 theme.tasklist_icon_size = dpi(18)
