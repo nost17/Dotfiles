@@ -16,7 +16,7 @@ return function(s)
       {
         layout = Wibox.layout.fixed.horizontal,
         spacing = Beautiful.widget_spacing,
-        -- module.launcher(),
+        module.launcher(),
         {
           widget = Wibox.container.margin,
           top = Beautiful.widget_spacing / 2,

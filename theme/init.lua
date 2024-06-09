@@ -6,7 +6,7 @@ local themes_path = Gears.filesystem.get_configuration_dir() .. "theme/"
 local dpi = Beautiful.xresources.apply_dpi
 
 theme = dofile(gfs.get_themes_dir() .. "default/theme.lua")
-local _colors = require("theme.colorschemes.onedark")
+local _colors = require("theme.colorschemes.tomorrow")
 local cscheme = require("theme.palettegen")(_colors, "dark")
 
 theme.transparent = "#00000000"
@@ -28,13 +28,13 @@ local _font = {
     bold = "Bold ",
   },
   sizes = {
-    xxs = 5,
-    xs = 8,
-    s = 10,
+    xxs = 6,
+    xs = 9,
+    s = 11,
     m = 12,
-    l = 16,
-    xl = 22,
-    xxl = 32,
+    l = 15,
+    xl = 28,
+    xxl = 35,
   },
 }
 local font = {}
@@ -45,13 +45,13 @@ for w_name, w_val in pairs(_font.weights) do
     font[fname] = fval
   end
 end
-theme.font = font.font_reg_s
+theme.font = font.font_reg_m
 
 -- widget
 theme.radius = dpi(3)
 theme.widget_border = {
-  width = 2,
-  color = cscheme.red[300],
+  width = 0,
+  color = cscheme.neutral[300],
 }
 theme.widget_radius = {
   outer = theme.radius,
@@ -62,7 +62,6 @@ theme.widget_padding = {
   inner = dpi(8),
 }
 theme.widget_spacing = theme.widget_padding.inner
-
 
 -- taglist
 theme.taglist_bg_focus = cscheme.primary[500]
@@ -78,6 +77,20 @@ theme.tasklist_bg_focus = cscheme.primary[500]
 theme.tasklist_bg_normal = cscheme.neutral[700]
 theme.tasklist_bg_minimize = theme.transparent
 theme.tasklist_shape = Gears.shape.rounded_bar
+
+-- notifications
+theme.notification_spacing = theme.widget_spacing
+theme.notification_border_width = theme.widget_border.width
+theme.notification_border_color = theme.widget_border.color
+theme.notification_timebar_bg = cscheme.neutral[800]
+theme.notification_timebar_color = cscheme.primary[400]
+theme.notification_icon_shape = function(cr, w, h)
+  if math.abs(w - h) <= (h * 0.1) then
+    Gears.shape.squircle(cr, w, h, 2.5)
+  else
+    Gears.shape.squircle(cr, w, h, 4)
+  end
+end
 
 Beautiful.init(theme)
 
