@@ -121,17 +121,8 @@ end
 function text_button.normal(args)
   args = args or {}
 
-  if not args.fg_normal then
-    if User.config.dark_mode then
-      args.fg_normal = color_lib.isDark(args.bg_normal or Beautiful.widget_bg_alt) and Beautiful.fg_normal
-          or Beautiful.foreground_alt
-    else
-      args.fg_normal = color_lib.isDark(args.bg_normal or Beautiful.widget_bg_alt)
-          and Beautiful.foreground_alt
-          or Beautiful.fg_normal
-    end
-  end
-  args.fg_hover = args.fg_hover or color_lib.lightness("lighten", Beautiful.color_method_factor, args.fg_normal)
+  args.fg_normal = Beautiful.neutral[100]
+  args.fg_hover = Beautiful.neutral[300]
   args.fg_press = args.fg_press or args.fg_hover
 
   local widget, text_widget = button(args, "normal")

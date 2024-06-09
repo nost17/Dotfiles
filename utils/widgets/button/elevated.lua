@@ -267,10 +267,9 @@ end
 function elevated_button.normal(args)
   args = args or {}
 
-  args.bg_normal = args.bg_normal or Beautiful.widget_bg_alt
-  args.bg_hover = args.bg_hover
-      or color_lib.lightness(color_lib.isDark(args.bg_normal) and "lighten" or "darken", 20, args.bg_normal)
-  args.bg_press = args.bg_press or color_lib.lightness("darken", 10, args.bg_hover)
+  args.bg_normal = args.bg_normal or Beautiful.neutral[850]
+  args.bg_hover = args.bg_hover or Beautiful.neutral[800]
+  args.bg_press = args.bg_press or Beautiful.neutral[850]
 
   args.shape = args.shape or nil
   args.hover_shape = args.hover_shape or nil
@@ -281,13 +280,8 @@ function elevated_button.normal(args)
   args.press_border_width = args.press_border_width or nil
 
   args.normal_border_color = args.normal_border_color or Beautiful.bg_normal
-  args.hover_border_color = args.hover_border_color
-      or color_lib.lightness(
-        color_lib.isDark(args.bg_normal) and "lighten" or "darken",
-        16,
-        args.normal_border_color
-      )
-  args.press_border_color = args.press_border_color or color_lib.lightness("darken", 20, args.normal_border_color)
+  args.hover_border_color = args.hover_border_color or args.normal_border_color
+  args.press_border_color = args.press_border_color or args.hover_border_color
 
   args.on_hover = args.on_hover or nil
   args.on_leave = args.on_leave or nil
