@@ -4,7 +4,7 @@ local SC_FOLDER = "/Capturas/"
 local module = {}
 local defaults = {
   prefix = "Captura_",
-  date_format = "%Y-%m-%d_%H:%M:%S",
+  date_format = "%Y-%m-%d_%H-%M-%S",
   file_format = "png",
   hide_cursor = false,
   quality = 8,
@@ -15,9 +15,19 @@ local get_file_name = function(opts)
   return opts.prefix .. os.date(opts.date_format) .. "." .. opts.file_format
 end
 
+local crush = function(target, source)
+  local ret = {}
+  for k, v in pairs(target) do
+    ret[k] = v
+  end
+  for k, v in pairs(source) do
+    ret[k] = v
+  end
+  return ret
+end
+
 local function main(self, opts)
-  opts = Gears.table.join(defaults, opts or {})
-  opts.delay = opts.delay or 0
+  opts = crush(defaults, opts or {})
   local file_name = get_file_name(opts)
   local cmd = self._private.cmd
       .. "-f "
@@ -55,8 +65,9 @@ end
 
 function module.select(opts)
   local self = new()
+  opts = opts or {}
   self._private.cmd = self._private.cmd .. "-s "
-  if opts.delay == 0 then
+  if opts.delay == 0 or not opts.delay then
     Gears.timer({
       timeout = 0.5,
       autostart = true,
@@ -73,7 +84,8 @@ end
 
 function module.normal(opts)
   local self = new()
-  if opts.delay == 0 then
+  opts = opts or {}
+  if opts.delay == 0 or not opts.delay then
     Gears.timer({
       timeout = 0.5,
       autostart = true,

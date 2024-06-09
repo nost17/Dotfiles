@@ -5,7 +5,7 @@ local dpi = Beautiful.xresources.apply_dpi
 Naughty.config.defaults = {
   -- position = Beautiful.notification_position,
   timeout = 5,
-  -- app_name = "AwesomeWM",
+  app_name = "AwesomeWM",
 }
 
 local colors = {
@@ -39,7 +39,8 @@ end)
 
 local function make_notify(n)
   local accent_color = colors[n.urgency]
-
+  local in_hover = false
+  n.app_name = n.app_name or Naughty.config.defaults.app_name
   local timebar = Wibox.widget({
     max_value = 100,
     value = 100,
@@ -111,14 +112,14 @@ local function make_notify(n)
     },
   })
 
-  local timeout = timebar.value / n.timeout
-
   Gears.timer.start_new(0.95, function()
-    timebar.value = timebar.value - timeout
+    if not in_hover then
+      timebar.value = timebar.value - timebar.max_value / n.timeout
+    end
     return timebar.value > 0
   end)
 
-  Naughty.layout.box({
+  local notification = Naughty.layout.box({
     notification = n,
     minimum_width = dpi(240),
     maximum_width = dpi(480),
@@ -128,7 +129,7 @@ local function make_notify(n)
       {
         widget = Wibox.container.margin,
         top = Beautiful.widget_padding.inner,
-        bottom = Beautiful.widget_padding.outer * 0.75,
+        bottom = Beautiful.widget_padding.inner,
         right = Beautiful.widget_padding.outer * 0.85,
         left = Beautiful.widget_padding.outer * 0.85,
         {
@@ -139,11 +140,15 @@ local function make_notify(n)
             layout = Wibox.layout.fixed.horizontal,
             spacing = Beautiful.widget_spacing,
             n.icon and {
-              widget = Wibox.widget.imagebox,
-              image = n.icon,
-              forced_width = dpi(48),
-              forced_height = dpi(48),
-              clip_shape = Beautiful.notification_icon_shape,
+              widget = Wibox.container.constraint,
+              strategy = "max",
+              height = Beautiful.notification_icon_height,
+              width = Beautiful.notification_icon_height * 2,
+              {
+                widget = Wibox.widget.imagebox,
+                image = n.icon,
+                clip_shape = Beautiful.notification_icon_shape,
+              },
             },
             {
               widget = Wibox.container.place,
@@ -173,6 +178,17 @@ local function make_notify(n)
       timebar,
     },
   })
+  notification:connect_signal("mouse::enter", function()
+    n:set_timeout(4294967)
+    in_hover = true
+  end)
+  notification:connect_signal("mouse::leave", function()
+    if n.urgency ~= "critical" then
+      n:set_timeout(2)
+      in_hover = false
+      timebar.max_value = timebar.value
+    end
+  end)
 end
 Naughty.connect_signal("request::display", function(n)
   make_notify(n)
