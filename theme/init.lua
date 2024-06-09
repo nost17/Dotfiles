@@ -11,12 +11,16 @@ local cscheme = require("theme.palettegen")(_colors, "dark")
 
 theme.transparent = "#00000000"
 
+theme.wallpaper = themes_path .. "assets/wallpapers/waves_2.jpg"
+
 theme.bg_normal = cscheme.neutral[900]
 theme.bg_alt = cscheme.neutral[700]
 theme.bg_focus = cscheme.neutral[800]
 theme.bg_urgent = cscheme.red[300]
 theme.fg_normal = cscheme.neutral[100]
 theme.fg_focus = "#abb2bf"
+
+theme.useless_gap = dpi(4)
 
 -- font
 local _font = {
@@ -80,7 +84,9 @@ theme.tasklist_shape = Gears.shape.rounded_bar
 
 -- notifications
 theme.notification_spacing = theme.widget_spacing
+theme.notification_icon_height = dpi(48)
 theme.notification_border_width = theme.widget_border.width
+theme.notification_bg = Helpers.color.blend(cscheme.neutral[900], cscheme.neutral[850])
 theme.notification_border_color = theme.widget_border.color
 theme.notification_timebar_bg = cscheme.neutral[800]
 theme.notification_timebar_color = cscheme.primary[400]
