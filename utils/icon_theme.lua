@@ -81,25 +81,6 @@ local function get_icon_by_pid_command(client, apps)
   end
 end
 
-function icon_theme:get_icon_alt(icon_name)
-  icon_name = custom_icons[icon_name] or icon_name
-  local icon_info = self.gtk_theme:lookup_icon(icon_name, self.icon_size, self.flag)
-  local icon_info_alt = self.gtk_theme:lookup_icon(icon_name:lower(), self.icon_size, self.flag)
-  if icon_info then
-    local icon_path = icon_info:get_filename()
-    if icon_path then
-      return icon_path
-    end
-  elseif icon_info_alt then
-    local icon_path = icon_info_alt:get_filename()
-    if icon_path then
-      return icon_path
-    end
-  end
-
-  return nil
-end
-
 function icon_theme:get_icon_by_class(client_class)
   local class = custom_icons[client_class] or client_class:lower()
 
@@ -149,6 +130,60 @@ function icon_theme:get_gicon_path(gicon)
   return false
 end
 
+-- Función para capitalizar la primera letra de una cadena
+local function capitalize(str)
+  return (str:gsub("^%l", string.upper))
+end
+
+-- Función para capitalizar la primera letra de cada palabra en una cadena
+local function title(str)
+  return (str:gsub("(%a)([%w_']*)", function(first, rest)
+    return first:upper() .. rest:lower()
+  end))
+end
+
+function icon_theme:get_icon_alt(opts)
+  opts.name = opts.name or "default-application"
+  opts.size = opts.size or 128
+  opts.flag = opts.symbolic and Gtk.IconLookupFlags.FORCE_SYMBOLIC or self.flag
+  opts.path = opts.path ~= nil and true or opts.flag
+
+  local name_cases = {
+    opts.name:lower(),
+    title(opts.name),
+    capitalize(opts.name),
+    opts.name,
+  }
+
+  if opts.fallback then
+    Gears.table.join(name_cases, {
+      opts.fallback:lower(),
+      title(opts.fallback),
+      capitalize(opts.fallback),
+      opts.fallback,
+    })
+  end
+
+  for _, name in ipairs(name_cases) do
+    local icon_info = icon_theme.gtk_theme:lookup_icon(name, opts.size, opts.flag)
+    if icon_info then
+      return opts.path and icon_info:get_filename() or icon_info
+    end
+  end
+  return opts.manual_fallback
+end
+
+local GLib = lgi.GLib
+
+function icon_theme:get_distro()
+  return {
+    icon = self:get_icon_alt({
+      name = GLib.get_os_info("LOGO"),
+    }),
+    name = GLib.get_os_info("ID"),
+  }
+end
+
 function icon_theme:get_icon_path(args)
   self.icon_size = args.icon_size or self.icon_size
   self.flag = args.symbolic and Gtk.IconLookupFlags.FORCE_SYMBOLIC or self.flag
@@ -167,8 +202,10 @@ function icon_theme:get_icon_path(args)
         or args.manual_fallback and args.manual_fallback
   else
     return icon_theme:get_icon_by_class(args.name)
-        or icon_theme:get_icon_alt(args.name)
-        or args.try_fallback ~= false and args.name_fallback and icon_theme:get_icon_alt(args.name_fallback)
+        or icon_theme:get_icon_alt({ name = args.name })
+        or args.try_fallback ~= false and args.name_fallback and icon_theme:get_icon_alt({
+          name = args.name_fallback,
+        })
         or args.manual_fallback and args.manual_fallback
   end
 
