@@ -1,5 +1,7 @@
 require(... .. ".internal")
 
-local lib = {}
+local lib = {
+  Volume = require(... .. ".system.audio")
+}
 
 return lib
