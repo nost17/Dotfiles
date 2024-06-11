@@ -107,13 +107,12 @@ local function make_notify(n)
     },
   })
 
-  local function set_value_timebar()
+  Gears.timer.start_new(0.95, function()
     if not in_hover then
       timebar.value = timebar.value - (timebar.max_value / n.timeout)
     end
     return timebar.value > (timebar.value / 4) or timebar.value == 0
-  end
-  Gears.timer.start_new(0.95, set_value_timebar)
+  end)
   local n_appname = Wibox.widget({
     widget = Wibox.widget.textbox,
     markup = Helpers.text.colorize_text(string.upper(n.app_name), accent_color),
@@ -179,6 +178,10 @@ local function make_notify(n)
       timebar,
     },
   })
+
+  n:connect_signal("property::timeout", function(_)
+    timebar.value = timebar.max_value
+  end)
   notification:connect_signal("mouse::enter", function()
     n:set_timeout(4294967)
     in_hover = true
@@ -187,7 +190,6 @@ local function make_notify(n)
     if n.urgency ~= "critical" then
       n:set_timeout(2)
       in_hover = false
-      timebar.value = timebar.max_value
       -- timebar.max_value = timebar.value
     end
   end)
