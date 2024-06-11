@@ -47,28 +47,27 @@ local function screenshot_notify(ss)
   end)
 end
 
---- Client keybindings.
-client.connect_signal("request::default_keybindings", function()
-  Awful.keyboard.append_client_keybindings({
-    -- Normal screenshot
-    create_bind({ mod.super }, "Print", labels.sshot.normal, labels.media, function()
-      screenshot_notify(Utils.screenshot.normal())
-    end),
-    -- Area screenshot
-    create_bind({ mod.super, mod.shift }, "s", labels.sshot.select, labels.media, function()
-      screenshot_notify(Utils.screenshot.select())
-    end),
-    -- Increment volume
-    create_bind({ mod.super }, "+", labels.volume.up, labels.media, function()
-      with_shell("pamixer -i 2", false)
-    end),
-    -- Decrease volume
-    create_bind({ mod.super }, "-", labels.volume.up, labels.media, function()
-      with_shell("pamixer -d 2", false)
-    end),
-    -- Toggle mute state
-    create_bind({ mod.super }, ".", labels.volume.mute, labels.media, function()
-      with_shell("pamixer -t", false)
-    end),
-  })
-end)
+Awful.keyboard.append_global_keybindings({
+  -- Normal screenshot
+  create_bind({ mod.super }, "Print", labels.sshot.normal, labels.media, function()
+    screenshot_notify(Utils.screenshot.normal())
+  end),
+  -- Area screenshot
+  create_bind({ mod.super, mod.shift }, "s", labels.sshot.select, labels.media, function()
+    screenshot_notify(Utils.screenshot.select())
+  end),
+  -- Increment volume
+  create_bind({ mod.super }, "+", labels.volume.up, labels.media, function()
+    with_shell("pamixer -i 2", false)
+    awesome.emit_signal("popup::volume", "inc")
+  end),
+  -- Decrease volume
+  create_bind({ mod.super }, "-", labels.volume.up, labels.media, function()
+    with_shell("pamixer -d 2", false)
+    awesome.emit_signal("popup::volume", "dec")
+  end),
+  -- Toggle mute state
+  create_bind({ mod.super }, ".", labels.volume.mute, labels.media, function()
+    with_shell("pamixer -t", false)
+  end),
+})

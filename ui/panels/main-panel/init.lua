@@ -1,6 +1,12 @@
 local dpi = Beautiful.xresources.apply_dpi
 local module = require(... .. ".module")
 
+local clock = Wibox.widget.textclock("%a %d, %H:%M")
+clock:set_text(clock:get_text():gsub("^%l", string.upper))
+clock._timer:connect_signal("timeout", function ()
+  clock:set_text(clock:get_text():gsub("^%l", string.upper))
+end)
+
 return function(s)
   s.mypromptbox = Awful.widget.prompt() -- Create a promptbox.
 
@@ -27,7 +33,7 @@ return function(s)
         module.tasklist(s),
       },
       -- Middle widgets.
-      Wibox.widget.textclock("%a %d, %H:%M"), -- Create a textclock widget.
+      clock,
       -- Right widgets.
       {
         layout = Wibox.layout.fixed.horizontal,

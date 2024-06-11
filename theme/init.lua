@@ -7,7 +7,7 @@ local dpi = Beautiful.xresources.apply_dpi
 
 theme = dofile(gfs.get_themes_dir() .. "default/theme.lua")
 local _colors = require("theme.colorschemes.tomorrow")
-local cscheme = require("theme.palettegen")(_colors, "dark")
+local cscheme = require("theme.palettegen")(_colors, "light")
 
 theme.transparent = "#00000000"
 
@@ -102,3 +102,4 @@ Beautiful.init(theme)
 
 Gears.table.crush(theme, font)
 Gears.table.crush(theme, cscheme)
+Beautiful.icons = themes_path .. "assets/icons/"
