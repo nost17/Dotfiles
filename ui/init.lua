@@ -5,6 +5,7 @@ local main_panel = require("ui.panels.main-panel")
 
 require(... .. ".titlebar")
 require(... .. ".notification")
+require(... .. ".popups")
 
 -- screen.connect_signal("request::desktop_decoration", function(s)
 --   -- Create all tags and attach the layouts to each of them.
