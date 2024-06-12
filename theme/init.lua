@@ -7,7 +7,7 @@ local dpi = Beautiful.xresources.apply_dpi
 
 theme = dofile(gfs.get_themes_dir() .. "default/theme.lua")
 local _colors = require("theme.colorschemes.tomorrow")
-local cscheme = require("theme.palettegen")(_colors, "light")
+local cscheme = require("theme.palettegen")(_colors, "dark")
 
 theme.transparent = "#00000000"
 
