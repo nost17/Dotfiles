@@ -118,7 +118,9 @@ local function make_notify(n)
     markup = Helpers.text.colorize_text(string.upper(n.app_name), accent_color),
     font = Beautiful.font_med_xs,
   })
-
+  -- n.preset = {
+  --   padding = _G.qs_width,
+  -- }
   local notification = Naughty.layout.box({
     notification = n,
     minimum_width = dpi(240),

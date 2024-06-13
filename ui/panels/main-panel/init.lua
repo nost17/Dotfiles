@@ -3,7 +3,7 @@ local module = require(... .. ".module")
 
 local clock = Wibox.widget.textclock("%a %d, %H:%M")
 clock:set_text(clock:get_text():gsub("^%l", string.upper))
-clock._timer:connect_signal("timeout", function ()
+clock._timer:connect_signal("timeout", function()
   clock:set_text(clock:get_text():gsub("^%l", string.upper))
 end)
 
@@ -22,24 +22,28 @@ return function(s)
       {
         layout = Wibox.layout.fixed.horizontal,
         spacing = Beautiful.widget_spacing,
-        module.launcher(),
+        module.quicksettings,
         {
           widget = Wibox.container.margin,
-          top = Beautiful.widget_spacing / 2,
-          bottom = Beautiful.widget_spacing / 2,
-          module.taglist(s),
+          left = -Beautiful.widget_spacing,
+          module.launcher(),
         },
         s.mypromptbox,
         module.tasklist(s),
       },
       -- Middle widgets.
-      clock,
+      module.taglist(s),
       -- Right widgets.
       {
         layout = Wibox.layout.fixed.horizontal,
         spacing = Beautiful.widget_spacing,
         Wibox.widget.systray(),
-        -- module.layoutbox(s),
+        clock,
+        {
+          widget = Wibox.container.margin,
+          margins = dpi(4),
+          module.layoutbox(s),
+        },
       },
     },
   })

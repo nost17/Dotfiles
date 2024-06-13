@@ -14,11 +14,17 @@ local launcher = Utils.widgets.button.elevated.normal({
     spacing = dpi(5),
     {
       widget = Wibox.widget.imagebox,
-      image = Utils.apps_info:get_distro().icon,
+      image = Gears.color.recolor_image(
+        Utils.apps_info:get_icon_alt({
+          name = "search",
+          symbolic = true,
+        }),
+        Beautiful.neutral[100]
+      ),
       halign = "center",
       valign = "center",
-      forced_width = dpi(18),
-      forced_height = dpi(18),
+      forced_width = dpi(15),
+      forced_height = dpi(15),
     },
     {
       widget = Wibox.widget.textbox,
@@ -36,7 +42,7 @@ local launcher = Utils.widgets.button.elevated.normal({
 return function()
   return Wibox.widget({
     widget = Wibox.container.margin,
-    right = Beautiful.widget_spacing,
+    -- right = Beautiful.widget_spacing,
     launcher,
   })
 end

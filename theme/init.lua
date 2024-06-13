@@ -77,10 +77,10 @@ theme.taglist_shape_border_color_focus = cscheme.neutral[100]
 
 -- tasklist
 theme.tasklist_icon_size = dpi(18)
-theme.tasklist_bg_focus = cscheme.primary[500]
-theme.tasklist_bg_normal = cscheme.neutral[700]
+theme.tasklist_bg_focus = cscheme.neutral[850]
+theme.tasklist_bg_normal = cscheme.neutral[900]
 theme.tasklist_bg_minimize = theme.transparent
-theme.tasklist_shape = Gears.shape.rounded_bar
+-- theme.tasklist_shape = Gears.shape.rounded_bar
 
 -- notifications
 theme.notification_spacing = theme.widget_spacing

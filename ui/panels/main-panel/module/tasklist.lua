@@ -1,13 +1,14 @@
 local dpi = Beautiful.xresources.apply_dpi
 
-local create_task = function(self, c, _, _)
-  self:get_children_by_id("icon_client")[1].image = Utils.apps_info:get_icon_path({
+local create_task = function(self, c, index, objects)
+  Helpers.gc(self, "icon_client").image = Utils.apps_info:get_icon_path({
     client = c,
-    manual_fallback = c.icon,
   })
+  Helpers.gc(self, "app_name").text = Utils.apps_info:get_app_name(c.class:lower():gsub("gnome\\--", "")) or c.class
 end
 
 local update_task = function(self, c, _, _)
+  Helpers.gc(self, "app_name_c").visible = c == client.focus
   if c.minimized then
     self:get_children_by_id("icon_client")[1].opacity = 0.4
   else
@@ -18,11 +19,11 @@ end
 return function(s)
   -- Create a tasklist widget
   return Awful.widget.tasklist({
-    screen = s,
+    screen = screen.primary,
     filter = Awful.widget.tasklist.filter.currenttags,
     layout = {
       layout = Wibox.layout.fixed.horizontal,
-      spacing = Beautiful.widget_spacing,
+      spacing = Beautiful.widget_spacing / 2,
     },
     buttons = {
       Awful.button(nil, 1, function(c)
@@ -40,38 +41,51 @@ return function(s)
       end),
     },
     widget_template = {
-      layout = Wibox.layout.stack,
+      widget = Wibox.container.background,
+      id = "background_role",
       {
-        widget = Wibox.container.place,
+        widget = Wibox.container.margin,
+        right = Beautiful.widget_padding.inner / 2,
+        left = Beautiful.widget_padding.inner / 2,
         {
-          widget = Wibox.widget.imagebox,
-          id = "icon_client",
-          forced_height = Beautiful.tasklist_icon_size,
-          forced_width = Beautiful.tasklist_icon_size,
-          halign = "center",
-          valign = "center",
-        },
-      },
-      {
-        widget = Wibox.container.place,
-        halign = "center",
-        valign = "top",
-        {
-          widget = Wibox.container.margin,
-          top = dpi(2),
+          layout = Wibox.layout.fixed.horizontal,
           {
-            widget = Wibox.container.background,
-            id = "background_role",
-            forced_height = dpi(3),
-            forced_width = dpi(8),
+            widget = Wibox.container.place,
+            {
+              widget = Wibox.widget.imagebox,
+              id = "icon_client",
+              forced_height = Beautiful.tasklist_icon_size,
+              forced_width = Beautiful.tasklist_icon_size,
+              halign = "center",
+              valign = "center",
+            },
+          },
+          {
+            widget = Wibox.container.margin,
+            id = "app_name_c",
+            left = Beautiful.widget_spacing / 2,
+            {
+              widget = Wibox.container.place,
+              {
+                widget = Wibox.widget.textbox,
+                id = "app_name",
+                font = Beautiful.font_med_s,
+                visible = true,
+                halign = "left",
+                valign = "center",
+              },
+            },
           },
         },
       },
       update_callback = function(self, c, index, objects)
         update_task(self, c)
       end,
-      create_callback = function(self, c, _, _)
-        create_task(self, c)
+      create_callback = function(self, c, index, objects)
+        create_task(self, c, index, objects)
+        -- Helpers.gc(self, "icon_client").image = Utils.apps_info:get_icon_path({
+        --   client = c,
+        -- })
         update_task(self, c)
       end,
     },

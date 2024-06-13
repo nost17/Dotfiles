@@ -61,7 +61,9 @@ function bar:new_value(value)
 end
 
 Lib.Volume:connect_signal("volume", function(_, vol, mut)
-  bar:new_value(vol)
+  if wdg.visible then
+      bar:new_value(vol)
+  end
 end)
 
 awesome.connect_signal("popup::volume", function(action)

@@ -13,10 +13,30 @@ local custom_icons = {
 }
 local custom_names = {
   ["ncmpcpp"] = "Musica local",
+  ["gnome-disks"] = "Discos",
+  ["disks"] = "Discos",
+  ["gnome-terminal"] = "Terminal",
+  ["terminal"] = "Terminal",
+  -- ["gnome-text-editor"] = "Editor de texto",
 }
 
+-- Función para capitalizar la primera letra de una cadena
+local function capitalize(str)
+  return (str:gsub("^%l", string.upper))
+end
+
+-- Función para capitalizar la primera letra de cada palabra en una cadena
+local function title(str)
+  return (str:gsub("(%a)([%w_']*)", function(first, rest)
+    return first:upper() .. rest:lower()
+  end))
+end
+
 function icon_theme:get_app_name(client_class)
-  local class = custom_names[client_class] or client_class:lower()
+  if custom_names[client_class] then
+    return custom_names[client_class]
+  end
+  local class = client_class:lower()
 
   -- Try to remove dashes
   local class_1 = class:gsub("[%-]", "")
@@ -30,6 +50,11 @@ function icon_theme:get_app_name(client_class)
   class_3 = class_3:match("(.-)%s+") or class_3
 
   local possible_icon_names = { class, class_2, class_1 }
+  -- if class:find("gnome") then
+  --   class_3 = "org." .. class_2 .. ".desktop"
+  --   table.insert(possible_icon_names, class_3)
+  -- end
+
   if
       not class_3:find("org")
       and not class_3:find("gnome")
@@ -60,6 +85,24 @@ function icon_theme:get_name(args)
     return icon_theme:get_app_name(args.name)
         or args.try_fallback ~= false and args.name_fallback and icon_theme:get_app_name(args.name_fallback)
         or args.manual_fallback and args.manual_fallback
+  end
+end
+
+function icon_theme:get_name_by_pid(client)
+  local pid = client.pid
+  if pid ~= nil then
+    local handle = io.popen(string.format("ps -p %d -o comm=", pid))
+    local pid_command = ""
+    if handle then
+      pid_command = handle:read("*a"):gsub("^%s*(.-)%s*$", "%1")
+      handle:close()
+    end
+    for _, app in ipairs(self.apps) do
+      local executable = app:get_executable()
+      if executable and executable:find(pid_command, 1, true) then
+        return app:get_name()
+      end
+    end
   end
 end
 
@@ -128,18 +171,6 @@ function icon_theme:get_gicon_path(gicon)
     end
   end
   return false
-end
-
--- Función para capitalizar la primera letra de una cadena
-local function capitalize(str)
-  return (str:gsub("^%l", string.upper))
-end
-
--- Función para capitalizar la primera letra de cada palabra en una cadena
-local function title(str)
-  return (str:gsub("(%a)([%w_']*)", function(first, rest)
-    return first:upper() .. rest:lower()
-  end))
 end
 
 function icon_theme:get_icon_alt(opts)
