@@ -4,6 +4,7 @@ local gfs = Gears.filesystem
 local theme = {}
 local themes_path = Gears.filesystem.get_configuration_dir() .. "theme/"
 local dpi = Beautiful.xresources.apply_dpi
+local darken = Helpers.color.darken
 
 theme = dofile(gfs.get_themes_dir() .. "default/theme.lua")
 local _colors = require("theme.colorschemes.tomorrow")
@@ -13,13 +14,14 @@ theme.transparent = "#00000000"
 
 theme.wallpaper = themes_path .. "assets/wallpapers/waves_2.jpg"
 theme.music_cover = themes_path .. "assets/no_music.png"
+theme.user_icon = themes_path .. "assets/user_icon.png"
 
 theme.bg_normal = cscheme.neutral[900]
 theme.bg_alt = cscheme.neutral[700]
 theme.bg_focus = cscheme.neutral[800]
 theme.bg_urgent = cscheme.red[300]
 theme.fg_normal = cscheme.neutral[100]
-theme.fg_focus = "#abb2bf"
+theme.fg_focus = cscheme.neutral[100]
 
 theme.useless_gap = dpi(4)
 
@@ -55,15 +57,16 @@ theme.font = font.font_reg_m
 -- widget
 theme.radius = dpi(3)
 theme.widget_border = {
-  width = 0,
-  color = cscheme.neutral[300],
+  width = 1.5,
+  color = cscheme.type == "dark" and darken(cscheme.neutral[900], 0.1) or cscheme.neutral[400],
+  color_inner = cscheme.type == "dark" and cscheme.neutral[900] or cscheme.neutral[300]
 }
 theme.widget_radius = {
   outer = theme.radius,
   inner = 0,
 }
 theme.widget_padding = {
-  outer = dpi(15),
+  outer = dpi(12),
   inner = dpi(8),
 }
 theme.widget_spacing = theme.widget_padding.inner

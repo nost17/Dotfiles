@@ -31,7 +31,7 @@ user.notify_count = 0
 
 user.music = {}
 user.music.notifys = {
-  enabled = true,
+  enabled = false,
   buttons = true,
 }
 user.music.players = {

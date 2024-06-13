@@ -26,7 +26,7 @@ return function(theme, style)
   -- Generate 9 neutral colors
   local ndark = cscheme.neutral.dark
   local nlight = cscheme.neutral.light
-  local nbase = cscheme.neutral.base or lib_color.blend(ndark, nlight)
+  local nbase = cscheme.neutral.base or lib_color.darken(lib_color.blend(ndark, nlight), 0.3)
 
   cscheme.neutral[900] = ndark
   cscheme.neutral[700] = lib_color.blend(ndark, nbase)

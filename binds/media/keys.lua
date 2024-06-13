@@ -2,6 +2,8 @@ local mod = require("binds.mod")
 local modkey = mod.modkey
 local with_shell = Awful.spawn.with_shell
 
+
+-- TODO: implement this in global `User`
 local labels = {
   media = "Multimedia",
   volume = {
