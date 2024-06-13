@@ -82,7 +82,7 @@ local function new(args)
   args.font = args.font ~= nil and args.font .. " " or Beautiful.font_text or nil
   args.bold = args.bold ~= nil and args.bold or false
   args.italic = args.italic ~= nil and args.italic or false
-  args.size = args.size or 11
+  args.size = args.size or (args.no_size and "" or 11)
   args.color = args.color or Beautiful.fg_normal
   args.text = args.text ~= nil and args.text or ""
   args.id = args.id or "text_role"

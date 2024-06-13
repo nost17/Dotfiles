@@ -12,6 +12,7 @@ local cscheme = require("theme.palettegen")(_colors, "dark")
 theme.transparent = "#00000000"
 
 theme.wallpaper = themes_path .. "assets/wallpapers/waves_2.jpg"
+theme.music_cover = themes_path .. "assets/no_music.png"
 
 theme.bg_normal = cscheme.neutral[900]
 theme.bg_alt = cscheme.neutral[700]

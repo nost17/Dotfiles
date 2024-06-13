@@ -397,6 +397,7 @@ function elevated_button.normal(args)
       end
     end
   end)
+  widget._private.child = args.child
 
   return widget
 end

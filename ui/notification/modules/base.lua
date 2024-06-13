@@ -30,7 +30,7 @@ Naughty.connect_signal("request::icon", function(n, context, hints)
     return
   end
   local path = Utils.apps_info:get_icon_alt({
-    name = n.image or hints.app_icon,
+    name =hints.app_icon,
   })
   if path then
     n.icon = path
@@ -148,9 +148,11 @@ local function make_notify(n)
               width = Beautiful.notification_icon_height * 2,
               {
                 widget = Wibox.widget.imagebox,
-                image = n.image and Utils.apps_info:get_icon_alt({
-                  name = n.image,
-                }) or n.icon,
+                -- image = n.icon,
+                image = Utils.apps_info:get_icon_alt({
+                  name = type(n.image) ~= "userdata" and n.image,
+                  manual_fallback = n.icon,
+                }),
                 clip_shape = Beautiful.notification_icon_shape,
               },
             },
