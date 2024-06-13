@@ -11,7 +11,7 @@ local first_time = true
 Lib.Playerctl:connect_signal("metadata", function(self, title, artist, art_url, album, new, player_name)
   if first_time then
     first_time = false
-  elseif new then
+  elseif new and User.music.notifys.enabled then
     emit_notify(title, artist, album, art_url, player_name)
   end
 end)

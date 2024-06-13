@@ -30,7 +30,7 @@ Naughty.connect_signal("request::icon", function(n, context, hints)
     return
   end
   local path = Utils.apps_info:get_icon_alt({
-    name =hints.app_icon,
+    name = hints.app_icon,
   })
   if path then
     n.icon = path
@@ -42,13 +42,15 @@ local function make_notify(n)
   local in_hover = false
   n.app_name = n.app_name or Naughty.config.defaults.app_name
   local timebar = Wibox.widget({
+    widget = Wibox.widget.progressbar,
+    bar_shape = Gears.shape.rounded_bar,
+    shape = Gears.shape.rounded_bar,
     max_value = 100,
     value = 100,
     forced_height = dpi(3),
     forced_width = 200,
     background_color = Beautiful.notification_timebar_bg,
     color = accent_color,
-    widget = Wibox.widget.progressbar,
   })
 
   local n_title = Wibox.widget({
@@ -82,8 +84,8 @@ local function make_notify(n)
           widget = Wibox.container.margin,
           left = dpi(6),
           right = dpi(6),
-          top = dpi(3),
-          bottom = dpi(3),
+          top = dpi(6),
+          bottom = dpi(6),
           {
             widget = Wibox.widget.textbox,
             id = "text_role",
@@ -125,6 +127,7 @@ local function make_notify(n)
     notification = n,
     minimum_width = dpi(240),
     maximum_width = dpi(480),
+    shape = Helpers.shape.rrect(Beautiful.radius),
     type = "notification",
     widget_template = {
       layout = Wibox.layout.fixed.vertical,
@@ -173,15 +176,17 @@ local function make_notify(n)
           (n.actions and #n.actions > 0) and {
             widget = Wibox.container.background,
             shape = Helpers.shape.rrect(Beautiful.radius),
-            bg = Beautiful.widget_border.width == 0 and Beautiful.neutral[900]
-                or Beautiful.widget_border.color,
             border_width = Beautiful.widget_border.width,
+            bg = Beautiful.widget_border.color,
             border_color = Beautiful.widget_border.color,
+            -- bg = Beautiful.widget_border.width == 0 and Beautiful.neutral[900] or Beautiful.widget_border.color,
+            -- border_width = Beautiful.widget_border.width,
+            -- border_color = Beautiful.widget_border.color,
             actions,
           },
+          timebar,
         },
       },
-      timebar,
     },
   })
 

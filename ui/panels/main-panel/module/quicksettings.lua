@@ -12,6 +12,7 @@ local button = Utils.widgets.button.elevated.normal({
     forced_height = dpi(18),
   },
   on_press = function()
+    awesome.emit_signal("widgets::quicksettings", "toggle")
     -- if _G.qs_width then
     --   _G.qs_width = nil
     -- else
