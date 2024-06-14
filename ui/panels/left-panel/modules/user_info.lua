@@ -45,8 +45,8 @@ local user_name = Wibox.widget({
 local function mkbutton(image, size, fn)
   return wbutton.normal({
     paddings = 0,
-    constraint_width = dpi(42),
-    constraint_height = dpi(42),
+    constraint_width = dpi(48),
+    constraint_height = dpi(48),
     constraint_strategy = "exact",
     halign = "center",
     valign = "center",
@@ -69,10 +69,10 @@ local function mkbutton(image, size, fn)
   })
 end
 
+local screenshot_options = require((...):match("(.-)[^%.]+$") .. "sshot_buttons")
+
 local button_screenshot = mkbutton(Beautiful.icons .. "settings/camera.svg", dpi(20), function()
-  Naughty.notify({
-    title = "TODO: agregar accion",
-  })
+  screenshot_options.visible = not screenshot_options.visible
 end)
 local button_logout = mkbutton(Beautiful.icons .. "settings/exit.svg", dpi(20), function()
   Naughty.notify({
@@ -80,31 +80,32 @@ local button_logout = mkbutton(Beautiful.icons .. "settings/exit.svg", dpi(20), 
   })
 end)
 
+
 return Wibox.widget({
-  widget = Wibox.container.background,
-  bg = Beautiful.neutral[850],
-  shape = Helpers.shape.rrect(Beautiful.radius),
-  border_width = Beautiful.widget_border.width,
-  border_color = Beautiful.widget_border.color,
+  layout = Wibox.layout.fixed.vertical,
   {
-    widget = Wibox.container.margin,
-    margins = Beautiful.widget_padding.inner,
+    widget = Wibox.container.background,
+    bg = Beautiful.neutral[850],
+    shape = Helpers.shape.rrect(Beautiful.radius),
+    border_width = Beautiful.widget_border.width,
+    border_color = Beautiful.widget_border.color,
     {
-      layout = Wibox.layout.align.horizontal,
+      widget = Wibox.container.margin,
+      margins = Beautiful.widget_padding.inner,
       {
-        widget = Wibox.container.background,
-        shape = Gears.shape.circle,
-        border_width = Beautiful.widget_border.width,
-        border_color = Beautiful.widget_border.color_inner,
-        user_icon,
-      },
-      {
-        widget = Wibox.container.margin,
-        left = Beautiful.widget_spacing,
-        user_name,
-      },
-      {
-        widget = Wibox.container.place,
+        layout = Wibox.layout.align.horizontal,
+        {
+          widget = Wibox.container.background,
+          shape = Gears.shape.circle,
+          border_width = Beautiful.widget_border.width,
+          border_color = Beautiful.widget_border.color_inner,
+          user_icon,
+        },
+        {
+          widget = Wibox.container.margin,
+          left = Beautiful.widget_spacing,
+          user_name,
+        },
         {
           layout = Wibox.layout.flex.horizontal,
           spacing = Beautiful.widget_spacing,
@@ -114,4 +115,5 @@ return Wibox.widget({
       },
     },
   },
+  screenshot_options,
 })
