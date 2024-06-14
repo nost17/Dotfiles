@@ -2,3 +2,4 @@
 -- for music.
 require(... .. ".modules.base")
 require(... .. ".modules.music")
+require(... .. ".modules.screenshots")

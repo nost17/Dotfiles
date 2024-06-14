@@ -35,7 +35,7 @@ local M = {
   },
 }
 
-M["dark"].primary.base = M["dark"].colors.blue
+M["dark"].primary.base = M["dark"].colors.yellow
 M["light"].primary.base = M["light"].colors.blue
 
 return M
