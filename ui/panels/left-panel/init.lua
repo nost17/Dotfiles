@@ -27,6 +27,7 @@ local quicksettings = Awful.popup({
       spacing = Beautiful.widget_spacing,
       modules.user_info,
       modules.volume_control,
+      modules.user_control,
       modules.music_control,
     },
   },

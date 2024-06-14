@@ -19,7 +19,7 @@ local user_name = Wibox.widget({
     layout = Wibox.layout.fixed.vertical,
     {
       widget = Wibox.container.background,
-      fg = Beautiful.yellow[300],
+      fg = Beautiful.primary[500],
       {
         widget = Wibox.widget.textbox,
         text = info.user,
@@ -95,7 +95,7 @@ return Wibox.widget({
         widget = Wibox.container.background,
         shape = Gears.shape.circle,
         border_width = Beautiful.widget_border.width,
-        border_color = Beautiful.widget_border.color,
+        border_color = Beautiful.widget_border.color_inner,
         user_icon,
       },
       {

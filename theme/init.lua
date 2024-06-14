@@ -58,8 +58,8 @@ theme.font = font.font_reg_m
 theme.radius = dpi(3)
 theme.widget_border = {
   width = 1.5,
-  color = cscheme.type == "dark" and darken(cscheme.neutral[900], 0.1) or cscheme.neutral[400],
-  color_inner = cscheme.type == "dark" and cscheme.neutral[900] or cscheme.neutral[300]
+  color = cscheme.type == "dark" and darken(cscheme.neutral[900], 0.1) or cscheme.neutral[500],
+  color_inner = cscheme.type == "dark" and cscheme.neutral[900] or cscheme.neutral[400]
 }
 theme.widget_radius = {
   outer = theme.radius,
@@ -69,7 +69,7 @@ theme.widget_padding = {
   outer = dpi(12),
   inner = dpi(8),
 }
-theme.widget_spacing = theme.widget_padding.inner
+theme.widget_spacing = theme.widget_padding.inner * 0.75
 
 -- taglist
 theme.taglist_bg_focus = cscheme.primary[500]

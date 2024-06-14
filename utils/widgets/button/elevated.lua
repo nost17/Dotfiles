@@ -49,20 +49,15 @@ end
 function elevated_button.state(args)
   args = args or {}
 
-  args.bg_normal = args.bg_normal or Beautiful.widget_bg_alt
+  args.bg_normal = args.bg_normal or Beautiful.neutral[850]
   args.bg_hover = args.bg_hover
-      or color_lib.lightness(color_lib.isDark(args.bg_normal) and "lighten" or "darken", 10, args.bg_normal)
-  args.bg_press = args.bg_press or color_lib.lightness("darken", 10, args.bg_hover)
+      or color_lib.lightness(args.bg_normal, 0.07, color_lib.isDark(args.bg_normal) and "lighten" or "darken")
+  args.bg_press = args.bg_press or color_lib.darken(args.bg_hover, 0.07)
 
-  args.bg_normal_on = args.bg_normal_on or args.bg_press
+  args.bg_normal_on = args.bg_normal_on or Beautiful.primary[500]
   args.bg_hover_on = args.bg_hover_on
-      or color_lib.lightness(
-        color_lib.isDark(args.bg_normal_on) and "lighten" or "darken",
-        20,
-        args.bg_normal_on
-      )
-  args.bg_press_on = args.bg_press_on
-      or color_lib.lightness("darken", color_lib.isDark(args.bg_hover_on) and 10 or 20, args.bg_hover_on)
+      or color_lib.lightness(args.bg_normal_on, 0.15, color_lib.isDark(args.bg_normal_on) and "lighten" or "darken")
+  args.bg_press_on = args.bg_press_on or color_lib.darken(args.bg_hover_on, 0.10)
 
   args.shape = args.shape or nil
 
@@ -104,6 +99,7 @@ function elevated_button.state(args)
       end
       widget._private.state = true
     end
+    widget:emit_signal("state", widget._private.state)
   end
 
   if args.on_by_default == true then
@@ -118,6 +114,7 @@ function elevated_button.state(args)
       end
       widget._private.state = false
     end
+    widget:emit_signal("state", widget._private.state)
   end
 
   function widget:toggle()
@@ -268,8 +265,9 @@ function elevated_button.normal(args)
   args = args or {}
 
   args.bg_normal = args.bg_normal or Beautiful.neutral[850]
-  args.bg_hover = args.bg_hover or Beautiful.neutral[800]
-  args.bg_press = args.bg_press or Beautiful.neutral[850]
+  args.bg_hover = args.bg_hover
+      or color_lib.lightness(args.bg_normal, 0.07, color_lib.isDark(args.bg_normal) and "lighten" or "darken")
+  args.bg_press = args.bg_press or color_lib.darken(args.bg_hover, 0.07)
 
   args.shape = args.shape or nil
   args.hover_shape = args.hover_shape or nil

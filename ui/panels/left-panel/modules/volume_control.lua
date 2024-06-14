@@ -59,7 +59,12 @@ return Wibox.widget({
   border_color = Beautiful.widget_border.color,
   {
     widget = Wibox.container.margin,
-    margins = Beautiful.widget_padding.inner,
+    margins = {
+      top = Beautiful.widget_padding.inner,
+      bottom = Beautiful.widget_padding.inner,
+      left = Beautiful.widget_padding.outer,
+      right = Beautiful.widget_padding.outer
+    },
     {
       layout = Wibox.layout.fixed.vertical,
       spacing = Beautiful.widget_spacing,
@@ -74,7 +79,7 @@ return Wibox.widget({
       },
       {
         layout = Wibox.layout.fixed.horizontal,
-        spacing = Beautiful.widget_spacing,
+        spacing = Beautiful.widget_spacing * 0.75,
         {
           widget = Wibox.widget.imagebox,
           image = Gears.color.recolor_image(

@@ -152,13 +152,18 @@ function M.mixer(color1, color2)
 end
 
 function M.isDark(hex)
-  local color = M.hex_to_rgb(hex)
-  local r, g, b = color.r, color.g, color.b
-
-  local R, G, B = r / 255, g / 255, b / 255
-  local max, min = math.max(R, G, B), math.min(R, G, B)
-  local l = (max + min) / 2
-  return l <= 0.5
+  local numeric_value = 0
+  for s in hex:gmatch("[a-fA-F0-9][a-fA-F0-9]") do
+    numeric_value = numeric_value + tonumber("0x" .. s)
+  end
+  return (numeric_value < 383)
+  -- local color = M.hex_to_rgb(hex)
+  -- local r, g, b = color.r, color.g, color.b
+  --
+  -- local R, G, B = r / 255, g / 255, b / 255
+  -- local max, min = math.max(R, G, B), math.min(R, G, B)
+  -- local l = (max + min) / 2
+  -- return l <= 0.5
 end
 
 function M.mixer_dom(color1, color2)

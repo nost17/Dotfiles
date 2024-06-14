@@ -6,7 +6,7 @@ local player_preffix = "Via: "
 local metadata_title = wtext({
   text = "Titulo",
   color = Beautiful.type == "dark" and Beautiful.neutral[100] or Beautiful.neutral[900],
-  font = Beautiful.font_med_m,
+  font = Beautiful.font_med_s,
   no_size = true,
 })
 local metadata_artist = wtext({
