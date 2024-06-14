@@ -10,6 +10,7 @@ local style = {
   shape_circle = Gears.shape.circle,
   -- shape = Gears.shape.rounded_bar,
   border_color = Beautiful.widget_border.color,
+  border_width = Beautiful.widget_border.width,
   bg_normal = Beautiful.neutral[850],
   -- bg_normal = Helpers.color.blend(Beautiful.neutral[850], Beautiful.neutral[800]),
   -- bg_hover = Beautiful.neutral[700],
@@ -35,7 +36,7 @@ else
 end
 
 local function default(opts)
-  if not opts.icon then
+  if not opts.icon and not opts.icon_off then
     Naughty.notification({
       title = "Error",
       text = "Icon required",
@@ -45,6 +46,8 @@ local function default(opts)
   end
   opts.icon = recolor(opts.icon, style.icon_normal)
   opts.icon_size = opts.icon_size or dpi(18)
+  opts.padding = opts.padding or Beautiful.widget_padding.inner * 0.75
+  opts.border_width = opts.border_width or style.border_width
   return opts
 end
 
@@ -63,9 +66,11 @@ end
 function templates.only_icon(opts)
   opts = default(opts)
   local button_main
+  local icon_off = opts.icon_off or opts.icon
+  local icon_on = opts.icon_on or opts.icon
   local button_main_icon = Wibox.widget({
     widget = Wibox.widget.imagebox,
-    image = opts.icon,
+    image = icon_off,
     forced_width = opts.icon_size,
     forced_height = opts.icon_size,
     halign = "center",
@@ -77,7 +82,7 @@ function templates.only_icon(opts)
       -- constraint_width = dpi(42),
       -- constraint_height = dpi(42),
       -- constraint_strategy = "exact",
-      paddings = Beautiful.widget_padding.inner * 0.75,
+      paddings = opts.padding,
       halign = "center",
       valign = "center",
       child = button_main_icon,
@@ -86,7 +91,7 @@ function templates.only_icon(opts)
       bg_press = style.bg_press,
       bg_normal_on = style.bg_normal_on,
       shape = style.shape,
-      border_width = Beautiful.widget_border.width,
+      border_width = opts.border_width,
       normal_border_color = style.border_color,
       on_turn_on = opts.fn_on,
       on_turn_off = opts.fn_off,
@@ -94,7 +99,10 @@ function templates.only_icon(opts)
   else
     button_main = wbutton.normal({
       -- paddings = Beautiful.widget_padding.outer,
-      paddings = Beautiful.widget_padding.inner * 0.75,
+      paddings = opts.padding,
+      constraint_width = opts.width,
+      constraint_height = opts.height,
+      constraint_strategy = opts.strategy,
       halign = "center",
       valign = "center",
       child = button_main_icon,
@@ -102,16 +110,16 @@ function templates.only_icon(opts)
       bg_hover = style.bg_hover,
       bg_press = style.bg_press,
       shape = style.shape,
-      normal_border_width = Beautiful.widget_border.width,
+      normal_border_width = opts.border_width,
       normal_border_color = style.border_color,
       on_press = opts.on_press,
     })
   end
   button_main:connect_signal("state", function(_, new_state)
     if new_state then
-      button_main_icon:set_image(recolor(opts.icon, style.icon_on))
+      button_main_icon:set_image(recolor(icon_on, style.icon_on))
     else
-      button_main_icon:set_image(recolor(opts.icon, style.icon_off))
+      button_main_icon:set_image(recolor(icon_off, style.icon_off))
     end
   end)
   return button_main
@@ -120,9 +128,11 @@ end
 function templates.with_label(opts)
   opts = default(opts)
   local label_state, button_settings
+  local icon_off = opts.icon_off or opts.icon
+  local icon_on = opts.icon_on or opts.icon
   local button_main_icon = Wibox.widget({
     widget = Wibox.widget.imagebox,
-    image = opts.icon,
+    image = icon_off,
     forced_width = opts.icon_size,
     forced_height = opts.icon_size,
     halign = "center",
@@ -171,7 +181,7 @@ function templates.with_label(opts)
   end
 
   local button_main = wbutton.state({
-    paddings = Beautiful.widget_padding.inner * 0.75,
+    paddings = opts.padding or Beautiful.widget_padding.inner * 0.75,
     halign = "left",
     valign = "center",
     child = {
@@ -214,9 +224,9 @@ function templates.with_label(opts)
       if button_settings then
         button_settings:turn_on()
       end
-      button_main_icon:set_image(recolor(opts.icon, style.icon_on))
+      button_main_icon:set_image(recolor(icon_on, style.icon_on))
     else
-      button_main_icon:set_image(recolor(opts.icon, style.icon_off))
+      button_main_icon:set_image(recolor(icon_off, style.icon_off))
       button_settings_icon:set_image(recolor(settings_icon, style.icon_off))
       label:set_color(style.icon_off)
       if button_settings then
@@ -232,7 +242,7 @@ function templates.with_label(opts)
   return Wibox.widget({
     widget = Wibox.container.background,
     shape = style.shape,
-    border_width = Beautiful.widget_border.width,
+    border_width = style.border_width,
     border_color = style.border_color,
     {
       layout = Wibox.layout.align.horizontal,
