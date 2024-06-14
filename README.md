@@ -70,48 +70,12 @@ Repositorio de configuración del entorno AwesomeWM y otros programas
 - [ ] Playerctl lib
   - [ ] Agregar REPEAT and RANDOM señal
   - [ ] Agregar funcionalidad a los botones de los ajustes rapidos/control de musica
-- [X] Implementar monitores de estado al panel de ajustes rapidos
-  - [X] Reorganizar ajustes rapidos
-    - [X] Agregar monitores en el widget de controles
-    - [X] Cambiar diseño de botones a simple
-      - [X] Modo oscuro
-      - [X] Alerta de canciones
-      - [X] Modo flotante
-      - [X] Luz nocturna
-  - [X] Agregar monitores
-    - [X] Agregar libreria de señales para CPU
-    - [X] Agregar libreria de señales para RAM
-    - [X] Agregar libreria de señales para DISCO
-    - [X] Agregar libreria de señales para TEMPERATURA
-  - [X] Agregar plantilla para los monitores
-  - [X] Agregar nueva plantilla simple para botones de ajustes rapidos
-- [ ] Implementación y re-diseño de ajustes rápidos
-  - [x] Agregar alternador de modo oscuro/claro
-  - [x] Agregar boton de captura de Pantalla
-    - [x] Captura instantánea
-    - [x] Menu de selección
-      - [x] Pantalla completa
-      - [x] Seleccion
-      - [x] Ventana
-  - [x] Agregar boton de internet
-    - [x] Agregar libreria de internet (señales)
-  - [ ] Agregar boton de bluetooth
-    - [ ] Agregar libreria de bluetooth (señales)
-- [x] Agregar barra de titulo para las ventanas
-  - [x] Agregar alternador de modo flotante (ajustes rápidos)
-- [x] Agregar calendario
-- [x] Agregar selector de distribucion de ventanas
-- [ ] Agregar pizarron de estado
-- [x] Pantalla de bloqueo
-- [x] Menu de apagado
-- [x] Lanzador de aplicaciones
-- [x] Convertir get_icon.lua en un objecto y agregar metodos
-- [x] Fusionar get_icon.lua y get_name.lua
-
-#### Other
-
-- [X] Agregar configuración de nvchad
-- [ ] Agregar rc de picom al script
-- [ ] Agregar compilacion automatica de picom-ibhagwan
-- [ ] Agregar compilacion automatica de awesome-git en el script
-- [ ] Terminar el script xd
+- [ ] Agregar funcionalidad
+  - [ ] Modo oscuro
+  - [ ] Luz nocturna
+  - [ ] Wifi
+  - [ ] Captura de pantalla
+    - [ ] Selección
+    - [ ] Pantalla completa
+    - [ ] Mostrar/Ocultar cursor
+    - [ ] Temporizador

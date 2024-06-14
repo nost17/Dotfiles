@@ -8,7 +8,7 @@ local modules = require(... .. ".modules")
 
 local quicksettings = Awful.popup({
   screen = c_screen,
-  visible = true,
+  visible = false,
   ontop = true,
   border_width = Beautiful.widget_border.width,
   border_color = Beautiful.widget_border.color,

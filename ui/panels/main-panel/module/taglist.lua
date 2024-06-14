@@ -11,8 +11,8 @@ return function(s)
     screen = s,
     filter = Awful.widget.taglist.filter.all,
     layout = {
-      layout = Wibox.layout.fixed.horizontal,
-      spacing = Beautiful.widget_spacing / 2 
+      layout = Wibox.layout.flex.horizontal,
+      spacing = Beautiful.widget_spacing,
     },
     buttons = {
       -- Left-clicking a tag changes to it.
@@ -49,22 +49,28 @@ return function(s)
       {
         widget = Wibox.container.background,
         id = "background_role",
-        forced_width = inactive_size,
-        forced_height = inactive_size,
+        forced_width = active_size,
+        -- forced_height = active_size * 1.1,
+        {
+          widget = Wibox.widget.textbox,
+          id = "text_role",
+          halign = "center",
+          valign = "center"
+        },
       },
       create_callback = function(self, t, _, _)
-        if t.selected then
-          self:get_children_by_id("background_role")[1].forced_width = active_size
-        end
+        -- if t.selected then
+        --   self:get_children_by_id("background_role")[1].forced_width = active_size
+        -- end
       end,
       update_callback = function(self, t, _, _)
-        awesome.emit_signal("tag_clients", #t:clients())
-        local tag = self:get_children_by_id("background_role")[1]
-        if t.selected then
-          tag.forced_width = active_size
-        else
-          tag.forced_width = inactive_size
-        end
+        -- awesome.emit_signal("tag_clients", #t:clients())
+        -- local tag = self:get_children_by_id("background_role")[1]
+        -- if t.selected then
+        --   tag.forced_width = active_size
+        -- else
+        --   tag.forced_width = inactive_size
+        -- end
       end,
     },
   })

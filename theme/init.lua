@@ -57,7 +57,8 @@ theme.font = font.font_reg_m
 -- widget
 theme.radius = dpi(3)
 theme.widget_border = {
-  width = 1.5,
+  width = 1,
+  -- color = cscheme.type == "dark" and Helpers.color.blend(cscheme.neutral[800],cscheme.neutral[700]) or cscheme.neutral[500],
   color = cscheme.type == "dark" and darken(cscheme.neutral[900], 0.1) or cscheme.neutral[500],
   color_inner = cscheme.type == "dark" and cscheme.neutral[900] or cscheme.neutral[400]
 }
@@ -72,12 +73,19 @@ theme.widget_padding = {
 theme.widget_spacing = theme.widget_padding.inner * 0.75
 
 -- taglist
+-- theme.taglist_bg_focus = cscheme.primary[500]
+-- theme.taglist_bg_empty = cscheme.neutral[800]
+-- theme.taglist_bg_occupied = cscheme.neutral[500]
+theme.taglist_font = font.font_med_m
 theme.taglist_bg_focus = cscheme.primary[500]
-theme.taglist_bg_empty = cscheme.neutral[800]
-theme.taglist_bg_occupied = cscheme.neutral[500]
-theme.taglist_shape = Gears.shape.rounded_bar
-theme.taglist_shape_border_width_focus = 0
-theme.taglist_shape_border_color_focus = cscheme.neutral[100]
+theme.taglist_bg_empty = cscheme.neutral[900]
+theme.taglist_bg_occupied = cscheme.neutral[800]
+theme.taglist_fg_focus = cscheme.neutral[900]
+theme.taglist_fg_occupied = cscheme.neutral[200]
+theme.taglist_fg_empty = cscheme.neutral[500]
+theme.taglist_shape = Helpers.shape.rrect(theme.radius)
+-- theme.taglist_shape_border_width_focus = theme.widget_border.width
+-- theme.taglist_shape_border_color_focus = theme.widget_border.color
 
 -- tasklist
 theme.tasklist_icon_size = dpi(18)
