@@ -7,6 +7,7 @@ local widgets = require('ui')
 
 local labels = {
   qs_panel = "Panel de ajustes",
+  logout = "Panel de salida"
 }
 
 local function create_bind(mods, key, desc, group, fn)
@@ -16,6 +17,9 @@ end
 Awful.keyboard.append_global_keybindings({
   create_bind({modkey}, "a", labels.qs_panel, nil, function ()
     awesome.emit_signal("widgets::quicksettings", "toggle")
+  end),
+  create_bind({modkey}, "q", labels.logout, nil, function ()
+    awesome.emit_signal("widgets::logoutscreen", "toggle")
   end)
 })
 

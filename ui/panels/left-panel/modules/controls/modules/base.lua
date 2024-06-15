@@ -1,7 +1,7 @@
 local wbutton = Utils.widgets.button.elevated
 local wtext = Utils.widgets.text
 local dpi = Beautiful.xresources.apply_dpi
-local recolor = Gears.color.recolor_image
+local recolor = Gears.color.recolor_image -- TODO: replace for `set_stylesheet` method
 local settings_icon = Beautiful.icons .. "settings/arrow_right.svg"
 local templates = {}
 
@@ -48,6 +48,11 @@ local function default(opts)
   opts.icon_size = opts.icon_size or dpi(18)
   opts.padding = opts.padding or Beautiful.widget_padding.inner * 0.75
   opts.border_width = opts.border_width or style.border_width
+  if opts.shape == "none" then
+    opts.shape = nil
+  else
+    opts.shape = opts.shape or style.shape
+  end
   return opts
 end
 
@@ -71,6 +76,7 @@ function templates.only_icon(opts)
   local button_main_icon = Wibox.widget({
     widget = Wibox.widget.imagebox,
     image = icon_off,
+    -- resize =false,
     forced_width = opts.icon_size,
     forced_height = opts.icon_size,
     halign = "center",
@@ -90,7 +96,7 @@ function templates.only_icon(opts)
       bg_hover = style.bg_hover,
       bg_press = style.bg_press,
       bg_normal_on = style.bg_normal_on,
-      shape = style.shape,
+      shape = opts.shape,
       border_width = opts.border_width,
       normal_border_color = style.border_color,
       on_turn_on = opts.fn_on,
@@ -109,8 +115,8 @@ function templates.only_icon(opts)
       bg_normal = style.bg_normal,
       bg_hover = style.bg_hover,
       bg_press = style.bg_press,
-      shape = style.shape,
-      normal_border_width = opts.border_width,
+      shape = opts.shape,
+      normal_border_width = style.border_width,
       normal_border_color = style.border_color,
       on_press = opts.on_press,
     })
@@ -239,9 +245,9 @@ function templates.with_label(opts)
     end
   end)
 
-  return Wibox.widget({
+  local button = Wibox.widget({
     widget = Wibox.container.background,
-    shape = style.shape,
+    shape = opts.shape,
     border_width = style.border_width,
     border_color = style.border_color,
     {
@@ -251,6 +257,15 @@ function templates.with_label(opts)
       opts.settings and button_settings,
     },
   })
+  function button:turn_on()
+    button_main:turn_on()
+  end
+
+  function button:turn_off()
+    button_main:turn_off()
+  end
+
+  return button
 end
 
 return templates

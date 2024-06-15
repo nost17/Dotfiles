@@ -60,7 +60,7 @@ theme.widget_border = {
   width = 1,
   -- color = cscheme.type == "dark" and Helpers.color.blend(cscheme.neutral[800],cscheme.neutral[700]) or cscheme.neutral[500],
   color = cscheme.type == "dark" and darken(cscheme.neutral[900], 0.1) or cscheme.neutral[500],
-  color_inner = cscheme.type == "dark" and cscheme.neutral[900] or cscheme.neutral[400]
+  color_inner = cscheme.type == "dark" and cscheme.neutral[900] or cscheme.neutral[500]
 }
 theme.widget_radius = {
   outer = theme.radius,
@@ -71,6 +71,13 @@ theme.widget_padding = {
   inner = dpi(8),
 }
 theme.widget_spacing = theme.widget_padding.inner * 0.75
+
+theme.border_width = theme.widget_border.width * 1.5
+theme.border_color_normal = cscheme.neutral[850]
+theme.border_color_active = cscheme.neutral[800]
+
+theme.titlebar_bg_normal = cscheme.neutral[850]
+theme.titlebar_bg_focus = cscheme.neutral[800]
 
 -- taglist
 -- theme.taglist_bg_focus = cscheme.primary[500]
@@ -96,19 +103,23 @@ theme.tasklist_bg_minimize = theme.transparent
 
 -- notifications
 theme.notification_spacing = theme.widget_spacing
-theme.notification_icon_height = dpi(48)
+theme.notification_icon_height = dpi(52)
 theme.notification_border_width = theme.widget_border.width
 theme.notification_bg = Helpers.color.blend(cscheme.neutral[900], cscheme.neutral[850])
+theme.notification_fg = cscheme.neutral[100]
 theme.notification_border_color = theme.widget_border.color
 theme.notification_timebar_bg = cscheme.neutral[800]
 theme.notification_timebar_color = cscheme.primary[400]
-theme.notification_icon_shape = function(cr, w, h)
-  if math.abs(w - h) <= (h * 0.1) then
-    Gears.shape.squircle(cr, w, h, 2.5)
-  else
-    Gears.shape.squircle(cr, w, h, 4)
-  end
-end
+theme.notification_icon_shape = Helpers.shape.rrect(theme.radius * 2)
+theme.notification_font_message = font.font_reg_s
+theme.notification_font_title = font.font_med_s
+-- theme.notification_icon_shape = function(cr, w, h)
+--   if math.abs(w - h) <= (h * 0.1) then
+--     Gears.shape.squircle(cr, w, h, 2.5)
+--   else
+--     Gears.shape.squircle(cr, w, h, 4)
+--   end
+-- end
 
 Beautiful.init(theme)
 

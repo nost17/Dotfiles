@@ -1,6 +1,7 @@
 local template = require((...):match("(.-)[^%.]+$") .. "controls.modules.base")
 local dpi = Beautiful.xresources.apply_dpi
 local delay_count = 0
+local hide_cursor = false
 local icons = {
   crop = Beautiful.icons .. "others/sshot_region.svg",
   full = Beautiful.icons .. "others/sshot_full.svg",
@@ -10,26 +11,26 @@ local icons = {
   down = Beautiful.icons .. "others/arrow_down.svg",
 }
 
-local function alert(title)
-  Naughty.notification({
-    title = title,
-  })
-end
-
 local button_region = template.only_icon({
   icon = icons.crop,
   padding = Beautiful.widget_padding.outer,
   on_press = function()
+    Utils.screenshot:notify(Utils.screenshot.select({
+      hide_cursor = hide_cursor,
+      delay = delay_count,
+    }))
     awesome.emit_signal("widgets::quicksettings", "hide")
-    Utils.screenshot:notify(Utils.screenshot.select())
   end,
 })
 local button_full = template.only_icon({
   icon = icons.full,
   padding = Beautiful.widget_padding.outer,
   on_press = function()
+    Utils.screenshot:notify(Utils.screenshot.normal({
+      hide_cursor = hide_cursor,
+      delay = delay_count,
+    }))
     awesome.emit_signal("widgets::quicksettings", "hide")
-    Utils.screenshot:notify(Utils.screenshot.normal())
   end,
 })
 local button_hide_cursor = template.with_label({
@@ -43,12 +44,16 @@ local button_hide_cursor = template.with_label({
   -- },
   label = "cursor",
   fn_on = function()
-    alert("oculto")
+    hide_cursor = false
   end,
   fn_off = function()
-    alert("mostrar")
+    hide_cursor = true
   end,
 })
+
+if not hide_cursor then
+  button_hide_cursor:turn_on()
+end
 
 local delay_text = Wibox.widget({
   widget = Wibox.widget.textbox,
@@ -61,6 +66,7 @@ local button_up = template.only_icon({
   icon = icons.up,
   border_width = 0,
   padding = 0,
+  shape = "none",
   on_press = function()
     delay_count = delay_count + 1
     delay_text:set_text(delay_count)
@@ -70,6 +76,7 @@ local button_down = template.only_icon({
   icon = icons.down,
   border_width = 0,
   padding = 0,
+  shape = "none",
   on_press = function()
     if delay_count > 0 then
       delay_count = delay_count - 1
@@ -86,7 +93,7 @@ local button_delay = Wibox.widget({
   border_color = Beautiful.widget_border.color,
   {
     layout = Wibox.layout.flex.horizontal,
-    spacing = Beautiful.widget_border.width,
+    -- spacing = Beautiful.widget_border.width,
     button_up,
     {
       widget = Wibox.container.background,
@@ -96,6 +103,13 @@ local button_delay = Wibox.widget({
     button_down,
   },
 })
+
+awesome.connect_signal("widgets::quicksettings", function(state)
+  if state == "hide" then
+    delay_count = 0
+    delay_text:set_text(delay_count)
+  end
+end)
 
 return Wibox.widget({
   widget = Wibox.container.margin,
