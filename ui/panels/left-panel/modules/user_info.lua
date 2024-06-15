@@ -75,11 +75,9 @@ local button_screenshot = mkbutton(Beautiful.icons .. "settings/camera.svg", dpi
   screenshot_options.visible = not screenshot_options.visible
 end)
 local button_logout = mkbutton(Beautiful.icons .. "settings/exit.svg", dpi(20), function()
-  Naughty.notify({
-    title = "TODO: agregar accion",
-  })
+  awesome.emit_signal("widgets::logoutscreen", "show")
+  awesome.emit_signal("widgets::quicksettings", "hide")
 end)
-
 
 return Wibox.widget({
   layout = Wibox.layout.fixed.vertical,
