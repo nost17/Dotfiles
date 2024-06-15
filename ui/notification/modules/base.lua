@@ -1,5 +1,6 @@
 local ruled = require("ruled")
 local dpi = Beautiful.xresources.apply_dpi
+local htext = Helpers.text
 
 --- Notifications
 Naughty.config.defaults = {
@@ -53,16 +54,13 @@ local function make_notify(n)
     color = accent_color,
   })
 
-  local n_title = Wibox.widget({
-    text = n.title,
-    font = Beautiful.font_med_s,
-    widget = Wibox.widget.textbox,
-  })
+  local n_title = require("ui.notification.components.title")(n)
+  local n_message = require("ui.notification.components.message")(n)
 
-  local n_message = Wibox.widget({
-    text = n.message,
-    font = Beautiful.font_med_s,
+  local n_appname = Wibox.widget({
     widget = Wibox.widget.textbox,
+    markup = htext.colorize_text(htext.upper(n.app_name), Beautiful.neutral[200]),
+    font = Beautiful.font_med_xs,
   })
 
   local actions = Wibox.widget({
@@ -115,11 +113,6 @@ local function make_notify(n)
     end
     return timebar.value > (timebar.value / 4) or timebar.value == 0
   end)
-  local n_appname = Wibox.widget({
-    widget = Wibox.widget.textbox,
-    markup = Helpers.text.colorize_text(string.upper(n.app_name), accent_color),
-    font = Beautiful.font_med_xs,
-  })
   -- n.preset = {
   --   padding = _G.qs_width,
   -- }
@@ -140,10 +133,9 @@ local function make_notify(n)
         {
           layout = Wibox.layout.fixed.vertical,
           spacing = Beautiful.widget_spacing * 0.85,
-          n_appname,
           {
             layout = Wibox.layout.fixed.horizontal,
-            spacing = Beautiful.widget_spacing,
+            spacing = Beautiful.widget_spacing * 1.5,
             {
               widget = Wibox.container.constraint,
               strategy = "max",
@@ -156,6 +148,8 @@ local function make_notify(n)
                   name = type(n.image) ~= "userdata" and n.image,
                   manual_fallback = n.icon,
                 }),
+                valign = "center",
+                halign = "center",
                 clip_shape = Beautiful.notification_icon_shape,
               },
             },
@@ -164,10 +158,11 @@ local function make_notify(n)
               valign = "center",
               {
                 layout = Wibox.layout.fixed.vertical,
+                n_appname,
                 n_title,
                 {
                   widget = Wibox.container.background,
-                  fg = Beautiful.neutral[200],
+                  fg = Beautiful.neutral[100],
                   n_message,
                 },
               },
@@ -184,7 +179,11 @@ local function make_notify(n)
             -- border_color = Beautiful.widget_border.color,
             actions,
           },
-          timebar,
+          {
+            widget = Wibox.container.margin,
+            top = Beautiful.widget_padding.inner * 0.5,
+            timebar,
+          },
         },
       },
     },
