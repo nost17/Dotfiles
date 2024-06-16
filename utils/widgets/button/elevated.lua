@@ -375,7 +375,11 @@ function elevated_button.normal(args)
     widget.button = nil
     if button == 1 then
       if args.on_release ~= nil or args.on_press ~= nil then
-        effect(widget, args.bg_hover, args.shape, args.hover_border_width, args.normal_border_color)
+        if args.on_release then
+          effect(widget, args.bg_normal, args.shape, args.hover_border_width, args.normal_border_color)
+        else
+          effect(widget, args.bg_hover, args.shape, args.hover_border_width, args.normal_border_color)
+        end
       end
       if args.on_release ~= nil then
         args.on_release(self, lx, ly, button, mods, find_widgets_result)

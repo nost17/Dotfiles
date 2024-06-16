@@ -1,84 +1,121 @@
 local dpi = Beautiful.xresources.apply_dpi
 local c_screen = Awful.screen.focused()
 local wbutton = Utils.widgets.button.elevated
-local template = require("ui.panels.left-panel.modules.controls.modules.base")
+-- local template = require("ui.panels.left-panel.modules.controls.modules.base")
+local icons_path = Beautiful.icons .. "power/"
 local buttons = {}
 
 Beautiful.quicksettings_bg = Beautiful.neutral[900]
 Beautiful.quicksettings_shape = Helpers.shape.rrect(Beautiful.radius)
 
 local icons = {
-  mute = Beautiful.icons .. "settings/muted.svg",
-  wifi = Beautiful.icons .. "settings/wifi.svg",
-  test = Beautiful.icons .. "check.svg",
-  night_light = Beautiful.icons .. "settings/phocus.svg",
-  dark_mode = Beautiful.icons .. "settings/moon.svg",
-  dnd = Beautiful.icons .. "settings/dnd.svg",
+  logout = icons_path .. "logout.svg",
+  shutdown = icons_path .. "shutdown.svg",
+  reboot = icons_path .. "reboot.svg",
+  suspend = icons_path .. "suspend.svg",
+  lock = icons_path .. "lock.svg",
 }
 
-local function mkbutton(icon, size, color, fn)
+local function mkbutton(opts)
   local icon_wdg = Wibox.widget({
     widget = Wibox.widget.imagebox,
-    image = icon,
-    forced_width = size,
-    forced_height = size,
+    image = opts.icon,
+    forced_width = opts.size,
+    forced_height = opts.size,
     halign = "center",
     valign = "center",
-    stylesheet = "*{fill: " .. color .. ";}",
+    stylesheet = "*{fill: " .. opts.color .. ";}",
   })
   return wbutton.normal({
     paddings = 0,
-    constraint_width = size * 2,
-    constraint_height = size * 2,
+    constraint_width = opts.abs_size or opts.size * 2.5,
+    constraint_height = opts.abs_size or opts.size * 2.5,
     constraint_strategy = "exact",
     halign = "center",
     valign = "center",
     child = icon_wdg,
-    bg_normal = Helpers.color.darken(Beautiful.neutral[900], 0.07),
+    bg_normal = opts.bg or Beautiful.neutral[850],
+    bg_hover = opts.bg_hover,
+    -- bg_normal = Helpers.color.darken(Beautiful.neutral[900], 0.07),
     -- shape = Helpers.shape.rrect(Beautiful.radius),
     shape = Gears.shape.circle,
     normal_border_width = Beautiful.widget_border.width,
-    normal_border_color = Beautiful.widget_border.color_inner,
-    on_press = fn,
-    on_hover = function()
-      icon_wdg:set_stylesheet("*{fill: " .. Beautiful.primary[500] .. ";}")
-    end,
-    on_leave = function()
-      icon_wdg:set_stylesheet("*{fill: " .. color .. ";}")
-    end,
+    normal_border_color = Beautiful.widget_border.color,
+    on_release = opts.fn,
+    -- on_hover = function()
+    --   icon_wdg:set_stylesheet("*{fill: " .. Beautiful.primary[500] .. ";}")
+    -- end,
+    -- on_leave = function()
+    --   icon_wdg:set_stylesheet("*{fill: " .. color .. ";}")
+    -- end,
   })
 end
 
-local icon_size = dpi(56)
-buttons.logout = mkbutton(icons.mute, icon_size, Beautiful.neutral[400], function()
-  Naughty.notify({
-    title = "uno",
-  })
-end)
-buttons.lock = mkbutton(icons.night_light, icon_size, Beautiful.neutral[400], function()
-  Naughty.notify({
-    title = "uno",
-  })
-end)
-buttons.shutdown = mkbutton(icons.wifi, icon_size, Beautiful.neutral[400], function()
-  Naughty.notify({
-    title = "uno",
-  })
-end)
-buttons.reboot = mkbutton(icons.test, icon_size, Beautiful.neutral[400], function()
-  Naughty.notify({
-    title = "uno",
-  })
-end)
--- buttons.logout = template.only_icon({
---   icon = icons.dark_mode,
---   icon_size = icon_size,
---   on_press = function()
---     Naughty.notify({
---       title = "xd",
---     })
---   end,
--- })
+local icon_size = dpi(42)
+buttons.logout = mkbutton({
+  icon = icons.logout,
+  size = icon_size,
+  bg = Beautiful.red[300],
+  bg_hover = Beautiful.red[400],
+  color = Beautiful.neutral[900],
+  fn = function()
+    Naughty.notify({
+      title = "uno",
+    })
+  end,
+})
+buttons.suspend = mkbutton({
+  icon = icons.suspend,
+  size = icon_size,
+  color = Beautiful.neutral[400],
+  fn = function()
+    Naughty.notify({
+      title = "uno",
+    })
+  end,
+})
+buttons.shutdown = mkbutton({
+  icon = icons.shutdown,
+  size = icon_size,
+  color = Beautiful.neutral[400],
+  fn = function()
+    Naughty.notify({
+      title = "uno",
+    })
+  end,
+})
+buttons.reboot = mkbutton({
+  icon = icons.reboot,
+  size = icon_size,
+  color = Beautiful.neutral[400],
+  fn = function()
+    Naughty.notify({
+      title = "uno",
+    })
+  end,
+})
+
+buttons.lock = mkbutton({
+  icon = icons.lock,
+  size = dpi(28),
+  -- abs_size = dpi(80),
+  color = Beautiful.neutral[400],
+  fn = function()
+    Naughty.notify({
+      title = "uno",
+    })
+  end,
+})
+
+buttons.close = mkbutton({
+  icon = Beautiful.icons .. "others/close.svg",
+  size = dpi(28),
+  abs_size = dpi(50),
+  color = Beautiful.neutral[400],
+  fn = function()
+    awesome.emit_signal("widgets::logoutscreen", "hide")
+  end,
+})
 
 local old_bg = buttons.logout._private.bg_hex
 buttons.logout:connect_signal("mouse::enter", function(self)
@@ -106,18 +143,36 @@ local logoutscreen = Awful.popup({
     margins = Beautiful.widget_padding.outer,
     {
       layout = Wibox.layout.flex.horizontal,
-      spacing = Beautiful.widget_padding.outer,
-      {
-        layout = Wibox.layout.flex.vertical,
-        spacing = Beautiful.widget_padding.outer,
-        buttons.logout,
-        buttons.lock,
-      },
+      spacing = -Beautiful.widget_padding.inner,
       {
         layout = Wibox.layout.flex.vertical,
         spacing = Beautiful.widget_padding.outer,
         buttons.shutdown,
-        buttons.reboot
+        buttons.suspend,
+      },
+      -- {
+      -- widget = Wibox.container.place,
+      {
+        layout = Wibox.layout.flex.vertical,
+        spacing = Beautiful.widget_padding.outer,
+        {
+          widget = Wibox.container.place,
+          buttons.close,
+        },
+        {
+          widget = Wibox.container.place,
+          buttons.lock,
+        },
+        {
+          widget = Wibox.container.background,
+        },
+        -- },
+      },
+      {
+        layout = Wibox.layout.flex.vertical,
+        spacing = Beautiful.widget_padding.outer,
+        buttons.reboot,
+        buttons.logout,
       },
     },
   },

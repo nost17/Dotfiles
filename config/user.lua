@@ -2,7 +2,7 @@
 user = {}
 
 user.theme = {
-  name = "onedark",
+  name = "tomorrow",
   dark = "dark",
   light = "light",
 }
@@ -26,6 +26,9 @@ user.vars = {}
 user.vars.modkey = "Mod4"
 user.vars.terminal = "wezterm"
 user.vars.editor = os.getenv("EDITOR") or "nano"
+user.vars.cmd_shutdown = "systemctl poweroff"
+user.vars.cmd_suspend = "systemctl poweroff"
+user.vars.cmd_reboot = "systemctl poweroff"
 
 user.notify_count = 0
 

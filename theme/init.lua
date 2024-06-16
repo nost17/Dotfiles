@@ -39,7 +39,7 @@ local _font = {
     xs = 9,
     s = 11,
     m = 12,
-    l = 15,
+    l = 14,
     xl = 28,
     xxl = 35,
   },
@@ -59,8 +59,10 @@ theme.radius = dpi(3)
 theme.widget_border = {
   width = 1,
   -- color = cscheme.type == "dark" and Helpers.color.blend(cscheme.neutral[800],cscheme.neutral[700]) or cscheme.neutral[500],
-  color = cscheme.type == "dark" and darken(cscheme.neutral[900], 0.1) or cscheme.neutral[500],
-  color_inner = cscheme.type == "dark" and cscheme.neutral[900] or cscheme.neutral[500]
+  -- color = cscheme.type == "dark" and darken(cscheme.neutral[900], 0.1) or cscheme.neutral[600],
+  -- color_inner = cscheme.type == "dark" and cscheme.neutral[900] or cscheme.neutral[500]
+  color = Helpers.color.blend(cscheme.neutral[700], cscheme.neutral[800]),
+  color_inner = cscheme.type == "dark" and cscheme.neutral[700] or cscheme.neutral[600],
 }
 theme.widget_radius = {
   outer = theme.radius,
@@ -83,14 +85,14 @@ theme.titlebar_bg_focus = cscheme.neutral[800]
 -- theme.taglist_bg_focus = cscheme.primary[500]
 -- theme.taglist_bg_empty = cscheme.neutral[800]
 -- theme.taglist_bg_occupied = cscheme.neutral[500]
-theme.taglist_font = font.font_med_m
+theme.taglist_font = font.font_reg_m
 theme.taglist_bg_focus = cscheme.primary[500]
-theme.taglist_bg_empty = cscheme.neutral[900]
+theme.taglist_bg_empty = cscheme.neutral[800]
 theme.taglist_bg_occupied = cscheme.neutral[800]
 theme.taglist_fg_focus = cscheme.neutral[900]
 theme.taglist_fg_occupied = cscheme.neutral[200]
-theme.taglist_fg_empty = cscheme.neutral[500]
-theme.taglist_shape = Helpers.shape.rrect(theme.radius)
+theme.taglist_fg_empty = cscheme.neutral[600] .. "BB"
+-- theme.taglist_shape = Helpers.shape.rrect(theme.radius)
 -- theme.taglist_shape_border_width_focus = theme.widget_border.width
 -- theme.taglist_shape_border_color_focus = theme.widget_border.color
 
