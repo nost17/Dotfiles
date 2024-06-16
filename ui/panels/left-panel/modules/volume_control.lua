@@ -3,7 +3,7 @@ local handle_border_color = Beautiful.type == "dark" and Helpers.color.darken(Be
     or Beautiful.neutral[200]
 local bar = Wibox.widget({
   widget = Wibox.widget.slider,
-  -- bar_height = dpi(15),
+  -- bar_height = dpi(13),
   shape = Gears.shape.rounded_bar,
   bar_shape = Gears.shape.rounded_bar,
   bar_active_color = Beautiful.primary[500],

@@ -12,7 +12,7 @@ return function(s)
     filter = Awful.widget.taglist.filter.all,
     layout = {
       layout = Wibox.layout.flex.horizontal,
-      spacing = Beautiful.widget_spacing,
+      -- spacing = Beautiful.widget_spacing,
     },
     buttons = {
       -- Left-clicking a tag changes to it.
@@ -49,8 +49,8 @@ return function(s)
       {
         widget = Wibox.container.background,
         id = "background_role",
-        forced_width = active_size,
-        -- forced_height = active_size * 1.1,
+        forced_width = active_size * 1.1,
+        forced_height = active_size * 1.15,
         {
           widget = Wibox.widget.textbox,
           id = "text_role",

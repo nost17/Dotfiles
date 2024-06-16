@@ -34,7 +34,7 @@ local launcher = Utils.widgets.button.elevated.normal({
       font = Beautiful.font_med_m,
     },
   },
-  on_press = function()
+  on_release = function()
     Awful.spawn.with_shell("rofi -show drun -show-icons", false)
   end,
 })
