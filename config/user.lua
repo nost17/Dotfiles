@@ -27,8 +27,8 @@ user.vars.modkey = "Mod4"
 user.vars.terminal = "wezterm"
 user.vars.editor = os.getenv("EDITOR") or "nano"
 user.vars.cmd_shutdown = "systemctl poweroff"
-user.vars.cmd_suspend = "systemctl poweroff"
-user.vars.cmd_reboot = "systemctl poweroff"
+user.vars.cmd_suspend = "systemctl suspend"
+user.vars.cmd_reboot = "systemctl reboot"
 
 user.notify_count = 0
 

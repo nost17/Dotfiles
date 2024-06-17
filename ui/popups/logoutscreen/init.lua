@@ -50,7 +50,9 @@ local function mkbutton(opts)
     -- end,
   })
 end
-
+local function with_shell(cmd)
+  Awful.spawn.with_shell(cmd, false)
+end
 local icon_size = dpi(42)
 buttons.logout = mkbutton({
   icon = icons.logout,
@@ -59,9 +61,7 @@ buttons.logout = mkbutton({
   bg_hover = Beautiful.red[400],
   color = Beautiful.neutral[900],
   fn = function()
-    Naughty.notify({
-      title = "uno",
-    })
+    awesome.quit()
   end,
 })
 buttons.suspend = mkbutton({
@@ -69,9 +69,7 @@ buttons.suspend = mkbutton({
   size = icon_size,
   color = Beautiful.neutral[400],
   fn = function()
-    Naughty.notify({
-      title = "uno",
-    })
+    with_shell(User.vars.cmd_suspend)
   end,
 })
 buttons.shutdown = mkbutton({
@@ -79,9 +77,7 @@ buttons.shutdown = mkbutton({
   size = icon_size,
   color = Beautiful.neutral[400],
   fn = function()
-    Naughty.notify({
-      title = "uno",
-    })
+    with_shell(User.vars.cmd_shutdown)
   end,
 })
 buttons.reboot = mkbutton({
@@ -89,9 +85,7 @@ buttons.reboot = mkbutton({
   size = icon_size,
   color = Beautiful.neutral[400],
   fn = function()
-    Naughty.notify({
-      title = "uno",
-    })
+    with_shell(User.vars.cmd_reboot)
   end,
 })
 
