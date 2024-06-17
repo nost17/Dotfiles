@@ -47,6 +47,8 @@ return function(s)
         widget = Wibox.container.margin,
         right = Beautiful.widget_padding.inner / 2,
         left = Beautiful.widget_padding.inner / 2,
+        top = Beautiful.widget_padding.inner * 0.45,
+        bottom = Beautiful.widget_padding.inner * 0.45,
         {
           layout = Wibox.layout.fixed.horizontal,
           {
@@ -63,7 +65,7 @@ return function(s)
           {
             widget = Wibox.container.margin,
             id = "app_name_c",
-            left = Beautiful.widget_spacing / 2,
+            left = Beautiful.widget_spacing,
             {
               widget = Wibox.container.place,
               {

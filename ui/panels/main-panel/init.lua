@@ -29,7 +29,11 @@ return function(s)
           module.launcher(),
         },
         s.mypromptbox,
-        module.tasklist(s),
+        {
+          widget = Wibox.container.place,
+          valign = "center",
+          module.tasklist(s),
+        },
       },
       -- Middle widgets.
       {

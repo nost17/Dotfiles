@@ -101,6 +101,10 @@ theme.tasklist_icon_size = dpi(18)
 theme.tasklist_bg_focus = cscheme.neutral[850]
 theme.tasklist_bg_normal = cscheme.neutral[900]
 theme.tasklist_bg_minimize = theme.transparent
+theme.tasklist_shape = Helpers.shape.rrect(theme.radius)
+theme.tasklist_shape_border_width = theme.widget_border.width
+theme.tasklist_shape_border_color_focus = theme.widget_border.color
+theme.tasklist_shape_border_color = theme.tasklist_bg_normal
 -- theme.tasklist_shape = Gears.shape.rounded_bar
 
 -- notifications
