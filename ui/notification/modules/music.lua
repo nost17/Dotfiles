@@ -1,3 +1,6 @@
+local music_notif
+local first_time = true
+
 local function generate_markup(opts)
   local bold_start = ""
   local bold_end = ""
@@ -29,19 +32,18 @@ local function generate_markup(opts)
 end
 
 local emit_notify = function(title, artist, album, art_url, player_name)
-  Naughty.notify({
+  music_notif = Helpers.notify_dwim({
     title = generate_markup({
-      text = artist,
+      text = title,
       color = Beautiful.primary[500],
       bold = true,
     }),
-    text = "<b>~</b> " .. title,
+    message = "<b>~</b> " .. artist,
     image = art_url,
     app_name = player_name,
-  })
+  }, music_notif)
 end
 
-local first_time = true
 Lib.Playerctl:connect_signal("metadata", function(self, title, artist, art_url, album, new, player_name)
   if first_time then
     first_time = false

@@ -54,12 +54,19 @@ local function make_notify(n)
     color = accent_color,
   })
 
+  n.icon = Utils.apps_info:get_icon_alt({
+    name = type(n.image) ~= "userdata" and n.image,
+    manual_fallback = n.icon,
+  })
+
   local n_title = require("ui.notification.components.title")(n)
   local n_message = require("ui.notification.components.message")(n)
+  local n_image = require("ui.notification.components.image")(n)
 
   local n_appname = Wibox.widget({
     widget = Wibox.widget.textbox,
-    markup = htext.colorize_text(htext.upper(n.app_name), Beautiful.neutral[200]),
+    markup = htext.colorize_text(htext.upper(n.app_name), accent_color),
+    -- markup = htext.colorize_text(htext.upper(n.app_name), Beautiful.neutral[200]),
     font = Beautiful.font_med_xs,
   })
 
@@ -113,9 +120,6 @@ local function make_notify(n)
     end
     return timebar.value > (timebar.value / 4) or timebar.value == 0
   end)
-  -- n.preset = {
-  --   padding = _G.qs_width,
-  -- }
   local notification = Naughty.layout.box({
     notification = n,
     minimum_width = dpi(240),
@@ -141,17 +145,7 @@ local function make_notify(n)
               strategy = "max",
               height = Beautiful.notification_icon_height,
               width = Beautiful.notification_icon_height * 2,
-              {
-                widget = Wibox.widget.imagebox,
-                -- image = n.icon,
-                image = Utils.apps_info:get_icon_alt({
-                  name = type(n.image) ~= "userdata" and n.image,
-                  manual_fallback = n.icon,
-                }),
-                valign = "center",
-                halign = "center",
-                clip_shape = Beautiful.notification_icon_shape,
-              },
+              n_image,
             },
             {
               widget = Wibox.container.place,
@@ -169,15 +163,19 @@ local function make_notify(n)
             },
           },
           (n.actions and #n.actions > 0) and {
-            widget = Wibox.container.background,
-            shape = Helpers.shape.rrect(Beautiful.radius),
-            border_width = Beautiful.widget_border.width,
-            bg = Beautiful.widget_border.color,
-            border_color = Beautiful.widget_border.color,
-            -- bg = Beautiful.widget_border.width == 0 and Beautiful.neutral[900] or Beautiful.widget_border.color,
-            -- border_width = Beautiful.widget_border.width,
-            -- border_color = Beautiful.widget_border.color,
-            actions,
+            widget = Wibox.container.margin,
+            top = Beautiful.widget_padding.inner * 0.5,
+            {
+              widget = Wibox.container.background,
+              shape = Helpers.shape.rrect(Beautiful.radius),
+              border_width = Beautiful.widget_border.width,
+              bg = Beautiful.widget_border.color,
+              border_color = Beautiful.widget_border.color,
+              -- bg = Beautiful.widget_border.width == 0 and Beautiful.neutral[900] or Beautiful.widget_border.color,
+              -- border_width = Beautiful.widget_border.width,
+              -- border_color = Beautiful.widget_border.color,
+              actions,
+            },
           },
           {
             widget = Wibox.container.margin,
@@ -190,7 +188,10 @@ local function make_notify(n)
   })
 
   n:connect_signal("property::timeout", function(_)
-    timebar.value = timebar.max_value
+    timebar:set_value(timebar.max_value)
+  end)
+  n:connect_signal("property::timebar", function()
+    timebar:set_value(timebar.max_value)
   end)
   notification:connect_signal("mouse::enter", function()
     n:set_timeout(4294967)
