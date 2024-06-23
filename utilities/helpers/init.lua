@@ -111,9 +111,13 @@ function _module.placement(wdg, pos, props, margins)
   end
 end
 
+---@module 'utilities.helpers.color'
 _module.color = require(... .. ".color")
+---@module 'utilities.helpers.shape'
 _module.shape = require(... .. ".shape")
+---@module 'utilities.helpers.ui'
 _module.ui = require(... .. ".ui")
+---@module 'utilities.helpers.text'
 _module.text = require(... .. ".text")
 
 return _module

@@ -7,11 +7,6 @@ local icons_path = Beautiful.icons .. "power/"
 local function with_shell(cmd)
    Awful.spawn.with_shell(cmd)
 end
-local function noti(t)
-   Naughty.notify({
-      title = t or "xd",
-   })
-end
 
 local style = {
    icon_size = dpi(38),
