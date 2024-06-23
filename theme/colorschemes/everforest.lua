@@ -20,7 +20,7 @@ local M = {
     type = "light",
     primary = {},
     neutral = {
-      dark = "#D3C6AA",
+      dark = "#fff9e8",
       light = "#2b3339",
     },
     colors = {

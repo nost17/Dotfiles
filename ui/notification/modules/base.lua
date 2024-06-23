@@ -11,7 +11,7 @@ Naughty.config.defaults = {
 
 local colors = {
   ["low"] = Beautiful.green[300],
-  ["normal"] = Beautiful.primary[300],
+  ["normal"] = Beautiful.primary[400],
   ["critical"] = Beautiful.red[300],
 }
 
@@ -79,7 +79,6 @@ local function make_notify(n)
     }),
     widget_template = {
       widget = Wibox.container.background,
-      bg = Beautiful.neutral[850],
       -- forced_height = dpi(25),
       -- forced_width = dpi(70),
       {
@@ -169,7 +168,9 @@ local function make_notify(n)
               widget = Wibox.container.background,
               shape = Helpers.shape.rrect(Beautiful.radius),
               border_width = Beautiful.widget_border.width,
-              bg = Beautiful.widget_border.color,
+              bg = Beautiful.widget_border.width == 0 and Beautiful.transparent
+                  or Beautiful.widget_border.color,
+              -- bg = Beautiful.widget_border.color,
               border_color = Beautiful.widget_border.color,
               -- bg = Beautiful.widget_border.width == 0 and Beautiful.neutral[900] or Beautiful.widget_border.color,
               -- border_width = Beautiful.widget_border.width,

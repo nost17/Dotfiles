@@ -121,6 +121,9 @@ end)
 
 -- update metadata
 Lib.Playerctl:connect_signal("metadata", function(_, title, artist, art_url, _, _, player_name)
+  if art_url == "" or not art_url then
+    art_url = Beautiful.music_cover
+  end
   set_cover(art_url)
   metadata_title:set_text(title)
   metadata_artist:set_text(artist)

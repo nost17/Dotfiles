@@ -1,5 +1,6 @@
 local music_notif
 local first_time = true
+local default_cover = Helpers.cropSurface(1, Gears.surface.load_uncached(Beautiful.music_cover))
 
 local function generate_markup(opts)
   local bold_start = ""
@@ -32,6 +33,7 @@ local function generate_markup(opts)
 end
 
 local emit_notify = function(title, artist, album, art_url, player_name)
+  art_url = art_url or default_cover
   music_notif = Helpers.notify_dwim({
     title = generate_markup({
       text = title,

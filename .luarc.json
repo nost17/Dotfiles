@@ -13,7 +13,7 @@
         "root"
     ],
     "format.defaultConfig": {
-        "indent_style": "tab",
+        "indent_style": "space",
         "indent_size": "2"
     }
 }
