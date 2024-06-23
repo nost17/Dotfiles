@@ -27,9 +27,9 @@ require("awful.autofocus")
 require("awful.hotkeys_popup.keys")
 
 User = require("config.user")
-Helpers = require("utils.helpers")
+Helpers = require("utilities.helpers")
 Lib = require("lib")
-Utils = require("utils")
+Utils = require("utilities")
 
 -- Load the theme. In other words, defines the variables within the `beautiful`
 -- table.

@@ -1,10 +1,14 @@
 local _module = {}
-_module = require("utils.helpers._markup")
+_module = require((...):match("(.-)[^%.]+$") .. "_markup")
 
 function _module.colorize_text(text, color)
   return "<span foreground='" .. color .. "'>" .. text .. "</span>"
 end
 
+--- Return time to text
+---Return seconds as colloquial text
+---@param seconds number
+---@return string
 function _module.to_time_ago(seconds)
   local days = seconds / 86400
   if days >= 1 then
