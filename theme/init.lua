@@ -23,7 +23,7 @@ theme.bg_urgent = cscheme.red[300]
 theme.fg_normal = cscheme.neutral[100]
 theme.fg_focus = cscheme.neutral[100]
 
-theme.useless_gap = dpi(4)
+theme.useless_gap = dpi(2)
 
 -- font
 local _font = {
@@ -74,9 +74,9 @@ theme.widget_padding = {
 }
 theme.widget_spacing = theme.widget_padding.inner * 0.75
 
-theme.border_width = theme.widget_border.width * 1.5
+theme.border_width = theme.widget_border.width 
 theme.border_color_normal = cscheme.neutral[850]
-theme.border_color_active = cscheme.neutral[800]
+theme.border_color_active = cscheme.primary[500]
 
 theme.titlebar_bg_normal = cscheme.neutral[850]
 theme.titlebar_bg_focus = cscheme.neutral[800]

@@ -3,7 +3,7 @@
 local awful = require("awful")
 local main_panel = require("ui.panels.main-panel")
 
-require(... .. ".titlebar")
+-- require(... .. ".titlebar")
 require(... .. ".notification")
 require(... .. ".popups")
 require(... .. ".panels.left-panel")
