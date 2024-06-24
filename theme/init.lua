@@ -52,6 +52,7 @@ for w_name, w_val in pairs(_font.weights) do
     font[fname] = fval
   end
 end
+theme.font_name = _font.name
 theme.font = font.font_reg_m
 
 -- widget
@@ -69,7 +70,7 @@ theme.widget_radius = {
   inner = 0,
 }
 theme.widget_padding = {
-  outer = dpi(12),
+  outer = dpi(10),
   inner = dpi(8),
 }
 theme.widget_spacing = theme.widget_padding.inner * 0.75

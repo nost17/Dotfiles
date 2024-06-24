@@ -3,6 +3,7 @@
 -- @copyright 2021-2022 Kasper24
 -------------------------------------------
 
+---@module 'utilities.widgets.container'
 local wcontainer = require((...):match("(.-)[^%.]+.[^%.]+$") .. "container")
 local color_lib = Helpers.color
 local setmetatable = setmetatable
@@ -32,7 +33,7 @@ local function button(args)
    args.halign = args.halign or "center"
    args.valign = args.valign or "center"
 
-   args.bg = args.normal_bg
+   args.bg = args.bg_normal
    args.shape = args.shape or nil
    args.border_width = args.border_width or args.normal_border_width or nil
    args.border_color = args.normal_border_color or Beautiful.transparent
@@ -268,6 +269,7 @@ function elevated_button.normal(args)
    ---@field bg_normal? color normal background
    ---@field bg_hover? color hover background
    ---@field bg_press? color press background
+   ---@field paddings? table|integer button paddings
    args = args or {}
 
    args.bg_normal = args.bg_normal or Beautiful.neutral[850]

@@ -79,7 +79,7 @@ local function new(args)
   args.height = args.height or nil
   args.halign = args.halign or nil
   args.valign = args.valign or nil
-  args.font = args.font ~= nil and args.font .. " " or Beautiful.font_text or nil
+  args.font = args.font ~= nil and args.font .. " " or Beautiful.font_name or nil
   args.bold = args.bold ~= nil and args.bold or false
   args.italic = args.italic ~= nil and args.italic or false
   args.size = args.size or (args.no_size and "" or 11)
