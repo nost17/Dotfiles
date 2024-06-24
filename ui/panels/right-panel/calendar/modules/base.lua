@@ -21,8 +21,9 @@ local style = {
       fg_normal = Beautiful.fg_normal,
    },
    days = {
-      font = Beautiful.font_med_s,
-      fg_normal = Beautiful.neutral[200],
+      font = Beautiful.font_reg_s,
+      font_selected = Beautiful.font_bold_s,
+      fg_normal = Beautiful.neutral[200] .. "ED",
       fg_other = Beautiful.neutral[100] .. "55",
       bg_normal = Beautiful.neutral[900],
       fg_selected = Beautiful.neutral[800],
@@ -68,14 +69,18 @@ local function date_widget(date, is_current, is_another_month)
          widget = Wibox.container.background,
          forced_width = style.days.width,
          forced_height = style.days.height,
-         bg = is_current and style.days.bg_selected or style.days.bg_normal,
+         -- bg = style.days.bg_normal,
          fg = text_color,
-         shape = style.border_width == 0 and style.shape,
+         bg = is_current and style.days.bg_selected or style.days.bg_normal,
+         border_width = 2,
+         border_color = style.days.bg_normal,
+         -- fg = text_color,
+         shape = (style.border_width == 0 or is_current) and Gears.shape.circle,
          {
             text = tostring(date),
             halign = "center",
             valign = "center",
-            font = style.days.font,
+            font = is_current and style.days.font_selected or style.days.font,
             widget = Wibox.widget.textbox,
          },
       },
@@ -202,7 +207,7 @@ local function new(...)
       layout = Wibox.layout.grid,
       row_count = 6,
       column_count = 7,
-      spacing = style.border_width,
+      spacing = 0,
       expand = true,
    })
 
@@ -228,7 +233,7 @@ local function new(...)
          },
          {
             widget = Wibox.container.background,
-            bg = style.border_width ~= 0 and style.border_color,
+            -- bg = style.border_width ~= 0 and style.border_color,
             shape = style.border_width == 0 and style.shape,
             {
                widget = Wibox.container.margin,

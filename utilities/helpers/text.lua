@@ -1,4 +1,5 @@
 local _module = {}
+---@module 'utilities.helpers._markup'
 _module = require((...):match("(.-)[^%.]+$") .. "_markup")
 
 function _module.colorize_text(text, color)

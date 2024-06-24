@@ -25,7 +25,7 @@ local calendar_button = wbutton({
    bg_normal = Beautiful.neutral[900],
    shape = Helpers.shape.rrect(Beautiful.radius),
    on_press = function()
-      awesome.emit_signal("widgets::calendar", "toggle")
+      awesome.emit_signal("widgets::info_panel", "toggle")
    end,
 })
 

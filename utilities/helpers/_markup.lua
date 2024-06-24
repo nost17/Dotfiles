@@ -18,7 +18,7 @@ end
 -- removing invalid content. If invalid content is present, nothing is
 -- displayed.
 function module.escape_text(text)
-	text = Gears.string.xml_unescape(text)
+	text = Gears.string.xml_unescape(tostring(text))
 	-- Take care of the already escaped content.
 	for pattern, subs in pairs(pre_escape) do
 		text = text:gsub(pattern, subs)

@@ -6,5 +6,7 @@ M.container = require(... .. ".container")
 M.text = require(... .. ".text")
 ---@module 'utilities.widgets.button'
 M.button = require(... .. ".button")
+---@module 'utilities.widgets.overflow'
+M.overflow = require(... .. ".overflow")
 
 return M

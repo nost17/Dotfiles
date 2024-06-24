@@ -22,7 +22,7 @@ Awful.keyboard.append_global_keybindings({
       awesome.emit_signal("widgets::logoutscreen", "toggle")
    end),
    create_bind({ modkey }, "c", labels.calendar, nil, function()
-      awesome.emit_signal("widgets::calendar", "toggle")
+      awesome.emit_signal("widgets::info_panel", "toggle")
    end)
 })
 
