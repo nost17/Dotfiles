@@ -8,6 +8,7 @@ local labels  = {
    qs_panel = "Panel de ajustes",
    logout = "Panel de salida",
    calendar = "Abrir calendario",
+   lock = "Bloquear pantalla"
 }
 
 local function create_bind(mods, key, desc, group, fn)
@@ -23,6 +24,9 @@ Awful.keyboard.append_global_keybindings({
    end),
    create_bind({ modkey }, "c", labels.calendar, nil, function()
       awesome.emit_signal("widgets::info_panel", "toggle")
+   end),
+   create_bind({ modkey }, "v", labels.lock, nil, function()
+      awesome.emit_signal("widgets::lockscreen", "toggle")
    end)
 })
 

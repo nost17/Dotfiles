@@ -1,4 +1,5 @@
 local dpi = Beautiful.xresources.apply_dpi
+
 local c_screen = Awful.screen.focused()
 local wbutton = Utils.widgets.button.elevated
 local wtext = Utils.widgets.button.text
@@ -205,9 +206,8 @@ buttons.lock = mkbutton({
    size = style.icon_size,
    color = Beautiful.neutral[400],
    fn = function()
-      Naughty.notify({
-         title = "uno",
-      })
+      awesome.emit_signal("widgets::lockscreen", "show")
+      awesome.emit_signal("widgets::logoutscreen", "hide")
    end,
 })
 
