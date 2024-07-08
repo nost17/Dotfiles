@@ -1,4 +1,5 @@
 local dpi = Beautiful.xresources.apply_dpi
+local htext = Helpers.text
 local handle_border_color = Beautiful.type == "dark" and Helpers.color.darken(Beautiful.neutral[900], 0.1)
     or Beautiful.neutral[200]
 local bar = Wibox.widget({
@@ -73,7 +74,8 @@ return Wibox.widget({
         left = Beautiful.widget_padding.inner * 0.25,
         {
           widget = Wibox.widget.textbox,
-          markup = Helpers.text.colorize_text("VOLUMEN", Beautiful.neutral[200]),
+          markup = htext.colorize_text(htext.upper("volumen"), Beautiful.neutral[200]),
+          -- markup = htext.colorize_text(htext.upper(User.config.speaker.name), Beautiful.neutral[200]),
           font = Beautiful.font_med_xs,
         },
       },

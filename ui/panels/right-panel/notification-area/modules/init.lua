@@ -27,6 +27,7 @@ function core:add(n)
       widget = Wibox.container.background,
       border_width = style.border_width,
       border_color = style.border_color,
+      shape = Helpers.shape.rrect(Beautiful.radius),
       notification_template(n),
    })
    Helpers.ui.add_hover(notif, style.bg_normal, nil, style.bg_hover)
