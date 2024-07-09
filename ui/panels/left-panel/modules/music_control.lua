@@ -12,7 +12,7 @@ local metadata_title = wtext({
    no_size = true,
    -- wrap = "char",
    -- ellipsize = "middle",
-   height = dpi(20),
+   height = dpi(15),
 })
 local metadata_artist = wtext({
    text = "Artistas",
@@ -24,7 +24,7 @@ local metadata_artist = wtext({
 })
 local metadata_player = wtext({
    text = "",
-   color = Beautiful.neutral[300],
+   color = Beautiful.neutral[200],
    font = Beautiful.font_name .. "SemiBold",
    size = 9,
 })
@@ -89,25 +89,43 @@ local button_padding = Beautiful.widget_padding.inner / 2
 local icons_size = dpi(18)
 local icons_size_alt = dpi(14)
 
-local function mkbutton(image, size, fn)
-   return wbutton.normal({
+local function mkbutton(image, size, fn, color)
+   local button, icon
+   icon = Wibox.widget({
+      widget = Wibox.widget.imagebox,
+      image = image,
+      forced_width = size,
+      forced_height = size,
+      halign = "center",
+      valign = "center",
+   })
+   button = wbutton.normal({
       paddings = button_padding,
       halign = "center",
       valign = "center",
       shape = Helpers.shape.rrect(Beautiful.radius),
       bg_normal = use_art_bg and Beautiful.transparent or nil,
-      child = {
-         widget = Wibox.widget.imagebox,
-         image = image,
-         forced_width = size,
-         forced_height = size,
-         halign = "center",
-         valign = "center",
-      },
+      child = icon,
       -- bg_normal = Helpers.color.blend(Beautiful.neutral[850], Beautiful.neutral[900]),
       -- shape = Helpers.shape.rrect(Beautiful.radius),
-      on_press = fn,
+      on_press = function()
+         fn(button, icon)
+      end,
    })
+   button._private.icon = image
+   function button:set_icon(new_icon)
+      button._private.icon = Gears.surface.load_uncached(new_icon)
+      icon:set_image(button._private.icon)
+   end
+
+   function button:set_color(new_color)
+      button:set_icon(Gears.color.recolor_image(button._private.icon, new_color))
+   end
+
+   if color then
+      button:set_color(color)
+   end
+   return button
 end
 
 local button_play_image = Wibox.widget({
@@ -139,14 +157,19 @@ end)
 
 local button_random = mkbutton(svg_icons.random, icons_size_alt * 1.15, function()
    Lib.Playerctl:play_pause()
-end)
+end, Beautiful.neutral[500])
 local button_repeat = mkbutton(svg_icons.replay, icons_size_alt * 1.15, function()
    Lib.Playerctl:play_pause()
-end)
+end, Beautiful.neutral[500])
 
-local button_notify = mkbutton(svg_icons.ding, icons_size_alt * 1.15, function()
-   Lib.Playerctl:play_pause()
-end)
+local button_notify = mkbutton(svg_icons.ding, icons_size_alt * 1.15, function(self)
+   User.music.notifys.enabled = not User.music.notifys.enabled
+   if User.music.notifys.enabled then
+      self:set_color(Beautiful.primary[500])
+   else
+      self:set_color(Beautiful.neutral[500])
+   end
+end, User.music.notifys.enabled and Beautiful.primary[500] or Beautiful.neutral[500])
 
 -- update metadata
 Lib.Playerctl:connect_signal("metadata", function(_, title, artist, art_url, _, _, player_name)
@@ -189,7 +212,7 @@ return Wibox.widget({
             top = Beautiful.widget_padding.outer,
             left = Beautiful.widget_padding.outer,
             right = Beautiful.widget_padding.outer,
-            bottom = Beautiful.widget_padding.inner,
+            bottom = Beautiful.widget_padding.inner * 0.5,
          },
          {
             layout = Wibox.layout.align.vertical,

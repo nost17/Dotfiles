@@ -1,4 +1,3 @@
-local awful = require('awful')
 local ruled = require('ruled')
 
 --- Rules.
@@ -9,10 +8,10 @@ ruled.client.connect_signal('request::rules', function()
       id         = 'global',
       rule       = { },
       properties = {
-         focus     = awful.client.focus.filter,
+         focus     = Awful.client.focus.filter,
          raise     = true,
-         screen    = awful.screen.preferred,
-         placement = awful.placement.no_overlap + awful.placement.no_offscreen
+         screen    = Awful.screen.preferred,
+         placement = Awful.placement.centered + Awful.placement.no_overlap + Awful.placement.no_offscreen
       }
    })
 
@@ -23,7 +22,7 @@ ruled.client.connect_signal('request::rules', function()
          instance = { 'copyq', 'pinentry' },
          class    = {
             'Arandr', 'Blueman-manager', 'Gpick', 'Kruler', 'Sxiv',
-            'Tor Browser', 'Wpa_gui', 'veromix', 'xtightvncviewer'
+            'Tor Browser', 'Wpa_gui', 'veromix', 'xtightvncviewer', 'mpv'
          },
          -- Note that the name property shown in xprop might be set slightly after creation of the client
          -- and the name shown there might not match defined rules here.

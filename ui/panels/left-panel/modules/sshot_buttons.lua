@@ -36,12 +36,12 @@ local button_full = template.only_icon({
 local button_hide_cursor = template.with_label({
   icon_off = icons.check,
   icon_on = icons.checked,
-  -- padding = {
-  --   right = Beautiful.widget_padding.outer,
-  --   left = 0,
-  --   top = Beautiful.widget_padding.outer,
-  --   bottom = Beautiful.widget_padding.outer,
-  -- },
+  padding = {
+    right = Beautiful.widget_padding.outer,
+    left = Beautiful.widget_padding.inner * 0.5,
+    top = Beautiful.widget_padding.outer,
+    bottom = Beautiful.widget_padding.outer,
+  },
   label = "cursor",
   fn_on = function()
     hide_cursor = false

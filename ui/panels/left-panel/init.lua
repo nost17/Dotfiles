@@ -15,7 +15,7 @@ local quicksettings = Awful.popup({
   bg = Beautiful.quicksettings_bg,
   shape = Beautiful.quicksettings_shape,
   maximum_height = c_screen.geometry.height,
-  maximum_width = dpi(355),
+  maximum_width = dpi(324),
   placement = function(c)
     Helpers.placement(c, "top_left", nil, Beautiful.useless_gap * 2)
   end,

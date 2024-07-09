@@ -37,7 +37,7 @@ local emit_notify = function(title, artist, album, art_url, player_name)
   music_notif = Helpers.notify_dwim({
     title = generate_markup({
       text = title,
-      color = Beautiful.primary[500],
+      -- color = Beautiful.primary[500],
       bold = true,
     }),
     message = "<b>~</b> " .. artist,
