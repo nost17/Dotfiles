@@ -7,12 +7,12 @@ local dpi = Beautiful.xresources.apply_dpi
 local darken = Helpers.color.darken
 
 theme = dofile(gfs.get_themes_dir() .. "default/theme.lua")
-local _colors = require("theme.colorschemes.tomorrow")
-local cscheme = require("theme.palettegen")(_colors, "dark")
+local _colors = require("theme.colorschemes.gruvbox_material")
+local cscheme = require("theme.palettegen")(_colors, "hard_dark")
 
 theme.transparent = "#00000000"
 
-theme.wallpaper = themes_path .. "assets/wallpapers/waves_2.jpg"
+theme.wallpaper = themes_path .. "assets/wallpapers/16.jpg"
 theme.music_cover = themes_path .. "assets/no_music.png"
 theme.user_icon = themes_path .. "assets/user_icon.png"
 
@@ -23,7 +23,7 @@ theme.bg_urgent = cscheme.red[300]
 theme.fg_normal = cscheme.neutral[100]
 theme.fg_focus = cscheme.neutral[100]
 
-theme.useless_gap = dpi(2)
+theme.useless_gap = dpi(3)
 
 -- font
 local _font = {
@@ -75,7 +75,7 @@ theme.widget_padding = {
 }
 theme.widget_spacing = theme.widget_padding.inner * 0.75
 
-theme.border_width = theme.widget_border.width 
+theme.border_width = 1.5
 theme.border_color_normal = cscheme.neutral[850]
 theme.border_color_active = cscheme.primary[500]
 
