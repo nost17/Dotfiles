@@ -2,7 +2,7 @@ local accent = Beautiful.primary[500]
 
 local reset = function(f, arc)
    arc.value = not f and 100 or 0
-   arc.colors = { not f and Beautiful.red[300] or Beautiful.neutral[300] .. "cc" }
+   arc.colors = { not f and Beautiful.lockscreen_passbox_bg_error or Beautiful.lockscreen_passbox_bg }
 end
 
 local getRandom = function()
@@ -14,9 +14,9 @@ end
 local check_caps = function(label)
    Awful.spawn.easy_async_with_shell("xset q | grep Caps | cut -d: -f3 | cut -d0 -f1 | tr -d ' '", function(stdout)
       if stdout:match("off") then
-         label.text = ""
+         label.markup = ""
       else
-         label.text = "Mayúsculas: ENCENDIDO"
+         label.markup = Helpers.text.colorize_text("Mayúsculas: ENCENDIDO", Beautiful.lockscreen_fg)
       end
    end)
 end
@@ -59,7 +59,7 @@ local function grab(args)
             arc.start_angle = getRandom()
             input = input:sub(1, -2)
             if #input == 0 then
-               arc.colors = { Beautiful.neutral[300] .. "cc" }
+               arc.colors = { Beautiful.lockscreen_passbox_bg_empty }
                arc.value = 100
             end
          end

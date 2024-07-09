@@ -4,7 +4,7 @@ local wtext = Utils.widgets.text
 
 local songname = wtext({
    text = "Nada por el momento...",
-   color = Beautiful.neutral[100],
+   color = Beautiful.lockscreen_fg,
    font = Beautiful.font_name .. "Regular",
    size = 16,
 })
@@ -50,8 +50,10 @@ local songarc = Wibox.widget({
       rounded_edge = false,
       thickness = dpi(3),
       start_angle = 4.71238898,
-      bg = Beautiful.neutral[300] .. "cc",
-      colors = { Beautiful.neutral[300] .. "cc" },
+      bg = Beautiful.lockscreen_passbox_bg,
+      colors = { Beautiful.lockscreen_passbox_bg },
+      -- bg = Beautiful.neutral[300] .. "cc",
+      -- colors = { Beautiful.neutral[300] .. "cc" },
       shape = Gears.shape.circle,
       forced_width = art_size,
       forced_height = art_size,
