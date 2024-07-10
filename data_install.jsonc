@@ -1,28 +1,28 @@
 {
-  "configs": [
-    "ranger",
-    "mpDris2",
-    "awesome",
-    "mpd",
-    "ncmpcpp",
-    "kitty",
-    "mpv",
-    "picom"
-  ],
-  "install": [
-    "playerctl",
-    "mpd",
-    "mpc",
-    "ncmpcpp",
-    "mpdris2",
-    "ranger",
-    "neofetch",
-    "htop",
-    "ripgrep",
-    "fzf",
-    "feh",
-    "ffmpeg",
-    "acpi",
-    "xclip"
-  ]
+   "configs": [
+      "ranger",
+      "mpDris2",
+      "mpd",
+      "ncmpcpp",
+      "wezterm",
+      "mpv",
+      "picom"
+   ],
+   "install": [
+      "zsh",
+      "playerctl",
+      "mpd",
+      "mpc",
+      "ncmpcpp",
+      "mpdris2",
+      "ranger",
+      "neofetch",
+      "htop",
+      "ripgrep",
+      "fzf",
+      "feh",
+      "ffmpeg",
+      "acpi",
+      "xclip"
+   ]
 }
