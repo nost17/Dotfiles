@@ -21,12 +21,12 @@ return Wibox.widget({
       {
         layout = Wibox.layout.flex.vertical,
         spacing = Beautiful.widget_spacing,
-        modules.test,
+        modules.nlight_state,
         {
           layout = Wibox.layout.flex.horizontal,
           spacing = Beautiful.widget_spacing,
+          modules.dnd_state,
           modules.test_2,
-          modules.test_3,
         },
       },
     },

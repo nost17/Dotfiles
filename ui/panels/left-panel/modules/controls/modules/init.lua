@@ -14,15 +14,15 @@ local function alert(title)
       title = title,
    })
 end
-local lol = require(... .. ".night_light")(template, icons)
-
 return {
    mute_state = require(... .. ".mute")(template, icons),
    wifi_state = require(... .. ".wifi")(template, icons),
-   test = lol,
-   test_2 = template.only_icon({
+   nlight_state = require(... .. ".night_light")(template, icons),
+   dnd_state = require(... .. ".dnd")(template, icons),
+   test = template.with_label({
+      label = "luz nocturna",
+      show_state = true,
       icon = icons.dnd,
-      type = "state",
       fn_on = function()
          alert("si")
       end,
@@ -30,7 +30,7 @@ return {
          alert("no")
       end,
    }),
-   test_3 = template.only_icon({
+   test_2 = template.only_icon({
       icon = icons.dark_mode,
       type = "state",
       fn_on = function()
@@ -40,6 +40,4 @@ return {
          alert("no")
       end,
    }),
-   -- test_2 = require(... .. ".none")(template, icons.dnd, "No molestar"),
-   -- test_3 = require(... .. ".none")(template, icons.dark_mode, "Modo oscuro"),
 }
