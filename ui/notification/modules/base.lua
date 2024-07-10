@@ -206,12 +206,14 @@ local function make_notify(n)
       end
    end)
 end
-local info_panel_visible = false
+local notif_center_vis = false
 Naughty.connect_signal("request::display", function(n)
-   if not info_panel_visible then
-      make_notify(n)
+   if not User.config.dnd_state then
+      if not notif_center_vis then
+         make_notify(n)
+      end
    end
 end)
-awesome.connect_signal("visible::info_panel", function (vis)
-   info_panel_visible = vis
+awesome.connect_signal("visible::info_panel", function(vis)
+   notif_center_vis = vis
 end)

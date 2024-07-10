@@ -46,14 +46,13 @@ local back = Wibox.widget({
    widget = Wibox.widget.imagebox,
    halign = "center",
    valign = "center",
-   image = Beautiful.wallpaper,
+   image = Gears.surface.crop_surface({
+      ratio = wscreen / hscreen,
+      surface = Gears.surface.load_uncached(Beautiful.wallpaper),
+   }),
    scaling_quality = "fast",
-   upscale = true,
-   downscale = true,
-   vertical_fit_policy = "fill",
-   horizontal_fit_policy = "fill",
-   forced_width = wscreen,
-   forced_height = hscreen,
+   horizontal_fit_policy = "fit",
+   vertical_fit_policy = "fit",
 })
 
 local overlay = Wibox.widget({

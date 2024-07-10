@@ -37,6 +37,9 @@ user.vars.cmd_reboot = "systemctl reboot"
 user.notify_count = 0
 
 user.music = {}
+user.music.control = {
+   art_bg = false
+}
 user.music.notifys = {
    enabled = false,
    buttons = true,
