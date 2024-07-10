@@ -1,4 +1,4 @@
-local overrides = require "custom.configs.overrides"
+local overrides = require("custom.configs.overrides")
 
 ---@type NvPluginSpec[]
 local plugins = {
@@ -12,15 +12,29 @@ local plugins = {
       {
         "jose-elias-alvarez/null-ls.nvim",
         config = function()
-          require "custom.configs.null-ls"
+          require("custom.configs.null-ls")
         end,
       },
     },
     config = function()
-      require "plugins.configs.lspconfig"
-      require "custom.configs.lspconfig"
+      require("plugins.configs.lspconfig")
+      require("custom.configs.lspconfig")
     end, -- Override to setup mason-lspconfig
   },
+  {
+    "elkowar/yuck.vim",
+  },
+  -- {
+  --   "lukas-reineke/indent-blankline.nvim",
+  --   version = "3.6.2",
+  --   main = "ibl",
+  --   opts = function ()
+  --     return require("custom.configs.ibl")
+  --   end,
+  --   config = function(_, opts)
+  --     require("indent_blankline").setup(opts)
+  --   end,
+  -- },
 
   -- override plugin configs
   {
@@ -40,7 +54,7 @@ local plugins = {
   {
     "nvim-tree/nvim-web-devicons",
     opts = function()
-      return { override = require "custom.overrides.devicons" }
+      return { override = require("custom.overrides.devicons") }
     end,
   },
 
