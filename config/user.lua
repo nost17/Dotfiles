@@ -8,6 +8,7 @@ user.theme = {
 }
 
 user.config = {}
+user.config.password = "awesome"
 user.config.night_light = {
    enabled = false,
    temp = "4500",

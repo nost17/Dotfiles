@@ -4,7 +4,7 @@ local wscreen = screen.primary.geometry.width
 local hscreen = screen.primary.geometry.height
 
 local auth = function(password)
-   return password == "awesome"
+   return password == (User.config.password or "awesome")
 end
 
 Beautiful.lockscreen_overlay_bg = Beautiful.neutral[800]
@@ -86,9 +86,7 @@ main:setup({
          },
          nil,
          {
-            widget = Wibox.container.place,
-            valign = "center",
-            halign = "left",
+            layout = Wibox.layout.align.horizontal,
             {
                layout = Wibox.layout.fixed.horizontal,
                spacing = Beautiful.widget_padding.outer * 1.6,
@@ -108,6 +106,13 @@ main:setup({
                      modules.song.name,
                   },
                },
+            },
+            nil,
+            {
+               widget = Wibox.container.place,
+               valign = "center",
+               halign = "right",
+               modules.actions,
             },
          },
       },

@@ -1,4 +1,5 @@
 return {
    song = require(... .. ".music"),
-   grab = require(... .. ".grab")
+   grab = require(... .. ".grab"),
+   actions = require(... .. ".user_actions"),
 }
