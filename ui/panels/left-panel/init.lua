@@ -17,7 +17,7 @@ local quicksettings = Awful.popup({
   maximum_height = c_screen.geometry.height,
   maximum_width = dpi(324),
   placement = function(c)
-    Helpers.placement(c, "top_left", nil, Beautiful.useless_gap * 2)
+    Helpers.placement(c, "top_left", nil, Beautiful.useless_gap * 2 - Beautiful.border_width * 0.5)
   end,
   widget = {
     widget = Wibox.container.margin,
