@@ -92,6 +92,7 @@ function elevated_button.state(args)
    local widget = button(args)
    widget._private.state = false
 
+   ---@private
    function widget:turn_on()
       if widget._private.state == false then
          effect(widget, args.bg_normal_on, args.shape, args.border_width_on, args.on_normal_border_color)
@@ -106,7 +107,8 @@ function elevated_button.state(args)
    if args.on_by_default == true then
       widget:turn_on()
    end
-
+   
+   ---@private
    function widget:turn_off()
       if widget._private.state == true then
          effect(widget, args.bg_normal, args.shape, args.border_width, args.normal_border_color)
@@ -118,6 +120,7 @@ function elevated_button.state(args)
       widget:emit_signal("state", widget._private.state)
    end
 
+   ---@private
    function widget:toggle()
       if widget._private.state == true then
          widget:turn_off()
