@@ -1,42 +1,70 @@
-local icon_size = 28
+local wbutton = Utils.widgets.button.elevated
+local icons_path = Beautiful.icons .. "power/"
+local icons = {
+   suspend = icons_path .. "suspend.svg",
+}
+local style = {
+   icon_size = 28,
+   bg = Beautiful.neutral[800],
+   fg = Beautiful.neutral[200],
+   border_width = Beautiful.widget_border.width,
+   border_color = Beautiful.widget_border.color,
+}
 
-local suspend = Utils.widgets.button.elevated.normal({
-   -- paddings = 0,
-   -- constraint_width = icon_size * 2.5,
-   -- constraint_height = icon_size * 2.5,
-   -- constraint_strategy = "exact",
-   halign = "center",
-   valign = "center",
-   child = {
-      layout = Wibox.layout.fixed.horizontal,
-      spacing = Beautiful.widget_spacing,
-      {
-         widget = Wibox.widget.imagebox,
-         image = Beautiful.icons .. "power/suspend.svg",
-         forced_width = icon_size,
-         forced_height = icon_size,
-         halign = "center",
-         valign = "center",
-         stylesheet = "*{fill: " .. Beautiful.lockscreen_fg .. ";}",
+local function mkbutton(opts)
+   return wbutton.normal({
+      paddings = {
+         top = Beautiful.widget_padding.inner * 0.8,
+         bottom = Beautiful.widget_padding.inner * 0.8,
+         left = Beautiful.widget_padding.outer * 0.9,
+         right = Beautiful.widget_padding.outer * 0.9,
       },
-      {
-         widget = Wibox.widget.textbox,
-         markup = Helpers.text.colorize_text("Suspender", Beautiful.lockscreen_fg),
-         font = Beautiful.font_med_m,
-         valign = "center",
+      -- constraint_width = icon_size * 2.5,
+      -- constraint_height = icon_size * 2.5,
+      -- constraint_strategy = "exact",
+      halign = "left",
+      valign = "center",
+      child = {
+         layout = Wibox.layout.fixed.horizontal,
+         spacing = Beautiful.widget_spacing,
+         {
+            widget = Wibox.widget.imagebox,
+            image = opts.icon,
+            forced_width = style.icon_size,
+            forced_height = style.icon_size,
+            halign = "center",
+            valign = "center",
+            stylesheet = "*{fill: " .. style.fg .. ";}",
+         },
+         {
+            widget = Wibox.widget.textbox,
+            markup = Helpers.text.colorize_text(opts.label, style.fg),
+            font = Beautiful.font_med_m,
+            valign = "center",
+         },
       },
-   },
-   bg_normal = Beautiful.lockscreen_overlay_bg .. "BB",
-   shape = Helpers.shape.rrect(Beautiful.radius),
-   normal_border_width = Beautiful.widget_border.width,
-   normal_border_color = Beautiful.lockscreen_overlay_bg,
-   on_release = function()
-      Awful.spawn.with_shell(User.vars.cmd_suspend)
+      bg_normal = style.bg,
+      on_release = opts.fn,
+   })
+end
+
+local suspend = mkbutton({
+   icon = icons.suspend,
+   label = "Suspender",
+   fn = function()
+      Naughty.notify({ title = "xd" })
+      -- Awful.spawn.with_shell(User.vars.cmd_suspend)
    end,
 })
 
 return Wibox.widget({
-   layout = Wibox.layout.fixed.vertical,
-   spacing = Beautiful.widget_spacing,
-   suspend,
+   widget = Wibox.container.background,
+   bg = style.border_color,
+   border_width = style.border_width,
+   border_color = style.border_color,
+   {
+      layout = Wibox.layout.flex.vertical,
+      spacing = style.border_width,
+      suspend,
+   },
 })

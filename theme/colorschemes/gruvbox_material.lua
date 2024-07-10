@@ -1,5 +1,5 @@
 local M = {
-   ["hard_dark"] = {
+   ["dark"] = {
       type = "dark",
       primary = {},
       neutral = {
@@ -42,7 +42,7 @@ local M = {
    },
 }
 
-M["hard_dark"].primary.base = M["hard_dark"].colors.cyan
+M["dark"].primary.base = M["dark"].colors.cyan
 M["light"].primary.base = M["light"].colors.cyan
 
 return M

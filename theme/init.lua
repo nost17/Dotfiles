@@ -8,7 +8,7 @@ local darken = Helpers.color.darken
 
 theme = dofile(gfs.get_themes_dir() .. "default/theme.lua")
 local _colors = require("theme.colorschemes.gruvbox_material")
-local cscheme = require("theme.palettegen")(_colors, "hard_dark")
+local cscheme = require("theme.palettegen")(_colors, "dark")
 
 theme.transparent = "#00000000"
 
@@ -56,13 +56,13 @@ theme.font_name = _font.name
 theme.font = font.font_reg_m
 
 -- widget
-theme.radius = dpi(3)
+theme.radius = dpi(1)
 theme.widget_border = {
   width = 1,
-  -- color = cscheme.type == "dark" and Helpers.color.blend(cscheme.neutral[800],cscheme.neutral[700]) or cscheme.neutral[500],
   -- color = cscheme.type == "dark" and darken(cscheme.neutral[900], 0.1) or cscheme.neutral[600],
-  -- color_inner = cscheme.type == "dark" and cscheme.neutral[900] or cscheme.neutral[500]
-  color = Helpers.color.blend(cscheme.neutral[700], cscheme.neutral[800]),
+  -- color_inner = cscheme.type == "dark" and cscheme.neutral[900] or cscheme.neutral[600],
+  -- color = Helpers.color.blend(cscheme.neutral[700], cscheme.neutral[850]),
+  color = cscheme.type == "dark" and Helpers.color.blend(cscheme.neutral[800],cscheme.neutral[700]) or cscheme.neutral[600],
   color_inner = cscheme.type == "dark" and cscheme.neutral[700] or cscheme.neutral[600],
 }
 theme.widget_radius = {
@@ -75,8 +75,8 @@ theme.widget_padding = {
 }
 theme.widget_spacing = theme.widget_padding.inner * 0.75
 
-theme.border_width = 1.5
-theme.border_color_normal = cscheme.neutral[850]
+theme.border_width = 1
+theme.border_color_normal = darken(cscheme.neutral[900], 0.15)
 theme.border_color_active = cscheme.primary[500]
 
 theme.titlebar_bg_normal = cscheme.neutral[850]

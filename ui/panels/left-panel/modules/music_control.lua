@@ -51,9 +51,9 @@ local metadata_art = Wibox.widget({
    resize = true,
    valign = "center",
    halign = "center",
-   forced_height = art_size,
-   forced_width = art_size,
-   clip_shape = Helpers.shape.rrect(Beautiful.radius * 1.75),
+   -- forced_height = art_size,
+   -- forced_width = art_size,
+   -- clip_shape = Helpers.shape.rrect(Beautiful.radius * 1.75),
 })
 
 local art_bg = Wibox.widget({
@@ -223,7 +223,15 @@ return Wibox.widget({
                not User.music.control.art_bg and {
                   widget = Wibox.container.margin,
                   right = Beautiful.widget_padding.outer,
-                  metadata_art,
+                  {
+                     widget = Wibox.container.background,
+                     forced_height = art_size,
+                     forced_width = art_size,
+                     border_width = Beautiful.widget_border.width,
+                     border_color = Beautiful.widget_border.color,
+                     shape = Helpers.shape.rrect(Beautiful.radius),
+                     metadata_art,
+                  },
                },
                {
                   widget = Wibox.container.place,
