@@ -1,6 +1,6 @@
 -- Create a launcher widget. Opens the Awesome menu when clicked.
 --    image = Utils.apps_info:get_distro().icon,
-
+require("ui.app-launcher")
 local dpi = Beautiful.xresources.apply_dpi
 
 local launcher = Utils.widgets.button.elevated.normal({
@@ -42,7 +42,8 @@ local launcher = Utils.widgets.button.elevated.normal({
     },
   },
   on_release = function()
-    Awful.spawn.spawn("rofi -show drun -show-icons", false)
+    awesome.emit_signal("widgets::app_launcher", "toggle")
+    -- Awful.spawn.spawn("rofi -show drun -show-icons", false)
   end,
 })
 

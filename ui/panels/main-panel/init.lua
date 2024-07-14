@@ -1,7 +1,7 @@
 local dpi = Beautiful.xresources.apply_dpi
-local module = require(... .. ".module")
 User._priv.bar_size = dpi(36)
 User._priv.bar_padding = dpi(4)
+local module = require(... .. ".module")
 
 return function(s)
   s.mypromptbox = Awful.widget.prompt() -- Create a promptbox.

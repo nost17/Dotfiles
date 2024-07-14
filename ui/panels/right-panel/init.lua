@@ -3,10 +3,11 @@ local notification_center = require(... .. ".notification-area")
 local dpi = Beautiful.xresources.apply_dpi
 
 local info_panel = Awful.popup({
+  screen = Awful.screen.focused(),
   visible = false,
   ontop = true,
-  border_width = Beautiful.border_width,
-  border_color = Beautiful.border_color_normal,
+  border_width =  Beautiful.widget_border.width,
+  border_color = Beautiful.widget_border.color,
   minimum_height = dpi(300),
   maximum_height = screen.primary.geometry.height
       - (Beautiful.useless_gap * 4)
@@ -15,7 +16,7 @@ local info_panel = Awful.popup({
   -- minimum_width = 400,
   maximum_width = dpi(290),
   minimum_width = dpi(290),
-  shape = Helpers.shape.rrect(Beautiful.radius),
+  -- shape = Helpers.shape.rrect(Beautiful.radius),
   placement = function(d)
     Awful.placement.top_right(d, {
       honor_workarea = true,
