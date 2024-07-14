@@ -62,6 +62,35 @@ function _module.upper(text)
   return result
 end
 
+function _module.findBestMatch(nombres, objetivo)
+  local mejor_similitud = 0
+  local nombre_mas_parecido = nombres[1]
+
+  for _, nombre in ipairs(nombres) do
+    -- Calcular la longitud de la subcadena común más larga
+    local i, j = 1, 1
+    local len = 0
+    while i <= #nombre and j <= #objetivo do
+      if nombre:sub(i, i) == objetivo:sub(j, j) then
+        len = len + 1
+        j = j + 1
+      end
+      i = i + 1
+    end
+
+    -- Calcular la similitud como la longitud de la subcadena común
+    local similitud = len / math.max(#nombre, #objetivo)
+
+    -- Actualizar el nombre más parecido si encontramos una mejor similitud
+    if similitud > mejor_similitud then
+      mejor_similitud = similitud
+      nombre_mas_parecido = nombre
+    end
+  end
+
+  return nombre_mas_parecido
+end
+
 -- [[
 -- local time = os.date("%Y-%m-%dT%H:%M:%S")
 -- to_time_ago(os.difftime(parse_date(os.date("%Y-%m-%dT%H:%M:%S")), parse_date(time)))

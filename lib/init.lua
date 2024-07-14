@@ -2,7 +2,11 @@ require(... .. ".internal")
 
 local lib = {
    Volume = require(... .. ".system.audio"),
-   Playerctl = require(... .. ".system.playerctl")(),
+   Playerctl = require(... .. ".system.playerctl")({
+    player_list = User.music.players,
+    player = User.music.current_player,
+    default_cover = Beautiful.music_cover,
+  }),
    NightLight = require(... .. ".system.night_light"),
 }
 

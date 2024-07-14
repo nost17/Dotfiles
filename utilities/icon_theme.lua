@@ -1,6 +1,8 @@
 local ipairs = ipairs
 local lgi = require("lgi")
 local Gtk = lgi.require("Gtk", "3.0")
+local GLib = lgi.GLib
+local DesktopInfo = lgi.Gio.DesktopAppInfo
 -- local GTK_APPS = lgi.Gio.AppInfo.get_all()
 
 local icon_theme = { mt = {} }
@@ -64,14 +66,19 @@ function icon_theme:get_app_name(client_class)
     table.insert(possible_icon_names, class_3)
   end
 
+  local names = {}
+
   for _, app in ipairs(self.apps) do
     local id = app:get_id():lower()
     for _, possible_icon_name in ipairs(possible_icon_names) do
       if id and id:find(possible_icon_name, 1, true) then
-        return app:get_name()
+        table.insert(names, app:get_id())
       end
     end
   end
+
+  local final_name = DesktopInfo.new(Helpers.text.findBestMatch(names, class))
+  return DesktopInfo.get_string(final_name, "Name[es]") or lgi.Gio.DesktopAppInfo.get_string(final_name, "Name") or class
 end
 
 function icon_theme:get_name(args)
@@ -144,6 +151,7 @@ function icon_theme:get_icon_by_class(client_class)
       and not class_3:find("apple", 1, true)
       and not class:find("github", 1, true)
       and not class_3:find("org", 1, true)
+    and not class_3 == "libreoffice"
   then
     table.insert(possible_icon_names, class_3)
   end
@@ -203,8 +211,6 @@ function icon_theme:get_icon_alt(opts)
   end
   return opts.manual_fallback
 end
-
-local GLib = lgi.GLib
 
 function icon_theme:get_distro()
   return {
