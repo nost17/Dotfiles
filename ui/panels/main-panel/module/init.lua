@@ -6,4 +6,5 @@ return {
   tasklist = require(... .. ".tasklist"),
   layoutbox = require(... .. ".layoutbox"),
   quicksettings = require(... .. ".quicksettings"),
+  calendar = require(... .. ".calendar")
 }

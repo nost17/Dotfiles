@@ -58,4 +58,7 @@ user.music.names = {
 }
 user.music.current_player = user.music.players[1]
 
+-- For globals hidden vars
+user._priv = {}
+
 return user

@@ -4,6 +4,7 @@
 pcall(require, "luarocks.loader")
 Gears = require("gears")
 Awful = require("awful")
+---@module 'wibox'
 Wibox = require("wibox")
 Beautiful = require("beautiful")
 Naughty = require("naughty")
@@ -33,6 +34,7 @@ Utils = require("utilities")
 
 -- Load the theme. In other words, defines the variables within the `beautiful`
 -- table.
+---@module 'theme'
 require("theme")
 
 -- Treat all signals. Bear in mind this implies creating all tags, attaching

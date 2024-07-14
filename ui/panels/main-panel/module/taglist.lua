@@ -43,20 +43,15 @@ return function(s)
       end),
     },
     widget_template = {
-      widget = Wibox.container.place,
-      helign = "center",
-      valign = "center",
+      widget = Wibox.container.background,
+      id = "background_role",
+      forced_width = active_size * 1.1,
+      forced_height = active_size * 1.15,
       {
-        widget = Wibox.container.background,
-        id = "background_role",
-        forced_width = active_size * 1.1,
-        forced_height = active_size * 1.15,
-        {
-          widget = Wibox.widget.textbox,
-          id = "text_role",
-          halign = "center",
-          valign = "center"
-        },
+        widget = Wibox.widget.textbox,
+        id = "text_role",
+        halign = "center",
+        valign = "center",
       },
       create_callback = function(self, t, _, _)
         -- if t.selected then

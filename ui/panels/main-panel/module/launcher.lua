@@ -4,10 +4,16 @@
 local dpi = Beautiful.xresources.apply_dpi
 
 local launcher = Utils.widgets.button.elevated.normal({
-  bg_normal = Beautiful.bg_normal,
+  bg_normal = Beautiful.neutral[850],
+  normal_border_color = Beautiful.widget_border.color,
+  normal_border_width = Beautiful.widget_border.width,
   paddings = {
     left = Beautiful.widget_padding.inner,
     right = Beautiful.widget_padding.inner,
+    top = dpi(2),
+    bottom = dpi(2),
+    -- right= dpi(7),
+    -- left = dpi(7),
   },
   child = {
     layout = Wibox.layout.fixed.horizontal,
@@ -15,10 +21,11 @@ local launcher = Utils.widgets.button.elevated.normal({
     {
       widget = Wibox.widget.imagebox,
       image = Gears.color.recolor_image(
-        Utils.apps_info:get_icon_alt({
-          name = "search",
-          symbolic = true,
-        }),
+        Beautiful.icons .. "others/search.svg",
+        -- Utils.apps_info:get_icon_alt({
+        --   name = "search",
+        --   symbolic = true,
+        -- }),
         Beautiful.neutral[100]
       ),
       halign = "center",
@@ -28,21 +35,17 @@ local launcher = Utils.widgets.button.elevated.normal({
     },
     {
       widget = Wibox.widget.textbox,
-      text = "Aplicaciones",
+      text = "Buscar",
       halign = "left",
       valign = "center",
       font = Beautiful.font_med_m,
     },
   },
   on_release = function()
-    Awful.spawn.with_shell("rofi -show drun -show-icons", false)
+    Awful.spawn.spawn("rofi -show drun -show-icons", false)
   end,
 })
 
 return function()
-  return Wibox.widget({
-    widget = Wibox.container.margin,
-    -- right = Beautiful.widget_spacing,
-    launcher,
-  })
+  return launcher
 end
