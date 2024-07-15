@@ -1,10 +1,11 @@
 local dpi = Beautiful.xresources.apply_dpi
 local wbutton = Utils.widgets.button.elevated
+local htext = Helpers.text
 local style = {
   border_width = Beautiful.widget_border.width,
   border_color = Beautiful.widget_border.color,
   shape = Helpers.shape.rrect(Beautiful.radius),
-  fg_normal = Beautiful.neutral[100],
+  fg_normal = Beautiful.neutral[200],
   fg_hover = Beautiful.neutral[100],
   bg_normal = Beautiful.neutral[900],
   bg_hover = nil,
@@ -18,6 +19,10 @@ local menu = Helpers.create_gobject({})
 local function get_cursor_coordinates()
   local coords = mouse.coords()
   return coords.x, coords.y
+end
+
+local function text_style(t)
+  return htext.colorize_text(htext.first_upper(t), style.fg_normal)
 end
 
 menu.layout = Wibox.widget({
@@ -41,8 +46,8 @@ menu.layout = Wibox.widget({
     })
     local label = Wibox.widget({
       widget = Wibox.widget.textbox,
-      text = Helpers.text.upper(label_off),
-      font = Beautiful.font_name .. "Medium 9",
+      markup = text_style(label_off),
+      font = Beautiful.font_med_s,
       valign = "center",
       halign = "left",
     })
@@ -83,10 +88,10 @@ menu.layout = Wibox.widget({
     })
     btn:connect_signal("state", function(_, state)
       if state then
-        label:set_text(Helpers.text.upper(label_on))
+        label:set_markup_silently(text_style(label_on))
         icon:set_image(Gears.color.recolor_image(icon_on, color))
       else
-        label:set_text(Helpers.text.upper(label_off))
+        label:set_markup_silently(text_style(label_off))
         icon:set_image(Gears.color.recolor_image(icon_off, color))
       end
     end)

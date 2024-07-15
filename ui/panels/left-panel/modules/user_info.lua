@@ -1,7 +1,7 @@
 local dpi = Beautiful.xresources.apply_dpi
 local wbutton = Utils.widgets.button.elevated
 local info = {
-  user = os.getenv("USER"):gsub("^%l", string.upper),
+  user = Helpers.text.first_upper(os.getenv("USER")),
   github = "@Rreverie",
 }
 

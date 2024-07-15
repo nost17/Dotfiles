@@ -42,6 +42,10 @@ function _module.parse_date(date_str)
   return os.time({ year = y, month = m, day = d, hour = h, min = min, sec = sec })
 end
 
+function _module.first_upper(t)
+  return t:gsub("^%l", string.upper)
+end
+
 function _module.upper(text)
   local result = ""
   for _, char in utf8.codes(text) do

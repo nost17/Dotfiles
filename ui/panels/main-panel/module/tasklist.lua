@@ -55,6 +55,7 @@ return function(s)
         -- bottom = Beautiful.widget_padding.inner * 0.45,
         {
           layout = Wibox.layout.fixed.horizontal,
+          spacing = Beautiful.widget_spacing,
           {
             widget = Wibox.container.place,
             {
@@ -66,6 +67,24 @@ return function(s)
               valign = "center",
             },
           },
+          {
+            widget = Wibox.container.constraint,
+            strategy = "max",
+            width = dpi(100),
+            {
+              widget = Wibox.container.margin,
+              top = dpi(-1),
+              {
+                widget = Wibox.widget.textbox,
+                id = "text_role",
+                font = Beautiful.font_med_s,
+                visible = true,
+                halign = "left",
+                valign = "center",
+              },
+            },
+          },
+
           -- nil and {
           --   widget = Wibox.container.margin,
           --   id = "app_name_c",

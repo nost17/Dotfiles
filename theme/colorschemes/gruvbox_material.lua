@@ -4,7 +4,7 @@ local M = {
       primary = {},
       neutral = {
          dark = "#1d2122",
-         light = "#a89984",
+         light = "#c7b89d",
       },
       colors = {
          red = "#ea6962",
@@ -20,7 +20,7 @@ local M = {
       type = "light",
       primary = {},
       neutral = {
-         dark = "#f3eac7",
+         dark = "#f2e5bc",
          light = "#3c3836",
       },
       colors = {

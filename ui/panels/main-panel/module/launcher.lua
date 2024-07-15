@@ -31,15 +31,15 @@ local launcher = Utils.widgets.button.elevated.normal({
       ),
       halign = "center",
       valign = "center",
-      forced_width = dpi(15),
-      forced_height = dpi(15),
+      forced_width = dpi(14),
+      forced_height = dpi(14),
     },
     {
       widget = Wibox.widget.textbox,
       text = "Buscar",
       halign = "left",
       valign = "center",
-      font = Beautiful.font_med_m,
+      font = Beautiful.font_med_s,
     },
   },
   on_release = function()

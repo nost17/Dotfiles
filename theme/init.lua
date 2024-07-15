@@ -99,6 +99,9 @@ theme.taglist_fg_empty = cscheme.neutral[600] .. "BB"
 
 -- tasklist
 theme.tasklist_icon_size = dpi(18)
+theme.tasklist_fg_normal = cscheme.neutral[300]
+theme.tasklist_fg_focus = cscheme.neutral[100]
+theme.tasklist_fg_minimize = cscheme.neutral[700]
 theme.tasklist_bg_focus = cscheme.neutral[850]
 -- theme.tasklist_bg_focus = Helpers.color.blend(cscheme.neutral[900], cscheme.primary[600]) .. "66"
 theme.tasklist_bg_normal = cscheme.neutral[900]
