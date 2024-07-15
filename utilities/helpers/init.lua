@@ -102,6 +102,13 @@ function _module.gc(widget, id)
   return widget:get_children_by_id(id)[1]
 end
 
+function _module.create_gobject(t)
+  local ret = Gears.object({})
+  Gears.table.crush(ret, t, true)
+  ret._private = {}
+  return ret
+end
+
 function _module.placement(wdg, pos, props, margins)
   props = props or { honor_workarea = true, margins = margins or Beautiful.useless_gap }
   if Awful.placement[pos] then
