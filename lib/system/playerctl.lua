@@ -86,6 +86,7 @@ local function emit_metadata(self)
       artist = artist,
       album = album,
       cover_art = cover_art,
+      player = self._private.player,
     }
     self:emit_signal("metadata", title, artist, album, cover_art, self._private.player)
     collectgarbage("collect")

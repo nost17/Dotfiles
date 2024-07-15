@@ -46,16 +46,15 @@ local emit_notify = function(title, artist, album, art_url, player_name)
   }, music_notif)
 end
 
-Lib.Playerctl:connect_signal("metadata", function(self, title, artist, art_url, album, new, player_name)
+Lib.Playerctl:connect_signal("metadata", function(_, title, artist, album, art_url, player_name)
   if first_time then
     first_time = false
-  elseif new and User.music.notifys.enabled then
+  elseif User.music.notifys.enabled then
     emit_notify(title, artist, album, art_url, player_name)
   end
 end)
 
 function Lib.Playerctl:notify()
-  local title, artist, album, art_url, player_name =
-      Lib.Playerctl:get_current_metadata(Lib.Playerctl:get_active_player())
-  emit_notify(title, artist, album, art_url, player_name)
+  local data = Lib.Playerctl._private.last_metadata
+  emit_notify(data.title, data.artist, data.album, data.cover_art, data.player)
 end
