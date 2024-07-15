@@ -16,7 +16,7 @@ local info_panel = Awful.popup({
   -- minimum_width = 400,
   maximum_width = dpi(290),
   minimum_width = dpi(290),
-  -- shape = Helpers.shape.rrect(Beautiful.radius),
+  shape = Helpers.shape.rrect(Beautiful.widget_radius.outer),
   placement = function(d)
     Awful.placement.top_right(d, {
       honor_workarea = true,

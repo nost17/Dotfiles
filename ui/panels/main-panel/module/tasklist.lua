@@ -30,7 +30,8 @@ return function(s)
         c:activate({ context = "tasklist", action = "toggle_minimization" })
       end),
       Awful.button(nil, 3, function(c)
-        c:kill()
+        awesome.emit_signal("menu::client", "toggle", c)
+        -- c:kill()
         -- Awful.menu.client_list({ theme = { width = 250 } })
       end),
       -- Mousewheel scrolling cycles through clients.
