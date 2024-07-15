@@ -2,7 +2,7 @@ local dpi = Beautiful.xresources.apply_dpi
 local c_screen = Awful.screen.focused()
 
 Beautiful.quicksettings_bg = Beautiful.neutral[900]
-Beautiful.quicksettings_shape = Helpers.shape.rrect(Beautiful.radius)
+Beautiful.quicksettings_shape = Helpers.shape.rrect(Beautiful.widget_radius.outer)
 
 local modules = require(... .. ".modules")
 
@@ -13,10 +13,11 @@ local quicksettings = Awful.popup({
   border_width = Beautiful.widget_border.width,
   border_color = Beautiful.widget_border.color,
   bg = Beautiful.quicksettings_bg,
-  shape = function(cr, width, height)
-    local arrow_size = Beautiful.widget_padding.outer * 1.5
-    return Helpers.shape.infobubble(cr, width, height, Beautiful.radius, arrow_size, 0)
-  end,
+  shape = Beautiful.quicksettings_shape,
+  -- shape = function(cr, width, height)
+  --   local arrow_size = Beautiful.widget_padding.outer * 1.5
+  --   return Helpers.shape.infobubble(cr, width, height, Beautiful.radius, arrow_size, 0)
+  -- end,
   maximum_height = c_screen.geometry.height,
   maximum_width = dpi(324),
   placement = function(c)
@@ -24,12 +25,7 @@ local quicksettings = Awful.popup({
   end,
   widget = {
     widget = Wibox.container.margin,
-    margins = {
-      top = Beautiful.widget_padding.outer * 2.5,
-      bottom = Beautiful.widget_padding.outer,
-      left = Beautiful.widget_padding.outer,
-      right = Beautiful.widget_padding.outer,
-    },
+    margins = Beautiful.widget_padding.outer,
     {
       layout = Wibox.layout.fixed.vertical,
       spacing = Beautiful.widget_spacing,

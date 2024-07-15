@@ -61,7 +61,7 @@ local function mkbutton(image, size, fn)
     bg_normal = Beautiful.neutral[800],
     bg_hover = Beautiful.neutral[700],
     bg_press = Beautiful.neutral[800],
-    -- shape = Helpers.shape.rrect(Beautiful.radius),
+    shape = Helpers.shape.rrect(Beautiful.radius),
     -- shape = Gears.shape.circle,
     normal_border_width = Beautiful.widget_border.width,
     normal_border_color = Beautiful.widget_border.color_inner,

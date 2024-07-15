@@ -1,6 +1,6 @@
 local dpi = Beautiful.xresources.apply_dpi
-local color_lib = Helpers.color
-local hover_color = Beautiful.primary[500]
+-- local color_lib = Helpers.color
+-- local hover_color = Beautiful.primary[500]
 -- local hover_color = color_lib.lightness(
 --   color_lib.isDark(Beautiful.accent_color) and "lighten" or "darken",
 --   Beautiful.color_method_factor,
@@ -13,11 +13,12 @@ return {
   favorites = { "kitty", "firefox" },
   skip_empty_icons = false,
   shrink_height = true,
-  shape = function(cr, width, height)
-    local arrow_size = Beautiful.widget_padding.outer * 1.5
-    local pos = (arrow_size * 2) + User._priv.bar_size
-    return Helpers.shape.infobubble(cr, width, height, Beautiful.radius, arrow_size, pos)
-  end,
+  shape = Helpers.shape.rrect(Beautiful.widget_radius.outer),
+  -- shape = function(cr, width, height)
+  --   local arrow_size = Beautiful.widget_padding.outer * 1.5
+  --   local pos = (arrow_size * 2) + User._priv.bar_size
+  --   return Helpers.shape.infobubble(cr, width, height, Beautiful.radius, arrow_size, pos)
+  -- end,
   placement = function(c)
     Helpers.placement(c, "top_left", nil, Beautiful.useless_gap * 2)
   end,
@@ -66,10 +67,12 @@ return {
   prompt_text_color = Beautiful.fg_normal .. "EE",
   prompt_icon_color = Beautiful.primary[500] .. "DF",
   prompt_cursor_color = Beautiful.neutral[100],
-  prompt_separator_size = dpi(2.5),
+  prompt_separator_size = dpi(0),
   prompt_separator_color = Beautiful.primary[500],
+  prompt_border_width = Beautiful.widget_border.width,
+  prompt_border_color = Beautiful.widget_border.color,
   grid_margins = {
-    top = Beautiful.widget_padding.outer * 2.5,
+    top = Beautiful.widget_padding.outer * 1.75,
     bottom = Beautiful.widget_padding.outer,
     left = Beautiful.widget_padding.outer,
     right = Beautiful.widget_padding.outer,

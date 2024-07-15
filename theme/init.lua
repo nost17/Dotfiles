@@ -56,7 +56,7 @@ theme.font_name = _font.name
 theme.font = font.font_reg_m
 
 -- widget
-theme.radius = dpi(1)
+theme.radius = dpi(2)
 theme.widget_border = {
   width = 1,
   -- color = cscheme.type == "dark" and darken(cscheme.neutral[900], 0.1) or cscheme.neutral[600],
@@ -66,8 +66,8 @@ theme.widget_border = {
   color_inner = cscheme.type == "dark" and cscheme.neutral[700] or cscheme.neutral[600],
 }
 theme.widget_radius = {
-  outer = theme.radius,
-  inner = 0,
+  outer = theme.radius * 2,
+  inner = theme.radius,
 }
 theme.widget_padding = {
   outer = dpi(10),

@@ -1,6 +1,6 @@
 local dpi = Beautiful.xresources.apply_dpi
 User._priv.bar_size = dpi(36)
-User._priv.bar_padding = dpi(4)
+User._priv.bar_padding = dpi(3)
 local module = require(... .. ".module")
 
 return function(s)
@@ -28,7 +28,14 @@ return function(s)
             spacing = Beautiful.widget_spacing,
             module.launcher(),
             s.mypromptbox,
-            module.tasklist(s),
+            -- module.tasklist(s),
+            {
+              widget = Wibox.container.background,
+              shape = Helpers.shape.rrect(Beautiful.radius),
+              border_width = Beautiful.widget_border.width,
+              border_color = Beautiful.widget_border.color,
+              module.taglist(s),
+            },
           },
         },
       },
@@ -37,13 +44,14 @@ return function(s)
         widget = Wibox.container.margin,
         top = User._priv.bar_padding,
         bottom = User._priv.bar_padding,
-        {
-          widget = Wibox.container.background,
-          shape = Helpers.shape.rrect(Beautiful.radius),
-          border_width = Beautiful.widget_border.width,
-          border_color = Beautiful.widget_border.color,
-          module.taglist(s),
-        },
+        module.tasklist(s),
+        -- {
+        --   widget = Wibox.container.background,
+        --   shape = Helpers.shape.rrect(Beautiful.radius),
+        --   border_width = Beautiful.widget_border.width,
+        --   border_color = Beautiful.widget_border.color,
+        --   module.taglist(s),
+        -- },
       },
       -- Right widgets.
       {

@@ -5,8 +5,8 @@ local dpi = Beautiful.xresources.apply_dpi
 ----------------------
 
 local charging_icon = Wibox.widget({
-  markup = Helpers.text.colorize_text(Helpers.text.escape_text("󰉁"), Beautiful.yellow),
-  font = Beautiful.font_icon .. "12",
+  markup = Helpers.text.colorize_text(Helpers.text.escape_text("󰉁"), Beautiful.yellow[300]),
+  font = "Material Design Icons Desktop 12",
   halign = "center",
   valign = "center",
   visible = false,
@@ -20,7 +20,7 @@ local battery_bar = Wibox.widget({
   paddings = dpi(2),
   border_width = 1.5,
   border_color = Beautiful.fg_normal,
-  color = Beautiful.green,
+  color = Beautiful.green[300],
   background_color = Beautiful.transparent,
   bar_shape = Helpers.shape.rrect(Beautiful.small_radius),
   shape = Helpers.shape.rrect(Beautiful.small_radius),
@@ -28,7 +28,7 @@ local battery_bar = Wibox.widget({
 })
 local battery_label = Wibox.widget({
   text = Helpers.getCmdOut("cat /sys/class/power_supply/BAT0/capacity") .. "%",
-  font = Beautiful.font_text .. "Medium 12",
+  font = Beautiful.font_name .. "Medium 12",
   halign = "center",
   widget = Wibox.widget.textbox,
 })
@@ -107,8 +107,8 @@ local user = Wibox.widget({
       layout = Wibox.layout.fixed.vertical,
       {
         widget = Wibox.widget.textbox,
-        markup = Helpers.text.colorize_text(os.getenv("USER"):gsub("^%l", string.upper), Beautiful.accent_color),
-        font = Beautiful.font_text .. "SemiBold 13",
+        markup = Helpers.text.colorize_text(os.getenv("USER"):gsub("^%l", string.upper), Beautiful.primary[500]),
+        font = Beautiful.font_name .. "SemiBold 13",
         halign = "left",
         valign = "top",
       },
@@ -118,7 +118,7 @@ local user = Wibox.widget({
           Helpers.getCmdOut("uptime -p | sed -e 's/up //;s/ hours,/h/;s/ hour,/h/;s/ minutes/m/;s/ minute/m/'"),
           Beautiful.fg_normal .. "CC"
         ),
-        font = Beautiful.font_text .. "Medium 10",
+        font = Beautiful.font_name .. "Medium 10",
         halign = "left",
         valign = "top",
       },
@@ -127,4 +127,4 @@ local user = Wibox.widget({
   battery,
 })
 
-return user
+return battery

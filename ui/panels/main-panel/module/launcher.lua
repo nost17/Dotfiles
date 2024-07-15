@@ -7,6 +7,7 @@ local launcher = Utils.widgets.button.elevated.normal({
   bg_normal = Beautiful.neutral[850],
   normal_border_color = Beautiful.widget_border.color,
   normal_border_width = Beautiful.widget_border.width,
+  shape = Helpers.shape.rrect(Beautiful.radius),
   paddings = {
     left = Beautiful.widget_padding.inner,
     right = Beautiful.widget_padding.inner,

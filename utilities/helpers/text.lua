@@ -2,8 +2,11 @@ local _module = {}
 ---@module 'utilities.helpers._markup'
 _module = require((...):match("(.-)[^%.]+$") .. "_markup")
 
-function _module.colorize_text(text, color)
-  return "<span foreground='" .. color .. "'>" .. text .. "</span>"
+function _module.colorize_text(text, color, bg)
+  if bg then
+    return string.format("<span foreground='%s' background='%s'>%s</span>", color or Beautiful.fg_normal, bg, text)
+  end
+  return string.format("<span foreground='%s'>%s</span>", color, text)
 end
 
 --- Return time to text
