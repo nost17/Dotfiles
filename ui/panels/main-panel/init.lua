@@ -3,6 +3,28 @@ User._priv.bar_size = dpi(36)
 User._priv.bar_padding = dpi(3)
 local module = require(... .. ".module")
 
+local add_tags = Utils.widgets.button.text.normal({
+  text = "+",
+  bold = true,
+  paddings = {
+    left = Beautiful.widget_padding.inner,
+    right = Beautiful.widget_padding.inner,
+  },
+  fg_normal = Beautiful.fg_normal,
+  bg_normal = Beautiful.neutral[800],
+  normal_border_width = Beautiful.widget_border.width,
+  normal_border_color = Beautiful.widget_border.color,
+  shape = Helpers.shape.rrect(Beautiful.widget_radius.inner),
+  on_press = function()
+    Awful.tag
+        .add(tostring(#Awful.screen.focused().tags + 1), {
+          screen = Awful.screen.focused(),
+          layout = User.config.layouts[1],
+        })
+        :view_only()
+  end,
+})
+
 return function(s)
   s.mypromptbox = Awful.widget.prompt() -- Create a promptbox.
 
@@ -36,6 +58,7 @@ return function(s)
               border_color = Beautiful.widget_border.color,
               module.taglist(s),
             },
+            add_tags,
           },
         },
       },

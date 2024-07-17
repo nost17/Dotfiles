@@ -52,8 +52,8 @@ local suspend = mkbutton({
    icon = icons.suspend,
    label = "Suspender",
    fn = function()
-      Naughty.notify({ title = "xd" })
-      -- Awful.spawn.with_shell(User.vars.cmd_suspend)
+      -- Naughty.notify({ title = "xd" })
+      Awful.spawn.with_shell(User.vars.cmd_suspend)
    end,
 })
 

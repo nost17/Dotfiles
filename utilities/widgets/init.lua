@@ -8,5 +8,9 @@ M.text = require(... .. ".text")
 M.button = require(... .. ".button")
 ---@module 'utilities.widgets.overflow'
 M.overflow = require(... .. ".overflow")
+---@module 'utilities.widgets.icon'
+M.icon = require(... .. ".icon")
+---@module 'utilities.widgets.checkbox'
+M.checkbox = require(... .. ".checkbox")
 
 return M

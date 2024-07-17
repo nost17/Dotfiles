@@ -1,17 +1,19 @@
 local dpi = Beautiful.xresources.apply_dpi
 local mod = require("binds.mod")
 local modkey = mod.modkey
+local taglist = require("utilities.widgets.taglist")
 
 local inactive_size = dpi(10)
 local active_size = dpi(20)
+Beautiful.taglist_index_as_name = true
 
 return function(s)
   -- Create a taglist widget
-  return Awful.widget.taglist({
+  return taglist({
     screen = s,
     filter = Awful.widget.taglist.filter.all,
     layout = {
-      layout = Wibox.layout.flex.horizontal,
+      layout = Wibox.layout.fixed.horizontal,
       -- spacing = Beautiful.widget_spacing,
     },
     buttons = {
@@ -26,7 +28,10 @@ return function(s)
         end
       end),
       -- Right-clicking a tag makes its contents visible in the current one.
-      Awful.button(nil, 3, Awful.tag.viewtoggle),
+      -- Awful.button(nil, 3, Awful.tag.viewtoggle),
+      Awful.button(nil, 3, function (t)
+        t:delete()
+      end),
       -- Mod + Right-clicking a tag makes the currently focused client visible
       -- in it.
       Awful.button({ modkey }, 3, function(t)
@@ -45,13 +50,18 @@ return function(s)
     widget_template = {
       widget = Wibox.container.background,
       id = "background_role",
-      forced_width = active_size * 1.1,
-      forced_height = active_size * 1.15,
+      -- forced_width = active_size * 1.1,
+      -- forced_height = active_size * 1.15,
       {
-        widget = Wibox.widget.textbox,
-        id = "text_role",
-        halign = "center",
-        valign = "center",
+        widget = Wibox.container.margin,
+        left = Beautiful.widget_padding.inner,
+        right = Beautiful.widget_padding.inner,
+        {
+          widget = Wibox.widget.textbox,
+          id = "text_role",
+          halign = "center",
+          valign = "center",
+        },
       },
       create_callback = function(self, t, _, _)
         -- if t.selected then

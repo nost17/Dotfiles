@@ -9,7 +9,7 @@ local labels = {
   logout = "Panel de salida",
   calendar = "Abrir calendario",
   lock = "Bloquear pantalla",
-  launcher = "Lanzador de aplicaciones"
+  launcher = "Lanzador de aplicaciones",
 }
 
 local function create_bind(mods, key, desc, group, fn)
@@ -46,6 +46,9 @@ Awful.keyboard.append_global_keybindings({
   -- Awful.key({ modkey }, "w", function()
   --   widgets.menu.main:show()
   -- end, { description = "show main menu", group = "awesome" }),
+  create_bind({ modkey, mod.shift }, "Tab", "Regresar al escritorio anterior", "tag", function()
+    Awful.tag.history.restore()
+  end),
   Awful.key({ modkey, mod.ctrl }, "r", awesome.restart, { description = "reload awesome", group = "awesome" }),
   Awful.key({ modkey, mod.ctrl }, "q", awesome.quit, { description = "quit awesome", group = "awesome" }),
   Awful.key({ modkey }, "x", function()

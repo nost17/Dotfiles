@@ -70,7 +70,7 @@ return function(s)
           {
             widget = Wibox.container.constraint,
             strategy = "max",
-            width = dpi(100),
+            width = dpi(90),
             {
               widget = Wibox.container.margin,
               top = dpi(-1),

@@ -112,9 +112,9 @@ end
 function _module.placement(wdg, pos, props, margins)
   props = props or { honor_workarea = true, margins = margins or Beautiful.useless_gap }
   if Awful.placement[pos] then
-    Awful.placement[pos](wdg, props)
+    return Awful.placement[pos](wdg, props)
   else
-    Awful.placement.centered(wdg, props)
+    return Awful.placement.centered(wdg, props)
   end
 end
 
