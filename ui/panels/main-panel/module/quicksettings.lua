@@ -1,21 +1,27 @@
 local dpi = Beautiful.xresources.apply_dpi
 
 local button = Utils.widgets.button.elevated.normal({
+  -- paddings = Beautiful.widget_padding.inner,
+  shape = Helpers.shape.rrect(),
+  normal_border_width = Beautiful.widget_border.width,
+  normal_border_color = Beautiful.neutral[600],
   paddings = {
-    left = Beautiful.widget_padding.inner * 0.8,
-    right = Beautiful.widget_padding.inner * 0.8,
+    left = Beautiful.widget_padding.inner,
+    right = Beautiful.widget_padding.inner,
   },
   halign = "center",
   valign = "center",
+  bg_normal = Beautiful.neutral[800],
   child = {
-    widget = Wibox.widget.imagebox,
-    halign = "center",
+    widget = Utils.widgets.icon,
     valign = "center",
-    -- image = Gears.color.recolor_image(Beautiful.icons .. "settings/home.svg", Beautiful.neutral[100]),
-    image = Utils.apps_info:get_distro().icon or Beautiful.user_icon,
-    clip_shape = Gears.shape.circle,
-    forced_width = dpi(25),
-    forced_height = dpi(25),
+    halign = "center",
+    icon = {
+      path = Beautiful.icons .. "others/circle-bold.svg",
+      color = Beautiful.fg_normal,
+      uncached = true
+    },
+    size = 16
   },
   on_press = function()
     awesome.emit_signal("widgets::quicksettings", "toggle")

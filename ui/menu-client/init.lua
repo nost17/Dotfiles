@@ -214,7 +214,7 @@ awesome.connect_signal("menu::client", function(action, client)
       k:check(client)
     end
     menu.popup.x = get_cursor_coordinates()
-    menu.popup.x = menu.popup.x - (menu.popup.width / 2)
+    -- menu.popup.x = menu.popup.x - (menu.popup.width / 2)
     menu.popup.y = User._priv.bar_size + Beautiful.useless_gap * 2
   end
 end)

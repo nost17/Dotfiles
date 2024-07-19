@@ -40,14 +40,15 @@ return function(s)
       {
         layout = Wibox.layout.fixed.horizontal,
         spacing = Beautiful.widget_spacing,
-        module.quicksettings,
         {
           widget = Wibox.container.margin,
+          left = User._priv.bar_padding,
           top = User._priv.bar_padding,
           bottom = User._priv.bar_padding,
           {
             layout = Wibox.layout.fixed.horizontal,
             spacing = Beautiful.widget_spacing,
+            module.quicksettings,
             module.launcher(),
             s.mypromptbox,
             -- module.tasklist(s),
