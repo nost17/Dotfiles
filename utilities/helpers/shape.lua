@@ -1,12 +1,14 @@
 local gshape = Gears.shape
 local _module = {}
 function _module.rrect(radius)
+  radius = radius or Beautiful.widget_radius.inner
   return function(cr, width, height)
     gshape.rounded_rect(cr, width, height, radius)
   end
 end
 
 function _module.prrect(radius, tl, tr, br, bl)
+  radius = radius or Beautiful.widget_radius.inner
   return function(cr, width, height)
     gshape.partially_rounded_rect(cr, width, height, tl, tr, br, bl, radius)
   end
@@ -71,4 +73,3 @@ function _module.infobubble(cr, width, height, corner_radius, arrow_size, arrow_
 end
 
 return _module
-

@@ -22,6 +22,7 @@ theme.bg_focus = cscheme.neutral[800]
 theme.bg_urgent = cscheme.red[300]
 theme.fg_normal = cscheme.neutral[100]
 theme.fg_focus = cscheme.neutral[100]
+theme.bg_systray = theme.bg_normal
 
 theme.useless_gap = dpi(3)
 
@@ -53,6 +54,7 @@ for w_name, w_val in pairs(_font.weights) do
   end
 end
 theme.font_name = _font.name
+theme.font_icon = "Material Design Icons Desktop "
 theme.font = font.font_reg_m
 
 -- widget
@@ -88,8 +90,8 @@ theme.titlebar_bg_focus = cscheme.neutral[800]
 -- theme.taglist_bg_occupied = cscheme.neutral[500]
 theme.taglist_font = font.font_reg_m
 theme.taglist_bg_focus = cscheme.primary[500]
-theme.taglist_bg_empty = cscheme.neutral[800]
-theme.taglist_bg_occupied = cscheme.neutral[800]
+theme.taglist_bg_empty = cscheme.neutral[850]
+theme.taglist_bg_occupied = cscheme.neutral[850]
 theme.taglist_fg_focus = cscheme.neutral[900]
 theme.taglist_fg_occupied = cscheme.neutral[200]
 theme.taglist_fg_empty = cscheme.neutral[600] .. "BB"

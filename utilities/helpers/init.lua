@@ -89,7 +89,7 @@ function _module.notify_dwim(args, notif)
     notif:set_message(args.message or notif.message)
     notif:set_image(args.image or notif.image)
     notif.actions = args.actions or notif.actions
-    notif.app_name = args.app_name or notif.app_name
+    notif:set_appname(args.app_name or notif.app_name)
     notif:reset_timeout()
     n:emit_signal("property::timebar")
   else
@@ -104,7 +104,7 @@ end
 
 function _module.create_gobject(t)
   local ret = Gears.object({})
-  Gears.table.crush(ret, t, true)
+  Gears.table.crush(ret, t or {}, true)
   ret._private = {}
   return ret
 end

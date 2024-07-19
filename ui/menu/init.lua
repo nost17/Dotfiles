@@ -1,31 +1,60 @@
-local awful     = require('awful')
-local beautiful = require('beautiful')
+local mwidget = require("utilities.widgets.menu")
 
---- Menu
-local menu = {}
-local apps = User.vars
-local hkey_popup = require('awful.hotkeys_popup')
+local function create_button(name, menu)
+  local button = mwidget.button({
+    menu = menu,
+    icon = {
+      path = Beautiful.icons .. "settings/phocus.svg",
+      color = Beautiful.fg_normal,
+    },
+    text = Helpers.text.first_upper(name),
+    on_release = function()
+      Naughty.notify({
+        title = name,
+      })
+    end,
+  })
 
--- Create a main menu.
-menu.awesome = {
-   { 'Atajos',     function() hkey_popup.show_help(nil, awful.screen.focused()) end },
-   { 'Manual',      apps.terminal .. ' -e man awesome' },
-   -- Not part of the original config but extremely useful, especially as the example
-   -- config is meant to serve as an example to build your own environment upon.
-   {
-      'Documentación',
-      (os.getenv('BROWSER') or 'firefox') .. ' https://awesomewm.org/apidoc'
-   },
-   { 'Editar rc', apps.editor .. ' ' .. awesome.conffile },
-   { 'Reiniciar',     awesome.restart },
-   { 'Salir',        function() awesome.quit() end }
-}
+  return button
+end
 
-menu.main = awful.menu({
-   items = {
-      { 'awesome', menu.awesome, beautiful.awesome_icon },
-      { 'abrir terminal', apps.terminal }
-   }
-})
+local function create_cb_button(name, menu)
+  local button = mwidget.checkbox_button({
+    menu = menu,
+    icon = {
+      path = Beautiful.icons .. "settings/phocus.svg",
+    },
+    text = Helpers.text.first_upper(name),
+    on_press = function()
+      Naughty.notify({
+        title = name,
+      })
+    end,
+  })
 
-return menu
+  return button
+end
+
+local xd_menu = mwidget.menu({})
+xd_menu:add(create_button("Maximo", xd_menu))
+xd_menu:add(create_button("Temperatura", xd_menu))
+
+local my_menu = mwidget.menu({})
+my_menu:add(create_cb_button("buenas xd", my_menu))
+my_menu:add(mwidget.separator(Beautiful.neutral[850], 2, 15))
+my_menu:add(mwidget.sub_menu_button({
+  text = "el menu pues",
+  icon = { path = Beautiful.icons .. "settings/phocus.svg" },
+  sub_menu = xd_menu,
+  menu = my_menu,
+}))
+
+awesome.connect_signal("lol", function()
+  local coords = mouse.coords()
+  my_menu:toggle({
+    -- coords = {
+    --   x = coords.x,
+    --   y = User._priv.bar_size + 10
+    -- }
+  })
+end)

@@ -32,6 +32,9 @@ Awful.keyboard.append_global_keybindings({
   create_bind({ modkey }, "w", labels.lock, nil, function()
     awesome.emit_signal("widgets::app_launcher", "toggle")
   end),
+  create_bind({ modkey }, "d", labels.lock, nil, function()
+    awesome.emit_signal("lol")
+  end),
 })
 
 --- Global key bindings

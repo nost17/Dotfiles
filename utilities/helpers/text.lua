@@ -1,4 +1,4 @@
-local _module = {}
+local _module = { mt = {} }
 ---@module 'utilities.helpers._markup'
 _module = require((...):match("(.-)[^%.]+$") .. "_markup")
 
