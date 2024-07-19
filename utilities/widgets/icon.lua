@@ -5,6 +5,8 @@
 local gtable = Gears.table
 local imagebox = Wibox.widget.imagebox
 local dpi = Beautiful.xresources.apply_dpi
+local uncached = Gears.surface.load_uncached_silently
+local recolor = Gears.color.recolor_image
 local setmetatable = setmetatable
 local ipairs = ipairs
 
@@ -43,41 +45,59 @@ local function build_properties(prototype, prop_names)
 end
 
 local function generate_style(color)
+  -- local style = [[
+  --       rect {
+  --           fill-rule=evenodd !important;
+  --           stroke-width=1 !important;
+  --           stroke: %s !important;
+  --           fill: %s !important;
+  --       }
+  --       circle {
+  --           fill-rule=evenodd !important;
+  --           stroke-width=1 !important;
+  --           stroke: %s !important;
+  --           fill: %s !important;
+  --       }
+  --       path {
+  --           fill-rule=evenodd !important;
+  --           stroke-width=1 !important;
+  --           stroke: %s !important;
+  --           fill: %s !important;
+  --       }
+  --       text {
+  --           fill-rule=evenodd !important;
+  --           stroke-width=1 !important;
+  --           stroke: %s !important;
+  --           fill: %s !important;
+  --       }
+  --   ]]
   local style = [[
-        rect {
-            fill-rule=evenodd !important;
-            stroke-width=1 !important;
-            stroke: %s !important;
-            fill: %s !important;
-        }
-        circle {
-            fill-rule=evenodd !important;
-            stroke-width=1 !important;
-            stroke: %s !important;
-            fill: %s !important;
-        }
         path {
-            fill-rule=evenodd !important;
             stroke-width=1 !important;
+            fill-rule=evenodd !important;
             stroke: %s !important;
             fill: %s !important;
         }
         text {
-            fill-rule=evenodd !important;
             stroke-width=1 !important;
+            fill-rule=evenodd !important;
             stroke: %s !important;
             fill: %s !important;
         }
     ]]
-  return string.format(style, color, color, color, color, color, color, color, color)
+  return string.format(style, color, color, color, color)
 end
 
 function icon:set_icon(_icon)
   local wp = self._private
   wp.icon = _icon
-  self.image = _icon.path
   wp.defaults.color = _icon.color or wp.color
-  self:set_stylesheet(generate_style(wp.defaults.color or wp.color))
+  if _icon and _icon.uncached then
+    self:set_image(recolor(_icon.path, wp.defaults.color))
+  else
+    self.image = _icon.path
+    self:set_stylesheet(generate_style(wp.defaults.color))
+  end
 end
 
 function icon:set_size(size)
@@ -89,8 +109,12 @@ end
 
 function icon:set_color(color)
   local wp = self._private
-  wp.color = color or self._private.icon.color or wp.color
-  self:set_stylesheet(generate_style(color))
+  wp.color = color or wp.icon.color or wp.color
+  if wp.icon and wp.icon.uncached then
+    self:set_image(recolor(wp.icon.path, wp.color))
+  else
+    self:set_stylesheet(generate_style(wp.color))
+  end
 end
 
 function icon:update_display_color(color)

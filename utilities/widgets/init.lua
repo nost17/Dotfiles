@@ -12,5 +12,7 @@ M.overflow = require(... .. ".overflow")
 M.icon = require(... .. ".icon")
 ---@module 'utilities.widgets.checkbox'
 M.checkbox = require(... .. ".checkbox")
+-- -@module 'utilities.widgets.menu'
+-- M.menu = require(... .. ".menu")
 
 return M

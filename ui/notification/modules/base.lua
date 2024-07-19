@@ -188,6 +188,9 @@ local function make_notify(n)
     },
   })
 
+  function n:set_appname(new_appname)
+    n_appname:set_markup(htext.colorize_text(htext.upper(new_appname or ""), accent_color))
+  end
   n:connect_signal("property::timeout", function(_)
     timebar:set_value(timebar.max_value)
   end)
