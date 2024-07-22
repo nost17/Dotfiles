@@ -78,7 +78,9 @@ function icon_theme:get_app_name(client_class)
   end
 
   local final_name = DesktopInfo.new(Helpers.text.findBestMatch(names, class))
-  return DesktopInfo.get_string(final_name, "Name[es]") or lgi.Gio.DesktopAppInfo.get_string(final_name, "Name") or class
+  return DesktopInfo.get_string(final_name, "Name[es]")
+      or lgi.Gio.DesktopAppInfo.get_string(final_name, "Name")
+      or class
 end
 
 function icon_theme:get_name(args)
@@ -151,7 +153,7 @@ function icon_theme:get_icon_by_class(client_class)
       and not class_3:find("apple", 1, true)
       and not class:find("github", 1, true)
       and not class_3:find("org", 1, true)
-    and not class_3 == "libreoffice"
+      and not class_3 == "libreoffice"
   then
     table.insert(possible_icon_names, class_3)
   end
@@ -182,6 +184,11 @@ function icon_theme:get_gicon_path(gicon)
 end
 
 function icon_theme:get_icon_alt(opts)
+  if type(opts) == "string" then
+    local name = opts
+    opts = {}
+    opts.name = name
+  end
   opts.name = opts.name or "default-application"
   opts.size = opts.size or 128
   opts.flag = opts.symbolic and Gtk.IconLookupFlags.FORCE_SYMBOLIC or self.flag
@@ -229,9 +236,7 @@ function icon_theme:get_icon_path(args)
   if args.client then
     -- return get_icon_by_pid_command(args.client, self.apps)
     return args.client.class ~= nil and icon_theme:get_icon_by_class(args.client.class)
-        or custom_icons[args.client.class] and args.client.class ~= nil and icon_theme:get_icon_alt(
-          args.client.class
-        )
+        or custom_icons[args.client.class] and icon_theme:get_icon_alt(custom_icons[args.client.class])
         or get_icon_by_pid_command(args.client, self.apps)
         or args.try_fallback ~= false and args.name_fallback and icon_theme:get_icon_by_class(args.name_fallback)
         or args.try_fallback ~= false and args.name_fallback and icon_theme:get_icon_alt(args.name_fallback)

@@ -6,7 +6,8 @@ menu_client.menu = mwidget.menu({}, dpi(160))
 local create_task = function(self, c, index, objects)
   Helpers.gc(self, "icon_client").image = Utils.apps_info:get_icon_path({
     client = c,
-  }) or c.icon
+    manual_fallback = c.icon
+  })
 end
 
 local update_task = function(self, c, _, _)
