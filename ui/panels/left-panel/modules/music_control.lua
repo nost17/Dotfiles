@@ -60,7 +60,7 @@ local art_bg = Wibox.widget({
   widget = Wibox.widget.imagebox,
   opacity = 0.4,
   horizontal_fit_policy = "fit",
-  vertical_fit_policy = "fit",
+  vertical_fit_policy = "cover",
   resize = true,
   valign = "center",
   halign = "center",
@@ -70,11 +70,13 @@ local art_bg = Wibox.widget({
 local function set_cover(art)
   -- metadata_art:set_image(Gears.surface.load_uncached(art))
   if User.music.control.art_bg then
-    art_bg:set_image(Gears.surface.crop_surface({
-      ratio = 3,
-      surface = Gears.surface.load_uncached(art),
-    }))
+    art_bg:set_image(Gears.surface.load_uncached(art))
+    -- art_bg:set_image(Gears.surface.crop_surface({
+    --   ratio = 3,
+    --   surface = Gears.surface.load_uncached(art),
+    -- }))
   else
+    -- metadata_art:set_image(Gears.surface.load_uncached(art))
     metadata_art:set_image(Gears.surface.crop_surface({
       ratio = 1,
       surface = Gears.surface.load_uncached(art),
@@ -121,7 +123,8 @@ local function mkbutton(image, size, fn, color, yoffset, xoffset)
     halign = "center",
     valign = "center",
     shape = default.shape,
-    bg_normal = User.music.control.art_bg and Beautiful.transparent or Beautiful.neutral[800],
+    bg_normal = Beautiful.neutral[800],
+    -- bg_normal = User.music.control.art_bg and Beautiful.transparent or Beautiful.neutral[800],
     child = {
       widget = Wibox.container.margin,
       bottom = yoffset,

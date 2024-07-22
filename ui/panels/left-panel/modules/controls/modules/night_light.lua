@@ -2,7 +2,7 @@
 return function(template, icons)
    local button = template.with_label({
       label = "Luz nocturna",
-      show_state = true,
+      -- show_state = true,
       icon = icons.night_light,
       fn_on = function()
          Lib.NightLight:emit_signal("update", "on")

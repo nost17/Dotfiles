@@ -1,7 +1,7 @@
 return function(template, icons)
    local button = template.with_label({
       label = "Silenciar",
-      show_state = true,
+      -- show_state = true,
       icon = icons.mute,
       settings = function()
          Awful.spawn("pavucontrol", false)
