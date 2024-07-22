@@ -122,7 +122,7 @@ local function mkbutton(image, size, fn, color, yoffset, xoffset)
     paddings = button_padding,
     halign = "center",
     valign = "center",
-    shape = default.shape,
+    -- shape = default.shape,
     bg_normal = Beautiful.neutral[800],
     -- bg_normal = User.music.control.art_bg and Beautiful.transparent or Beautiful.neutral[800],
     child = {
@@ -297,7 +297,7 @@ return Wibox.widget({
             bg = Beautiful.widget_border.color_inner,
             shape = default.shape,
             {
-              layout = Wibox.layout.flex.horizontal,
+              layout = Wibox.layout.fixed.horizontal,
               spacing = Beautiful.widget_border.width,
               button_notify,
               button_random,
