@@ -1,33 +1,38 @@
 local mwidget = require("utilities.widgets.menu")
+local main_menu = mwidget.menu({})
+local screenshot_menu = mwidget.menu({}, 170)
 
-local function create_button(name, menu)
-  local button = mwidget.button({
-    menu = menu,
+local function create_button(opts)
+  return mwidget.button({
+    menu = main_menu,
     icon = {
-      path = Beautiful.icons .. "settings/phocus.svg",
-      color = Beautiful.fg_normal,
+      path = Beautiful.icons .. opts.icon_path,
+      color = opts.icon_color or Beautiful.neutral[100],
+      size = 17,
+      -- uncached = true,
     },
-    text = Helpers.text.first_upper(name),
+    text = Helpers.text.first_upper(opts.name),
     on_release = function()
       Naughty.notify({
-        title = name,
+        title = opts.name,
       })
     end,
   })
-
-  return button
 end
 
-local function create_cb_button(name, menu)
+local function create_cb_button(opts)
   local button = mwidget.checkbox_button({
-    menu = menu,
+    menu = main_menu,
     icon = {
-      path = Beautiful.icons .. "settings/phocus.svg",
+      path = Beautiful.icons .. opts.icon_path,
+      color = opts.icon_color,
+      -- uncached = true,
+      size = 17,
     },
-    text = Helpers.text.first_upper(name),
+    text = Helpers.text.first_upper(opts.name),
     on_press = function()
       Naughty.notify({
-        title = name,
+        title = opts.name,
       })
     end,
   })
@@ -35,26 +40,49 @@ local function create_cb_button(name, menu)
   return button
 end
 
-local xd_menu = mwidget.menu({})
-xd_menu:add(create_button("Maximo", xd_menu))
-xd_menu:add(create_button("Temperatura", xd_menu))
+local function create_sub_menu_button(opts)
+  return mwidget.sub_menu_button({
+    menu = main_menu,
+    sub_menu = screenshot_menu,
+    icon = {
+      path = Beautiful.icons .. opts.icon_path,
+      color = opts.icon_color or Beautiful.neutral[100],
+      size = 17,
+      uncached = opts.uncached,
+    },
+    text = Helpers.text.first_upper(opts.name),
+  })
+end
 
-local my_menu = mwidget.menu({})
-my_menu:add(create_cb_button("buenas xd", my_menu))
-my_menu:add(mwidget.separator(Beautiful.neutral[850], 2, 15))
-my_menu:add(mwidget.sub_menu_button({
-  text = "el menu pues",
-  icon = { path = Beautiful.icons .. "settings/phocus.svg" },
-  sub_menu = xd_menu,
-  menu = my_menu,
+main_menu:add(create_button({
+  name = "Abrir terminal",
+  icon_path = "apps/terminal-fill.svg",
+}))
+main_menu:add(create_button({
+  name = "Abrir editor",
+  icon_path = "apps/code-fill.svg",
+}))
+main_menu:add(create_button({
+  name = "Abrir navegador",
+  icon_path = "apps/planet-fill.svg",
+}))
+main_menu:add(create_button({
+  name = "Abrir archivos",
+  icon_path = "apps/folder-open.svg",
+}))
+main_menu:add(create_sub_menu_button({
+  name = "Captura rapida",
+  icon_path = "settings/camera.svg",
+}))
+screenshot_menu:add(create_button({
+  name = "Seleccionar area",
+  icon_path = "others/sshot_region.svg",
+}))
+screenshot_menu:add(create_button({
+  name = "Pantalla completa",
+  icon_path = "others/sshot_full.svg",
 }))
 
 awesome.connect_signal("lol", function()
-  local coords = mouse.coords()
-  my_menu:toggle({
-    -- coords = {
-    --   x = coords.x,
-    --   y = User._priv.bar_size + 10
-    -- }
-  })
+  main_menu:toggle()
 end)

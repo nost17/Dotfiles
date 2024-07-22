@@ -460,7 +460,7 @@ function menu.button(args)
           spacing = style.spacing,
           {
             widget = Wibox.container.margin,
-            top = 0.5,
+            top = 0,
             icon,
           },
           text,
