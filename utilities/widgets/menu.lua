@@ -326,7 +326,7 @@ function menu.sub_menu_button(args)
       path = Beautiful.icons .. "others/big-arrow_right.svg",
     },
     valign = "center",
-    color = Beautiful.colors.on_background,
+    color = style.button_fg_off,
     size = 16,
   })
 
@@ -387,7 +387,7 @@ function menu.sub_menu_button(args)
   })
   widget.children[1]:connect_signal("off", function()
     if icon then
-      icon:set_color(style.button_fg_off)
+      icon:set_color(args.icon.color or style.button_fg_off)
     end
     text:set_color(style.button_fg_off)
     arrow:set_color(style.button_fg_off)

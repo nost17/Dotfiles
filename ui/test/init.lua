@@ -5,7 +5,7 @@ local bwidget = Wibox.container.background
 local boton = Wibox.widget({
   widget = wbutton,
   shape = Helpers.shape.rrect(),
-  bg = Beautiful.neutral[850],
+  color = Beautiful.neutral[850],
   border_width = Beautiful.widget_border.width,
   border_color = Beautiful.widget_border.color,
   halign = "left",
@@ -71,3 +71,4 @@ main:setup({
     boton,
   },
 })
+

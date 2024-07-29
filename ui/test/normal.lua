@@ -1,10 +1,10 @@
 local gtable = Gears.table
 local gcolor = Gears.color
-
----@module 'wibox'
+local lib_color = Helpers.color
 local wibox = require("wibox")
+local beautiful = require("beautiful")
 local bwidget = wibox.container.background
-local dpi = Beautiful.xresources.apply_dpi
+local dpi = beautiful.xresources.apply_dpi
 local setmetatable = setmetatable
 local ipairs = ipairs
 local table = table
@@ -25,7 +25,7 @@ local properties = {
   "valign",
   -- "hover_cursor",
   "disabled",
-  "bg",
+  "color",
   "normal_shape",
   "hover_shape",
   "press_shape",
@@ -67,13 +67,46 @@ end
 
 function button_normal:effect()
   local wp = self._private
+  local on_prefix = wp.state and "on_" or ""
+  local key = on_prefix .. wp.mode .. "_"
+  local bg_key = on_prefix .. "color"
+
+  -- New props
+  local bg = wp[bg_key] or wp.defaults[bg_key]
+
+  -- Update opacity overlay
   local state_layer_opacity = 0
-  if wp.mode == "hover" then
-    state_layer_opacity = 0.08
-  elseif wp.mode == "press" then
-    state_layer_opacity = 0.04
+
+  if wp.color_is_dark then
+    if wp.mode == "hover" then
+      state_layer_opacity = 0.06
+    elseif wp.mode == "press" then
+      state_layer_opacity = 0.04
+    end
+  else
+    if wp.mode == "hover" then
+      state_layer_opacity = 0.12
+    elseif wp.mode == "press" then
+      state_layer_opacity = 0.20
+    end
   end
+
   wp.overlay.opacity = state_layer_opacity
+
+  -- Update props
+  self.bg = bg
+end
+
+function button_normal:set_color(color)
+  local wp = self._private
+  wp.color = color
+  wp.color_is_dark = lib_color.isDark(wp.color)
+  if wp.color_is_dark then
+    wp.overlay.bg = beautiful.neutral[100]
+  else
+    wp.overlay.bg = beautiful.neutral[900]
+  end
+  self:effect()
 end
 
 function button_normal:set_widget(widget)
@@ -136,10 +169,14 @@ end
 local function new(...)
   local widget = bwidget()
   gtable.crush(widget, button_normal, true)
-  -- widget:set_widget(Wibox.container.margin())
+
+  widget:set_widget(wibox.container.margin())
 
   local wp = widget._private
   wp.mode = "normal"
+
+  -- Default props
+  wp.defaults = {}
 
   widget:connect_signal("mouse::enter", function(self)
     wp.mode = "hover"
