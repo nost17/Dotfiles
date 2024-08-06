@@ -35,7 +35,7 @@ return function(s)
     height = User._priv.bar_size,
     widget = {
       layout = Wibox.layout.align.horizontal,
-      expand = "none",
+      -- expand = "none",
       -- Left widgets.
       {
         layout = Wibox.layout.fixed.horizontal,
@@ -59,7 +59,7 @@ return function(s)
               border_color = Beautiful.widget_border.color,
               module.taglist(s),
             },
-            add_tags,
+            -- add_tags,
           },
         },
       },

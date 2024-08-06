@@ -68,18 +68,18 @@ menu_tag.menu:add(create_tag_button({
     path = Beautiful.icons .. "others/long-arrow_down.svg",
   },
 }))
-menu_tag.menu:add(create_header("etiqueta"))
-menu_tag.menu:add(create_tag_button({
-  text = "borrar",
-  icon = {
-    path = Beautiful.icons .. "others/trash.svg",
-    color = Beautiful.red[300],
-    uncached = true,
-  },
-  action = function ()
-    menu_tag.tag:delete()
-  end
-}))
+-- menu_tag.menu:add(create_header("etiqueta"))
+-- menu_tag.menu:add(create_tag_button({
+--   text = "borrar",
+--   icon = {
+--     path = Beautiful.icons .. "others/trash.svg",
+--     color = Beautiful.red[300],
+--     uncached = true,
+--   },
+--   action = function ()
+--     menu_tag.tag:delete()
+--   end
+-- }))
 
 Beautiful.taglist_index_as_name = true
 

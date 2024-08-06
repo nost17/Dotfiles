@@ -55,10 +55,10 @@ return function(s)
   return Awful.widget.tasklist({
     screen = s,
     filter = Awful.widget.tasklist.filter.currenttags,
-    layout = {
-      layout = Wibox.layout.fixed.horizontal,
-      spacing = Beautiful.widget_spacing / 2,
-    },
+    -- layout = {
+    --   layout = Wibox.layout.fixed.horizontal,
+    --   spacing = Beautiful.widget_spacing / 2,
+    -- },
     buttons = {
       Awful.button(nil, 1, function(c)
         c:activate({ context = "tasklist", action = "toggle_minimization" })
@@ -108,14 +108,14 @@ return function(s)
           {
             widget = Wibox.container.constraint,
             strategy = "max",
-            width = dpi(90),
+            -- width = dpi(90),
             {
               widget = Wibox.container.margin,
               top = dpi(-1),
               {
                 widget = Wibox.widget.textbox,
                 id = "text_role",
-                font = Beautiful.font_med_s,
+                -- font = Beautiful.font_med_s,
                 visible = true,
                 halign = "left",
                 valign = "center",
