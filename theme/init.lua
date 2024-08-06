@@ -7,12 +7,12 @@ local dpi = Beautiful.xresources.apply_dpi
 local darken = Helpers.color.darken
 
 theme = dofile(gfs.get_themes_dir() .. "default/theme.lua")
-local _colors = require("theme.colorschemes.gruvbox_material")
+local _colors = require("theme.colorschemes.onedark")
 local cscheme = require("theme.palettegen")(_colors, "dark")
 
 theme.transparent = "#00000000"
 
-theme.wallpaper = themes_path .. "assets/wallpapers/58.jpg"
+theme.wallpaper = themes_path .. "assets/wallpapers/16.jpg"
 theme.music_cover = themes_path .. "assets/no_music.png"
 theme.user_icon = themes_path .. "assets/user_icon.png"
 
@@ -61,11 +61,11 @@ theme.font = font.font_reg_m
 theme.radius = dpi(2)
 theme.widget_border = {
   width = 1,
-  -- color = cscheme.type == "dark" and darken(cscheme.neutral[900], 0.1) or cscheme.neutral[600],
-  -- color_inner = cscheme.type == "dark" and cscheme.neutral[900] or cscheme.neutral[600],
+  color = cscheme.type == "dark" and darken(cscheme.neutral[900], 0.2) or cscheme.neutral[600],
+  color_inner = cscheme.type == "dark" and darken(cscheme.neutral[900], 0) or cscheme.neutral[600],
   -- color = Helpers.color.blend(cscheme.neutral[700], cscheme.neutral[850]),
-  color = cscheme.type == "dark" and Helpers.color.blend(cscheme.neutral[800],cscheme.neutral[700]) or cscheme.neutral[600],
-  color_inner = cscheme.type == "dark" and cscheme.neutral[700] or cscheme.neutral[600],
+  -- color = cscheme.type == "dark" and Helpers.color.blend(cscheme.neutral[800],cscheme.neutral[700]) or cscheme.neutral[600],
+  -- color_inner = cscheme.type == "dark" and cscheme.neutral[700] or cscheme.neutral[600],
 }
 theme.widget_radius = {
   outer = theme.radius * 2,
@@ -101,6 +101,7 @@ theme.taglist_fg_empty = cscheme.neutral[600] .. "BB"
 
 -- tasklist
 theme.tasklist_icon_size = dpi(18)
+theme.tasklist_font = theme.font_name .. "Regular 11"
 theme.tasklist_fg_normal = cscheme.neutral[300]
 theme.tasklist_fg_focus = cscheme.neutral[100]
 theme.tasklist_fg_minimize = cscheme.neutral[700]

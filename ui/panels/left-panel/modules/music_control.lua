@@ -297,7 +297,7 @@ return Wibox.widget({
             bg = Beautiful.widget_border.color_inner,
             shape = default.shape,
             {
-              layout = Wibox.layout.flex.horizontal,
+              layout = Wibox.layout.fixed.horizontal,
               spacing = Beautiful.widget_border.width,
               button_notify,
               button_random,

@@ -3,7 +3,8 @@ local M = {
     type = "dark",
     primary = {},
     neutral = {
-      dark = "#282c34",
+      -- dark = "#282c34",
+      dark = "#1e222a",
       base = "#696f79",
       light = "#abb2bf",
     },
