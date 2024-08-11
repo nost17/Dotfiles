@@ -68,18 +68,18 @@ menu_tag.menu:add(create_tag_button({
     path = Beautiful.icons .. "others/long-arrow_down.svg",
   },
 }))
-menu_tag.menu:add(create_header("etiqueta"))
-menu_tag.menu:add(create_tag_button({
-  text = "borrar",
-  icon = {
-    path = Beautiful.icons .. "others/trash.svg",
-    color = Beautiful.red[300],
-    uncached = true,
-  },
-  action = function ()
-    menu_tag.tag:delete()
-  end
-}))
+-- menu_tag.menu:add(create_header("etiqueta"))
+-- menu_tag.menu:add(create_tag_button({
+--   text = "borrar",
+--   icon = {
+--     path = Beautiful.icons .. "others/trash.svg",
+--     color = Beautiful.red[300],
+--     uncached = true,
+--   },
+--   action = function ()
+--     menu_tag.tag:delete()
+--   end
+-- }))
 
 Beautiful.taglist_index_as_name = true
 
@@ -125,10 +125,11 @@ return function(s)
     widget_template = {
       widget = Wibox.container.background,
       id = "background_role",
+      forced_width = dpi(23),
       {
         widget = Wibox.container.margin,
-        left = Beautiful.widget_padding.inner,
-        right = Beautiful.widget_padding.inner,
+        -- left = Beautiful.widget_padding.inner,
+        -- right = Beautiful.widget_padding.inner,
         {
           widget = Wibox.widget.textbox,
           id = "text_role",

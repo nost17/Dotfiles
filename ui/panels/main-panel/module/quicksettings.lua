@@ -4,10 +4,10 @@ local button = Utils.widgets.button.elevated.normal({
   -- paddings = Beautiful.widget_padding.inner,
   shape = Helpers.shape.rrect(),
   normal_border_width = Beautiful.widget_border.width,
-  normal_border_color = Beautiful.neutral[600],
+  normal_border_color = Beautiful.widget_border.color,
   paddings = {
-    left = Beautiful.widget_padding.inner,
-    right = Beautiful.widget_padding.inner,
+    left = Beautiful.widget_padding.inner * 0.9,
+    right = Beautiful.widget_padding.inner * 0.9,
   },
   halign = "center",
   valign = "center",
@@ -17,7 +17,8 @@ local button = Utils.widgets.button.elevated.normal({
     valign = "center",
     halign = "center",
     icon = {
-      path = Beautiful.icons .. "others/circle-bold.svg",
+      path = Beautiful.icons .. "awesome.svg",
+      -- path = Beautiful.icons .. "others/circle-bold.svg",
       color = Beautiful.fg_normal,
       uncached = true
     },

@@ -170,6 +170,7 @@ local button_repeat = mkbutton(svg_icons.replay, default.icons.size_alt * 1.15, 
   Lib.Playerctl:play_pause()
 end, default.icons.inactive, dpi(-1))
 
+-- TODO: Move this button to quicksettings buttons
 local button_notify = mkbutton(svg_icons.ding, default.icons.size_alt * 1.15, function(self)
   User.music.notifys.enabled = not User.music.notifys.enabled
   if User.music.notifys.enabled then

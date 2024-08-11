@@ -30,7 +30,7 @@ local style = {
   button_fg_off = Beautiful.neutral[200],
   button_border_width = Beautiful.widget_border.width,
   button_border_color = Beautiful.neutral[900],
-  button_border_color_hover = Beautiful.neutral[600],
+  button_border_color_hover = Beautiful.widget_border.color,
 }
 
 local menu = {

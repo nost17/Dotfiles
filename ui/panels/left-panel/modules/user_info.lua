@@ -2,7 +2,7 @@ local dpi = Beautiful.xresources.apply_dpi
 local wbutton = Utils.widgets.button.elevated
 local info = {
   user = Helpers.text.first_upper(os.getenv("USER")),
-  github = "@Rreverie",
+  github = "@kry16",
 }
 
 local user_icon = Wibox.widget({
@@ -58,7 +58,11 @@ local function mkbutton(image, size, fn)
       halign = "center",
       valign = "center",
     },
-    bg_normal = Beautiful.neutral[800],
+    bg_normal = Helpers.color.lightness(
+      Beautiful.neutral[800],
+      0.01,
+      Beautiful.type == "dark" and "lighten" or "darken"
+    ),
     -- bg_hover = Beautiful.neutral[700],
     -- bg_press = Beautiful.neutral[800],
     shape = Helpers.shape.rrect(Beautiful.radius),

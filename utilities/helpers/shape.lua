@@ -1,12 +1,23 @@
 local gshape = Gears.shape
 local _module = {}
+
+
+---radius for all edges
+---@param radius number|nil radius
+---@return function
 function _module.rrect(radius)
   radius = radius or Beautiful.widget_radius.inner
   return function(cr, width, height)
     gshape.rounded_rect(cr, width, height, radius)
   end
 end
-
+---radius for selected edges
+---@param radius number|nil radius
+---@param tl boolean|nil top-left border
+---@param tr boolean|nil top-right border
+---@param br boolean|nil bottom-right border
+---@param bl boolean|nil bottom-left border
+---@return function
 function _module.prrect(radius, tl, tr, br, bl)
   radius = radius or Beautiful.widget_radius.inner
   return function(cr, width, height)

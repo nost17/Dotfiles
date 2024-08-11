@@ -1,12 +1,16 @@
 local dpi = Beautiful.xresources.apply_dpi
 
+---@alias Widget table
+
 local parse_date = Helpers.text.parse_date
 local icon_size = Beautiful.notification_icon_height * 0.80
 
 local new_time = function(creation_time)
    return Helpers.text.to_time_ago(os.difftime(parse_date(os.date("%Y-%m-%dT%H:%M:%S")), parse_date(creation_time)))
 end
-
+---Create notification body
+---@param n table
+---@return Widget
 local function create_notify(n)
    local time = os.date("%Y-%m-%dT%H:%M:%S")
    n.title = Helpers.text.escape_text(n.title)
@@ -96,6 +100,7 @@ local function create_notify(n)
       end
    end)
 
+   ---@type Widget
    return Wibox.widget({
       widget = Wibox.container.margin,
       left = Beautiful.widget_padding.inner,
