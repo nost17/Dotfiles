@@ -10,7 +10,8 @@
         "screen",
         "tag",
         "mouse",
-        "root"
+        "root",
+        "mousegrabber"
     ],
     "format.defaultConfig": {
         "indent_style": "space",

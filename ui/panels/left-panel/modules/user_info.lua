@@ -2,7 +2,7 @@ local dpi = Beautiful.xresources.apply_dpi
 local wbutton = Utils.widgets.button.elevated
 local info = {
   user = Helpers.text.first_upper(os.getenv("USER")),
-  github = "@Rreverie",
+  github = "@kry16",
 }
 
 local user_icon = Wibox.widget({

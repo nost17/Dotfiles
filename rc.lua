@@ -45,3 +45,12 @@ require("binds")
 
 -- Load all client rules.
 require("config")
+Gears.timer({
+  timeout = 5,
+  call_now = true,
+  autostart = true,
+  single_shot = false,
+  callback = function()
+    collectgarbage("collect")
+  end,
+})

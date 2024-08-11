@@ -191,11 +191,19 @@ local function make_notify(n)
   function n:set_appname(new_appname)
     n_appname:set_markup(htext.colorize_text(htext.upper(new_appname or ""), accent_color))
   end
+
   n:connect_signal("property::timeout", function(_)
     timebar:set_value(timebar.max_value)
   end)
   n:connect_signal("property::timebar", function()
     timebar:set_value(timebar.max_value)
+  end)
+  notification:connect_signal("button::press", function(_, _, _, button)
+    if button == 3 then
+      n.callback = function() end
+      n.run = function() end
+      n.destroy = function() end
+    end
   end)
   notification:connect_signal("mouse::enter", function()
     n:set_timeout(4294967)

@@ -10,7 +10,7 @@ return {
   save_history = false,
   terminal = "wezterm",
   reset_on_hide = true,
-  favorites = { "kitty", "firefox" },
+  favorites = { "wezterm", "firefox", "thunar" },
   skip_empty_icons = false,
   shrink_height = true,
   shape = Helpers.shape.rrect(Beautiful.widget_radius.outer),
