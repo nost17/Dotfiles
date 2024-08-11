@@ -10,6 +10,7 @@ local labels = {
   calendar = "Abrir calendario",
   lock = "Bloquear pantalla",
   launcher = "Lanzador de aplicaciones",
+  color_selector = "Activar selector de color",
 }
 
 local function create_bind(mods, key, desc, group, fn)
@@ -39,6 +40,9 @@ Awful.keyboard.append_global_keybindings({
 
 --- Global key bindings
 Awful.keyboard.append_global_keybindings({
+  create_bind({ modkey, "Shift" }, "x", labels.color_selector, nil, function()
+    awesome.emit_signal("color_selector")
+  end),
   -- General Awesome keys.
   Awful.key(
     { modkey },
