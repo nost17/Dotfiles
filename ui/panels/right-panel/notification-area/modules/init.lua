@@ -1,5 +1,7 @@
 local core = {}
 local dpi = Beautiful.xresources.apply_dpi
+---@type function
+---@module "ui.panels.right-panel.notification-area.modules.template"
 local notification_template = require(... .. ".template")
 local scroller = require(... .. ".scroll")
 
@@ -12,7 +14,7 @@ local style = {
 
 core.layout = Wibox.widget({
    layout = Wibox.layout.fixed.vertical,
-   spacing = dpi(10),
+   spacing = Beautiful.widget_spacing,
 })
 scroller(core.layout)
 -- core.layout.forced_height = dpi(240)

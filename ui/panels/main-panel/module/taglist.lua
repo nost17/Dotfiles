@@ -125,10 +125,11 @@ return function(s)
     widget_template = {
       widget = Wibox.container.background,
       id = "background_role",
+      forced_width = dpi(23),
       {
         widget = Wibox.container.margin,
-        left = Beautiful.widget_padding.inner,
-        right = Beautiful.widget_padding.inner,
+        -- left = Beautiful.widget_padding.inner,
+        -- right = Beautiful.widget_padding.inner,
         {
           widget = Wibox.widget.textbox,
           id = "text_role",

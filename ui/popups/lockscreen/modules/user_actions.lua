@@ -59,6 +59,7 @@ local suspend = mkbutton({
 
 return Wibox.widget({
    widget = Wibox.container.background,
+   shape = Helpers.shape.rrect(),
    bg = style.border_color,
    border_width = style.border_width,
    border_color = style.border_color,

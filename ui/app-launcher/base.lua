@@ -91,7 +91,9 @@ local function select_app(self, x, y)
     self._private.active_widget = widgets[1]
     if self._private.active_widget ~= nil then
       self._private.active_widget.selected = true
-      Helpers.gc(self._private.active_widget, "background").bg = self.app_selected_color
+      -- Helpers.gc(self._private.active_widget, "background").bg = self.app_selected_color
+      self._private.active_widget.bg = self.app_selected_color
+      self._private.active_widget.border_color = self.app_selected_border_color
       local name_widget = Helpers.gc(self._private.active_widget, "name")
       if name_widget then
         name_widget.markup = Helpers.text.colorize_text(name_widget.text, self.app_name_selected_color)
@@ -103,7 +105,9 @@ end
 local function unselect_app(self)
   if self._private.active_widget ~= nil then
     self._private.active_widget.selected = false
-    Helpers.gc(self._private.active_widget, "background").bg = self.app_normal_color
+    -- Helpers.gc(self._private.active_widget, "background").bg = self.app_normal_color
+    self._private.active_widget.bg = self.app_normal_color
+    self._private.active_widget.border_color = self.app_normal_border_color
     local name_widget = Helpers.gc(self._private.active_widget, "name")
     if name_widget then
       name_widget.markup = Helpers.text.colorize_text(name_widget.text, self.app_name_normal_color)
@@ -139,6 +143,8 @@ local function create_app_widget(self, entry)
     forced_height = self.app_height,
     shape = self.app_shape,
     bg = self.app_normal_color,
+    border_width = self.app_border_width,
+    border_color = self.app_normal_border_color,
     {
       widget = Wibox.container.margin,
       margins = self.app_content_padding,
@@ -191,9 +197,13 @@ local function create_app_widget(self, entry)
 
     local w_app = _self
     if w_app.selected then
-      Helpers.gc(w_app, "background").bg = self.app_selected_hover_color
+      app.bg = self.app_selected_hover_color
+      app.border_color = self.app_selected_hover_border_color
+      -- Helpers.gc(w_app, "background").bg = self.app_selected_hover_color
     else
-      Helpers.gc(w_app, "background").bg = self.app_normal_hover_color
+      app.bg = self.app_normal_hover_color
+      app.border_color = self.app_normal_hover_border_color
+      -- Helpers.gc(w_app, "background").bg = self.app_normal_hover_color
     end
   end)
 
@@ -205,9 +215,13 @@ local function create_app_widget(self, entry)
 
     local w_app = _self
     if w_app.selected then
-      Helpers.gc(w_app, "background").bg = self.app_selected_color
+      app.bg = self.app_selected_color
+      -- Helpers.gc(w_app, "background").bg = self.app_selected_color
+      app.border_color = self.app_selected_border_color
     else
-      Helpers.gc(w_app, "background").bg = self.app_normal_color
+      app.bg = self.app_normal_color
+      -- Helpers.gc(w_app, "background").bg = self.app_normal_color
+      app.border_color = self.app_normal_border_color
     end
   end)
 

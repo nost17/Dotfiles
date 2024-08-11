@@ -1,6 +1,6 @@
 local dpi = Beautiful.xresources.apply_dpi
 User._priv.bar_size = dpi(36)
-User._priv.bar_padding = dpi(3)
+User._priv.bar_padding = dpi(4)
 local module = require(... .. ".module")
 
 -- local add_tags = Utils.widgets.button.text.normal({
@@ -57,7 +57,12 @@ return function(s)
               shape = Helpers.shape.rrect(Beautiful.radius),
               border_width = Beautiful.widget_border.width,
               border_color = Beautiful.widget_border.color,
-              module.taglist(s),
+              {
+                widget = Wibox.container.margin,
+                left = dpi(1),
+                right = dpi(1),
+                module.taglist(s)
+              },
             },
             -- add_tags,
           },

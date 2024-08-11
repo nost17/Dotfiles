@@ -1,20 +1,20 @@
 {
-    "diagnostics": {
-        "disable": [
-            "lowercase-global"
-        ]
-    },
-    "diagnostics.globals": [
-        "client",
-        "awesome",
-        "screen",
-        "tag",
-        "mouse",
-        "root",
-        "mousegrabber"
-    ],
-    "format.defaultConfig": {
-        "indent_style": "space",
-        "indent_size": "2"
-    }
+  "diagnostics": {
+    "disable": [
+      "lowercase-global"
+    ]
+  },
+  "diagnostics.globals": [
+    "client",
+    "awesome",
+    "screen",
+    "tag",
+    "mouse",
+    "root",
+    "mousegrabber"
+  ],
+  "format.defaultConfig": {
+    "indent_style": "space",
+    "indent_size": "2"
+  }
 }
