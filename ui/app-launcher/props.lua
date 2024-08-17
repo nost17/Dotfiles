@@ -76,11 +76,6 @@ return {
   prompt_separator_color = Beautiful.primary[500],
   prompt_border_width = Beautiful.widget_border.width,
   prompt_border_color = Beautiful.widget_border.color,
-  grid_margins = {
-    top = Beautiful.widget_padding.outer * 1.75,
-    bottom = Beautiful.widget_padding.outer,
-    left = Beautiful.widget_padding.outer,
-    right = Beautiful.widget_padding.outer,
-  },
+  grid_margins = Beautiful.widget_padding.outer,
   grid_spacing = Beautiful.widget_spacing,
 }

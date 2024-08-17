@@ -19,6 +19,7 @@ local capi = {
 
 --- @class ButtonNormal
 local button_normal = {
+  mt = {}
 }
 
 local mt = {}
@@ -30,7 +31,8 @@ local properties = {
   "padding",
   -- "hover_cursor",
   "disabled",
-  "color",
+  -- "color",
+  -- "overlay",
   "normal_shape",
   "hover_shape",
   "press_shape",
@@ -82,19 +84,20 @@ function button_normal:effect()
   local shape = wp[key .. "shape"] or wp.defaults[key .. "shape"]
   local border_width = wp[key .. "border_width"] or wp.defaults[key .. "border_width"]
   local border_color = wp[key .. "border_color"] or wp.defaults[key .. "border_color"]
+  -- self:set_overlay(bg)
 
   -- Update opacity overlay
   local state_layer_opacity = 0
 
   if wp.color_is_dark then
     if wp.mode == "hover" then
-      state_layer_opacity = 0.05
+      state_layer_opacity = 0.04
     elseif wp.mode == "press" then
-      state_layer_opacity = 0.03
+      state_layer_opacity = 0.02
     end
   else
     if wp.mode == "hover" then
-      state_layer_opacity = 0.10
+      state_layer_opacity = 0.13
     elseif wp.mode == "press" then
       state_layer_opacity = 0.20
     end
@@ -109,21 +112,64 @@ function button_normal:effect()
   self.border_width = border_width
 end
 
---- Sets the button color
---- @param color string new background color
-function button_normal:set_color(color)
+--- Sets the button children
+--- @param widget table the new **widget**
+function button_normal:set_widget(widget)
   local wp = self._private
-  wp.color = color or wp.defaults.color
-  wp.color_is_dark = lib_color.isDark(wp.color)
-  Naughty.notify({
-    title = wp.color,
-  text = tostring(wp.color_is_dark)
+  widget = widget or {}
+  local w = widget and wibox.widget.base.make_widget_from_value(widget)
+  if w then
+    wibox.widget.base.check_widget(w)
+  end
+
+  wp.widget = wibox.widget({
+    layout = wibox.layout.stack,
+    {
+      widget = bwidget,
+      id = "overlay",
+      opacity = 0,
+      bg = Beautiful.neutral[100],
+    },
+    {
+      widget = wibox.container.place,
+      id = "place",
+      halign = wp.halign or "center",
+      valign = wp.valign or "center",
+      {
+        widget = wibox.container.margin,
+        id = "padding",
+        margins = wp.padding or wp.defaults.padding,
+        w,
+      },
+    },
   })
+  wp.overlay = wp.widget.children[1]
+  wp.child = wp.widget:get_children_by_id("padding")[1].children[1]
+end
+
+--- Set overlay color
+--- @protected
+function button_normal:update_overlay(color)
+  local wp = self._private
+  wp.color_is_dark = helpers.color.isDark(color)
   if wp.color_is_dark then
     wp.overlay.bg = beautiful.neutral[beautiful.type == "dark" and 100 or 900]
   else
     wp.overlay.bg = beautiful.neutral[beautiful.type == "dark" and 900 or 100]
   end
+end
+
+function button_normal:set_overlay(color)
+  local wp = self._private
+  wp.overlay.bg = color or wp.overlay.bg
+end
+
+--- Sets the button color
+--- @param color string new background color
+function button_normal:set_color(color)
+  local wp = self._private
+  wp.color = color or wp.defaults.color
+  self:update_overlay(wp.color)
   self:effect()
 end
 
@@ -157,40 +203,6 @@ function button_normal:set_normal_border_color(normal_border_color)
   self:effect()
 end
 
---- Sets the button children
---- @param widget table the new **widget**
-function button_normal:set_widget(widget)
-  local wp = self._private
-
-  local w = widget and wibox.widget.base.make_widget_from_value(widget)
-  if w then
-    wibox.widget.base.check_widget(w)
-  end
-
-  wp.widget = wibox.widget({
-    layout = wibox.layout.stack,
-    {
-      widget = bwidget,
-      id = "overlay",
-      opacity = 0,
-      bg = Beautiful.neutral[100],
-    },
-    {
-      widget = wibox.container.place,
-      id = "place",
-      halign = wp.halign or "center",
-      valign = wp.valign or "center",
-      {
-        widget = wibox.container.margin,
-        id = "padding",
-        margins = wp.padding or dpi(0),
-        w,
-      },
-    },
-  })
-  wp.overlay = wp.widget.children[1]
-  wp.child = wp.widget:get_children_by_id("padding")[1].children[1]
-end
 
 --- Sets the horizontal alignment
 --- @param halign string
@@ -226,12 +238,16 @@ function button_normal:set_padding(padding)
   end
 end
 
+function button_normal:get_content()
+  return self._private.child
+end
+
 --- Create new widget button
+--- @param is_state boolean|nil is a status button?
 --- @return ButtonNormal
-local function new(props)
-  --- @class args
+local function new(is_state)
+  --- @class normal_args
   --- @field widget? table Widget child of button
-  --- @field is_state? boolean Is it a **status** button?
   --- @field color? string Background color (hex)
   --- @field halign? string Horizontal alignment
   --- @field valign? string Vertical alignment
@@ -253,18 +269,16 @@ local function new(props)
   --- @field on_secondary_release? function Function called on secondary mouse button release
   --- @field on_scroll_up? function Function called on scroll up
   --- @field on_scroll_down? function Function called on scroll down
-  props = props or {}
+  props = props
   local widget = bwidget()
   gtable.crush(widget, button_normal, true)
-
-  -- widget:set_widget(wibox.container.margin())
 
   local wp = widget._private
   wp.mode = "normal"
 
   -- Default props
   wp.defaults = {}
-  wp.defaults.padding = 10
+  wp.defaults.padding = 6
   wp.defaults.color = beautiful.neutral[850]
 
   wp.defaults.normal_shape = helpers.shape.rrect()
@@ -277,7 +291,7 @@ local function new(props)
 
   wp.defaults.normal_border_color = beautiful.widget_border.color
   wp.defaults.hover_border_color = wp.defaults.normal_border_color
-  wp.defaults.press_border_color = wp.defaults.normal_border_color
+  wp.defaults.press_border_color = wp.defaults.hover_border_color
 
   wp.on_hover = nil
   wp.on_leave = nil
@@ -287,6 +301,7 @@ local function new(props)
   wp.on_secondary_release = nil
   wp.on_scroll_up = nil
   wp.on_scroll_down = nil
+
 
   widget:connect_signal("mouse::enter", function(self, find_widgets_result)
     if wp.disabled == true then
@@ -340,39 +355,48 @@ local function new(props)
       wp.on_scroll_down(self, lx, ly, button, mods, find_widgets_result)
     end
   end)
-  widget:connect_signal("button::release", function(self, lx, ly, button, mods, find_widgets_result)
-    if wp.disabled == true then
-      return
-    end
-    if button == 1 then
-      wp.old_mode = wp.mode
-      wp.mode = "hover"
-      self:effect()
-
-      if wp.on_release then
-        wp.on_release(self, lx, ly, button, mods, find_widgets_result)
+  if is_state ~= true then
+    widget:connect_signal("button::release", function(self, lx, ly, button, mods, find_widgets_result)
+      if wp.disabled == true then
+        return
       end
-    elseif button == 3 and (wp.on_secondary_release or wp.on_secondary_press) then
-      wp.old_mode = wp.mode
-      wp.mode = "hover"
-      self:effect()
+      if button == 1 then
+        wp.old_mode = wp.mode
+        wp.mode = "hover"
+        self:effect()
 
-      if wp.on_secondary_release then
-        wp.on_secondary_release(self, lx, ly, button, mods, find_widgets_result)
+        if wp.on_release then
+          wp.on_release(self, lx, ly, button, mods, find_widgets_result)
+        end
+      elseif button == 3 and (wp.on_secondary_release or wp.on_secondary_press) then
+        wp.old_mode = wp.mode
+        wp.mode = "hover"
+        self:effect()
+
+        if wp.on_secondary_release then
+          wp.on_secondary_release(self, lx, ly, button, mods, find_widgets_result)
+        end
       end
-    end
-  end)
-
-  widget:set_widget(props.widget or {})
-
-  for _, prop in ipairs(properties) do
-    widget["set_" .. prop](widget, props[prop] or wp.defaults[prop])
+    end)
   end
+
+  widget:set_widget(wibox.container.margin())
+  -- widget:set_widget(props.widget)
+  widget:update_overlay(wp.defaults.color)
+  widget:effect()
+
+  -- for _, prop in ipairs(properties) do
+  --   widget["set_" .. prop](widget, wp.defaults[prop])
+  -- end
 
   return widget
 end
 
 
+function button_normal.mt:__call(...)
+  return new(...)
+end
+
 build_properties(button_normal, properties)
 
-return new
+return setmetatable(button_normal, button_normal.mt)

@@ -57,14 +57,21 @@ theme.font_name = _font.name
 theme.font_icon = "Material Design Icons Desktop "
 theme.font = font.font_reg_m
 
+-- cscheme.neutral[850] = "#ECECE8"
+
 -- widget
 theme.radius = dpi(2)
+theme.widget_color = {
+  cscheme.neutral[900],
+  cscheme.neutral[800],
+  cscheme.neutral[700],
+}
 theme.widget_border = {
   width = 1,
   -- color = cscheme.type == "dark" and darken(cscheme.neutral[900], 0.2) or cscheme.neutral[600],
   -- color_inner = cscheme.type == "dark" and darken(cscheme.neutral[900], 0) or cscheme.neutral[600],
   -- color = Helpers.color.blend(cscheme.neutral[700], cscheme.neutral[850]),
-  color = cscheme.type == "dark" and Helpers.color.blend(cscheme.neutral[800],cscheme.neutral[700]) or cscheme.neutral[600],
+  color = cscheme.type == "dark" and Helpers.color.blend(cscheme.neutral[700],cscheme.neutral[600]) or cscheme.neutral[600],
   color_inner = cscheme.type == "dark" and cscheme.neutral[700] or cscheme.neutral[600],
 }
 theme.widget_radius = {

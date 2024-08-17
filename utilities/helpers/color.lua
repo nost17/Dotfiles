@@ -116,6 +116,14 @@ end
 
 --------------
 
+function M.darken_or_lighten(color, amount)
+  if M.isDark(color) then
+    return M.lighten(color, amount)
+  else
+    return M.darken(color, amount)
+  end
+end
+
 function M.lightness(color, brightness, method)
   if method == "darken" then
     return M.darken(color, brightness)

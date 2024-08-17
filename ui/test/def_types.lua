@@ -71,3 +71,7 @@ local ButtonNormal = {}
 -- --- Sets the button children
 -- --- @param widget table the new widget 
 -- function ButtonNormal:set_widget(widget) end
+
+
+--- @class ButtonState: ButtonNormal
+local ButtonState = {}

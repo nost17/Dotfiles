@@ -23,6 +23,7 @@ local M = {
     primary = {},
     neutral = {
       dark = "#fafafa",
+      -- base = "#696f79",
       light = "#202227",
     },
     colors = {

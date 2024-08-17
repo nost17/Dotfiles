@@ -16,8 +16,8 @@ local style = {
   border_width = Beautiful.widget_border.width,
   shape = Helpers.shape.rrect(Beautiful.radius),
   header = {
-    bg_normal = Beautiful.neutral[850],
-    bg_hover = Beautiful.neutral[800],
+    bg_normal = Beautiful.neutral[800],
+    bg_hover = Beautiful.neutral[700],
     fg_normal = Beautiful.fg_normal,
   },
   days = {
