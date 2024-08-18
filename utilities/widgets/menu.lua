@@ -47,7 +47,8 @@ local function get_icon_and_text(args)
   local icon = nil
   local text = nil
   if args.font_icon ~= nil then
-    icon = twidget({
+    icon = Wibox.widget({
+      widget = twidget,
       text = args.font_icon.icon,
       font = args.font_icon.font or Beautiful.font_icon,
       size = args.font_icon.size or 14,

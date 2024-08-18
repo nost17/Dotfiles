@@ -98,6 +98,36 @@ function _module.findBestMatch(nombres, objetivo)
   return nombre_mas_parecido
 end
 
+function _module.generate_markup(opts)
+  local bold_start = ""
+  local bold_end = ""
+  local italic_start = ""
+  local italic_end = ""
+  local underline_start = ""
+  local underline_end = ""
+
+  if opts.bold == true then
+    bold_start = "<b>"
+    bold_end = "</b>"
+  end
+  if opts.italic == true then
+    italic_start = "<i>"
+    italic_end = "</i>"
+  end
+  if opts.underline == true then
+    underline_start = "<u>"
+    underline_end = "</u>"
+  end
+
+  return underline_start
+      .. bold_start
+      .. italic_start
+      .. _module.colorize_text(opts.text, opts.color or Beautiful.fg_normal, opts.bg)
+      .. italic_end
+      .. bold_end
+      .. underline_end
+end
+
 -- [[
 -- local time = os.date("%Y-%m-%dT%H:%M:%S")
 -- to_time_ago(os.difftime(parse_date(os.date("%Y-%m-%dT%H:%M:%S")), parse_date(time)))

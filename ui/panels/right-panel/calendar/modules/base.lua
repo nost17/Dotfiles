@@ -51,12 +51,15 @@ local function day_name_widget(name, weekend)
     -- forced_width = style.weak_days.size,
     -- forced_height = style.weak_days.size,
     bg = style.weak_days.bg_normal,
-    wtext({
+    Wibox.widget({
+      widget = Wibox.widget.textbox,
       halign = "center",
-      color = weekend and style.weak_days.accent or style.weak_days.color,
-      size = 11,
-      bold = true,
-      text = name,
+      font = Beautiful.font_reg_s,
+      markup = Helpers.text.generate_markup({
+        color = weekend and style.weak_days.accent or style.weak_days.color,
+        bold = true,
+        text = name,
+      })
     }),
   })
 end

@@ -5,7 +5,8 @@ local bwidget = require("wibox.container.background")
 local texto = Wibox.widget({
   widget = twidget,
   text = "LOL",
-  size = 6,
+  size = 12,
+  halign = "right",
   font = Beautiful.font_light_xxl,
   color = Beautiful.green[200]
 })
@@ -17,25 +18,6 @@ texto:connect_signal("property::font", function ()
   }
 end)
 
-Gears.timer({
-  timeout = 3,
-  autostart = true,
-  single_shot = true,
-  callback = function ()
-    -- texto:set_text("buenas")
-    texto:set_font(Beautiful.font_bold_xl)
-    -- texto:set_size(20)
-  end
-})
-
-Gears.timer({
-  timeout = 4,
-  autostart = true,
-  single_shot = true,
-  callback = function ()
-    texto:set_size(40)
-  end
-})
 
 
 
