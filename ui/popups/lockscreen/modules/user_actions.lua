@@ -1,4 +1,4 @@
-local wbutton = Utils.widgets.button.elevated
+local wbutton = Utils.widgets.button.normal
 local icons_path = Beautiful.icons .. "power/"
 local icons = {
    suspend = icons_path .. "suspend.svg",
@@ -12,8 +12,9 @@ local style = {
 }
 
 local function mkbutton(opts)
-   return wbutton.normal({
-      paddings = {
+   return Wibox.widget({
+      widget = wbutton,
+      padding = {
          top = Beautiful.widget_padding.inner * 0.8,
          bottom = Beautiful.widget_padding.inner * 0.8,
          left = Beautiful.widget_padding.outer * 0.9,
@@ -24,7 +25,7 @@ local function mkbutton(opts)
       -- constraint_strategy = "exact",
       halign = "left",
       valign = "center",
-      child = {
+      {
          layout = Wibox.layout.fixed.horizontal,
          spacing = Beautiful.widget_spacing,
          {
@@ -43,7 +44,7 @@ local function mkbutton(opts)
             valign = "center",
          },
       },
-      bg_normal = style.bg,
+      color = style.bg,
       on_release = opts.fn,
    })
 end

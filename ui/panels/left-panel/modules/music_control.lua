@@ -1,6 +1,6 @@
 local dpi = Beautiful.xresources.apply_dpi
 local wtext = Utils.widgets.text
-local wbutton = Utils.widgets.button.elevated
+local wbutton = Utils.widgets.button
 local art_size = dpi(50)
 local default = {
   shape = Helpers.shape.rrect(Beautiful.radius),
@@ -118,21 +118,20 @@ local function mkbutton(image, size, fn, color, yoffset, xoffset)
     halign = "center",
     valign = "center",
   })
-  button = wbutton.normal({
-    paddings = button_padding,
+  button = Wibox.widget({
+    widget = wbutton.normal,
+    padding = button_padding,
+    normal_border_width = 0,
     halign = "center",
     valign = "center",
-    -- shape = default.shape,
-    bg_normal = Beautiful.neutral[800],
-    -- bg_normal = User.music.control.art_bg and Beautiful.transparent or Beautiful.neutral[800],
-    child = {
+    color = Beautiful.neutral[800],
+    {
       widget = Wibox.container.margin,
+      forced_width = size * 1.1,
       bottom = yoffset,
       right = xoffset,
       icon,
     },
-    -- bg_normal = Helpers.color.blend(Beautiful.neutral[850], Beautiful.neutral[900]),
-    -- shape = Helpers.shape.rrect(Beautiful.radius),
     on_press = function()
       fn(button, icon)
     end,
@@ -258,8 +257,21 @@ return Wibox.widget({
         {
           layout = Wibox.layout.align.horizontal,
           expand = "none",
-          wbutton.normal({
-            child = {
+          Wibox.widget({
+            widget = wbutton.normal,
+            padding = {
+              left = Beautiful.widget_padding.inner,
+              right = Beautiful.widget_padding.inner,
+            },
+            normal_border_color = Beautiful.widget_border.color_inner,
+            color = Beautiful.neutral[800],
+            on_press = function()
+              Lib.Playerctl:next_player()
+            end,
+            on_secondary_press = function()
+              Lib.Playerctl:prev_player()
+            end,
+            {
               layout = Wibox.layout.fixed.horizontal,
               spacing = Beautiful.widget_spacing,
               {
@@ -275,20 +287,6 @@ return Wibox.widget({
                 metadata_player,
               },
             },
-            shape = default.shape,
-            paddings = {
-              left = Beautiful.widget_padding.inner,
-              right = Beautiful.widget_padding.inner,
-            },
-            normal_border_width = Beautiful.widget_border.width,
-            normal_border_color = Beautiful.widget_border.color_inner,
-            bg_normal = Beautiful.neutral[800],
-            on_press = function()
-              Lib.Playerctl:next_player()
-            end,
-            on_secondary_press = function()
-              Lib.Playerctl:prev_player()
-            end,
           }),
           nil,
           {

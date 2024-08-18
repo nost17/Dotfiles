@@ -1,5 +1,5 @@
 local dpi = Beautiful.xresources.apply_dpi
-local wbutton = Utils.widgets.button.elevated
+local wbutton = Utils.widgets.button
 local info = {
   user = Helpers.text.first_upper(os.getenv("USER")),
   github = "@kry16",
@@ -43,42 +43,43 @@ local user_name = Wibox.widget({
 })
 
 local function mkbutton(image, size, fn)
-  return wbutton.normal({
-    paddings = 0,
-    constraint_width = dpi(44),
-    constraint_height = dpi(44),
-    constraint_strategy = "exact",
+  return Wibox.widget({
+    widget = wbutton.normal,
+    padding = Beautiful.widget_padding.inner,
     halign = "center",
     valign = "center",
-    child = {
-      widget = Wibox.widget.imagebox,
-      image = Gears.color.recolor_image(image, Beautiful.neutral[200]),
-      forced_width = size,
-      forced_height = size,
-      halign = "center",
-      valign = "center",
-    },
-    bg_normal = Helpers.color.lightness(
+    color = Helpers.color.lightness(
       Beautiful.neutral[800],
       0.01,
       Beautiful.type == "dark" and "lighten" or "darken"
     ),
-    -- bg_hover = Beautiful.neutral[700],
-    -- bg_press = Beautiful.neutral[800],
-    shape = Helpers.shape.rrect(Beautiful.radius),
-    -- shape = Gears.shape.circle,
+    normal_shape = Helpers.shape.rrect(Beautiful.radius),
     normal_border_width = Beautiful.widget_border.width,
     normal_border_color = Beautiful.widget_border.color_inner,
     on_press = fn,
+    {
+      widget = Wibox.container.place,
+      forced_width = dpi(24),
+      forced_height = dpi(24),
+      strategy = "exact",
+      {
+        widget = Wibox.widget.imagebox,
+        image = Gears.color.recolor_image(image, Beautiful.neutral[200]),
+        forced_width = size,
+        forced_height = size,
+        halign = "center",
+        valign = "center",
+      }
+    }
   })
 end
 
 local screenshot_options = require((...):match("(.-)[^%.]+$") .. "sshot_buttons")
 
-local button_screenshot = mkbutton(Beautiful.icons .. "settings/camera.svg", dpi(20), function()
+local button_screenshot = mkbutton(Beautiful.icons .. "settings/camera.svg", dpi(18), function()
   screenshot_options.visible = not screenshot_options.visible
 end)
-local button_logout = mkbutton(Beautiful.icons .. "settings/exit.svg", dpi(20), function()
+local button_logout = mkbutton(Beautiful.icons .. "settings/exit.svg", dpi(18), function()
   awesome.emit_signal("widgets::logoutscreen", "show")
   awesome.emit_signal("widgets::quicksettings", "hide")
 end)
@@ -110,14 +111,12 @@ return Wibox.widget({
         },
         {
           widget = Wibox.container.place,
-          valign = "center",
-          halign = "center",
           {
             layout = Wibox.layout.flex.horizontal,
             spacing = Beautiful.widget_spacing,
             button_logout,
             button_screenshot,
-          },
+          }
         },
       },
     },

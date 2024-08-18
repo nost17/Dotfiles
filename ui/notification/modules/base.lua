@@ -15,6 +15,9 @@ local colors = {
   ["critical"] = Beautiful.red[300],
 }
 
+local border_width = Beautiful.widget_border.width
+local border_color = Beautiful.widget_border.color
+
 ruled.notification.connect_signal("request::rules", function()
   -- All notifications will match this rule.
   ruled.notification.append_rule({
@@ -74,7 +77,11 @@ local function make_notify(n)
     widget = Naughty.list.actions,
     notification = n,
     base_layout = Wibox.widget({
-      spacing = Beautiful.widget_border.width == 0 and dpi(2) or Beautiful.widget_border.width,
+      spacing = border_width == 0 and dpi(2) or border_width,
+      spacing_widget = {
+        widget = Wibox.container.background,
+        bg = border_width ~= 0 and border_color,
+      },
       layout = Wibox.layout.flex.horizontal,
     }),
     widget_template = {
@@ -82,19 +89,16 @@ local function make_notify(n)
       -- forced_height = dpi(25),
       -- forced_width = dpi(70),
       {
-        widget = Wibox.container.place,
-
+        widget = Wibox.container.margin,
+        left = dpi(6),
+        right = dpi(6),
+        top = dpi(6),
+        bottom = dpi(6),
         {
-          widget = Wibox.container.margin,
-          left = dpi(6),
-          right = dpi(6),
-          top = dpi(6),
-          bottom = dpi(6),
-          {
-            widget = Wibox.widget.textbox,
-            id = "text_role",
-            font = Beautiful.font_reg_s,
-          },
+          widget = Wibox.widget.textbox,
+          id = "text_role",
+          halign = "center",
+          font = Beautiful.font_reg_s,
         },
       },
       create_callback = function(self, _, _, _)
@@ -113,12 +117,15 @@ local function make_notify(n)
     },
   })
 
-  Gears.timer.start_new(0.95, function()
-    if not in_hover then
-      timebar.value = timebar.value - (timebar.max_value / n.timeout)
-    end
-    return timebar.value > (timebar.value / 4) or timebar.value == 0
-  end)
+  if n.urgency ~= "critical" then
+    Gears.timer.start_new(0.95, function()
+      if not in_hover then
+        timebar.value = timebar.value - (timebar.max_value / n.timeout)
+      end
+      return timebar.value > (timebar.value / 4) or timebar.value == 0
+    end)
+  end
+
   local notification = Naughty.layout.box({
     notification = n,
     minimum_width = dpi(240),
@@ -166,15 +173,9 @@ local function make_notify(n)
             top = Beautiful.widget_padding.inner * 0.5,
             {
               widget = Wibox.container.background,
-              shape = Helpers.shape.rrect(Beautiful.radius),
-              border_width = Beautiful.widget_border.width,
-              bg = Beautiful.widget_border.width == 0 and Beautiful.transparent
-                  or Beautiful.widget_border.color,
-              -- bg = Beautiful.widget_border.color,
-              border_color = Beautiful.widget_border.color,
-              -- bg = Beautiful.widget_border.width == 0 and Beautiful.neutral[900] or Beautiful.widget_border.color,
-              -- border_width = Beautiful.widget_border.width,
-              -- border_color = Beautiful.widget_border.color,
+              shape = Helpers.shape.rrect(),
+              border_width = border_width,
+              border_color = border_color,
               actions,
             },
           },
@@ -182,7 +183,6 @@ local function make_notify(n)
       },
       {
         widget = Wibox.container.margin,
-        -- top = Beautiful.widget_padding.inner * 0.5,
         timebar,
       },
     },

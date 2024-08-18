@@ -6,6 +6,10 @@ local dpi = Beautiful.xresources.apply_dpi
 local setmetatable = setmetatable
 local os = os
 
+local get_current_month = function(time)
+  return Helpers.text.first_upper(tostring(os.date("%B %Y", time)))
+end
+
 --- Calendar Widget
 --- ~~~~~~~~~~~~~~~
 
@@ -109,7 +113,7 @@ function calendar:set_date(date)
   local month_days = last_day.day
 
   local time = os.time({ year = date.year, month = date.month, day = 1 })
-  self.month:set_text(tostring(os.date("%B %Y", time)):gsub("^%l", string.upper))
+  self.month:set_text(get_current_month(time))
 
   local days_to_add_at_month_start = first_day.wday - 2
   local days_to_add_at_month_end = 42 - last_day.day - days_to_add_at_month_start - 1
@@ -143,22 +147,53 @@ function calendar:decrease_date()
   self:set_date({ year = self.date.year, month = new_calendar_month, day = self.date.day })
 end
 
+local function icon_button(icon, action)
+  return Wibox.widget({
+    widget = Wibox.container.constraint,
+    strategy = "exact",
+    width = style.days.width,
+    {
+      widget = wbutton.normal,
+      padding = 0,
+      halign = "center",
+      color = style.header.bg_normal,
+      normal_border_width = 0,
+      on_release = action,
+      {
+        widget = Wibox.widget.textbox,
+        markup = Helpers.text.colorize_text(icon, style.header.fg_normal),
+        font = "Material Design Icons Desktop 16",
+      }
+    }
+  })
+end
+
 local function new(...)
   local ret = gobject({})
   gtable.crush(ret, calendar, true)
 
-  ret.month = wbutton.text.normal({
-    text = tostring(os.date("%B %Y")):gsub("^%l", string.upper),
-    font = Beautiful.font_med_m,
-    no_size = true,
+  ret.month = Wibox.widget({
+    widget = wbutton.normal,
     halign = "left",
-    bg_normal = style.header.bg_normal,
-    bg_hover = style.header.bg_hover,
-    fg_normal = style.header.fg_normal,
+    padding = Beautiful.widget_padding.inner,
+    color = style.header.bg_normal,
+    normal_border_width = 0,
     on_release = function()
       ret:set_date_current()
     end,
+    {
+      widget = Wibox.container.background,
+      fg = style.header.fg_normal,
+      {
+        widget = Wibox.widget.textbox,
+        text = get_current_month(),
+        font = Beautiful.font_med_m,
+      }
+    }
   })
+  function ret.month:set_text(text)
+    self:get_content().children[1].text = text
+  end
 
   -- TODO: Replace unicode icons with svg icons
   local month = Wibox.widget({
@@ -167,36 +202,12 @@ local function new(...)
     ret.month,
     {
       layout = Wibox.layout.flex.horizontal,
-      wbutton.text.normal({
-        paddings = 0,
-        constraint_strategy = "exact",
-        constraint_width = style.days.width,
-        halign = "center",
-        text = "󰅃",
-        font = "Material Design Icons Desktop",
-        size = 16,
-        bg_normal = style.header.bg_normal,
-        bg_hover = style.header.bg_hover,
-        fg_normal = style.header.fg_normal,
-        on_release = function()
-          ret:increase_date()
-        end,
-      }),
-      wbutton.text.normal({
-        paddings = 0,
-        constraint_strategy = "exact",
-        constraint_width = style.days.width,
-        halign = "center",
-        text = "󰅀",
-        font = "Material Design Icons Desktop",
-        size = 16,
-        bg_normal = style.header.bg_normal,
-        bg_hover = style.header.bg_hover,
-        fg_normal = style.header.fg_normal,
-        on_release = function()
-          ret:decrease_date()
-        end,
-      }),
+      icon_button("󰅃", function()
+        ret:increase_date()
+      end),
+      icon_button("󰅀", function()
+        ret:decrease_date()
+      end)
     },
   })
 
@@ -219,11 +230,9 @@ local function new(...)
       -- spacing = Beautiful.widget_spacing,
       {
         widget = Wibox.container.background,
-        {
-          widget = Wibox.container.background,
-          shape = style.border_width == 0 and style.shape,
-          month,
-        },
+        forced_height = style.days.width,
+        shape = style.border_width == 0 and style.shape,
+        month,
       },
       {
         widget = Wibox.container.background,

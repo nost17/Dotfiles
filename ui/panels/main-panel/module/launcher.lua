@@ -2,9 +2,11 @@
 --    image = Utils.apps_info:get_distro().icon,
 require("ui.app-launcher")
 local dpi = Beautiful.xresources.apply_dpi
+local wbutton = Utils.widgets.button.normal
 
-local launcher = Utils.widgets.button.elevated.normal({
-  bg_normal = Beautiful.neutral[850],
+local launcher = Wibox.widget({
+  widget = wbutton,
+  color = Beautiful.neutral[850],
   normal_border_color = Beautiful.widget_border.color,
   normal_border_width = Beautiful.widget_border.width,
   shape = Helpers.shape.rrect(Beautiful.radius),
@@ -13,10 +15,8 @@ local launcher = Utils.widgets.button.elevated.normal({
     right = Beautiful.widget_padding.inner,
     top = dpi(2),
     bottom = dpi(2),
-    -- right= dpi(7),
-    -- left = dpi(7),
   },
-  child = {
+  {
     layout = Wibox.layout.fixed.horizontal,
     spacing = dpi(5),
     {

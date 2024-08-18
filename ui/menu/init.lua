@@ -7,9 +7,9 @@ local function create_button(opts)
     menu = main_menu,
     icon = {
       path = Beautiful.icons .. opts.icon_path,
-      color = opts.icon_color or Beautiful.neutral[100],
-      size = 17,
-      -- uncached = true,
+      color = opts.icon_color or Beautiful.primary[600],
+      -- size = 17,
+      uncached = true,
     },
     text = Helpers.text.first_upper(opts.name),
     on_release = function()
@@ -46,8 +46,8 @@ local function create_sub_menu_button(opts)
     sub_menu = screenshot_menu,
     icon = {
       path = Beautiful.icons .. opts.icon_path,
-      color = opts.icon_color or Beautiful.neutral[100],
-      size = 17,
+      color = opts.icon_color or Beautiful.primary[500],
+      -- size = 13,
       uncached = opts.uncached,
     },
     text = Helpers.text.first_upper(opts.name),
@@ -55,19 +55,19 @@ local function create_sub_menu_button(opts)
 end
 
 main_menu:add(create_button({
-  name = "Abrir terminal",
+  name = "Terminal",
   icon_path = "apps/terminal-fill.svg",
 }))
 main_menu:add(create_button({
-  name = "Abrir editor",
+  name = "Editor",
   icon_path = "apps/code-fill.svg",
 }))
 main_menu:add(create_button({
-  name = "Abrir navegador",
+  name = "Navegador",
   icon_path = "apps/planet-fill.svg",
 }))
 main_menu:add(create_button({
-  name = "Abrir archivos",
+  name = "Archivos",
   icon_path = "apps/folder-open.svg",
 }))
 main_menu:add(create_sub_menu_button({

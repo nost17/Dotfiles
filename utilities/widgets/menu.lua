@@ -4,7 +4,7 @@
 -------------------------------------------
 local gtable = Gears.table
 local gtimer = Gears.timer
-local ebwidget = Utils.widgets.button.elevated
+local ebwidget = Utils.widgets.button
 local iwidget = Utils.widgets.icon
 local twidget = Utils.widgets.text
 local cbwidget = Utils.widgets.checkbox
@@ -20,14 +20,20 @@ local capi = {
   mouse = mouse,
 }
 local style = {
-  button_padding = dpi(5),
+  button_padding = {
+    left = dpi(8),
+    right = dpi(8),
+    top = dpi(6),
+    bottom = dpi(6),
+  },
   shape = Helpers.shape.rrect(),
-  spacing = dpi(4),
+  arrow_icon = Beautiful.icons .. "others/chevrons-right.svg",
+  spacing = dpi(8),
   menu_padding = dpi(6),
-  button_bg_on = Beautiful.primary[500],
+  button_bg_on = Beautiful.neutral[700],
   button_bg_off = Beautiful.neutral[900],
-  button_fg_on = Beautiful.neutral[900],
-  button_fg_off = Beautiful.neutral[200],
+  button_fg_on = Beautiful.neutral[100],
+  button_fg_off = Beautiful.neutral[100],
   button_border_width = Beautiful.widget_border.width,
   button_border_color = Beautiful.neutral[900],
   button_border_color_hover = Beautiful.widget_border.color,
@@ -44,7 +50,7 @@ local function get_icon_and_text(args)
     icon = twidget({
       text = args.font_icon.icon,
       font = args.font_icon.font or Beautiful.font_icon,
-      size = args.font_icon.size or 16,
+      size = args.font_icon.size or 14,
       color = args.font_icon.color or style.button_fg_off,
       valign = "center",
       halign = "center",
@@ -52,7 +58,7 @@ local function get_icon_and_text(args)
   elseif args.icon ~= nil then
     icon = Wibox.widget({
       widget = iwidget,
-      size = args.icon.size or 15,
+      size = args.icon.size or 16,
       icon = args.icon,
       color = args.icon.color or style.button_fg_off,
       valign = "center",
@@ -79,7 +85,7 @@ local function get_icon_and_text(args)
   else
     text = twidget({
       text = args.text,
-      font = args.text_font or Beautiful.font_reg_s,
+      font = args.text_font or Beautiful.font_med_s,
       bold = args.bold,
       italic = args.italic,
       no_size = true,
@@ -323,7 +329,9 @@ function menu.sub_menu_button(args)
   local arrow = Wibox.widget({
     widget = iwidget,
     icon = {
-      path = Beautiful.icons .. "others/big-arrow_right.svg",
+      path = style.arrow_icon,
+      uncached = true,
+      -- path = Beautiful.icons .. "others/big-arrow_right.svg",
     },
     valign = "center",
     color = style.button_fg_off,
@@ -335,18 +343,19 @@ function menu.sub_menu_button(args)
     -- forced_height = dpi(45),
     sub_menu = args.sub_menu,
     -- margins = style.menu_padding,
-    ebwidget.state({
+    {
+      widget = ebwidget.state,
       id = "button",
       halign = "left",
-      shape = style.shape,
-      paddings = style.button_padding,
-      bg_normal = style.button_bg_off,
-      bg_normal_on = style.button_bg_on,
-      border_width = style.button_border_width,
+      normal_shape = style.shape,
+      padding = style.button_padding,
+      color = style.button_bg_off,
+      on_color = style.button_bg_on,
+      normal_border_width = style.button_border_width,
       normal_border_color = style.button_border_color,
       hover_border_color = style.button_border_color_hover,
-      on_normal_border_color = style.button_bg_on,
-      content_fill_horizontal = true,
+      press_border_color = style.button_border_color_hover,
+      on_normal_border_color = Helpers.color.darken_or_lighten(style.button_bg_on, 0.1),
       on_turn_on = function(self)
         if args.menu then
           local coords = Helpers.ui.get_widget_geometry_in_device_space({ wibox = args.menu }, self)
@@ -367,34 +376,38 @@ function menu.sub_menu_button(args)
           args.sub_menu:hide()
         end
       end,
-      child = {
+      {
         widget = Wibox.container.constraint,
         strategy = "min",
         id = "constraint",
         {
-          layout = Wibox.layout.align.horizontal,
+          widget = Wibox.container.place,
+          content_fill_horizontal = true,
           {
-            layout = Wibox.layout.fixed.horizontal,
-            spacing = style.spacing,
-            icon,
-            text,
+            layout = Wibox.layout.align.horizontal,
+            {
+              layout = Wibox.layout.fixed.horizontal,
+              spacing = style.spacing,
+              icon,
+              text,
+            },
+            nil,
+            arrow,
           },
-          nil,
-          arrow,
-        },
+        }
       },
-    }),
+    }
   })
-  widget.children[1]:connect_signal("off", function()
+  widget.children[1]:connect_signal("turn_off", function()
     if icon then
       icon:set_color(args.icon.color or style.button_fg_off)
     end
     text:set_color(style.button_fg_off)
     arrow:set_color(style.button_fg_off)
   end)
-  widget.children[1]:connect_signal("on", function()
+  widget.children[1]:connect_signal("turn_on", function()
     if icon then
-      icon:set_color(style.button_fg_on)
+      -- icon:set_color(style.button_fg_on)
     end
     text:set_color(style.button_fg_on)
     arrow:set_color(style.button_fg_on)
@@ -403,7 +416,7 @@ function menu.sub_menu_button(args)
   if args.menu then
     args.menu:connect_signal("hide", function()
       widget.children[1]:turn_off()
-      args.sub_menu:hide()
+      widget.sub_menu:hide()
     end)
   end
 
@@ -431,15 +444,17 @@ function menu.button(args)
     widget = Wibox.container.margin,
     -- forced_height = dpi(45),
     -- margins = style.menu_padding,
-    ebwidget.normal({
+    Wibox.widget({
+      widget = ebwidget.normal,
       halign = "left",
       id = "button",
-      bg_normal = style.button_bg_off,
-      shape = style.shape,
-      paddings = style.button_padding,
+      color = style.button_bg_off,
+      padding = style.button_padding,
+      normal_shape = style.shape,
       normal_border_color = style.button_border_color,
       hover_border_color = style.button_border_color_hover,
       normal_border_width = style.button_border_width,
+      press_border_color = style.button_border_color_hover,
       on_release = function(self)
         if args.menu then
           args.menu:hide(true)
@@ -451,7 +466,7 @@ function menu.button(args)
       --     args.menu:hide_children_menus()
       --   end
       -- end,
-      child = {
+      {
         widget = Wibox.container.constraint,
         strategy = "min",
         id = "constraint",
@@ -499,16 +514,18 @@ function menu.checkbox_button(args)
     widget = Wibox.container.margin,
     -- forced_height = dpi(45),
     -- margins = dpi(5),
-    ebwidget.normal({
+    {
+      widget = ebwidget.normal,
       halign = "left",
       id = "button",
-      bg_normal = style.button_bg_off,
-      shape = style.shape,
-      paddings = style.button_padding,
+      color = style.button_bg_off,
+      normal_shape = style.shape,
+      padding = style.button_padding,
       normal_border_color = style.button_border_color,
       hover_border_color = style.button_border_color_hover,
       normal_border_width = style.button_border_width,
-      content_fill_horizontal = true,
+      press_border_color = style.button_border_color_hover,
+      -- content_fill_horizontal = true,
       on_press = function(self)
         -- if args.menu then
         --   args.menu:hide(true)
@@ -519,27 +536,31 @@ function menu.checkbox_button(args)
       -- on_hover = function(self)
       --   self.menu:hide_children_menus()
       -- end,
-      child = {
+      {
         widget = Wibox.container.constraint,
         strategy = "min",
         id = "constraint",
         {
-          layout = Wibox.layout.align.horizontal,
+          widget = Wibox.container.place,
+          content_fill_horizontal = true,
           {
-            layout = Wibox.layout.fixed.horizontal,
-            spacing = style.spacing,
-            icon,
-            text,
+            layout = Wibox.layout.align.horizontal,
+            {
+              layout = Wibox.layout.fixed.horizontal,
+              spacing = style.spacing,
+              icon,
+              text,
+            },
+            nil,
+            {
+              widget = Wibox.container.margin,
+              top = dpi(1),
+              checkbox,
+            },
           },
-          nil,
-          {
-            widget = Wibox.container.margin,
-            top = dpi(1),
-            checkbox,
-          },
-        },
+        }
       },
-    }),
+    },
   })
 
   function widget:turn_on()

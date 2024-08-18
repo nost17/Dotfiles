@@ -1,8 +1,9 @@
 local dpi = Beautiful.xresources.apply_dpi
 
-local button = Utils.widgets.button.elevated.normal({
+local button = Wibox.widget({
+  widget = Utils.widgets.button.normal,
   -- paddings = Beautiful.widget_padding.inner,
-  shape = Helpers.shape.rrect(),
+  normal_shape = Helpers.shape.rrect(),
   normal_border_width = Beautiful.widget_border.width,
   normal_border_color = Beautiful.widget_border.color,
   paddings = {
@@ -12,7 +13,7 @@ local button = Utils.widgets.button.elevated.normal({
   halign = "center",
   valign = "center",
   bg_normal = Beautiful.neutral[800],
-  child = {
+  {
     widget = Utils.widgets.icon,
     valign = "center",
     halign = "center",

@@ -1,4 +1,7 @@
-local template = require((...):match("(.-)[^%.]+$") .. "controls.modules.base")
+-- local template = require((...):match("(.-)[^%.]+$") .. "controls.modules.base")
+local wbutton = Utils.widgets.button
+local wicon = Utils.widgets.icon
+local wcheckbox = Utils.widgets.checkbox
 local dpi = Beautiful.xresources.apply_dpi
 local delay_count = 0
 local hide_cursor = false
@@ -11,9 +14,28 @@ local icons = {
   down = Beautiful.icons .. "others/arrow_down.svg",
 }
 
-local button_region = template.only_icon({
+local icon_button = function(args)
+  args = args or {}
+
+  return Wibox.widget({
+    widget = wbutton.normal,
+    normal_shape = args.shape,
+    padding = args.padding or Beautiful.widget_padding.outer,
+    on_press = args.on_press,
+    normal_border_width = args.border_width,
+    {
+      widget = wicon,
+      color = Beautiful.fg_normal,
+      size = args.size,
+      icon = {
+        path = args.icon,
+      }
+    }
+  })
+end
+
+local button_region = icon_button({
   icon = icons.crop,
-  padding = Beautiful.widget_padding.outer,
   on_press = function()
     Utils.screenshot:notify(Utils.screenshot.select({
       hide_cursor = hide_cursor,
@@ -22,7 +44,7 @@ local button_region = template.only_icon({
     awesome.emit_signal("widgets::quicksettings", "hide")
   end,
 })
-local button_full = template.only_icon({
+local button_full = icon_button({
   icon = icons.full,
   padding = Beautiful.widget_padding.outer,
   on_press = function()
@@ -33,23 +55,60 @@ local button_full = template.only_icon({
     awesome.emit_signal("widgets::quicksettings", "hide")
   end,
 })
-local button_hide_cursor = template.with_label({
-  icon_off = icons.check,
-  icon_on = icons.checked,
+local button_hide_cursor = Wibox.widget({
+  widget = wbutton.state,
+  on_color = Beautiful.primary[600],
   padding = {
     right = Beautiful.widget_padding.outer,
     left = Beautiful.widget_padding.inner * 0.5,
     top = Beautiful.widget_padding.outer,
     bottom = Beautiful.widget_padding.outer,
   },
-  label = "cursor",
-  fn_on = function()
+  on_turn_on = function(self)
     hide_cursor = false
   end,
-  fn_off = function()
+  on_turn_off = function(self)
     hide_cursor = true
   end,
+  {
+    layout = Wibox.layout.fixed.horizontal,
+    spacing = dpi(4),
+    {
+      widget = wcheckbox,
+      valign = "center",
+      halign = "center",
+      icon_off = {
+        path = icons.check,
+        color = Beautiful.neutral[100]
+      },
+      icon_on = {
+        path = icons.checked,
+        color = Beautiful.neutral[900]
+      }
+    },
+    {
+      widget = Wibox.container.background,
+      fg = Beautiful.neutral[100],
+      {
+        widget = Wibox.widget.textbox,
+        font = Beautiful.font_reg_s,
+        valign = "center",
+        halign = "left",
+        text = "cursor",
+      }
+    }
+  }
 })
+local _widget = button_hide_cursor:get_content()
+button_hide_cursor:connect_signal("turn_on", function()
+  _widget.children[1]:turn_on()
+  _widget.children[2].fg = Beautiful.neutral[900]
+end)
+
+button_hide_cursor:connect_signal("turn_off", function()
+  _widget.children[1]:turn_off()
+  _widget.children[2].fg = Beautiful.neutral[100]
+end)
 
 if not hide_cursor then
   button_hide_cursor:turn_on()
@@ -62,21 +121,21 @@ local delay_text = Wibox.widget({
   halign = "center",
 })
 
-local button_up = template.only_icon({
+local button_up = icon_button({
   icon = icons.up,
-  border_width = 0,
+  shape = Helpers.shape.rrect(0),
   padding = 0,
-  shape = "none",
+  -- size = dpi(20),
   on_press = function()
     delay_count = delay_count + 1
     delay_text:set_text(delay_count)
   end,
 })
-local button_down = template.only_icon({
+local button_down = icon_button({
   icon = icons.down,
-  border_width = 0,
+  shape = Helpers.shape.rrect(0),
   padding = 0,
-  shape = "none",
+  -- size = dpi(40),
   on_press = function()
     if delay_count > 0 then
       delay_count = delay_count - 1
