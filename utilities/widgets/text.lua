@@ -18,7 +18,7 @@ local properties = {
 	"bold", "italic",
 	"color", "on_color", "underline_color", "strikethrough_color",
 	"text_transform", "line_height", "underline", "strikethrough",
-	"scale", "text", "icon", "size"
+	"scale", "size", "text", "icon", "font"
 }
 
 local function extract_size(input_string)
@@ -33,7 +33,7 @@ local function remove_size(font)
 	if size then
 		return string.gsub(font, size, "")
 	end
-	return font .. " "
+	return font
 end
 
 local function generate_markup(self, color)
@@ -115,21 +115,36 @@ function text:update_display_color(color)
 	generate_markup(self, color)
 end
 
-function text:set_font(font)
-  self._private.font = font
-	self._private.size = extract_size(font)
-	self._private.layout:set_font_description(beautiful.get_font(font))
-  self:emit_signal("widget::redraw_needed")
-  self:emit_signal("widget::layout_changed")
-  self:emit_signal("property::font", font)
+function text:get_font()
+	return self._private.font or self._private.defaults.font
 end
 
 function text:set_size(size)
 	local wp = self._private
-  -- Remove the previous size from the font field
-  local font = remove_size(wp.font or wp.defaults.font)
-  self._private.size = size
-  self:set_font(font .. size)
+	-- Remove the previous size from the font field
+	local font = remove_size(wp.font or "")
+	rawset(wp, "size", size)
+	rawset(wp.defaults, "size", size)
+	self:set_font(font)
+end
+
+function text:set_font(font)
+	font = font .. " "
+	local wp = self._private
+	-- rawset(wp, "size",  or wp.size or wp.defaults.size)
+	local size = extract_size(font)
+	if size then
+		wp.size = size
+		wp.defaults.size = size
+	else
+		font = font .. tostring(wp.size or wp.defaults.size)
+	end
+	wp.font = font
+
+	wp.layout:set_font_description(beautiful.get_font(font))
+	self:emit_signal("widget::redraw_needed")
+	self:emit_signal("widget::layout_changed")
+	self:emit_signal("property::font", font)
 end
 
 local function new()
@@ -150,6 +165,11 @@ local function new()
 	wp.defaults.text_transform = "none"
 	wp.defaults.line_height = 0
 	wp.defaults.text = ""
+
+
+	-- if not wp.font then
+	-- widget:set_font(wp.defaults.font)
+	-- end
 
 	-- widget:connect_signal("property::font", function (_, font)
 	-- 	wp.size = extract_size(font)

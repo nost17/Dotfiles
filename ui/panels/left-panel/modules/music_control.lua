@@ -1,5 +1,5 @@
 local dpi = Beautiful.xresources.apply_dpi
-local wtext = Utils.widgets.text
+local twidget = Utils.widgets.text
 local wbutton = Utils.widgets.button
 local art_size = dpi(50)
 local default = {
@@ -17,24 +17,24 @@ local default = {
   },
 }
 
-local metadata_title = wtext({
+local metadata_title = Wibox.widget({
+  widget = twidget,
   text = default.title,
   color = Beautiful.neutral[100],
   font = Beautiful.font_med_s,
-  no_size = true,
-  -- wrap = "char",
-  -- ellipsize = "middle",
-  height = dpi(15),
+  forced_height = dpi(15),
 })
-local metadata_artist = wtext({
+local metadata_artist = Wibox.widget({
+  widget = twidget,
   text = default.artist,
   color = Beautiful.neutral[200],
-  font = Beautiful.font_name .. "Regular",
+  font = Beautiful.font_name .. "Italic",
   size = 10,
   italic = true,
-  height = dpi(20),
+  forced_height = dpi(20),
 })
-local metadata_player = wtext({
+local metadata_player = Wibox.widget({
+  widget = twidget,
   text = "",
   color = Beautiful.neutral[200],
   font = Beautiful.font_name .. "SemiBold",
