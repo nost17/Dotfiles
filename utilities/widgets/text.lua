@@ -1,132 +1,169 @@
--------------------------------------------
--- @author https://github.com/Kasper24
--- @copyright 2021-2022 Kasper24
--------------------------------------------
-local text = { mt = {} }
+local gtable = Gears.table
+local textbox = Wibox.widget.textbox
+local beautiful = require("beautiful")
+local setmetatable = setmetatable
+local escape_text = Helpers.text.escape_text
+local tostring = tostring
+local ipairs = ipairs
+local string = string
+local capi = {
+	awesome = awesome
+}
 
-local function generate_markup(self)
-  local bold_start = ""
-  local bold_end = ""
-  local italic_start = ""
-  local italic_end = ""
-  local spacing = ""
+local text = {
+	mt = {}
+}
 
-  if self._private.bold == true then
-    bold_start = "<b>"
-    bold_end = "</b>"
-  end
-  if self._private.italic == true then
-    italic_start = "<i>"
-    italic_end = "</i>"
-  end
-  if self._private.letter_spacing then
-    spacing = "letter_spacing='" .. tostring(self._private.letter_spacing) .. "' "
-  end
-  self._private.text = Helpers.text.escape_text(self._private.text)
-  self.markup = "<span "
-      .. spacing
-      .. ">"
-      .. bold_start
-      .. italic_start
-      .. Helpers.text.colorize_text(self._private.text, self._private.color)
-      .. italic_end
-      .. bold_end
-      .. "</span>"
+local properties = {
+	"bold", "italic",
+	"color", "on_color", "underline_color", "strikethrough_color",
+	"text_transform", "line_height", "underline", "strikethrough",
+	"scale", "text", "icon", "size"
+}
+
+local function extract_size(input_string)
+	-- Encuentra el último grupo de dígitos en la cadena
+	local last_numbers = input_string:match("(%d+)%s*$")
+	return last_numbers
 end
 
-function text:set_halign(halign)
-  self.align = halign
+local function remove_size(font)
+	-- return string.gsub(font, extract_size(font) or "", "") .. " "
+	local size = extract_size(font)
+	if size then
+		return string.gsub(font, size, "")
+	end
+	return font .. " "
+end
+
+local function generate_markup(self, color)
+	local wp = self._private
+
+	local bold_start = ""
+	local bold_end = ""
+	local italic_start = ""
+	local italic_end = ""
+
+	if wp.bold == true then
+		bold_start = "<b>"
+		bold_end = "</b>"
+	end
+	if wp.italic == true then
+		italic_start = "<i>"
+		italic_end = "</i>"
+	end
+
+	color = color or wp.color or wp.defaults.color
+	local underline = wp.underline or wp.defaults.underline
+	local underline_color = wp.underline_color or wp.defaults.underline_color
+	local strikethrough = wp.strikethrough or wp.defaults.strikethrough
+	local strikethrough_color = wp.strikethrough_color or wp.defaults.strikethrough_color
+	local text_transform = wp.text_transform or wp.defaults.text_transform
+	local line_height = wp.line_height or wp.defaults.line_height
+	local _text = wp.text or wp.defaults.text
+
+	_text = escape_text(tostring(_text))
+	-- Need to unescape in a case the text was escaped by other code before
+	-- _text = gstring.xml_unescape(tostring(_text))
+	-- _text = gstring.xml_escape(_text)
+
+	self.markup = string.format(
+		"<span foreground='%s' underline='%s' underline_color='%s' strikethrough='%s' strikethrough_color='%s' text_transform='%s' line_height='%s'>%s%s%s%s%s</span>",
+		color,
+		underline,
+		underline_color,
+		strikethrough,
+		strikethrough_color,
+		text_transform,
+		line_height,
+		bold_start,
+		italic_start,
+		_text,
+		italic_end,
+		bold_end
+	)
+end
+
+local function build_properties(prototype, prop_names)
+	for _, prop in ipairs(prop_names) do
+		if not prototype["set_" .. prop] then
+			prototype["set_" .. prop] = function(self, value)
+				if self._private[prop] ~= value then
+					self._private[prop] = value
+					if prop ~= "size" then -- Not necessary
+						generate_markup(self)
+					end
+					self:emit_signal("widget::redraw_needed")
+					self:emit_signal("property::" .. prop, value)
+				end
+				return self
+			end
+		end
+		if not prototype["get_" .. prop] then
+			prototype["get_" .. prop] = function(self)
+				return self._private[prop]
+			end
+		end
+	end
+end
+
+function text:get_type()
+	return "text"
+end
+
+function text:update_display_color(color)
+	generate_markup(self, color)
 end
 
 function text:set_font(font)
   self._private.font = font
+	self._private.size = extract_size(font)
+	self._private.layout:set_font_description(beautiful.get_font(font))
   self:emit_signal("widget::redraw_needed")
   self:emit_signal("widget::layout_changed")
   self:emit_signal("property::font", font)
 end
 
-function text:set_bold(bold)
-  self._private.bold = bold
-  generate_markup(self)
-end
-
-function text:set_italic(italic)
-  self._private.italic = italic
-  generate_markup(self)
-end
-
-function text:set_width(width)
-  self.forced_width = width
-end
-
-function text:set_height(height)
-  self.forced_height = height
-end
-
 function text:set_size(size)
+	local wp = self._private
   -- Remove the previous size from the font field
-  local font = string.gsub(self._private.font, self._private.size, "")
+  local font = remove_size(wp.font or wp.defaults.font)
   self._private.size = size
   self:set_font(font .. size)
 end
 
-function text:set_color(color)
-  self._private.color = color
-  generate_markup(self)
-end
+local function new()
+	local widget = textbox()
+	gtable.crush(widget, text, true)
 
-function text:set_text(_text)
-  self._private.text = _text
-  generate_markup(self)
-end
+	local wp = widget._private
 
-local function new(args)
-  args = args or {}
+	-- Setup default values
+	wp.defaults = {}
+	wp.defaults.font = beautiful.font_reg_s
+	wp.defaults.size = extract_size(wp.defaults.font)
+	wp.defaults.color = beautiful.fg_normal
+	wp.defaults.underline = "none"
+	wp.defaults.underline_color = wp.defaults.color
+	wp.defaults.strikethrough = false
+	wp.defaults.strikethrough_color = wp.defaults.color
+	wp.defaults.text_transform = "none"
+	wp.defaults.line_height = 0
+	wp.defaults.text = ""
 
-  args.width = args.width or nil
-  args.height = args.height or nil
-  args.halign = args.halign or nil
-  args.valign = args.valign or nil
-  args.font = args.font ~= nil and args.font .. " " or Beautiful.font_name or nil
-  args.bold = args.bold ~= nil and args.bold or false
-  args.italic = args.italic ~= nil and args.italic or false
-  args.size = args.size or (args.no_size and "" or 11)
-  args.color = args.color or Beautiful.fg_normal
-  args.text = args.text ~= nil and args.text or ""
-  args.id = args.id or "text_role"
-  args.wrap = args.wrap or nil
-  args.ellipsize = args.ellipsize or nil
-  args.opacity = args.opacity or 1
+	-- widget:connect_signal("property::font", function (_, font)
+	-- 	wp.size = extract_size(font)
+	-- end)
 
-  local widget = Wibox.widget({
-    widget = Wibox.widget.textbox,
-    forced_width = args.width,
-    forced_height = args.height,
-    halign = args.halign,
-    align = args.halign,
-    valign = args.valign,
-    id = args.id,
-    wrap = args.wrap,
-    opacity = args.opacity,
-    font = args.font and args.font .. args.size or Beautiful.font,
-  })
+	generate_markup(widget)
 
-  Gears.table.crush(widget, text, true)
-
-  widget._private.font = args.font
-  widget._private.bold = args.bold
-  widget._private.italic = args.italic
-  widget._private.size = args.size
-  widget._private.color = args.color
-  widget._private.text = args.text
-  widget._private.letter_spacing = args.letter_spacing or nil
-
-  generate_markup(widget)
-  return widget
+	return widget
 end
 
 function text.mt:__call(...)
-  return new(...)
+	return new(...)
 end
+
+build_properties(text, properties)
 
 return setmetatable(text, text.mt)
