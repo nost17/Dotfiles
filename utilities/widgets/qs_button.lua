@@ -131,6 +131,25 @@ templates.with_label = function(opts)
   return widget
 end
 
+templates.only_icon = function(opts)
+  return Wibox.widget({
+    widget = Utils.widgets.button.state,
+    color = defaults.color,
+    on_color = defaults.on_color,
+    on_turn_on = opts.fn_on,
+    on_turn_off = opts.fn_off,
+    {
+      widget = Utils.widgets.icon,
+      icon = {
+        path = opts.icon,
+        uncached = opts.icon_uncached,
+      },
+      color = defaults.color_fg,
+      on_color = defaults.on_color_fg
+    }
+  })
+end
+
 templates.windows_label = function(opts)
   local settings
   local icon = Wibox.widget({
@@ -214,7 +233,8 @@ templates.windows_label = function(opts)
     {
       widget = twidget,
       text = Helpers.text.first_upper(opts.label or ""),
-      font = Beautiful.font_reg_s,
+      font = Beautiful.font_name .. "Regular",
+      size = 10,
       color = defaults.color_fg,
       on_color = defaults.on_color_fg,
       halign = "center",
