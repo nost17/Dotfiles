@@ -3,8 +3,9 @@
 -- @copyright 2021-2022 Kasper24
 -------------------------------------------
 local gtable = require("gears.table")
-local ebnwidget = require("ui.test.normal")
+local ebnwidget = require("utilities.widgets.button.normal")
 local beautiful = require("beautiful")
+local wibox = Wibox
 local helpers = Helpers
 local setmetatable = setmetatable
 local ipairs = ipairs
@@ -21,6 +22,7 @@ local properties = {
   "on_normal_border_color", "on_hover_border_color", "on_press_border_color",
   "on_turn_on", "on_turn_off"
 }
+
 
 local function build_properties(prototype, prop_names)
   for _, prop in ipairs(prop_names) do
@@ -42,11 +44,15 @@ local function build_properties(prototype, prop_names)
   end
 end
 
+
 function button_state:turn_on()
   local wp = self._private
   wp.state = true
   self:update_overlay(wp.on_color)
   self:effect()
+  for _, child in ipairs(wp.children_effect) do
+    child.widget:update_display_color(child.on_color)
+  end
   self:emit_signal("turn_on")
 end
 
@@ -55,6 +61,9 @@ function button_state:turn_off()
   wp.state = false
   self:update_overlay(wp.color or wp.defaults.color)
   self:effect()
+  for _, child in ipairs(wp.children_effect) do
+    child.widget:update_display_color(child.color)
+  end
   self:emit_signal("turn_off")
 end
 
@@ -69,11 +78,12 @@ end
 
 function button_state:set_on_color(on_color)
   local wp = self._private
-  wp.on_color = on_color or helpers.color.darken_or_lighten(wp.color, 0.2)
-  -- Naughty.notify({
-  --   title = tostring(wp.on_color)
-  -- })
+  wp.on_color = on_color or wp.defaults.on_color
   self:effect()
+end
+
+function button_state:update_on_color(color)
+  self:set_on_color(helpers.color.darken_or_lighten(color or self._private.color, 0.2))
 end
 
 function button_state:set_normal_shape(normal_shape)
@@ -106,6 +116,10 @@ function button_state:set_normal_border_width(normal_border_width)
   if wp.on_normal_shape == nil then
       self:set_on_normal_border_width(normal_border_width)
   end
+end
+
+function button_state:get_color()
+  return self._private.color
 end
 
 function button_state:set_normal_border_color(normal_border_color)

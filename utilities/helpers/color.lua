@@ -164,8 +164,8 @@ function M.isDark(hex)
   for s in hex:gmatch("[a-fA-F0-9][a-fA-F0-9]") do
     numeric_value = numeric_value + tonumber("0x" .. s)
   end
-  return (numeric_value < 200)
-  -- return (numeric_value < 383)
+  -- return (numeric_value < 200)
+  return (numeric_value < 383)
   -- local color = M.hex_to_rgb(hex)
   -- local r, g, b = color.r, color.g, color.b
   --

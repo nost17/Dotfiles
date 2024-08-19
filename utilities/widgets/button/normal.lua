@@ -4,7 +4,7 @@ local lib_color = Helpers.color
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local helpers = Helpers
-local bwidget = wibox.container.background
+local bwidget = require("utilities.widgets.background")
 local dpi = beautiful.xresources.apply_dpi
 local setmetatable = setmetatable
 local ipairs = ipairs
@@ -72,6 +72,28 @@ local function build_properties(prototype, prop_names)
   end
 end
 
+local function build_children_effects(self, child)
+  if not child.get_type then
+    return
+  end
+
+  local wp = self._private
+
+  local wtype = child:get_type()
+  if wtype == "icon"  or wtype == "text" then
+    local color = child._private.color or (child._private.defaults and child._private.defaults.color)
+    local on_color = child._private.on_color or (child._private.defaults and child._private.defaults.on_color)
+    if on_color and color then
+      table.insert(wp.children_effect, {
+        type = wtype,
+        widget = child,
+        color = color,
+        on_color = on_color,
+      })
+    end
+  end
+end
+
 --- Enable button skin effects
 function button_normal:effect()
   local wp = self._private
@@ -110,13 +132,13 @@ function button_normal:effect()
   self.shape = shape
   self.border_color = border_color
   self.border_width = border_width
+
 end
 
 --- Sets the button children
 --- @param widget table the new **widget**
 function button_normal:set_widget(widget)
   local wp = self._private
-  widget = widget or {}
   local w = widget and wibox.widget.base.make_widget_from_value(widget)
   if w then
     wibox.widget.base.check_widget(w)
@@ -144,7 +166,18 @@ function button_normal:set_widget(widget)
     },
   })
   wp.overlay = wp.widget.children[1]
-  wp.child = wp.widget:get_children_by_id("padding")[1].children[1]
+  wp.content_widget = w
+  wp.children_effect = {}
+
+  if widget then
+    for _, child in ipairs(w.all_children) do
+      build_children_effects(self, child)
+    end
+    build_children_effects(self, widget)
+  end
+
+  self:emit_signal("property::widget")
+  self:emit_signal("widget::layout_changed")
 end
 
 --- Set overlay color
@@ -203,7 +236,6 @@ function button_normal:set_normal_border_color(normal_border_color)
   self:effect()
 end
 
-
 --- Sets the horizontal alignment
 --- @param halign string
 function button_normal:set_halign(halign)
@@ -231,7 +263,7 @@ end
 --- padding.top -> `top padding`
 --- padding.bottom -> `bottom padding`
 function button_normal:set_padding(padding)
-  self._private.padding = padding
+  self._private.padding = padding or self._private.defaults.padding
   local widget = self:get_widget()
   if widget then
     widget:get_children_by_id("padding")[1].margins = padding
@@ -239,7 +271,7 @@ function button_normal:set_padding(padding)
 end
 
 function button_normal:get_content()
-  return self._private.child
+  return self._private.content_widget
 end
 
 --- Create new widget button
@@ -302,6 +334,8 @@ local function new(is_state)
   wp.on_scroll_up = nil
   wp.on_scroll_down = nil
 
+  wp.padding = wp.padding or wp.defaults.padding
+  wp.children_effect = {}
 
   widget:connect_signal("mouse::enter", function(self, find_widgets_result)
     if wp.disabled == true then

@@ -48,6 +48,7 @@ function checkbox:turn_on()
   if wp.on_turn_on ~= nil then
     wp.on_turn_on(self)
   end
+  self:emit_signal("turn_on")
 end
 
 function checkbox:turn_off()
@@ -58,6 +59,7 @@ function checkbox:turn_off()
   if wp.on_turn_off ~= nil then
     wp.on_turn_off(self)
   end
+  self:emit_signal("turn_off")
 end
 
 function checkbox:toggle()
@@ -94,6 +96,22 @@ local crush = function(target, source)
   return ret
 end
 
+function checkbox:set_icon_on(icon)
+  local wp = self._private
+  wp.icon_on = icon or wp.defaults.icon_on
+  if wp.state == true then
+    self:set_icon(icon)
+  end
+end
+
+function checkbox:set_icon_off(icon)
+  local wp = self._private
+  wp.icon_off = icon or wp.defaults.icon_off
+  if wp.state == false then
+    self:set_icon(icon)
+  end
+end
+
 local function new(...)
   local widget = Wibox.widget({
     widget = wicon,
@@ -109,8 +127,8 @@ local function new(...)
     path = Beautiful.icons .. "others/circle.svg",
   }
 
-  wp.icon_on = crush(wp.icon_on or {}, wp.defaults.icon_on)
-  wp.icon_off = crush(wp.icon_off or {}, wp.defaults.icon_off)
+  wp.icon_on = wp.icon_on or wp.defaults.icon_on
+  wp.icon_off = wp.icon_off or wp.defaults.icon_off
 
   widget:turn_off()
 

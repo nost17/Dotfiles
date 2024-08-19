@@ -2,10 +2,11 @@
 -- @author https://github.com/Kasper24
 -- @copyright 2021-2022 Kasper24
 -------------------------------------------
-local gtable = Gears.table
-local imagebox = Wibox.widget.imagebox
-local dpi = Beautiful.xresources.apply_dpi
-local uncached = Gears.surface.load_uncached_silently
+local gtable = require("gears.table")
+local imagebox = require("wibox.widget.imagebox")
+local beautiful = require("beautiful")
+local dpi = beautiful.xresources.apply_dpi
+-- local uncached = Gears.surface.load_uncached_silently
 local recolor = Gears.color.recolor_image
 local setmetatable = setmetatable
 local ipairs = ipairs
@@ -20,6 +21,7 @@ local icon = {
 
 local properties = {
   "color",
+  "on_color",
   "size",
   "icon",
 }
@@ -88,15 +90,21 @@ local function generate_style(color)
   return string.format(style, color, color, color, color)
 end
 
+function icon:get_type()
+  return "icon"
+end
+
 function icon:set_icon(_icon)
   local wp = self._private
-  wp.icon = _icon
-  wp.defaults.color = _icon.color or wp.color
-  if _icon and _icon.uncached then
-    self:set_image(recolor(_icon.path, wp.defaults.color))
-  else
-    self.image = _icon.path
-    self:set_stylesheet(generate_style(wp.defaults.color))
+  if _icon then
+    wp.icon = _icon
+    wp.defaults.color = _icon.color or wp.color
+    if _icon and _icon.uncached then
+      self:set_image(recolor(_icon.path, wp.defaults.color))
+    else
+      self.image = _icon.path
+      self:set_stylesheet(generate_style(wp.defaults.color))
+    end
   end
 end
 
@@ -117,8 +125,14 @@ function icon:set_color(color)
   end
 end
 
+
 function icon:update_display_color(color)
-  self:set_stylesheet(generate_style(color))
+  local wp = self._private
+  if wp.icon and wp.icon.uncached then
+    self:set_image(recolor(wp.icon.path, color))
+  else
+    self:set_stylesheet(generate_style(color))
+  end
 end
 
 local function new(...)
@@ -130,6 +144,7 @@ local function new(...)
   -- Setup default values
   wp.defaults = {}
   wp.defaults.color = Beautiful.fg_normal
+  wp.defaults.on_color = Beautiful.fg_normal
   wp.defaults.size = 16
 
   if wp.color then

@@ -74,25 +74,16 @@ local function get_icon_and_text(args)
     })
   end
 
-  if args.text_size then
-    text = twidget({
-      text = args.text,
-      size = args.text_size,
-      font = args.text_font or Beautiful.font_name,
-      bold = args.bold,
-      italic = args.italic,
-      color = style.button_fg_off,
-    })
-  else
-    text = twidget({
-      text = args.text,
-      font = args.text_font or Beautiful.font_med_s,
-      bold = args.bold,
-      italic = args.italic,
-      no_size = true,
-      color = style.button_fg_off,
-    })
-  end
+
+  text = Wibox.widget({
+    widget = twidget,
+    text = args.text,
+    font = args.text_font or Beautiful.font_med_s,
+    size = args.text_size,
+    bold = args.bold,
+    italic = args.italic,
+    color = style.button_fg_off,
+  })
   return icon, text
 end
 
@@ -505,8 +496,10 @@ function menu.checkbox_button(args)
 
   local icon, text = get_icon_and_text(args)
 
-  local checkbox = cbwidget({
+  local checkbox = Wibox.widget({
+    widget = cbwidget,
     valign = "center",
+    halign = "center"
   })
   checkbox:set_state(args.on_by_default)
 
