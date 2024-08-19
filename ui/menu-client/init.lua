@@ -7,7 +7,7 @@ local style = {
   shape = Helpers.shape.rrect(Beautiful.radius),
   fg_normal = Beautiful.neutral[200],
   fg_hover = Beautiful.neutral[100],
-  bg_normal = Beautiful.neutral[900],
+  bg_normal = Beautiful.widget_color[1],
   bg_hover = nil,
 }
 local function get_icon(name)
@@ -67,8 +67,8 @@ end
 --       shape = style.shape,
 --       halign = "left",
 --       valign = "center",
---       bg_normal = Beautiful.neutral[850],
---       bg_normal_on = Beautiful.neutral[850],
+--       bg_normal = Beautiful.widget_color[2],
+--       bg_normal_on = Beautiful.widget_color[2],
 --       normal_border_width = style.border_width,
 --       normal_border_color = style.border_color,
 --       on_turn_on = function()
@@ -185,7 +185,7 @@ end
 --   ontop = true,
 --   border_width = style.border_width,
 --   border_color = style.border_color,
---   bg = Beautiful.neutral[900],
+--   bg = Beautiful.widget_color[1],
 --   shape = Helpers.shape.rrect(Beautiful.widget_radius.outer),
 --   maximum_height = dpi(200),
 --   maximum_width = dpi(160),

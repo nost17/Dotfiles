@@ -1,7 +1,7 @@
 local dpi = Beautiful.xresources.apply_dpi
 local c_screen = Awful.screen.focused()
 
-Beautiful.quicksettings_bg = Beautiful.neutral[900]
+Beautiful.quicksettings_bg = Beautiful.widget_color[1]
 Beautiful.quicksettings_shape = Helpers.shape.rrect(Beautiful.widget_radius.outer)
 
 local modules = require(... .. ".modules")

@@ -48,11 +48,7 @@ local function mkbutton(image, size, fn)
     padding = Beautiful.widget_padding.inner,
     halign = "center",
     valign = "center",
-    color = Helpers.color.lightness(
-      Beautiful.neutral[800],
-      0.01,
-      Beautiful.type == "dark" and "lighten" or "darken"
-    ),
+    color = Beautiful.widget_color[3],
     normal_shape = Helpers.shape.rrect(Beautiful.radius),
     normal_border_width = Beautiful.widget_border.width,
     normal_border_color = Beautiful.widget_border.color_inner,
@@ -88,7 +84,7 @@ return Wibox.widget({
   layout = Wibox.layout.fixed.vertical,
   {
     widget = Wibox.container.background,
-    bg = Beautiful.neutral[850],
+    bg = Beautiful.widget_color[2],
     shape = Helpers.shape.rrect(Beautiful.radius),
     border_width = Beautiful.widget_border.width,
     border_color = Beautiful.widget_border.color,

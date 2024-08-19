@@ -33,7 +33,7 @@ local notification_center = Wibox.widget({
 			end,
 			{
 				widget = Wibox.container.background,
-				fg = Beautiful.neutral[900],
+				fg = Beautiful.widget_color[1],
 				{
 					widget = Wibox.widget.textbox,
 					text = "limpiar",

@@ -9,7 +9,7 @@ local style = {
   shape = Helpers.shape.rrect(Beautiful.radius),
   fg_normal = Beautiful.neutral[200],
   fg_hover = Beautiful.neutral[100],
-  bg_normal = Beautiful.neutral[900],
+  bg_normal = Beautiful.widget_color[1],
   bg_hover = nil,
 }
 
@@ -24,14 +24,14 @@ local function mkxd(title)
 
   local test = wbutton.state({
     shape = style.shape,
-    bg_normal = Beautiful.neutral[900],
-    bg_normal_on = Beautiful.neutral[900],
+    bg_normal = Beautiful.widget_color[1],
+    bg_normal_on = Beautiful.widget_color[1],
     bg_hover = Beautiful.neutral[800],
     bg_hover_on = Beautiful.neutral[800],
     halign = "left",
     content_fill_horizontal = true,
     border_width = 1,
-    normal_border_color = Beautiful.neutral[900],
+    normal_border_color = Beautiful.widget_color[1],
     hover_border_color = Beautiful.neutral[700],
     on_hover_border_color = Beautiful.neutral[700],
     child = {
@@ -64,7 +64,7 @@ local menu = Wibox({
   ontop = true,
   border_width = style.border_width,
   border_color = style.border_color,
-  bg = Beautiful.neutral[900],
+  bg = Beautiful.widget_color[1],
   shape = Helpers.shape.rrect(Beautiful.widget_radius.outer),
   height = dpi(200),
   width = dpi(260),

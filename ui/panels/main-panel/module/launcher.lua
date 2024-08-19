@@ -6,7 +6,7 @@ local wbutton = Utils.widgets.button.normal
 
 local launcher = Wibox.widget({
   widget = wbutton,
-  color = Beautiful.neutral[850],
+  color = Beautiful.widget_color[2],
   normal_border_color = Beautiful.widget_border.color,
   normal_border_width = Beautiful.widget_border.width,
   shape = Helpers.shape.rrect(Beautiful.radius),

@@ -72,7 +72,7 @@ local main = Wibox({
   visible = true,
   width = 240,
   height = 240,
-  bg = Beautiful.neutral[900],
+  bg = Beautiful.widget_color[1],
   x = screen.primary.geometry.width - 500,
   y = screen.primary.geometry.height / 2 + 100,
 })

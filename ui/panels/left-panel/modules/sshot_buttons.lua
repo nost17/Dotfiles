@@ -83,7 +83,7 @@ local button_hide_cursor = Wibox.widget({
       },
       icon_on = {
         path = icons.checked,
-        color = Beautiful.neutral[900]
+        color = Beautiful.widget_color[1]
       }
     },
     {
@@ -102,7 +102,7 @@ local button_hide_cursor = Wibox.widget({
 local _widget = button_hide_cursor:get_content()
 button_hide_cursor:connect_signal("turn_on", function()
   _widget.children[1]:turn_on()
-  _widget.children[2].fg = Beautiful.neutral[900]
+  _widget.children[2].fg = Beautiful.widget_color[1]
 end)
 
 button_hide_cursor:connect_signal("turn_off", function()
@@ -156,7 +156,7 @@ local button_delay = Wibox.widget({
     button_up,
     {
       widget = Wibox.container.background,
-      bg = Beautiful.neutral[850],
+      bg = Beautiful.widget_color[2],
       delay_text,
     },
     button_down,

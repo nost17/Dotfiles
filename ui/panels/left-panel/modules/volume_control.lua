@@ -1,6 +1,6 @@
 local dpi = Beautiful.xresources.apply_dpi
 local htext = Helpers.text
-local handle_border_color = Beautiful.type == "dark" and Helpers.color.darken(Beautiful.neutral[900], 0.1)
+local handle_border_color = Beautiful.type == "dark" and Helpers.color.darken(Beautiful.widget_color[1], 0.1)
     or Beautiful.neutral[200]
 local style = {
    shape = Helpers.shape.rrect(Beautiful.radius),
@@ -16,7 +16,7 @@ local bar = Wibox.widget({
    -- shape = style.bar_shape,
    -- bar_shape = style.bar_shape,
    bar_active_color = Beautiful.primary[500],
-   bar_color = Beautiful.neutral[800],
+   bar_color = Beautiful.widget_color[3],
    -- bar_border_width = style.border_width * 1.5,
    -- bar_border_color = style.border_color_alt,
    bar_margins = {
@@ -33,7 +33,7 @@ local bar = Wibox.widget({
       -- top = dpi(2),
       -- bottom = dpi(2),
    },
-   handle_color = Beautiful.type == "dark" and Beautiful.neutral[900] or Beautiful.neutral[200],
+   handle_color = Beautiful.type == "dark" and Beautiful.widget_color[1] or Beautiful.neutral[200],
    -- handle_border_width = style.border_width,
    -- handle_border_color = handle_border_color,
    handle_shape = style.handle_shape,
@@ -62,7 +62,7 @@ end)
 
 return Wibox.widget({
    widget = Wibox.container.background,
-   bg = Beautiful.neutral[850],
+   bg = Beautiful.widget_color[2],
    shape = style.shape,
    border_width = style.border_width,
    border_color = style.border_color,

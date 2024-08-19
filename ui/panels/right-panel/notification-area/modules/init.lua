@@ -6,7 +6,7 @@ local notification_template = require(... .. ".template")
 local scroller = require(... .. ".scroll")
 
 local style = {
-   bg_normal = Beautiful.neutral[850],
+   bg_normal = Beautiful.widget_color[2],
    bg_hover = Beautiful.neutral[800],
    border_width = Beautiful.widget_border.width,
    border_color = Beautiful.widget_border.color,

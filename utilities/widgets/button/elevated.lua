@@ -50,7 +50,7 @@ end
 function elevated_button.state(args)
   args = args or {}
 
-  args.bg_normal = args.bg_normal or Beautiful.neutral[850]
+  args.bg_normal = args.bg_normal or Beautiful.widget_color[2]
   args.bg_hover = args.bg_hover
       or color_lib.lightness(args.bg_normal, 0.07, color_lib.isDark(args.bg_normal) and "lighten" or "darken")
   args.bg_press = args.bg_press or color_lib.darken(args.bg_hover, 0.07)
@@ -280,7 +280,7 @@ function elevated_button.normal(args)
   ---@field paddings? table|integer button paddings
   args = args or {}
 
-  args.bg_normal = args.bg_normal or Beautiful.neutral[850]
+  args.bg_normal = args.bg_normal or Beautiful.widget_color[2]
   args.bg_hover = args.bg_hover
       or color_lib.lightness(args.bg_normal, 0.07, color_lib.isDark(args.bg_normal) and "lighten" or "darken")
   args.bg_press = args.bg_press or color_lib.darken(args.bg_hover, 0.07)

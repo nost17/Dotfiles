@@ -11,10 +11,10 @@ local icons = {
 }
 
 local style = {}
-style.color = Beautiful.neutral[850]
+style.color = Beautiful.widget_color[2]
 style.on_color = Beautiful.primary[600]
 style.color_fg = Beautiful.neutral[200]
-style.on_color_fg = Beautiful.neutral[900]
+style.on_color_fg = Beautiful.widget_color[1]
 
 
 local function alert(title)

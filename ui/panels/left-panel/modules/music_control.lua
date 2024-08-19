@@ -4,7 +4,7 @@ local wbutton = Utils.widgets.button
 local art_size = dpi(50)
 local default = {
   shape = Helpers.shape.rrect(Beautiful.radius),
-  overlay_bg = Beautiful.neutral[850],
+  overlay_bg = Beautiful.widget_color[2],
   player_preffix = "",
   artist = "N/A",
   title = "Desconocido",
@@ -124,7 +124,7 @@ local function mkbutton(image, size, fn, color, yoffset, xoffset)
     normal_border_width = 0,
     halign = "center",
     valign = "center",
-    color = Beautiful.neutral[800],
+    color = Beautiful.widget_color[3],
     {
       widget = Wibox.container.margin,
       forced_width = size * 1.1,
@@ -197,7 +197,7 @@ Lib.Playerctl:connect_signal("status", function(_, playing)
   end
 end)
 
--- local art_overlay = Beautiful.neutral[850]
+-- local art_overlay = Beautiful.widget_color[2]
 -- if use_art_bg then
 --    art_overlay = art_overlay .. (Beautiful.type == "dark" and "BA" or "33")
 -- end
@@ -264,7 +264,7 @@ return Wibox.widget({
               right = Beautiful.widget_padding.inner,
             },
             normal_border_color = Beautiful.widget_border.color_inner,
-            color = Beautiful.neutral[800],
+            color = Beautiful.widget_color[3],
             on_press = function()
               Lib.Playerctl:next_player()
             end,

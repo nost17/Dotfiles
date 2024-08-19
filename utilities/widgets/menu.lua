@@ -31,11 +31,11 @@ local style = {
   spacing = dpi(8),
   menu_padding = dpi(6),
   button_bg_on = Beautiful.neutral[700],
-  button_bg_off = Beautiful.neutral[900],
+  button_bg_off = Beautiful.widget_color[1],
   button_fg_on = Beautiful.neutral[100],
   button_fg_off = Beautiful.neutral[100],
   button_border_width = Beautiful.widget_border.width,
-  button_border_color = Beautiful.neutral[900],
+  button_border_color = Beautiful.widget_color[1],
   button_border_color_hover = Beautiful.widget_border.color,
 }
 

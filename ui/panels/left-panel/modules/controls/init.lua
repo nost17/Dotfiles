@@ -2,7 +2,7 @@ local modules = require(... .. ".modules")
 
 return Wibox.widget({
   widget = Wibox.container.background,
-  -- bg = Beautiful.neutral[850],
+  -- bg = Beautiful.widget_color[2],
   -- shape = Helpers.shape.rrect(Beautiful.radius),
   -- border_width = Beautiful.widget_border.width,
   -- border_color = Beautiful.widget_border.color,

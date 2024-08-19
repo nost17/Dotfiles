@@ -12,10 +12,10 @@ defaults.windows_label_height = Beautiful.xresources.apply_dpi(40)
 
 defaults.shape = Helpers.shape.rrect()
 
-defaults.color = Beautiful.neutral[850]
+defaults.color = Beautiful.widget_color[2]
 defaults.color_fg = Beautiful.neutral[100]
 defaults.on_color = Beautiful.primary[500]
-defaults.on_color_fg = Beautiful.neutral[900]
+defaults.on_color_fg = Beautiful.widget_color[1]
 defaults.icon_color = defaults.color_fg
 defaults.icon_on_color = defaults.on_color_fg
 defaults.border_color = Beautiful.widget_border.color

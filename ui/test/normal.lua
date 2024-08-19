@@ -279,7 +279,7 @@ local function new(is_state)
   -- Default props
   wp.defaults = {}
   wp.defaults.padding = 6
-  wp.defaults.color = beautiful.neutral[850]
+  wp.defaults.color = Beautiful.widget_color[2]
 
   wp.defaults.normal_shape = helpers.shape.rrect()
   wp.defaults.hover_shape = wp.defaults.normal_shape

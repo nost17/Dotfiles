@@ -104,7 +104,7 @@ local function make_notify(n)
       create_callback = function(self, _, _, _)
         Helpers.ui.add_hover(
           self,
-          Beautiful.neutral[850],
+          Beautiful.widget_color[2],
           Beautiful.neutral[200],
           Beautiful.neutral[800],
           Beautiful.neutral[100]

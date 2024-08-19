@@ -7,7 +7,7 @@ local dpi = Beautiful.xresources.apply_dpi
 local darken = Helpers.color.darken
 
 theme = dofile(gfs.get_themes_dir() .. "default/theme.lua")
-local _colors = require("theme.colorschemes.onedark")
+local _colors = require("theme.colorschemes.tomorrow")
 local cscheme = require("theme.palettegen")(_colors, "dark")
 
 theme.transparent = "#00000000"
@@ -65,14 +65,15 @@ theme.widget_color = {
   cscheme.neutral[900],
   cscheme.neutral[800],
   cscheme.neutral[700],
+  cscheme.neutral[600],
 }
 theme.widget_border = {
   width = 1,
   -- color = cscheme.type == "dark" and darken(cscheme.neutral[900], 0.2) or cscheme.neutral[600],
   -- color_inner = cscheme.type == "dark" and darken(cscheme.neutral[900], 0) or cscheme.neutral[600],
   -- color = Helpers.color.blend(cscheme.neutral[700], cscheme.neutral[850]),
-  color = cscheme.type == "dark" and Helpers.color.blend(cscheme.neutral[700],cscheme.neutral[600]) or cscheme.neutral[600],
-  color_inner = cscheme.type == "dark" and cscheme.neutral[700] or cscheme.neutral[600],
+  color = cscheme.neutral[600],
+  color_inner = cscheme.type == "dark" and cscheme.neutral[500] or cscheme.neutral[600],
 }
 theme.widget_radius = {
   outer = theme.radius * 2,
@@ -88,8 +89,8 @@ theme.border_width = 1
 theme.border_color_normal = darken(cscheme.neutral[900], 0.15)
 theme.border_color_active = cscheme.primary[500]
 
-theme.titlebar_bg_normal = cscheme.neutral[850]
-theme.titlebar_bg_focus = cscheme.neutral[800]
+theme.titlebar_bg_normal = theme.widget_color[2]
+theme.titlebar_bg_focus = theme.widget_color[2]
 
 -- taglist
 -- theme.taglist_bg_focus = cscheme.primary[500]
@@ -97,9 +98,9 @@ theme.titlebar_bg_focus = cscheme.neutral[800]
 -- theme.taglist_bg_occupied = cscheme.neutral[500]
 theme.taglist_font = font.font_reg_m
 theme.taglist_bg_focus = cscheme.primary[500]
-theme.taglist_bg_empty = cscheme.neutral[850]
-theme.taglist_bg_occupied = cscheme.neutral[850]
-theme.taglist_fg_focus = cscheme.neutral[900]
+theme.taglist_bg_empty = theme.widget_color[2]
+theme.taglist_bg_occupied = theme.widget_color[2]
+theme.taglist_fg_focus = theme.widget_color[1]
 theme.taglist_fg_occupied = cscheme.neutral[200]
 theme.taglist_fg_empty = cscheme.neutral[600] .. "BB"
 -- theme.taglist_shape = Helpers.shape.rrect(theme.radius)
@@ -112,9 +113,9 @@ theme.tasklist_font = theme.font_name .. "Regular 10"
 theme.tasklist_fg_normal = cscheme.neutral[300]
 theme.tasklist_fg_focus = cscheme.neutral[100]
 theme.tasklist_fg_minimize = cscheme.neutral[700]
-theme.tasklist_bg_focus = cscheme.neutral[850]
+theme.tasklist_bg_focus = theme.widget_color[2]
 -- theme.tasklist_bg_focus = Helpers.color.blend(cscheme.neutral[900], cscheme.primary[600]) .. "66"
-theme.tasklist_bg_normal = cscheme.neutral[900]
+theme.tasklist_bg_normal = theme.widget_color[1]
 theme.tasklist_bg_minimize = theme.transparent
 theme.tasklist_shape = Helpers.shape.rrect(theme.radius)
 theme.tasklist_shape_border_width = theme.widget_border.width

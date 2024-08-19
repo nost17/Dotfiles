@@ -14,7 +14,7 @@ local style = {
   countdown = 5,
   widget_width = dpi(320),
   widget_height = dpi(220),
-  cancel_fg = Beautiful.neutral[900],
+  cancel_fg = Beautiful.widget_color[1],
   cancel_bg = Beautiful.red[300],
   ok_fg = Beautiful.neutral[100],
   ok_bg = Beautiful.neutral[800],
@@ -32,7 +32,7 @@ local icons = {
 local buttons = {}
 local confirm = { _private = {} }
 
-Beautiful.logoutscreen_bg = Beautiful.neutral[900]
+Beautiful.logoutscreen_bg = Beautiful.widget_color[1]
 Beautiful.logoutscreen_shape = Helpers.shape.rrect(Beautiful.radius)
 
 confirm.prompt = Wibox.widget({
@@ -150,7 +150,7 @@ local function mkbutton(opts)
       padding = 0,
       halign = "center",
       valign = "center",
-      color = opts.bg or Beautiful.neutral[850],
+      color = opts.bg or Beautiful.widget_color[2],
       normal_shape = Helpers.shape.rrect(Beautiful.radius),
       normal_border_width = Beautiful.widget_border.width,
       normal_border_color = Beautiful.widget_border.color,
@@ -171,7 +171,7 @@ buttons.logout = mkbutton({
   size = style.icon_size,
   bg = Beautiful.red[300],
   bg_hover = Beautiful.red[400],
-  color = Beautiful.neutral[900],
+  color = Beautiful.widget_color[1],
   confirm = true,
   prompt = "cerrará sesión",
   fn = function()
