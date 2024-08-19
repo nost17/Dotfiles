@@ -8,9 +8,9 @@ require(... .. ".notification")
 require(... .. ".popups")
 require(... .. ".panels.left-panel")
 require(... .. ".panels.right-panel")
-require(... .. ".menu-client")
-require(... .. ".menu")
--- require(... .. ".test")
+-- require(... .. ".menu-client")
+-- require(... .. ".menu")
+require(... .. ".test")
 
 -- screen.connect_signal("request::desktop_decoration", function(s)
 --   -- Create all tags and attach the layouts to each of them.

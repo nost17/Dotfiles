@@ -1,25 +1,23 @@
 ---@module 'ui.test.text'
-local twidget = require(... .. ".text")
-local bwidget = require("wibox.container.background")
+local qswidget = Utils.widgets.qs_button
 
-local texto = Wibox.widget({
-  widget = twidget,
-  text = "LOL",
-  size = 12,
-  halign = "right",
-  font = Beautiful.font_light_xxl,
-  color = Beautiful.green[200]
+local boton1 = qswidget.with_label({
+  label = "prueba",
+  icon = Beautiful.icons .. "settings/phocus.svg",
+  fn_on = function ()
+    Naughty.notify({
+      title = "ON"
+    })
+  end,
+  fn_off = function ()
+    Naughty.notify({
+      title = "OFF"
+    })
+  end,
+  settings = function ()
+    Awful.spawn.with_shell("wezterm")
+  end
 })
-
-texto:connect_signal("property::font", function ()
-  Naughty.notify{
-    title = "XDD" .. " " .. texto:get_font(),
-    text = tostring(texto:get_size()),
-  }
-end)
-
-
-
 
 local main = Wibox({
   ontop = true,
@@ -38,7 +36,9 @@ main:setup({
     {
       layout = Wibox.layout.fixed.vertical,
       spacing = Beautiful.widget_spacing,
-      texto
+      boton1,
+      boton2,
+      boton3,
     }
   },
 })
