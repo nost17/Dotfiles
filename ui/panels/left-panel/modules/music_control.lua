@@ -10,7 +10,7 @@ local default = {
   title = "Desconocido",
   icons = {
     size = dpi(18),
-    size_alt = dpi(14),
+    size_alt = dpi(15),
     normal = Beautiful.neutral[100],
     active = Beautiful.primary[500],
     inactive = Beautiful.neutral[500],
@@ -120,8 +120,8 @@ local function mkbutton(image, size, fn, color, yoffset, xoffset)
   })
   button = Wibox.widget({
     widget = Wibox.container.margin,
-    forced_width = 24,
-    forced_height = 24,
+    forced_width = 25,
+    forced_height = 25,
     -- valign = "center",
     -- halign = "center",
     {
@@ -137,7 +137,7 @@ local function mkbutton(image, size, fn, color, yoffset, xoffset)
       end,
       {
         widget = Wibox.container.margin,
-        bottom = yoffset,
+        -- bottom = yoffset,
         right = xoffset,
         icon,
       },
@@ -170,15 +170,15 @@ local button_prev = mkbutton(svg_icons.previous, default.icons.size_alt, functio
   Lib.Playerctl:previous()
 end)
 
-local button_random = mkbutton(svg_icons.random, default.icons.size_alt * 1.15, function()
+local button_random = mkbutton(svg_icons.random, default.icons.size_alt, function()
   Lib.Playerctl:play_pause()
 end, default.icons.inactive, dpi(-2))
-local button_repeat = mkbutton(svg_icons.replay, default.icons.size_alt * 1.15, function()
+local button_repeat = mkbutton(svg_icons.replay, default.icons.size_alt, function()
   Lib.Playerctl:play_pause()
 end, default.icons.inactive, dpi(-1))
 
 -- TODO: Move this button to quicksettings buttons
-local button_notify = mkbutton(svg_icons.ding, default.icons.size_alt * 1.15, function(self)
+local button_notify = mkbutton(svg_icons.ding, default.icons.size_alt, function(self)
   User.music.notifys.enabled = not User.music.notifys.enabled
   if User.music.notifys.enabled then
     self:set_color(default.icons.active)
@@ -214,7 +214,7 @@ return Wibox.widget({
   border_width = Beautiful.widget_border.width,
   border_color = Beautiful.widget_border.color,
   shape = Helpers.shape.rrect(Beautiful.radius),
-  forced_height = User.music.control.art_bg and dpi(100),
+  forced_height = User.music.control.art_bg and dpi(110),
   {
     layout = Wibox.layout.stack,
     art_bg,
