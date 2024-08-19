@@ -7,7 +7,7 @@ local dpi = Beautiful.xresources.apply_dpi
 local darken = Helpers.color.darken
 
 theme = dofile(gfs.get_themes_dir() .. "default/theme.lua")
-local _colors = require("theme.colorschemes.tomorrow")
+local _colors = require("theme.colorschemes.onedark")
 local cscheme = require("theme.palettegen")(_colors, "dark")
 
 theme.transparent = "#00000000"
@@ -73,7 +73,7 @@ theme.widget_border = {
   -- color_inner = cscheme.type == "dark" and darken(cscheme.neutral[900], 0) or cscheme.neutral[600],
   -- color = Helpers.color.blend(cscheme.neutral[700], cscheme.neutral[850]),
   color = cscheme.neutral[600],
-  color_inner = cscheme.type == "dark" and cscheme.neutral[500] or cscheme.neutral[600],
+  color_inner = cscheme.type == "dark" and cscheme.neutral[600] or cscheme.neutral[600],
 }
 theme.widget_radius = {
   outer = theme.radius * 2,

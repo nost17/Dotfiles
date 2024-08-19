@@ -18,7 +18,8 @@ local calendar = { mt = {} }
 local style = {
   border_color = Beautiful.widget_border.color,
   border_width = Beautiful.widget_border.width,
-  shape = Helpers.shape.rrect(Beautiful.radius),
+  shape = Helpers.shape.rrect(),
+  spacing = Beautiful.widget_spacing,
   header = {
     bg_normal = Beautiful.neutral[800],
     bg_hover = Beautiful.neutral[700],
@@ -33,7 +34,7 @@ local style = {
     fg_selected = Beautiful.widget_color[1],
     bg_selected = Beautiful.primary[500],
     height = dpi(32),
-    width = dpi(38),
+    width = dpi(42),
   },
   weak_days = {
     -- color = Beautiful.primary[500],
@@ -43,6 +44,7 @@ local style = {
   },
 }
 
+style.button_shape = Helpers.shape.rrect(style.border_width == 0 and Beautiful.radius)
 style.weak_days.bg_normal = style.border_width ~= 0 and style.header.bg_normal
 
 local function day_name_widget(name, weekend)
@@ -59,7 +61,7 @@ local function day_name_widget(name, weekend)
         color = weekend and style.weak_days.accent or style.weak_days.color,
         bold = true,
         text = name,
-      })
+      }),
     }),
   })
 end
@@ -160,14 +162,15 @@ local function icon_button(icon, action)
       padding = 0,
       halign = "center",
       color = style.header.bg_normal,
+      normal_shape = style.button_shape,
       normal_border_width = 0,
       on_release = action,
       {
         widget = Wibox.widget.textbox,
         markup = Helpers.text.colorize_text(icon, style.header.fg_normal),
         font = "Material Design Icons Desktop 16",
-      }
-    }
+      },
+    },
   })
 end
 
@@ -178,7 +181,8 @@ local function new(...)
   ret.month = Wibox.widget({
     widget = wbutton.normal,
     halign = "left",
-    padding = Beautiful.widget_padding.inner,
+    padding = Beautiful.widget_padding.outer,
+    normal_shape = style.button_shape,
     color = style.header.bg_normal,
     normal_border_width = 0,
     on_release = function()
@@ -191,8 +195,8 @@ local function new(...)
         widget = Wibox.widget.textbox,
         text = get_current_month(),
         font = Beautiful.font_med_m,
-      }
-    }
+      },
+    },
   })
   function ret.month:set_text(text)
     self:get_content().children[1].text = text
@@ -204,13 +208,18 @@ local function new(...)
     nil,
     ret.month,
     {
-      layout = Wibox.layout.flex.horizontal,
-      icon_button("󰅃", function()
-        ret:increase_date()
-      end),
-      icon_button("󰅀", function()
-        ret:decrease_date()
-      end)
+      widget = Wibox.container.margin,
+      left = style.border_width == 0 and style.spacing or 0,
+      {
+        layout = Wibox.layout.flex.horizontal,
+        spacing = style.border_width == 0 and (style.spacing / 2) or 0,
+        icon_button("󰅃", function()
+          ret:increase_date()
+        end),
+        icon_button("󰅀", function()
+          ret:decrease_date()
+        end),
+      },
     },
   })
 
@@ -229,7 +238,7 @@ local function new(...)
     shape = style.border_width ~= 0 and style.shape,
     {
       layout = Wibox.layout.fixed.vertical,
-      spacing = style.border_width == 0 and dpi(8) or 0,
+      spacing = style.border_width == 0 and style.spacing or 0,
       -- spacing = Beautiful.widget_spacing,
       {
         widget = Wibox.container.background,

@@ -19,7 +19,7 @@ local capi = {
 
 --- @class ButtonNormal
 local button_normal = {
-  mt = {}
+  mt = {},
 }
 
 local mt = {}
@@ -80,7 +80,7 @@ local function build_children_effects(self, child)
   local wp = self._private
 
   local wtype = child:get_type()
-  if wtype == "icon"  or wtype == "text" then
+  if wtype == "icon" or wtype == "text" then
     local color = child._private.color or (child._private.defaults and child._private.defaults.color)
     local on_color = child._private.on_color or (child._private.defaults and child._private.defaults.on_color)
     if on_color and color then
@@ -106,6 +106,11 @@ function button_normal:effect()
   local shape = wp[key .. "shape"] or wp.defaults[key .. "shape"]
   local border_width = wp[key .. "border_width"] or wp.defaults[key .. "border_width"]
   local border_color = wp[key .. "border_color"] or wp.defaults[key .. "border_color"]
+
+  if shape == "none" then
+    shape = nil
+  end
+
   -- self:set_overlay(bg)
 
   -- Update opacity overlay
@@ -113,15 +118,15 @@ function button_normal:effect()
 
   if wp.color_is_dark then
     if wp.mode == "hover" then
-      state_layer_opacity = 0.04
+      state_layer_opacity = 0.1
     elseif wp.mode == "press" then
-      state_layer_opacity = 0.02
+      state_layer_opacity = 0.06
     end
   else
     if wp.mode == "hover" then
-      state_layer_opacity = 0.13
+      state_layer_opacity = 0.22
     elseif wp.mode == "press" then
-      state_layer_opacity = 0.20
+      state_layer_opacity = 0.16
     end
   end
 
@@ -132,7 +137,6 @@ function button_normal:effect()
   self.shape = shape
   self.border_color = border_color
   self.border_width = border_width
-
 end
 
 --- Sets the button children
@@ -147,10 +151,10 @@ function button_normal:set_widget(widget)
   wp.widget = wibox.widget({
     layout = wibox.layout.stack,
     {
-      widget = bwidget,
+      widget = Wibox.container.background,
       id = "overlay",
       opacity = 0,
-      bg = Beautiful.neutral[100],
+      bg = Beautiful.neutral[400],
     },
     {
       widget = wibox.container.place,
@@ -180,29 +184,11 @@ function button_normal:set_widget(widget)
   self:emit_signal("widget::layout_changed")
 end
 
---- Set overlay color
---- @protected
-function button_normal:update_overlay(color)
-  local wp = self._private
-  wp.color_is_dark = helpers.color.isDark(color)
-  if wp.color_is_dark then
-    wp.overlay.bg = beautiful.neutral[beautiful.type == "dark" and 100 or 900]
-  else
-    wp.overlay.bg = beautiful.neutral[beautiful.type == "dark" and 900 or 100]
-  end
-end
-
-function button_normal:set_overlay(color)
-  local wp = self._private
-  wp.overlay.bg = color or wp.overlay.bg
-end
-
 --- Sets the button color
 --- @param color string new background color
 function button_normal:set_color(color)
   local wp = self._private
   wp.color = color or wp.defaults.color
-  self:update_overlay(wp.color)
   self:effect()
 end
 
@@ -313,7 +299,7 @@ local function new(is_state)
   wp.defaults.padding = 6
   wp.defaults.color = Beautiful.widget_color[2]
 
-  wp.defaults.normal_shape = helpers.shape.rrect()
+  wp.defaults.normal_shape = Helpers.shape.rrect()
   wp.defaults.hover_shape = wp.defaults.normal_shape
   wp.defaults.press_shape = wp.defaults.normal_shape
 
@@ -416,7 +402,7 @@ local function new(is_state)
 
   widget:set_widget(wibox.container.margin())
   -- widget:set_widget(props.widget)
-  widget:update_overlay(wp.defaults.color)
+  -- widget:update_overlay(wp.defaults.color)
   widget:effect()
 
   -- for _, prop in ipairs(properties) do
@@ -425,7 +411,6 @@ local function new(is_state)
 
   return widget
 end
-
 
 function button_normal.mt:__call(...)
   return new(...)

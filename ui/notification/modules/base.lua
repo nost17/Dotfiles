@@ -106,7 +106,7 @@ local function make_notify(n)
           self,
           Beautiful.widget_color[2],
           Beautiful.neutral[200],
-          Beautiful.neutral[800],
+          Beautiful.widget_color[3],
           Beautiful.neutral[100]
         )
       end,

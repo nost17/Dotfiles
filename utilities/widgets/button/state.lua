@@ -48,7 +48,6 @@ end
 function button_state:turn_on()
   local wp = self._private
   wp.state = true
-  self:update_overlay(wp.on_color)
   self:effect()
   for _, child in ipairs(wp.children_effect) do
     child.widget:update_display_color(child.on_color)
@@ -59,7 +58,6 @@ end
 function button_state:turn_off()
   local wp = self._private
   wp.state = false
-  self:update_overlay(wp.color or wp.defaults.color)
   self:effect()
   for _, child in ipairs(wp.children_effect) do
     child.widget:update_display_color(child.color)

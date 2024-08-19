@@ -100,7 +100,7 @@ local svg_icons = {
   replay = recolor(Beautiful.icons .. "music/player-repeat.svg"),
   tower = recolor(Beautiful.icons .. "music/tower.svg"),
 }
-local button_padding = Beautiful.widget_padding.inner / 2
+local button_padding = Beautiful.widget_padding.inner
 -- local button_padding = {
 --    left = Beautiful.widget_padding.inner / 2,
 --    right = Beautiful.widget_padding.inner / 2,
@@ -119,23 +119,31 @@ local function mkbutton(image, size, fn, color, yoffset, xoffset)
     valign = "center",
   })
   button = Wibox.widget({
-    widget = wbutton.normal,
-    padding = button_padding,
-    normal_border_width = 0,
-    halign = "center",
-    valign = "center",
-    color = Beautiful.widget_color[3],
+    widget = Wibox.container.margin,
+    forced_width = 24,
+    forced_height = 24,
+    -- valign = "center",
+    -- halign = "center",
     {
-      widget = Wibox.container.margin,
-      forced_width = size * 1.1,
-      bottom = yoffset,
-      right = xoffset,
-      icon,
+      widget = wbutton.normal,
+      padding = 0,
+      normal_shape = Helpers.shape.rrect(0),
+      normal_border_width = 0,
+      halign = "center",
+      valign = "center",
+      color = Beautiful.widget_color[3],
+      on_press = function()
+        fn(button, icon)
+      end,
+      {
+        widget = Wibox.container.margin,
+        bottom = yoffset,
+        right = xoffset,
+        icon,
+      },
     },
-    on_press = function()
-      fn(button, icon)
-    end,
   })
+
   button._private.icon = image
   function button:set_icon(new_icon)
     button._private.icon = new_icon
@@ -164,7 +172,7 @@ end)
 
 local button_random = mkbutton(svg_icons.random, default.icons.size_alt * 1.15, function()
   Lib.Playerctl:play_pause()
-end, default.icons.inactive, dpi(-1))
+end, default.icons.inactive, dpi(-2))
 local button_repeat = mkbutton(svg_icons.replay, default.icons.size_alt * 1.15, function()
   Lib.Playerctl:play_pause()
 end, default.icons.inactive, dpi(-1))
@@ -177,7 +185,7 @@ local button_notify = mkbutton(svg_icons.ding, default.icons.size_alt * 1.15, fu
   else
     self:set_color(default.icons.inactive)
   end
-end, User.music.notifys.enabled and default.icons.active or default.icons.inactive, 0, dpi(-2))
+end, User.music.notifys.enabled and default.icons.active or default.icons.inactive, -1, dpi(-2))
 
 -- update metadata
 Lib.Playerctl:connect_signal("metadata", function(_, title, artist, _, art_url, player_name)
@@ -256,8 +264,8 @@ return Wibox.widget({
         Helpers.ui.vertical_pad(Beautiful.widget_spacing),
         {
           layout = Wibox.layout.align.horizontal,
-          expand = "none",
-          Wibox.widget({
+          -- expand = "none",
+          {
             widget = wbutton.normal,
             padding = {
               left = Beautiful.widget_padding.inner,
@@ -287,7 +295,7 @@ return Wibox.widget({
                 metadata_player,
               },
             },
-          }),
+          },
           nil,
           {
             widget = Wibox.container.background,
