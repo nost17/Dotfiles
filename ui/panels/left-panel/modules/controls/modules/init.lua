@@ -1,5 +1,5 @@
 ---@module 'ui.panels.left-panel.modules.controls.modules.base'
-local template = require(... .. ".base")
+-- local template = require(... .. ".base")
 
 local icons = {
   mute = Beautiful.icons .. "settings/muted.svg",
@@ -9,36 +9,23 @@ local icons = {
   dark_mode = Beautiful.icons .. "settings/moon.svg",
   dnd = Beautiful.icons .. "settings/dnd.svg",
 }
+
+local style = {}
+style.color = Beautiful.neutral[850]
+style.on_color = Beautiful.primary[600]
+style.color_fg = Beautiful.neutral[200]
+style.on_color_fg = Beautiful.neutral[900]
+
+
 local function alert(title)
   Naughty.notification({
     title = title,
   })
 end
 return {
-  mute_state = require(... .. ".mute")(template, icons),
-  wifi_state = require(... .. ".wifi")(template, icons),
-  nlight_state = require(... .. ".night_light")(template, icons),
-  dnd_state = require(... .. ".dnd")(template, icons),
-  test = template.only_icon({
-    label = "luz nocturna",
-    show_state = true,
-    icon = icons.dnd,
-    fn_on = function()
-      alert("si")
-    end,
-    fn_off = function()
-      alert("no")
-    end,
-  }),
-  test_2 = template.only_icon({
-    icon = icons.dark_mode,
-    label = "modo oscuro",
-    type = "state",
-    fn_on = function()
-      alert("si")
-    end,
-    fn_off = function()
-      alert("no")
-    end,
-  }),
+  mute_state = require(... .. ".mute")(style, icons),
+  wifi_state = require(... .. ".wifi")(style, icons),
+  nlight_state = require(... .. ".night_light")(style, icons),
+  dnd_state = require(... .. ".dnd")(style, icons),
+  dark_mode_state = require(... .. ".dark")(style, icons),
 }

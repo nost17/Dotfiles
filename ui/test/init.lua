@@ -1,20 +1,68 @@
----@module 'ui.test.text'
+---@module 'utilities.widgets.qs_button'
 local qswidget = Utils.widgets.qs_button
 
 local boton1 = qswidget.with_label({
   label = "prueba",
   icon = Beautiful.icons .. "settings/phocus.svg",
-  fn_on = function ()
+  fn_on = function()
     Naughty.notify({
       title = "ON"
     })
   end,
-  fn_off = function ()
+  fn_off = function()
     Naughty.notify({
       title = "OFF"
     })
   end,
-  settings = function ()
+  settings = function()
+    Awful.spawn.with_shell("wezterm")
+  end
+})
+
+local boton2 = qswidget.with_label({
+  label = "prueba",
+  icon = Beautiful.icons .. "settings/phocus.svg",
+  fn_on = function()
+    Naughty.notify({
+      title = "ON"
+    })
+  end,
+  fn_off = function()
+    Naughty.notify({
+      title = "OFF"
+    })
+  end,
+})
+
+local boton3 = qswidget.windows_label({
+  label = "prueba",
+  icon = Beautiful.icons .. "settings/phocus.svg",
+  fn_on = function()
+    Naughty.notify({
+      title = "ON"
+    })
+  end,
+  fn_off = function()
+    Naughty.notify({
+      title = "OFF"
+    })
+  end,
+})
+
+local boton4 = qswidget.windows_label({
+  label = "prueba",
+  icon = Beautiful.icons .. "settings/phocus.svg",
+  fn_on = function()
+    Naughty.notify({
+      title = "ON"
+    })
+  end,
+  fn_off = function()
+    Naughty.notify({
+      title = "OFF"
+    })
+  end,
+  settings = function()
     Awful.spawn.with_shell("wezterm")
   end
 })
@@ -22,8 +70,8 @@ local boton1 = qswidget.with_label({
 local main = Wibox({
   ontop = true,
   visible = true,
-  width = 200,
-  height = 200,
+  width = 240,
+  height = 240,
   bg = Beautiful.neutral[900],
   x = screen.primary.geometry.width - 500,
   y = screen.primary.geometry.height / 2 + 100,
@@ -38,7 +86,12 @@ main:setup({
       spacing = Beautiful.widget_spacing,
       boton1,
       boton2,
-      boton3,
+      {
+        layout = Wibox.layout.flex.horizontal,
+        spacing = Beautiful.widget_spacing,
+        boton3,
+        boton4,
+      }
     }
   },
 })

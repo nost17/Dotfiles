@@ -8,7 +8,7 @@ local darken = Helpers.color.darken
 
 theme = dofile(gfs.get_themes_dir() .. "default/theme.lua")
 local _colors = require("theme.colorschemes.onedark")
-local cscheme = require("theme.palettegen")(_colors, "light")
+local cscheme = require("theme.palettegen")(_colors, "dark")
 
 theme.transparent = "#00000000"
 

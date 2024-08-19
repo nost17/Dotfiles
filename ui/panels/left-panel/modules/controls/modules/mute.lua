@@ -1,5 +1,5 @@
-return function(template, icons)
-   local button = template.with_label({
+return function(style, icons)
+   local button = Utils.widgets.qs_button.with_label({
       label = "Silenciar",
       -- show_state = true,
       icon = icons.mute,
@@ -14,9 +14,9 @@ return function(template, icons)
       end,
    })
    Lib.Volume:connect_signal("volume", function(_, _, muted)
-      if muted and not button._state then
+      if muted and not button:get_state() then
          button:turn_on()
-      elseif muted == false and button._state then
+      elseif muted == false and button:get_state() then
          button:turn_off()
       end
    end)

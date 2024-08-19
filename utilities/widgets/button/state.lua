@@ -149,6 +149,10 @@ function button_state:set_on_normal_border_color(on_normal_border_color)
   self:effect()
 end
 
+function button_state:get_state()
+  return self._private.state
+end
+
 --- Create new status button
 --- @return ButtonState
 local function new()
