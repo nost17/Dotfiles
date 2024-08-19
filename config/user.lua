@@ -43,7 +43,7 @@ user.notify_count = 0
 
 user.music = {}
 user.music.control = {
-   art_bg = false
+   art_bg = true
 }
 user.music.notifys = {
    enabled = false,

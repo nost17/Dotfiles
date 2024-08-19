@@ -1,8 +1,7 @@
 return function(style, icons)
-   local button = Utils.widgets.qs_button.with_label({
-      label = "Silenciar",
-      -- show_state = true,
+   local button = Utils.widgets.qs_button.windows_label({
       icon = icons.mute,
+      label = "Silenciar",
       settings = function()
          Awful.spawn("pavucontrol", false)
       end,

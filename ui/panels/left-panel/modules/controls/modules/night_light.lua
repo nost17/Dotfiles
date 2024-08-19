@@ -1,9 +1,8 @@
 ---@param icons table
 return function(style, icons)
-   local button = Utils.widgets.qs_button.with_label({
-      label = "Luz nocturna",
-      -- show_state = true,
+   local button = Utils.widgets.qs_button.windows_label({
       icon = icons.night_light,
+      label = "Luz nocturna",
       fn_on = function()
          Lib.NightLight:emit_signal("update", "on")
       end,
