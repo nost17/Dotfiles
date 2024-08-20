@@ -100,13 +100,7 @@ local svg_icons = {
   replay = recolor(Beautiful.icons .. "music/player-repeat.svg"),
   tower = recolor(Beautiful.icons .. "music/tower.svg"),
 }
-local button_padding = Beautiful.widget_padding.inner
--- local button_padding = {
---    left = Beautiful.widget_padding.inner / 2,
---    right = Beautiful.widget_padding.inner / 2,
---    bottom = Beautiful.widget_padding.inner,
---    top = Beautiful.widget_padding.inner,
--- }
+
 
 local function mkbutton(image, size, fn, color, yoffset, xoffset)
   local button, icon
@@ -127,7 +121,7 @@ local function mkbutton(image, size, fn, color, yoffset, xoffset)
     {
       widget = wbutton.normal,
       padding = 0,
-      normal_shape = Helpers.shape.rrect(0),
+      normal_shape = "none",
       normal_border_width = 0,
       halign = "center",
       valign = "center",
@@ -211,7 +205,7 @@ return Wibox.widget({
     {
       widget = Wibox.container.background,
       bg = default.overlay_bg,
-      opacity = User.music.control.art_bg and (Beautiful.type == "dark" and 0.79 or 0.3) or nil,
+      opacity = User.music.control.art_bg and (Beautiful.type == "dark" and 0.79 or 0.25) or nil,
     },
     {
       widget = Wibox.container.margin,
@@ -243,6 +237,8 @@ return Wibox.widget({
             widget = Wibox.container.place,
             valign = "center",
             halign = "left",
+            content_fill_horizontal = true,
+            fill_horizontal = true,
             {
               layout = Wibox.layout.flex.vertical,
               metadata_title,

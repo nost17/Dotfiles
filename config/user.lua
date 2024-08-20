@@ -47,7 +47,7 @@ user.music.control = {
    art_bg = true
 }
 user.music.notifys = {
-   enabled = false,
+   enabled = true,
    buttons = true,
 }
 user.music.players = {

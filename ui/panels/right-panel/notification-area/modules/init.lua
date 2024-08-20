@@ -7,7 +7,7 @@ local scroller = require(... .. ".scroll")
 
 local style = {
    bg_normal = Beautiful.widget_color[2],
-   bg_hover = Beautiful.neutral[800],
+   bg_hover = Beautiful.widget_color[3],
    border_width = Beautiful.widget_border.width,
    border_color = Beautiful.widget_border.color,
 }
