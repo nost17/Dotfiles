@@ -12,4 +12,5 @@ return Wibox.widget({
     modules.mute_state,
     modules.dnd_state,
     modules.nlight_state,
+    modules.symphony_state
 })

@@ -177,16 +177,6 @@ local button_repeat = mkbutton(svg_icons.replay, default.icons.size_alt, functio
   Lib.Playerctl:play_pause()
 end, default.icons.inactive, dpi(-1))
 
--- TODO: Move this button to quicksettings buttons
-local button_notify = mkbutton(svg_icons.ding, default.icons.size_alt, function(self)
-  User.music.notifys.enabled = not User.music.notifys.enabled
-  if User.music.notifys.enabled then
-    self:set_color(default.icons.active)
-  else
-    self:set_color(default.icons.inactive)
-  end
-end, User.music.notifys.enabled and default.icons.active or default.icons.inactive, -1, dpi(-2))
-
 -- update metadata
 Lib.Playerctl:connect_signal("metadata", function(_, title, artist, _, art_url, player_name)
   if art_url == "" or not art_url then
@@ -306,7 +296,6 @@ return Wibox.widget({
             {
               layout = Wibox.layout.fixed.horizontal,
               spacing = Beautiful.widget_border.width,
-              button_notify,
               button_random,
               button_repeat,
               button_prev,

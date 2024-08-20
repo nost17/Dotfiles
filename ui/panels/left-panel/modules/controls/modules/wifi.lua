@@ -1,4 +1,4 @@
-return function(style, icons)
+return function(icons)
   return Utils.widgets.qs_button.windows_label({
     icon = icons.wifi,
     label = "Internet",

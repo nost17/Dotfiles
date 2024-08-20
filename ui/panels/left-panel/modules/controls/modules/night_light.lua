@@ -1,5 +1,5 @@
 ---@param icons table
-return function(style, icons)
+return function(icons)
    local button = Utils.widgets.qs_button.windows_label({
       icon = icons.night_light,
       label = "Luz nocturna",
