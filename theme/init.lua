@@ -60,7 +60,7 @@ theme.font = font.font_reg_m
 -- cscheme.neutral[850] = "#ECECE8"
 
 -- widget
-theme.radius = dpi(2)
+theme.radius = dpi(1)
 theme.widget_color = {
   cscheme.neutral[900],
   cscheme.neutral[800],
