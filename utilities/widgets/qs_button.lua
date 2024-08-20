@@ -13,7 +13,7 @@ defaults.windows_label_height = Beautiful.xresources.apply_dpi(40)
 defaults.shape = Helpers.shape.rrect()
 
 defaults.color = Beautiful.widget_color[2]
-defaults.color_fg = Beautiful.neutral[100]
+defaults.color_fg = Beautiful.neutral[200]
 defaults.on_color = Beautiful.primary[500]
 defaults.on_color_fg = Beautiful.widget_color[1]
 defaults.icon_color = defaults.color_fg
@@ -71,6 +71,7 @@ templates.with_label = function(opts)
       nil,
       {
         widget = ebwidget.state,
+        on_by_default = opts.on_by_default,
         padding = defaults.padding,
         color = defaults.color,
         on_color = defaults.on_color,
@@ -133,7 +134,8 @@ end
 
 templates.only_icon = function(opts)
   return Wibox.widget({
-    widget = Utils.widgets.button.state,
+    widget = ebwidget.normal,
+    on_by_default = opts.on_by_default,
     color = defaults.color,
     on_color = defaults.on_color,
     on_turn_on = opts.fn_on,
@@ -195,6 +197,7 @@ templates.windows_label = function(opts)
       {
         widget = ebwidget.state,
         padding = defaults.padding,
+        on_by_default = opts.on_by_default,
         color = defaults.color,
         on_color = defaults.on_color,
         normal_border_width = 0,

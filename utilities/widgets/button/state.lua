@@ -68,9 +68,9 @@ end
 function button_state:toggle()
   local wp = self._private
   if wp.state == true then
-      self:turn_off()
+    self:turn_off()
   else
-      self:turn_on()
+    self:turn_on()
   end
 end
 
@@ -92,7 +92,7 @@ function button_state:set_normal_shape(normal_shape)
   self:effect()
 
   if wp.on_normal_shape == nil then
-      self:set_on_normal_shape(normal_shape)
+    self:set_on_normal_shape(normal_shape)
   end
 end
 
@@ -112,7 +112,7 @@ function button_state:set_normal_border_width(normal_border_width)
   self:effect()
 
   if wp.on_normal_shape == nil then
-      self:set_on_normal_border_width(normal_border_width)
+    self:set_on_normal_border_width(normal_border_width)
   end
 end
 
@@ -128,7 +128,7 @@ function button_state:set_normal_border_color(normal_border_color)
   self:effect()
 
   if wp.on_normal_shape == nil then
-      self:set_on_normal_border_color(normal_border_color)
+    self:set_on_normal_border_color(normal_border_color)
   end
 end
 
@@ -139,6 +139,7 @@ function button_state:set_on_normal_border_width(on_normal_border_width)
   wp.defaults.on_press_border_width = on_normal_border_width
   self:effect()
 end
+
 function button_state:set_on_normal_border_color(on_normal_border_color)
   local wp = self._private
   wp.on_normal_border_color = on_normal_border_color
@@ -149,6 +150,19 @@ end
 
 function button_state:get_state()
   return self._private.state
+end
+
+function button_state:set_on_by_default(value)
+  if value == true then
+    Gears.timer({
+      timeout = 0.5,
+      autostart = true,
+      single_shot = true,
+      callback = function()
+        self:turn_on()
+      end
+    })
+  end
 end
 
 --- Create new status button
