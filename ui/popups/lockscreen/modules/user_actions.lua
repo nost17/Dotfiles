@@ -17,7 +17,7 @@ local style = {
   border_width = Beautiful.widget_border.width,
   border_color = Beautiful.widget_border.color,
   timeout = 7,
-  prompt_template = "%s en: %ss"
+  prompt_template = "El equipo se %s en: %ss"
 }
 
 local confirm = {}

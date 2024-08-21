@@ -68,15 +68,9 @@ local art_bg = Wibox.widget({
 })
 
 local function set_cover(art)
-  -- metadata_art:set_image(Gears.surface.load_uncached(art))
   if User.music.control.art_bg then
     art_bg:set_image(Gears.surface.load_uncached(art))
-    -- art_bg:set_image(Gears.surface.crop_surface({
-    --   ratio = 3,
-    --   surface = Gears.surface.load_uncached(art),
-    -- }))
   else
-    -- metadata_art:set_image(Gears.surface.load_uncached(art))
     metadata_art:set_image(Gears.surface.crop_surface({
       ratio = 1,
       surface = Gears.surface.load_uncached(art),
@@ -209,12 +203,7 @@ return Wibox.widget({
     },
     {
       widget = Wibox.container.margin,
-      margins = {
-        top = Beautiful.widget_padding.outer,
-        left = Beautiful.widget_padding.outer,
-        right = Beautiful.widget_padding.outer,
-        bottom = Beautiful.widget_padding.outer,
-      },
+      margins = Beautiful.widget_padding.inner,
       {
         layout = Wibox.layout.align.vertical,
         -- expand = "none",
@@ -222,7 +211,7 @@ return Wibox.widget({
           layout = Wibox.layout.align.horizontal,
           not User.music.control.art_bg and {
             widget = Wibox.container.margin,
-            right = Beautiful.widget_padding.outer,
+            right = Beautiful.widget_spacing,
             {
               widget = Wibox.container.background,
               forced_height = art_size,
@@ -247,7 +236,7 @@ return Wibox.widget({
           },
           nil,
         },
-        Helpers.ui.vertical_pad(Beautiful.widget_spacing),
+        Helpers.ui.vertical_pad(Beautiful.widget_padding.inner),
         {
           layout = Wibox.layout.align.horizontal,
           -- expand = "none",

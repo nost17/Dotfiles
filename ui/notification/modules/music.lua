@@ -12,18 +12,15 @@ prev_button:connect_signal("invoked", function()
 end)
 local emit_notify = function(title, artist, album, art_url, player_name)
   art_url = art_url or default_cover
-  music_notif = Helpers.notify_dwim({
-    title = title,
-    -- title = Helpers.text.generate_markup({
-    --   text = title,
-    --   -- color = Beautiful.primary[500],
-    --   bold = true,
-    -- }),
-    message = "<b>~</b> " .. artist,
-    image = art_url,
-    app_name = player_name,
-    actions = User.music.notifys.buttons and { prev_button, next_button }
-  }, music_notif)
+  if not User.config.dnd_state then
+    music_notif = Helpers.notify_dwim({
+      title = title,
+      message = "<b>~</b> " .. artist,
+      image = art_url,
+      app_name = player_name,
+      actions = User.music.notifys.buttons and { prev_button, next_button }
+    }, music_notif)
+  end
 end
 
 Lib.Playerctl:connect_signal("metadata", function(_, title, artist, album, art_url, player_name)

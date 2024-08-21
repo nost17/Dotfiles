@@ -75,11 +75,12 @@ return wibox.widget({
   forced_width = width,
   {
     layout = wibox.layout.align.horizontal,
-    songart,
+    nil,
     {
       widget = wibox.container.margin,
       margins = beautiful.widget_padding.inner * 0.7,
       {
+        songart,
         layout = wibox.layout.fixed.horizontal,
         spacing = beautiful.widget_spacing,
         songname

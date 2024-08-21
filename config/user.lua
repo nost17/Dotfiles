@@ -49,7 +49,7 @@ user.notify_count = 0
 user.music = {}
 user.music.app = user.vars.terminal .. " start --class ncmpcppad " .. user.vars.term_music
 user.music.control = {
-   art_bg = true
+   art_bg = false
 }
 user.music.notifys = {
    enabled = true,
