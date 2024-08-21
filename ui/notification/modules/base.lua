@@ -218,8 +218,9 @@ local function make_notify(n)
   end)
 end
 local notif_center_vis = false
+local dnd_state = User.config.dnd_state
 Naughty.connect_signal("request::display", function(n)
-  if not User.config.dnd_state then
+  if not dnd_state then
     if not notif_center_vis then
       make_notify(n)
     end
@@ -227,4 +228,8 @@ Naughty.connect_signal("request::display", function(n)
 end)
 awesome.connect_signal("visible::info_panel", function(vis)
   notif_center_vis = vis
+end)
+
+Lib.Dnd:connect_signal("state", function (_, state)
+  dnd_state = state
 end)

@@ -171,4 +171,9 @@ awesome.connect_signal("widgets::lockscreen", function(action)
    if main.visible then
       grabber:start()
    end
+
+end)
+
+awesome.connect_signal("visible::lockscreen", function (vis)
+   Lib.Dnd:set_state(vis)
 end)
