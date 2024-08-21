@@ -18,7 +18,6 @@ local calendar_button = Wibox.widget({
   },
   normal_border_color = Beautiful.widget_border.color,
   normal_border_width = Beautiful.widget_border.width,
-  bg_normal = Beautiful.widget_color[2],
   -- bg_normal = Beautiful.widget_color[1],
   normal_shape = Helpers.shape.rrect(Beautiful.radius),
   on_press = function()

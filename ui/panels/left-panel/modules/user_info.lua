@@ -1,9 +1,5 @@
 local dpi = Beautiful.xresources.apply_dpi
 local wbutton = Utils.widgets.button
-local info = {
-  user = Helpers.text.first_upper(os.getenv("USER")),
-  github = "@kry16",
-}
 
 local user_icon = Wibox.widget({
   widget = Wibox.widget.imagebox,
@@ -22,7 +18,7 @@ local user_name = Wibox.widget({
       fg = Beautiful.primary[500],
       {
         widget = Wibox.widget.textbox,
-        text = info.user,
+        text = User.info.user,
         font = Beautiful.font_med_m,
         halign = "left",
         valign = "top",
@@ -34,7 +30,7 @@ local user_name = Wibox.widget({
       fg = Beautiful.fg_normal .. "CC",
       {
         widget = Wibox.widget.textbox,
-        text = info.github,
+        text = User.info.github,
         halign = "left",
         font = Beautiful.font_reg_s,
       },

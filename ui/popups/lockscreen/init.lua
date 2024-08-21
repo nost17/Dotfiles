@@ -28,8 +28,42 @@ local caps = Wibox.widget({
    valign = "center",
 })
 
+local grab_arc = Wibox.widget({
+   id = "arc",
+   widget = Wibox.container.arcchart,
+   max_value = 100,
+   min_value = 0,
+   value = 0,
+   rounded_edge = false,
+   thickness = dpi(3),
+   start_angle = 4.71238898,
+   bg = Beautiful.lockscreen_passbox_bg,
+   colors = { Beautiful.lockscreen_passbox_bg },
+   -- bg = Beautiful.neutral[300] .. "cc",
+   -- colors = { Beautiful.neutral[300] .. "cc" },
+   shape = Gears.shape.circle,
+   forced_width = dpi(100),
+   forced_height = dpi(100),
+   {
+      widget = Wibox.container.place,
+      valign = "center",
+      halign = "center",
+      {
+         widget = Utils.widgets.icon,
+         valign = "center",
+         halign = "center",
+         icon = {
+            path = Beautiful.icons .. "power/lock2.svg",
+            uncached = true,
+         },
+         size = 42,
+         color = Beautiful.lockscreen_fg,
+      },
+   }
+})
+
 local grabber = modules.grab({
-   password_box = modules.song.art,
+   password_box = grab_arc,
    auth = auth,
    caps_label = caps,
 })
@@ -60,7 +94,28 @@ local overlay = Wibox.widget({
    forced_width = wscreen,
    forced_height = hscreen,
    bg = Beautiful.lockscreen_overlay_bg,
-   opacity = Beautiful.type == "dark" and 0.8 or 0.35,
+   opacity = Beautiful.type == "dark" and 0.8 or 0.5,
+})
+
+
+local bar = Wibox.widget({
+   widget = Wibox.container.background,
+   bg = Beautiful.widget_color[1],
+   forced_height = dpi(48),
+   {
+      widget = Wibox.container.margin,
+      top = Beautiful.widget_padding.inner * 0.7,
+      bottom = Beautiful.widget_padding.inner * 0.7,
+      left = Beautiful.widget_padding.inner,
+      right = Beautiful.widget_padding.inner,
+      {
+         layout = Wibox.layout.align.horizontal,
+         expand = "none",
+         modules.info,
+         modules.song,
+         modules.actions,
+      }
+   }
 })
 
 main:setup({
@@ -68,54 +123,39 @@ main:setup({
    back,
    overlay,
    {
-      widget = Wibox.container.margin,
-      margins = 100,
+      layout = Wibox.layout.align.vertical,
       {
-         layout = Wibox.layout.align.vertical,
+         widget = Wibox.container.margin,
+         margins = 100,
          {
             layout = Wibox.layout.align.horizontal,
-            {
-               widget = Wibox.widget.textclock,
-               font = Beautiful.font_name .. " Bold 100",
-               format = Helpers.text.colorize_text("%H:%M", Beautiful.lockscreen_fg),
-               align = "center",
-               valign = "center",
-            },
+            expand = "none",
             nil,
+            {
+               layout = Wibox.layout.fixed.vertical,
+               {
+                  widget = Wibox.widget.textclock,
+                  font = Beautiful.font_name .. " Medium 82",
+                  format = Helpers.text.colorize_text("%H:%M", Beautiful.lockscreen_fg),
+                  align = "center",
+                  valign = "center",
+               },
+               {
+                  widget = Wibox.container.margin,
+                  top = dpi(-10),
+                  modules.date
+               }
+            },
             caps,
          },
-         nil,
-         {
-            layout = Wibox.layout.align.horizontal,
-            {
-               layout = Wibox.layout.fixed.horizontal,
-               spacing = Beautiful.widget_padding.outer * 1.6,
-               modules.song.art,
-               {
-                  widget = Wibox.container.place,
-                  valign = "center",
-                  halign = "left",
-                  {
-                     layout = Wibox.layout.fixed.vertical,
-                     {
-                        widget = Wibox.widget.textbox,
-                        font = Beautiful.font_name .. "Bold 22",
-                        halign = "start",
-                        markup = Helpers.text.colorize_text("Escuchando ahora", Beautiful.lockscreen_fg),
-                     },
-                     modules.song.name,
-                  },
-               },
-            },
-            nil,
-            {
-               widget = Wibox.container.place,
-               valign = "center",
-               halign = "right",
-               modules.actions,
-            },
-         },
       },
+      {
+         widget = Wibox.container.place,
+         halign = "center",
+         valign = "center",
+         grab_arc
+      },
+      bar,
    },
 })
 
