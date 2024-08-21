@@ -235,7 +235,6 @@ buttons.layout_buttons = Wibox.widget({
     spacing = Beautiful.widget_padding.outer,
     buttons.shutdown,
     buttons.reboot,
-
     buttons.close,
   },
   {

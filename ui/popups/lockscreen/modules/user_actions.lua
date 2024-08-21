@@ -7,7 +7,7 @@ local icons = {
   reboot = icons_path .. "reboot.svg",
   shutdown = icons_path .. "shutdown.svg",
   accept = Beautiful.icons .. "others/check.svg",
-  dimiss = Beautiful.icons .. "others/close.svg",
+  dimiss = Beautiful.icons .. "others/close2.svg",
 }
 local style = {
   icon_width = dpi(38),
