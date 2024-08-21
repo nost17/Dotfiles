@@ -1,7 +1,6 @@
 local music_notif
-local first_time = true
+local _time = 0
 local default_cover = Helpers.cropSurface(1, Gears.surface.load_uncached(Beautiful.music_cover))
-
 
 local next_button = Naughty.action({ name = "siguiente" })
 local prev_button = Naughty.action({ name = "anterior" })
@@ -28,8 +27,8 @@ local emit_notify = function(title, artist, album, art_url, player_name)
 end
 
 Lib.Playerctl:connect_signal("metadata", function(_, title, artist, album, art_url, player_name)
-  if first_time then
-    first_time = false
+  if _time < 2 then
+    _time = _time + 1
   elseif User.music.notifys.enabled then
     emit_notify(title, artist, album, art_url, player_name)
   end

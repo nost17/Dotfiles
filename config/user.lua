@@ -7,6 +7,11 @@ user.theme = {
    light = "light",
 }
 
+user.info = {
+   user = tostring((os.getenv("USER"))):gsub("^%l", string.upper),
+   github = "@kry16",
+}
+
 user.config = {}
 user.config.password = "awesome"
 user.config.night_light = {
