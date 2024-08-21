@@ -109,8 +109,8 @@ local bar = Wibox.widget({
       left = Beautiful.widget_padding.inner,
       right = Beautiful.widget_padding.inner,
       {
-         layout = Wibox.layout.align.horizontal,
-         expand = "none",
+         layout = Wibox.layout.flex.horizontal,
+         -- expand = "none",
          modules.info,
          modules.song,
          modules.actions,

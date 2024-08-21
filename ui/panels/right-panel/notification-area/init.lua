@@ -18,7 +18,12 @@ local notification_center = Wibox.widget({
 		nil,
 		Wibox.widget({
 			widget = wbutton.normal,
-			padding = Beautiful.widget_padding.inner,
+			padding = {
+				top = Beautiful.widget_padding.inner * 0.75,
+				bottom = Beautiful.widget_padding.inner * 0.75,
+				left = Beautiful.widget_padding.inner,
+				right = Beautiful.widget_padding.inner,
+			},
 			color = Beautiful.red[300],
 			on_press = function()
 				core:reset()

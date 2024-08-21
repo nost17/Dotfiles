@@ -10,16 +10,19 @@ return wibox.widget({
 		widget = wibox.container.place,
 		halign = "center",
 		valign = "center",
+		content_fill_vertical = true,
+		fill_vertical = true,
+		forced_height = dpi(34),
+		forced_width = dpi(34),
 		{
 			widget = wibox.container.background,
 			shape = gshape.circle,
 			border_width = 1,
 			border_color = beautiful.neutral[100],
+
 			{
 				widget = wibox.widget.imagebox,
 				image = Beautiful.user_icon,
-				forced_width = dpi(34),
-				forced_height = dpi(34),
 				halign = "center",
 				valign = "center",
 			},
