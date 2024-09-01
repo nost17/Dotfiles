@@ -13,6 +13,7 @@ local bwidget = Wibox.container.background
 local dpi = Beautiful.xresources.apply_dpi
 local setmetatable = setmetatable
 local ipairs = ipairs
+local lighten = Beautiful.type == "dark" and Helpers.color.lighten or Helpers.color.lighten
 local capi = {
   awesome = awesome,
   tag = tag,
@@ -257,7 +258,9 @@ function menu.menu(widgets, width, hide_on_clicked_outside)
     ontop = true,
     minimum_width = width or dpi(200),
     maximum_width = width or dpi(200),
-    shape = Helpers.shape.rrect(),
+    shape = Helpers.shape.rrect(style.menu_padding + (Beautiful.widget_radius.inner / 2)),
+    border_color = Beautiful.widget_border.color,
+    border_width = Beautiful.widget_border.width,
     -- bg = Beautiful.colors.background,
     widget = {
       widget = Wibox.container.margin,
@@ -347,7 +350,7 @@ function menu.sub_menu_button(args)
       normal_border_color = style.button_border_color,
       hover_border_color = style.button_border_color_hover,
       press_border_color = style.button_border_color_hover,
-      on_normal_border_color = Helpers.color.darken_or_lighten(style.button_bg_on, 0.1),
+      on_normal_border_color = lighten(style.button_bg_on, 0.15),
       on_turn_on = function(self)
         if args.menu then
           local coords = Helpers.ui.get_widget_geometry_in_device_space({ wibox = args.menu }, self)

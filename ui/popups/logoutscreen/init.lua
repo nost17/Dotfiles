@@ -18,7 +18,7 @@ local style = {
   cancel_bg = Beautiful.red[300],
   ok_fg = Beautiful.neutral[100],
   ok_bg = Beautiful.neutral[800],
-  shape = Helpers.shape.rrect(Beautiful.radius),
+  shape = Helpers.shape.rrect(),
   border_color = Beautiful.widget_border.color,
   border_width = Beautiful.widget_border.width,
 }
@@ -259,7 +259,7 @@ local logoutscreen = Awful.popup({
   border_width = Beautiful.widget_border.width,
   border_color = Beautiful.widget_border.color,
   bg = Beautiful.quicksettings_bg,
-  shape = Beautiful.quicksettings_shape,
+  shape = style.shape,
   maximum_height = style.widget_height,
   maximum_width = style.widget_width,
   minimum_width = style.widget_width,

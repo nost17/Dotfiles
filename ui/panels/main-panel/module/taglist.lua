@@ -4,7 +4,7 @@ local modkey = mod.modkey
 local taglist = require("utilities.widgets.taglist")
 local mwidget = require("utilities.widgets.menu")
 local menu_tag = Helpers.create_gobject()
-menu_tag.menu = mwidget.menu({}, dpi(160))
+menu_tag.menu = mwidget.menu({}, dpi(180))
 
 local function create_tag_button(args)
   local button = mwidget.button({
