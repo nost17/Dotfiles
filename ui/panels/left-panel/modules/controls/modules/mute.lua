@@ -1,5 +1,5 @@
-return function(icons)
-   local button = Utils.widgets.qs_button.windows_label({
+return function(icons, template)
+   local button = Utils.widgets.qs_button[template]({
       icon = icons.mute,
       label = "Silenciar",
       settings = function()

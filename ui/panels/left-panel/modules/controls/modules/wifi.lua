@@ -1,5 +1,5 @@
-return function(icons)
-  return Utils.widgets.qs_button.windows_label({
+return function(icons, template)
+  return Utils.widgets.qs_button[template]({
     icon = icons.wifi,
     label = "Internet",
     fn_on = function()

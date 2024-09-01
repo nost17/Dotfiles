@@ -9,11 +9,14 @@ local icons = {
   symphony = Beautiful.icons .. "apps/headphones.svg",
 }
 
+local template = "windows_label"
+
 return {
-  mute_state = require(... .. ".mute")(icons),
-  wifi_state = require(... .. ".wifi")(icons),
-  nlight_state = require(... .. ".night_light")(icons),
-  dnd_state = require(... .. ".dnd")(icons),
-  dark_mode_state = require(... .. ".dark")(icons),
-  symphony_state = require(... .. ".music_notify")(icons)
+  template = template,
+  mute_state = require(... .. ".mute")(icons, template),
+  wifi_state = require(... .. ".wifi")(icons, template),
+  nlight_state = require(... .. ".night_light")(icons, template),
+  dnd_state = require(... .. ".dnd")(icons, template),
+  dark_mode_state = require(... .. ".dark")(icons, template),
+  symphony_state = require(... .. ".music_notify")(icons, template)
 }

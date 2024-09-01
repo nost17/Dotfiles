@@ -1,6 +1,6 @@
 ---@param icons table
-return function(icons)
-	return Utils.widgets.qs_button.windows_label({
+return function(icons, template)
+	return Utils.widgets.qs_button[template]({
 		icon = icons.symphony,
 		on_by_default = User.music.notifys.enabled,
 		label = "sinfonia",

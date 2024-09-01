@@ -4,7 +4,7 @@ return Wibox.widget({
     layout = Wibox.layout.grid,
     spacing = Beautiful.widget_spacing,
     orientation = "vertical",
-    column_count = 3,
+    column_count = modules.template == "with_label" and 2 or 3,
     homogeneous = true,
     expand = true,
     modules.wifi_state,
