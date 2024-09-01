@@ -20,6 +20,8 @@ defaults.icon_color = defaults.color_fg
 defaults.icon_on_color = defaults.on_color_fg
 defaults.border_color = Beautiful.widget_border.color
 defaults.on_border_color = Beautiful.primary[600]
+defaults.separator_color = Beautiful.neutral[500]
+defaults.on_separator_color = Beautiful.primary[700]
 
 defaults.arrow_icon = Beautiful.icons .. "settings/arrow_right.svg"
 
@@ -153,7 +155,7 @@ templates.only_icon = function(opts)
 end
 
 templates.windows_label = function(opts)
-  local settings
+  local settings, sep
   local icon = Wibox.widget({
     widget = iwidget,
     valign = "center",
@@ -170,7 +172,9 @@ templates.windows_label = function(opts)
       color = defaults.color,
       on_color = defaults.on_color,
       normal_border_width = 0,
-      shape = Helpers.shape.rrect(0),
+      on_normal_border_width = 0,
+      normal_shape = 'none',
+      on_normal_shape = 'none',
       on_release = opts.settings,
       {
         widget = iwidget,
@@ -184,55 +188,67 @@ templates.windows_label = function(opts)
         halign = "center",
       },
     })
+    sep = Wibox.widget({
+      widget = Wibox.container.background,
+      forced_height = 25,
+      forced_width = defaults.border_width,
+      bg = defaults.separator_color
+    })
   end
 
   local widget = Wibox.widget({
-    widget = Wibox.container.background,
-    shape = defaults.shape,
-    border_width = defaults.border_width,
-    border_color = defaults.border_color,
-    forced_height = defaults.windows_label_height,
+
+    layout = Wibox.layout.flex.horizontal,
     {
-      layout = Wibox.layout.flex.horizontal,
-      {
-        widget = ebwidget.state,
-        padding = defaults.padding,
-        on_by_default = opts.on_by_default,
-        color = defaults.color,
-        on_color = defaults.on_color,
-        normal_border_width = 0,
-        shape = Helpers.shape.rrect(0),
-        halign = "center",
-        on_turn_on = opts.fn_on,
-        on_turn_off = opts.fn_off,
-        icon,
-      },
-      settings and {
-        widget = Wibox.container.margin,
-        color = defaults.border_color,
-        left = defaults.border_width,
-        settings,
-      },
+      widget = ebwidget.state,
+      padding = defaults.padding,
+      on_by_default = opts.on_by_default,
+      color = defaults.color,
+      on_color = defaults.on_color,
+      normal_border_width = 0,
+      on_normal_border_width = 0,
+      normal_shape = 'none',
+      on_normal_shape = 'none',
+      halign = "center",
+      on_turn_on = opts.fn_on,
+      on_turn_off = opts.fn_off,
+      icon,
     },
+    settings
+
   })
 
-  widget.widget.children[1]:connect_signal("turn_on", function()
+  widget.children[1]:connect_signal("turn_on", function()
     if settings then
       settings:turn_on()
-      widget.widget.children[2].color = defaults.on_border_color
+      sep.bg = defaults.on_separator_color
     end
   end)
-  widget.widget.children[1]:connect_signal("turn_off", function()
+  widget.children[1]:connect_signal("turn_off", function()
     if settings then
       settings:turn_off()
-      widget.widget.children[2].color = defaults.border_color
+      sep.bg = defaults.separator_color
     end
   end)
 
   local main = Wibox.widget({
     layout = Wibox.layout.fixed.vertical,
     spacing = defaults.spacing * 0.5,
-    widget,
+    {
+      layout = Wibox.layout.stack,
+      {
+        widget = Wibox.container.background,
+        shape = defaults.shape,
+        border_width = defaults.border_width,
+        border_color = defaults.border_color,
+        forced_height = defaults.windows_label_height,
+        widget
+      },
+      {
+        widget = Wibox.container.place,
+      sep,
+      }
+    },
     {
       widget = twidget,
       text = Helpers.text.first_upper(opts.label or ""),
@@ -246,15 +262,15 @@ templates.windows_label = function(opts)
   })
 
   function main:turn_on()
-    return widget.widget.children[1]:turn_on()
+    return widget.children[1]:turn_on()
   end
 
   function main:turn_off()
-    return widget.widget.children[1]:turn_off()
+    return widget.children[1]:turn_off()
   end
 
   function main:get_state()
-    return widget.widget.children[1]:get_state()
+    return widget.children[1]:get_state()
   end
 
   return main
