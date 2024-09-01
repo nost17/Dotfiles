@@ -192,14 +192,14 @@ return Wibox.widget({
   border_width = Beautiful.widget_border.width,
   border_color = Beautiful.widget_border.color,
   shape = Helpers.shape.rrect(Beautiful.radius),
-  forced_height = User.music.control.art_bg and dpi(110),
+  forced_height = dpi(100),
   {
     layout = Wibox.layout.stack,
     art_bg,
     {
       widget = Wibox.container.background,
       bg = default.overlay_bg,
-      opacity = User.music.control.art_bg and (Beautiful.type == "dark" and 0.79 or 0.25) or nil,
+      opacity = (Beautiful.type == "dark" and 0.7 or 0.35) or nil,
     },
     {
       widget = Wibox.container.margin,
@@ -218,7 +218,7 @@ return Wibox.widget({
               forced_width = art_size,
               border_width = Beautiful.widget_border.width,
               border_color = Beautiful.widget_border.color,
-              shape = Helpers.shape.rrect(Beautiful.radius),
+              shape = Helpers.shape.rrect(),
               metadata_art,
             },
           },

@@ -94,7 +94,7 @@ local overlay = Wibox.widget({
    forced_width = wscreen,
    forced_height = hscreen,
    bg = Beautiful.lockscreen_overlay_bg,
-   opacity = Beautiful.type == "dark" and 0.8 or 0.5,
+   opacity = Beautiful.type == "dark" and 0.8 or 0.3,
 })
 
 
@@ -169,6 +169,7 @@ awesome.connect_signal("widgets::lockscreen", function(action)
    end
    awesome.emit_signal("visible::lockscreen", main.visible)
    if main.visible then
+      grabber:reset_arc()
       grabber:start()
    end
 

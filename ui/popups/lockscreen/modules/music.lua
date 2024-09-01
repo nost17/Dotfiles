@@ -6,6 +6,12 @@ local gsurface = Gears.surface
 local widgets = Utils.widgets
 local width = screen.primary.geometry.width / 4
 
+local defaults = {
+  bg = beautiful.primary[beautiful.type == "dark" and 900 or 700],
+  border_color = beautiful.primary[800],
+  border_width = beautiful.widget_border.width,
+}
+
 local songname = wibox.widget({
   widget = widgets.text,
   text = "Nada por el momento...",
@@ -66,12 +72,24 @@ Lib.Playerctl:connect_signal("status", function(_, playing)
   end
 end)
 
+local next_button = wibox.widget({
+  widget = widgets.button.normal,
+  color = beautiful.transparent,
+  forced_width = dpi(38),
+  normal_border_width = 0,
+  normal_shape = "none",
+  toggle_icon,
+  on_release = function()
+    Lib.Playerctl:play_pause()
+  end
+})
+
 return wibox.widget({
   widget = wibox.container.background,
   shape = hshape.rrect(),
-  border_width = beautiful.widget_border.width,
-  border_color = beautiful.primary[700],
-  bg = beautiful.primary[900],
+  border_width = defaults.border_width,
+  border_color = defaults.border_color,
+  bg = defaults.bg,
   forced_width = width,
   {
     layout = wibox.layout.align.horizontal,
@@ -88,17 +106,7 @@ return wibox.widget({
     },
     {
       layout = wibox.layout.flex.horizontal,
-      {
-        widget = widgets.button.normal,
-        color = beautiful.transparent,
-        forced_width = dpi(38),
-        normal_border_width = 0,
-        normal_shape = "none",
-        toggle_icon,
-        on_release = function()
-          Lib.Playerctl:play_pause()
-        end
-      },
+      next_button,
       {
         widget = widgets.button.normal,
         color = beautiful.transparent,

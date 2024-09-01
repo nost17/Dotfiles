@@ -17,7 +17,7 @@ local style = {
   border_width = Beautiful.widget_border.width,
   border_color = Beautiful.widget_border.color,
   timeout = 7,
-  prompt_template = "El equipo se %s en: %ss"
+  prompt_template = "Se %s en: %ss"
 }
 
 local confirm = {}
@@ -34,7 +34,7 @@ local function mkbutton(opts)
       end
     end,
     forced_width = style.icon_width,
-    color = opts.color,
+    color = opts.color or Beautiful.widget_color[3],
     halign = "center",
     valign = "center",
     {
