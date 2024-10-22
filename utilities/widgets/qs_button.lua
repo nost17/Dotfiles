@@ -141,7 +141,8 @@ end
 
 templates.only_icon = function(opts)
   return Wibox.widget({
-    widget = ebwidget.normal,
+    widget = ebwidget.state,
+    padding = defaults.padding,
     on_by_default = opts.on_by_default,
     color = defaults.color,
     on_color = defaults.on_color,
@@ -154,8 +155,8 @@ templates.only_icon = function(opts)
         uncached = opts.icon_uncached,
       },
       color = defaults.color_fg,
-      on_color = defaults.on_color_fg
-    }
+      on_color = defaults.on_color_fg,
+    },
   })
 end
 
@@ -178,8 +179,8 @@ templates.windows_label = function(opts)
       on_color = defaults.on_color,
       normal_border_width = 0,
       on_normal_border_width = 0,
-      normal_shape = 'none',
-      on_normal_shape = 'none',
+      normal_shape = "none",
+      on_normal_shape = "none",
       on_release = opts.settings,
       {
         widget = iwidget,
@@ -197,7 +198,7 @@ templates.windows_label = function(opts)
       widget = Wibox.container.background,
       forced_height = 25,
       forced_width = defaults.border_width,
-      bg = defaults.separator_color
+      bg = defaults.separator_color,
     })
   end
 
@@ -212,15 +213,14 @@ templates.windows_label = function(opts)
       on_color = defaults.on_color,
       normal_border_width = 0,
       on_normal_border_width = 0,
-      normal_shape = 'none',
-      on_normal_shape = 'none',
+      normal_shape = "none",
+      on_normal_shape = "none",
       halign = "center",
       on_turn_on = opts.fn_on,
       on_turn_off = opts.fn_off,
       icon,
     },
-    settings
-
+    settings,
   })
 
   widget.children[1]:connect_signal("turn_on", function()
@@ -247,12 +247,12 @@ templates.windows_label = function(opts)
         border_width = defaults.border_width,
         border_color = defaults.border_color,
         forced_height = defaults.windows_label_height,
-        widget
+        widget,
       },
       {
         widget = Wibox.container.place,
-      sep,
-      }
+        sep,
+      },
     },
     {
       widget = twidget,
