@@ -17,9 +17,9 @@ opt.list = true
 opt.swapfile = false
 opt.guicursor = "i:hor50"
 
-opt.shiftwidth = 3
-opt.tabstop = 3
-opt.softtabstop = 3
+opt.shiftwidth = 2
+opt.tabstop = 2
+opt.softtabstop = 2
 
 -- Auto resize panes when resizing nvim window
 -- autocmd("VimResized", {

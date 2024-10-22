@@ -13,13 +13,16 @@ local config = {}
 
 config.color_schemes = {
 	-- ["OneDark"] = current_palette, #717373
+   ["OneDark"] = wezterm.color.get_builtin_schemes()["OneDark (base16)"],
 	["Tomorrow"] = require("custom_themes.tomorrow_night"),
    ["Gruvbox material dark"] = require("custom_themes.gruvbox_material_dark"),
    ["Gruvbox material light"] = require("custom_themes.gruvbox_material_light")
 }
-config.color_scheme = "Gruvbox material dark"
+config.color_scheme = "OneDark"
 
 local current_palette = config.color_schemes[config.color_scheme]
+
+current_palette.ansi[1] = wezterm.color.parse(current_palette.ansi[1])
 
 config.force_reverse_video_cursor = true
 

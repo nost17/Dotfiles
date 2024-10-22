@@ -22,8 +22,8 @@ local override_colors = {
 
 M.ui = {
 	extended_integrations = { "bufferline" },
-	theme = "gruvchad",
-	theme_toggle = { "gruvchad", "one_light" },
+	theme = "doomchad",
+	theme_toggle = { "doomchad", "one_light" },
 	nvdash = { load_on_startup = true },
 	cmp = {
 		style = "flat_light",
